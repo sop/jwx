@@ -1,0 +1,23 @@
+{
+	"name": "sop/jwx",
+	"description": "A PHP library for JSON web tokens (JWT) with signature (JWS) and encryption (JWE) support.",
+	"license": "MIT",
+	"type": "library",
+	"keywords": ["jwt", "jws", "jwe", "json web tokens"],
+	"authors": [
+		{
+			"name": "Joni Eskelinen",
+			"email": "jonieske@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.6.3",
+		"ext-openssl": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"JWX\\": "lib/JWX/"
+		}
+	}
+}
