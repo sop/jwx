@@ -39,7 +39,8 @@ class JWS
 	 * @param string $payload JWS Payload
 	 * @param string $signature JWS Signature
 	 */
-	public function __construct(Header $protected_header, $payload, $signature) {
+	protected function __construct(Header $protected_header, $payload,
+			$signature) {
 		$this->_protectedHeader = $protected_header;
 		$this->_payload = $payload;
 		$this->_signature = $signature;
@@ -68,11 +69,15 @@ class JWS
 	 * Initialize by signing payload with given algorithm
 	 *
 	 * @param string $payload JWS Payload
-	 * @param SignatureAlgorithm $algo
+	 * @param Header $header Desired header. Algorithm specific parameters are
+	 *        added automatically.
+	 * @param SignatureAlgorithm $algo Signature algorithm
 	 * @return self
 	 */
-	public static function sign($payload, SignatureAlgorithm $algo) {
-		$header = new Header(AlgorithmParameter::fromAlgorithm($algo));
+	public static function sign($payload, Header $header, 
+			SignatureAlgorithm $algo) {
+		$header = $header->withParameter(
+			AlgorithmParameter::fromAlgorithm($algo));
 		$data = Base64::urlEncode($header->toJSON()) . "." .
 			 Base64::urlEncode($payload);
 		$signature = $algo->computeSignature($data);
