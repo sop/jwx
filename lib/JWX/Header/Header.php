@@ -46,14 +46,16 @@ class Header implements \Countable
 	}
 	
 	/**
-	 * Get self with parameter added
+	 * Get self with parameters added
 	 *
-	 * @param Parameter $param
+	 * @param Parameters ...$param
 	 * @return self
 	 */
-	public function withParameter(Parameter $param) {
+	public function withParameters(Parameter ...$params) {
 		$obj = clone $this;
-		$obj->_parameters[$param->name()] = $param;
+		foreach ($params as $param) {
+			$obj->_parameters[$param->name()] = $param;
+		}
 		return $obj;
 	}
 	

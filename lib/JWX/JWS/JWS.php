@@ -76,7 +76,7 @@ class JWS
 	 */
 	public static function sign($payload, Header $header, 
 			SignatureAlgorithm $algo) {
-		$header = $header->withParameter(
+		$header = $header->withParameters(
 			AlgorithmParameter::fromAlgorithm($algo));
 		$data = Base64::urlEncode($header->toJSON()) . "." .
 			 Base64::urlEncode($payload);

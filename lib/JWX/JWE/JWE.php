@@ -2,10 +2,10 @@
 
 namespace JWX\JWE;
 
-use JWX\JOSE\JOSE;
-use JWX\JOSE\Parameter\AlgorithmParameter;
-use JWX\JOSE\Parameter\EncryptionAlgorithmParameter;
 use JWX\Util\Base64;
+use JWX\Header\Header;
+use JWX\Header\Parameter\AlgorithmParameter;
+use JWX\Header\Parameter\EncryptionAlgorithmParameter;
 
 
 class JWE
@@ -13,7 +13,7 @@ class JWE
 	/**
 	 * Header
 	 *
-	 * @var JOSE $_protectedHeader
+	 * @var Header $_protectedHeader
 	 */
 	protected $_protectedHeader;
 	
@@ -55,16 +55,16 @@ class JWE
 	/**
 	 * Constructor
 	 *
-	 * @param JOSE $header
-	 * @param string $encrypted_key
-	 * @param string $iv
-	 * @param string $ciphertext
-	 * @param string $auth_tag
-	 * @param string|null $aad
+	 * @param Header $protected_header JWE Protected Header
+	 * @param string $encrypted_key Encrypted key
+	 * @param string $iv Initialization vector
+	 * @param string $ciphertext Ciphertext
+	 * @param string $auth_tag Authentication tag
+	 * @param string|null $aad Additional authenticated data
 	 */
-	public function __construct(JOSE $header, $encrypted_key, $iv, $ciphertext, 
-		$auth_tag, $aad = null) {
-		$this->_protectedHeader = $header;
+	public function __construct(Header $protected_header, $encrypted_key, $iv, 
+			$ciphertext, $auth_tag, $aad = null) {
+		$this->_protectedHeader = $protected_header;
 		$this->_encryptedKey = $encrypted_key;
 		$this->_iv = $iv;
 		$this->_aad = $aad;
@@ -85,7 +85,7 @@ class JWE
 			throw new \UnexpectedValueException(
 				"Not valid JWE compact serialization");
 		}
-		$header = JOSE::fromJSON(Base64::urlDecode($segments[0]));
+		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
 		$encrypted_key = Base64::urlDecode($segments[1]);
 		$iv = Base64::urlDecode($segments[2]);
 		$ciphertext = Base64::urlDecode($segments[3]);
@@ -97,20 +97,25 @@ class JWE
 	 * Initialize by encrypting given payload
 	 *
 	 * @param string $payload
-	 * @param KeyManagementAlgorithm $key_algo
-	 * @param ContentEncryptionAlgorithm $enc_algo
+	 * @param Header $header Desired header. Algorithm specific parameters
+	 *        are automatically added.
+	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
+	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
 	 * @return self
 	 */
-	public static function encrypt($payload, KeyManagementAlgorithm $key_algo, 
+	public static function encrypt($payload, Header $header, 
+			KeyManagementAlgorithm $key_algo, 
 			ContentEncryptionAlgorithm $enc_algo) {
 		$cek = $key_algo->contentEncryptionKey();
+		// generate random IV
 		$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
 		// @todo add support for compression
-		$header = new JOSE(AlgorithmParameter::fromAlgorithm($key_algo), 
+		$header = $header->withParameters(
+			AlgorithmParameter::fromAlgorithm($key_algo), 
 			EncryptionAlgorithmParameter::fromAlgorithm($enc_algo));
 		$aad = Base64::urlEncode($header->toJSON());
-		list($ciphertext, $auth_tag) = $enc_algo->encrypt($payload, $cek, $iv, 
-			$aad);
+		list ($ciphertext, $auth_tag) = $enc_algo->encrypt(
+			$payload, $cek, $iv, $aad);
 		return new self($header, $key_algo->encryptedKey(), $iv, $ciphertext, 
 			$auth_tag);
 	}

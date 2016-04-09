@@ -8,6 +8,13 @@ use JWX\JWE\ContentEncryptionAlgorithm;
 abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 {
 	/**
+	 * Get content encryption key size
+	 *
+	 * @return int
+	 */
+	abstract public function keySize();
+	
+	/**
 	 * Get cipher method name that is recognized by openssl
 	 *
 	 * @return string
@@ -20,13 +27,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	 * @return string
 	 */
 	abstract protected function _hashAlgo();
-	
-	/**
-	 * Get content encryption key size
-	 *
-	 * @return int
-	 */
-	abstract protected function _keySize();
 	
 	/**
 	 * Get length of encryption key
@@ -56,7 +56,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	 * @throws \RuntimeException
 	 */
 	final protected function _validateKey($key) {
-		if (strlen($key) != $this->_keySize()) {
+		if (strlen($key) != $this->keySize()) {
 			throw new \RuntimeException("Invalid key size");
 		}
 	}
@@ -130,7 +130,8 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		}
 		$auth_data = $aad . $iv . $ciphertext . $this->_aadLen($aad);
 		$auth_tag = $this->_computeAuthTag($auth_data, $key);
-		return array($ciphertext, $auth_tag);
+		return array($ciphertext,$auth_tag
+		);
 	}
 	
 	public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag) {

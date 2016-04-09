@@ -5,6 +5,10 @@ namespace JWX\JWE\EncryptionAlgorithm;
 
 class A128CBCHS256Algorithm extends AESCBCAlgorithm
 {
+	public function keySize() {
+		return 32;
+	}
+	
 	public function algorithmParamValue() {
 		return "A128CBC-HS256";
 	}
@@ -15,10 +19,6 @@ class A128CBCHS256Algorithm extends AESCBCAlgorithm
 	
 	protected function _hashAlgo() {
 		return "sha256";
-	}
-	
-	protected function _keySize() {
-		return 32;
 	}
 	
 	protected function _encKeyLen() {

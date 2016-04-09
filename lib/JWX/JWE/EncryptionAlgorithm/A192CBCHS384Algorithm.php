@@ -5,6 +5,10 @@ namespace JWX\JWE\EncryptionAlgorithm;
 
 class A192CBCHS384Algorithm extends AESCBCAlgorithm
 {
+	public function keySize() {
+		return 48;
+	}
+	
 	public function algorithmParamValue() {
 		return "A192CBC-HS384";
 	}
@@ -15,10 +19,6 @@ class A192CBCHS384Algorithm extends AESCBCAlgorithm
 	
 	protected function _hashAlgo() {
 		return "sha384";
-	}
-	
-	protected function _keySize() {
-		return 48;
 	}
 	
 	protected function _encKeyLen() {
