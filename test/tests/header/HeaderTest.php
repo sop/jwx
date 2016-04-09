@@ -3,6 +3,7 @@
 use JWX\Header\Header;
 use JWX\Header\Parameter\TypeParameter;
 use JWX\Header\Parameter\RegisteredParameter;
+use JWX\Header\Parameter\ContentTypeParameter;
 
 
 /**
@@ -52,6 +53,28 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testGetFails(Header $header) {
 		$header->get("nope");
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Header $header
+	 */
+	public function testAdd(Header $header) {
+		$header = $header->withParameter(new ContentTypeParameter("test"));
+		$this->assertCount(2, $header);
+	}
+	
+	/**
+	 * @depends testCreate
+	 * 
+	 * @param Header $header
+	 */
+	public function testModify(Header $header) {
+		$header = $header->withParameter(new TypeParameter("modified"));
+		$this->assertEquals("modified", 
+			$header->get(RegisteredParameter::NAME_TYPE)
+				->value());
 	}
 	
 	/**
