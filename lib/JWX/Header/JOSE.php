@@ -3,6 +3,7 @@
 namespace JWX\Header;
 
 use JWX\Header\Parameter\Parameter;
+use JWX\Header\Parameter\RegisteredParameter;
 
 
 class JOSE extends Header
@@ -23,5 +24,24 @@ class JOSE extends Header
 			}
 		}
 		parent::__construct(...array_values($params));
+	}
+	
+	/**
+	 * Whether JOSE is for JWS
+	 *
+	 * @return bool
+	 */
+	public function isJWS() {
+		return $this->has(RegisteredParameter::NAME_ALGORITHM) &&
+			 !$this->has(RegisteredParameter::NAME_ENCRYPTION_ALGORITHM);
+	}
+	
+	/**
+	 * Whether JOSE is for JWE
+	 *
+	 * @return bool
+	 */
+	public function isJWE() {
+		return $this->has(RegisteredParameter::NAME_ENCRYPTION_ALGORITHM);
 	}
 }
