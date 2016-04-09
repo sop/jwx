@@ -1,6 +1,6 @@
 <?php
 
-namespace JWX\JOSE;
+namespace JWX\Header;
 
 
 interface AlgorithmParameterValue

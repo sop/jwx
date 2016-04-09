@@ -1,11 +1,11 @@
 <?php
 
-namespace JWX\JOSE;
+namespace JWX\Header;
 
-use JWX\JOSE\Parameter\Parameter;
+use JWX\Header\Parameter\Parameter;
 
 
-class JOSE
+class Header implements \Countable
 {
 	/**
 	 * Parameters
@@ -46,6 +46,15 @@ class JOSE
 	}
 	
 	/**
+	 * Get all parameters
+	 *
+	 * @return Parameter[]
+	 */
+	public function parameters() {
+		return $this->_parameters;
+	}
+	
+	/**
 	 * Whether parameter is present
 	 *
 	 * @param string $name Parameter name
@@ -75,10 +84,23 @@ class JOSE
 	 * @return string
 	 */
 	public function toJSON() {
+		if (empty($this->_parameters)) {
+			return "";
+		}
 		$data = array();
 		foreach ($this->_parameters as $param) {
 			$data[$param->name()] = $param->value();
 		}
 		return json_encode($data, JSON_FORCE_OBJECT);
+	}
+	
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see Countable::count()
+	 */
+	public function count() {
+		return count($this->_parameters);
 	}
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace JWX\JOSE\Parameter;
+namespace JWX\Header\Parameter;
 
-use JWX\JOSE\AlgorithmParameterValue;
+use JWX\Header\AlgorithmParameterValue;
 
 
 class AlgorithmParameter extends RegisteredParameter

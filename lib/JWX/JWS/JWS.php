@@ -2,10 +2,11 @@
 
 namespace JWX\JWS;
 
-use JWX\JOSE\JOSE;
-use JWX\JOSE\Parameter\AlgorithmParameter;
-use JWX\JOSE\Parameter\RegisteredParameter;
 use JWX\Util\Base64;
+use JWX\Header\JOSE;
+use JWX\Header\Header;
+use JWX\Header\Parameter\AlgorithmParameter;
+use JWX\Header\Parameter\RegisteredParameter;
 
 
 class JWS
@@ -13,7 +14,7 @@ class JWS
 	/**
 	 * Header
 	 *
-	 * @var JOSE $_protectedHeader
+	 * @var Header $_protectedHeader
 	 */
 	protected $_protectedHeader;
 	
@@ -34,11 +35,11 @@ class JWS
 	/**
 	 * Constructor
 	 *
-	 * @param JOSE $header
-	 * @param string $payload
-	 * @param string $signature
+	 * @param Header $header JWS Protected Header
+	 * @param string $payload JWS Payload
+	 * @param string $signature JWS Signature
 	 */
-	public function __construct(JOSE $protected_header, $payload, $signature) {
+	public function __construct(Header $protected_header, $payload, $signature) {
 		$this->_protectedHeader = $protected_header;
 		$this->_payload = $payload;
 		$this->_signature = $signature;
@@ -57,7 +58,7 @@ class JWS
 			throw new \UnexpectedValueException(
 				"Not valid JWS compact serialization");
 		}
-		$header = JOSE::fromJSON(Base64::urlDecode($segments[0]));
+		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
 		$payload = Base64::urlDecode($segments[1]);
 		$signature = Base64::urlDecode($segments[2]);
 		return new self($header, $payload, $signature);
@@ -66,25 +67,36 @@ class JWS
 	/**
 	 * Initialize by signing payload with given algorithm
 	 *
-	 * @param string $payload
+	 * @param string $payload JWS Payload
 	 * @param SignatureAlgorithm $algo
 	 * @return self
 	 */
 	public static function sign($payload, SignatureAlgorithm $algo) {
-		$header = new JOSE(new AlgorithmParameter($algo->algorithmParamValue()));
+		$header = new Header(AlgorithmParameter::fromAlgorithm($algo));
 		$data = Base64::urlEncode($header->toJSON()) . "." .
 			 Base64::urlEncode($payload);
 		$signature = $algo->computeSignature($data);
 		return new self($header, $payload, $signature);
 	}
 	
+	/**
+	 * Get JOSE header
+	 *
+	 * @return JOSE
+	 */
 	public function header() {
-		return $this->_protectedHeader;
+		return new JOSE($this->_protectedHeader);
 	}
 	
+	/**
+	 * Get signature algorithm name
+	 *
+	 * @return string
+	 */
 	public function algorithmName() {
-		$jose = $this->header();
-		return $jose->get(RegisteredParameter::NAME_ALGORITHM)->value();
+		return $this->header()
+			->get(RegisteredParameter::NAME_ALGORITHM)
+			->value();
 	}
 	
 	/**
