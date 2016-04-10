@@ -149,4 +149,13 @@ class JWE
 			 Base64::urlEncode($this->_ciphertext) . "." .
 			 Base64::urlEncode($this->_authenticationTag);
 	}
+	
+	/**
+	 * Convert JWE to string
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->toCompact();
+	}
 }

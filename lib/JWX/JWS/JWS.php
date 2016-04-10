@@ -139,4 +139,13 @@ class JWS
 			 Base64::urlEncode($this->_payload) . "." .
 			 Base64::urlEncode($this->_signature);
 	}
+	
+	/**
+	 * Convert JWS to string
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->toCompact();
+	}
 }
