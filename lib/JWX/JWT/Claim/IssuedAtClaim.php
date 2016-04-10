@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Claim;
 
+use JWX\JWT\Claim\Feature\NumericDateClaim;
+
 
 /**
  * Implements 'iat' claim specified in rfc7519 section 4.1.6
@@ -10,6 +12,8 @@ namespace JWX\JWT\Claim;
  */
 class IssuedAtClaim extends RegisteredClaim
 {
+	use NumericDateClaim;
+	
 	/**
 	 * Constructor
 	 *
