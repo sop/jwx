@@ -52,6 +52,6 @@ class Claims
 		foreach ($this->_claims as $claim) {
 			$data[$claim->name()] = $claim->value();
 		}
-		return json_encode($data, JSON_FORCE_OBJECT);
+		return json_encode($data, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
 	}
 }
