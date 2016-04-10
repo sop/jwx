@@ -38,15 +38,9 @@ class Claim
 	 * @return Claim
 	 */
 	public static function fromNameAndValue($name, $value) {
-		switch ($name) {
-		case RegisteredClaim::NAME_ISSUER:
-			return new IssuerClaim($value);
-		case RegisteredClaim::NAME_SUBJECT:
-			return new SubjectClaim($value);
-		case RegisteredClaim::NAME_AUDIENCE:
-			return new AudienceClaim($value);
-		case RegisteredClaim::NAME_EXPIRATION_TIME:
-			return new ExpirationTimeClaim($value);
+		if (isset(RegisteredClaim::$nameToCls[$name])) {
+			$cls = RegisteredClaim::$nameToCls[$name];
+			return $cls::fromJSONValue($value);
 		}
 		return new self($name, $value);
 	}
