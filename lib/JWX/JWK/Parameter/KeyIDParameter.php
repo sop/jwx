@@ -5,7 +5,12 @@ namespace JWX\JWK\Parameter;
 
 class KeyIDParameter extends RegisteredJWKParameter
 {
-	public function __construct($algo) {
-		parent::__construct(self::PARAM_KEY_ID, $algo);
+	/**
+	 * Constructor
+	 *
+	 * @param string $algo Key ID
+	 */
+	public function __construct($id) {
+		parent::__construct(self::PARAM_KEY_ID, $id);
 	}
 }

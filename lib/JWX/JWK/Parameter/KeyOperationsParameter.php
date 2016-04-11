@@ -14,7 +14,16 @@ class KeyOperationsParameter extends RegisteredJWKParameter
 	const OP_DERIVE_KEY = "deriveKey";
 	const OP_DERIVE_BITS = "deriveBits";
 	
+	/**
+	 * Constructor
+	 *
+	 * @param string ...$ops Key operations
+	 */
 	public function __construct(...$ops) {
 		parent::__construct(self::PARAM_KEY_OPERATIONS, $ops);
+	}
+	
+	public static function fromJSONValue($value) {
+		return new self(...$value);
 	}
 }

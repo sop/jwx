@@ -46,6 +46,22 @@ abstract class RegisteredJWKParameter extends JWKParameter
 		self::PARAM_KEY_OPERATIONS => KeyOperationsParameter::class,
 		self::PARAM_ALGORITHM => AlgorithmParameter::class,
 		self::PARAM_KEY_ID => KeyIDParameter::class,
+		self::PARAM_CURVE => CurveParameter::class,
+		self::PARAM_X_COORDINATE => XCoordinateParameter::class,
+		self::PARAM_Y_COORDINATE => YCoordinateParameter::class,
+		self::PARAM_ECC_PRIVATE_KEY => ECCPrivateKeyParameter::class,
+		self::PARAM_MODULUS => ModulusParameter::class,
+		self::PARAM_EXPONENT => ExponentParameter::class,
+		self::PARAM_PRIVATE_EXPONENT => PrivateExponentParameter::class,
+		self::PARAM_FIRST_PRIME_FACTOR => FirstPrimeFactorParameter::class,
+		self::PARAM_SECOND_PRIME_FACTOR => SecondPrimeFactorParameter::class,
+		self::PARAM_FIRST_FACTOR_CRT_EXPONENT => 
+			FirstFactorCRTExponentParameter::class,
+		self::PARAM_SECOND_FACTOR_CRT_EXPONENT => 
+			SecondFactorCRTExponentParameter::class,
+		self::PARAM_FIRST_CRT_COEFFICIENT =>
+			FirstCRTCoefficientParameter::class,
+		self::PARAM_OTHER_PRIMES_INFO => OtherPrimesInfoParameter::class,
 		self::PARAM_KEY_VALUE => KeyValueParameter::class
 	);	// @formatter:on
 	
