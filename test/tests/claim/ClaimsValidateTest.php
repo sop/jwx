@@ -9,6 +9,8 @@ use JWX\JWT\Claim\NotBeforeClaim;
 use JWX\JWT\Claim\IssuedAtClaim;
 use JWX\JWT\Claim\JWTIDClaim;
 use JWX\JWT\ValidationContext;
+use JWX\JWT\Claim\Claim;
+use JWX\JWT\Claim\Validator\LessValidator;
 
 
 /**
@@ -114,5 +116,20 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withID("nope");
 		$ctx->validate($this->_claims);
+	}
+	
+	public function testCustomClaim() {
+		$claims = new Claims(new Claim("test", 0, new LessValidator()));
+		$ctx = new ValidationContext(array("test" => 1));
+		$ctx->validate($claims);
+	}
+	
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testCustomClaimFails() {
+		$claims = new Claims(new Claim("test", 0, new LessValidator()));
+		$ctx = new ValidationContext(array("test" => 0));
+		$ctx->validate($claims);
 	}
 }
