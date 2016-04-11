@@ -10,7 +10,7 @@ namespace JWX\JWT\Claim\Validator;
  */
 class ContainsValidator extends Validator
 {
-	public function __invoke($value, $constraint) {
+	public function validate($value, $constraint) {
 		if (is_array($value)) {
 			return in_array($constraint, $value);
 		}

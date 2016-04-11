@@ -8,7 +8,7 @@ namespace JWX\JWT\Claim\Validator;
  */
 class GreaterOrEqualValidator extends Validator
 {
-	public function __invoke($value, $constraint) {
+	public function validate($value, $constraint) {
 		return $value >= $constraint;
 	}
 }
