@@ -3,8 +3,8 @@
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Feature\NumericDateClaim;
-use JWX\JWT\Claim\Validator\GreaterValidator;
 use JWX\JWT\Claim\Feature\ReferenceTimeValidation;
+use JWX\JWT\Claim\Validator\GreaterValidator;
 
 
 /**

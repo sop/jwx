@@ -8,9 +8,9 @@ use JWX\JWT\Claims;
 use JWX\JWS\JWS;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
+use JWX\JWE\JWE;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWE\ContentEncryptionAlgorithm;
-use JWX\JWE\JWE;
 
 
 class JWT
