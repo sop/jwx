@@ -23,10 +23,12 @@ class ValidationContext
 	
 	/**
 	 * Constructor
+	 *
+	 * @param array $constraints Array of constraints keyed by claim name
 	 */
-	public function __construct() {
+	public function __construct(array $constraints = array()) {
 		$this->_refTime = time();
-		$this->_constraints = array();
+		$this->_constraints = $constraints;
 	}
 	
 	/**
