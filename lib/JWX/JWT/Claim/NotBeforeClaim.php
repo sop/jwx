@@ -4,6 +4,7 @@ namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Feature\NumericDateClaim;
 use JWX\JWT\Claim\Validator\LessOrEqualValidator;
+use JWX\JWT\Claim\Feature\ReferenceTimeValidation;
 
 
 /**
@@ -14,6 +15,7 @@ use JWX\JWT\Claim\Validator\LessOrEqualValidator;
 class NotBeforeClaim extends RegisteredClaim
 {
 	use NumericDateClaim;
+	use ReferenceTimeValidation;
 	
 	/**
 	 * Constructor

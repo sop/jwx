@@ -2,8 +2,6 @@
 
 namespace JWX\JWT\Claim\Feature;
 
-use JWX\JWT\ValidationContext;
-
 
 /**
  * Trait for claims having NumericDate value.
@@ -27,7 +25,7 @@ trait NumericDateClaim
 	 * @return int
 	 */
 	public function timestamp() {
-		return (int) $this->_value;
+		return (int)$this->_value;
 	}
 	
 	/**
@@ -38,24 +36,5 @@ trait NumericDateClaim
 	public function dateTime() {
 		return \DateTimeImmutable::createFromFormat("!U", $this->_value, 
 			new \DateTimeZone("UTC"));
-	}
-	
-	/**
-	 * Override default Claim validation.
-	 *
-	 * Uses reference time of the validation context as a constraint.
-	 *
-	 * @see JWX\JWT\Claim\Claim::validate
-	 * @param ValidationContext $ctx
-	 * @return bool
-	 */
-	public function validate(ValidationContext $ctx) {
-		if (isset($this->_validator)) {
-			if ($ctx->hasReferenceTime()) {
-				return $this->_validator->__invoke($this->_value, 
-					$ctx->referenceTime());
-			}
-		}
-		return true;
 	}
 }
