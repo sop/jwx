@@ -3,7 +3,7 @@
 namespace JWX\JWT\Parameter;
 
 
-abstract class RegisteredParameter extends Parameter
+abstract class RegisteredParameter extends JWTParameter
 {
 	const NAME_TYPE = "typ";
 	const NAME_CONTENT_TYPE = "cty";

@@ -2,7 +2,7 @@
 
 namespace JWX\JWT;
 
-use JWX\JWT\Parameter\Parameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -13,16 +13,16 @@ class Header implements \Countable
 	/**
 	 * Parameters
 	 *
-	 * @var Parameter[] $_parameters
+	 * @var JWTParameter[] $_parameters
 	 */
 	protected $_parameters;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param Parameter ...$params Parameters
+	 * @param JWTParameter ...$params Parameters
 	 */
-	public function __construct(Parameter ...$params) {
+	public function __construct(JWTParameter ...$params) {
 		$this->_parameters = array();
 		foreach ($params as $param) {
 			$this->_parameters[$param->name()] = $param;
@@ -43,7 +43,7 @@ class Header implements \Countable
 			throw new \UnexpectedValueException("Invalid JSON");
 		}
 		foreach ($fields as $name => $value) {
-			$params[] = Parameter::fromNameAndValue($name, $value);
+			$params[] = JWTParameter::fromNameAndValue($name, $value);
 		}
 		return new self(...$params);
 	}
@@ -51,10 +51,10 @@ class Header implements \Countable
 	/**
 	 * Get self with parameters added
 	 *
-	 * @param Parameters ...$param
+	 * @param JWTParameter ...$param
 	 * @return self
 	 */
-	public function withParameters(Parameter ...$params) {
+	public function withParameters(JWTParameter ...$params) {
 		$obj = clone $this;
 		foreach ($params as $param) {
 			$obj->_parameters[$param->name()] = $param;
@@ -65,7 +65,7 @@ class Header implements \Countable
 	/**
 	 * Get all parameters
 	 *
-	 * @return Parameter[]
+	 * @return JWTParameter[]
 	 */
 	public function parameters() {
 		return $this->_parameters;
@@ -86,7 +86,7 @@ class Header implements \Countable
 	 *
 	 * @param string $name Parameter name
 	 * @throws \LogicException
-	 * @return Parameter
+	 * @return JWTParameter
 	 */
 	public function get($name) {
 		if (!$this->has($name)) {

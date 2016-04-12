@@ -3,7 +3,7 @@
 namespace JWX\JWT\Parameter;
 
 
-class Parameter
+class JWTParameter
 {
 	protected $_name;
 	
@@ -23,7 +23,7 @@ class Parameter
 		case RegisteredParameter::NAME_ALGORITHM:
 			return new AlgorithmParameter($value);
 		}
-		return new Parameter($name, $value);
+		return new JWTParameter($name, $value);
 	}
 	
 	public function name() {

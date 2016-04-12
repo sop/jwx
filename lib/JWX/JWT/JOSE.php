@@ -2,7 +2,6 @@
 
 namespace JWX\JWT;
 
-use JWX\JWT\Parameter\Parameter;
 use JWX\JWT\Parameter\RegisteredParameter;
 
 
