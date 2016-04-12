@@ -3,9 +3,9 @@
 namespace JWX\JWE;
 
 use JWX\Util\Base64;
-use JWX\Header\Header;
-use JWX\Header\Parameter\AlgorithmParameter;
-use JWX\Header\Parameter\EncryptionAlgorithmParameter;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 
 class JWE

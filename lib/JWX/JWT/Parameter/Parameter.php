@@ -1,6 +1,6 @@
 <?php
 
-namespace JWX\Header\Parameter;
+namespace JWX\JWT\Parameter;
 
 
 class Parameter

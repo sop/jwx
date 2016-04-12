@@ -2,8 +2,8 @@
 
 namespace JWX\JWT;
 
-use JWX\Header\JOSE;
-use JWX\Header\Header;
+use JWX\JWT\JOSE;
+use JWX\JWT\Header;
 use JWX\JWT\Claims;
 use JWX\JWS\JWS;
 use JWX\JWS\SignatureAlgorithm;

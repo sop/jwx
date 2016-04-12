@@ -1,9 +1,9 @@
 <?php
 
-use JWX\Header\Header;
-use JWX\Header\Parameter\TypeParameter;
-use JWX\Header\Parameter\RegisteredParameter;
-use JWX\Header\Parameter\ContentTypeParameter;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\TypeParameter;
+use JWX\JWT\Parameter\RegisteredParameter;
+use JWX\JWT\Parameter\ContentTypeParameter;
 
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-use JWX\Header\Header;
+use JWX\JWT\Header;
 use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWT\Claims;

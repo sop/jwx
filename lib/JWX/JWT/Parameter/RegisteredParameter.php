@@ -1,6 +1,6 @@
 <?php
 
-namespace JWX\Header\Parameter;
+namespace JWX\JWT\Parameter;
 
 
 abstract class RegisteredParameter extends Parameter

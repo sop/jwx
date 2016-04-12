@@ -3,10 +3,10 @@
 namespace JWX\JWS;
 
 use JWX\Util\Base64;
-use JWX\Header\JOSE;
-use JWX\Header\Header;
-use JWX\Header\Parameter\AlgorithmParameter;
-use JWX\Header\Parameter\RegisteredParameter;
+use JWX\JWT\JOSE;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\RegisteredParameter;
 
 
 class JWS

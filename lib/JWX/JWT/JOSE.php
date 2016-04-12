@@ -1,9 +1,9 @@
 <?php
 
-namespace JWX\Header;
+namespace JWX\JWT;
 
-use JWX\Header\Parameter\Parameter;
-use JWX\Header\Parameter\RegisteredParameter;
+use JWX\JWT\Parameter\Parameter;
+use JWX\JWT\Parameter\RegisteredParameter;
 
 
 class JOSE extends Header

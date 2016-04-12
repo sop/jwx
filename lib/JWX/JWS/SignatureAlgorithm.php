@@ -2,7 +2,7 @@
 
 namespace JWX\JWS;
 
-use JWX\Header\AlgorithmParameterValue;
+use JWX\JWT\AlgorithmParameterValue;
 
 
 interface SignatureAlgorithm extends AlgorithmParameterValue

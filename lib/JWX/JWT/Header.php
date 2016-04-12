@@ -1,10 +1,13 @@
 <?php
 
-namespace JWX\Header;
+namespace JWX\JWT;
 
-use JWX\Header\Parameter\Parameter;
+use JWX\JWT\Parameter\Parameter;
 
 
+/**
+ * Header used in JWS and JWE.
+ */
 class Header implements \Countable
 {
 	/**
@@ -105,7 +108,7 @@ class Header implements \Countable
 		foreach ($this->_parameters as $param) {
 			$data[$param->name()] = $param->value();
 		}
-		return json_encode($data, JSON_FORCE_OBJECT);
+		return json_encode($data, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
 	}
 	
 	/**
