@@ -41,11 +41,11 @@ class JWTParameter
 	 */
 	public static function fromNameAndValue($name, $value) {
 		switch ($name) {
-		case RegisteredParameter::NAME_TYPE:
+		case RegisteredJWTParameter::PARAM_TYPE:
 			return new TypeParameter($value);
-		case RegisteredParameter::NAME_CONTENT_TYPE:
+		case RegisteredJWTParameter::PARAM_CONTENT_TYPE:
 			return new ContentTypeParameter($value);
-		case RegisteredParameter::NAME_ALGORITHM:
+		case RegisteredJWTParameter::PARAM_ALGORITHM:
 			return new AlgorithmParameter($value);
 		}
 		return new JWTParameter($name, $value);

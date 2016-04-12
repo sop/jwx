@@ -3,9 +3,9 @@
 namespace JWX\JWT\Parameter;
 
 
-class TypeParameter extends RegisteredParameter
+class TypeParameter extends RegisteredJWTParameter
 {
 	public function __construct($value) {
-		parent::__construct(self::NAME_TYPE, $value);
+		parent::__construct(self::PARAM_TYPE, $value);
 	}
 }

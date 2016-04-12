@@ -6,7 +6,7 @@ use JWX\Util\Base64;
 use JWX\JWT\JOSE;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\RegisteredParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 class JWS
@@ -100,7 +100,7 @@ class JWS
 	 */
 	public function algorithmName() {
 		return $this->header()
-			->get(RegisteredParameter::NAME_ALGORITHM)
+			->get(RegisteredJWTParameter::PARAM_ALGORITHM)
 			->value();
 	}
 	
