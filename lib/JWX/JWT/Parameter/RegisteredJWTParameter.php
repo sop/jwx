@@ -29,4 +29,28 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	const PARAM_SUBJECT = "sub";
 	const PARAM_AUDIENCE = "aud";
 	const PARAM_BASE64URL_ENCODE_PAYLOAD = "b64";
+	
+	/**
+	 * Mapping from registered JWT parameter name to class name
+	 *
+	 * @var array
+	 */
+	public static $nameToCls = array(
+		// @formatter:off
+		self::PARAM_ALGORITHM => AlgorithmParameter::class,
+		self::PARAM_TYPE => TypeParameter::class,
+		self::PARAM_CONTENT_TYPE => ContentTypeParameter::class,
+		self::PARAM_ENCRYPTION_ALGORITHM => EncryptionAlgorithmParameter::class
+	);	// @formatter:on
+	
+
+	/**
+	 * Initialize concrete JWT parameter instance from JSON value
+	 *
+	 * @param mixed $value
+	 * @return RegisteredJWTParameter
+	 */
+	public static function fromJSONValue($value) {
+		return new static($value);
+	}
 }

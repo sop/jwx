@@ -40,15 +40,11 @@ class JWTParameter
 	 * @return self
 	 */
 	public static function fromNameAndValue($name, $value) {
-		switch ($name) {
-		case RegisteredJWTParameter::PARAM_TYPE:
-			return new TypeParameter($value);
-		case RegisteredJWTParameter::PARAM_CONTENT_TYPE:
-			return new ContentTypeParameter($value);
-		case RegisteredJWTParameter::PARAM_ALGORITHM:
-			return new AlgorithmParameter($value);
+		if (isset(RegisteredJWTParameter::$nameToCls[$name])) {
+			$cls = RegisteredJWTParameter::$nameToCls[$name];
+			return $cls::fromJSONValue($value);
 		}
-		return new JWTParameter($name, $value);
+		return new self($name, $value);
 	}
 	
 	/**
