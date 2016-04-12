@@ -1,6 +1,6 @@
 <?php
 
-namespace JWX\JWT;
+namespace JWX\JWT\Parameter;
 
 
 interface AlgorithmParameterValue

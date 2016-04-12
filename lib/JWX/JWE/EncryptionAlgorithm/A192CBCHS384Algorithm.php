@@ -9,7 +9,7 @@ class A192CBCHS384Algorithm extends AESCBCAlgorithm
 		return 48;
 	}
 	
-	public function algorithmParamValue() {
+	public function encryptionAlgorithmParamValue() {
 		return "A192CBC-HS384";
 	}
 	

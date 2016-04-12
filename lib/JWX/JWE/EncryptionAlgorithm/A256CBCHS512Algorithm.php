@@ -9,7 +9,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
 		return 64;
 	}
 	
-	public function algorithmParamValue() {
+	public function encryptionAlgorithmParamValue() {
 		return "A256CBC-HS512";
 	}
 	

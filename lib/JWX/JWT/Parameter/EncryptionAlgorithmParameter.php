@@ -2,8 +2,6 @@
 
 namespace JWX\JWT\Parameter;
 
-use JWX\JWT\AlgorithmParameterValue;
-
 
 class EncryptionAlgorithmParameter extends RegisteredJWTParameter
 {
@@ -11,7 +9,8 @@ class EncryptionAlgorithmParameter extends RegisteredJWTParameter
 		parent::__construct(self::PARAM_ENCRYPTION_ALGORITHM, $value);
 	}
 	
-	public static function fromAlgorithm(AlgorithmParameterValue $value) {
-		return new self($value->algorithmParamValue());
+	public static function fromAlgorithm(
+			EncryptionAlgorithmParameterValue $value) {
+		return new self($value->encryptionAlgorithmParamValue());
 	}
 }

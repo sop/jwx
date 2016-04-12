@@ -2,8 +2,6 @@
 
 namespace JWX\JWT\Parameter;
 
-use JWX\JWT\AlgorithmParameterValue;
-
 
 class AlgorithmParameter extends RegisteredJWTParameter
 {

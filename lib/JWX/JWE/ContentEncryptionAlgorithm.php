@@ -2,10 +2,10 @@
 
 namespace JWX\JWE;
 
-use JWX\JWT\AlgorithmParameterValue;
+use JWX\JWT\Parameter\EncryptionAlgorithmParameterValue;
 
 
-interface ContentEncryptionAlgorithm extends AlgorithmParameterValue
+interface ContentEncryptionAlgorithm extends EncryptionAlgorithmParameterValue
 {
 	/**
 	 * Encrypt plaintext.

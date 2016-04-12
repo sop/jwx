@@ -9,7 +9,7 @@ class A128CBCHS256Algorithm extends AESCBCAlgorithm
 		return 32;
 	}
 	
-	public function algorithmParamValue() {
+	public function encryptionAlgorithmParamValue() {
 		return "A128CBC-HS256";
 	}
 	
