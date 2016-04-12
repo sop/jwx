@@ -83,7 +83,7 @@ class JWE
 		$segments = explode(".", $data);
 		if (count($segments) != 5) {
 			throw new \UnexpectedValueException(
-				"Not valid JWE compact serialization");
+				"Invalid JWE compact serialization");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
 		$encrypted_key = Base64::urlDecode($segments[1]);

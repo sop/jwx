@@ -57,7 +57,7 @@ class JWS
 		$segments = explode(".", $data);
 		if (count($segments) != 3) {
 			throw new \UnexpectedValueException(
-				"Not valid JWS compact serialization");
+				"Invalid JWS compact serialization");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
 		$payload = Base64::urlDecode($segments[1]);
