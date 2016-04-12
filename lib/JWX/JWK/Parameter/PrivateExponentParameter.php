@@ -2,9 +2,13 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\JWK\Parameter\Feature\Base64UIntValue;
+
 
 class PrivateExponentParameter extends RegisteredJWKParameter
 {
+	use Base64UIntValue;
+	
 	/**
 	 * Constructor
 	 *
