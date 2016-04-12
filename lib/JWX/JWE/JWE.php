@@ -3,9 +3,9 @@
 namespace JWX\JWE;
 
 use JWX\Util\Base64;
-use JWX\Header\Header;
-use JWX\Header\Parameter\AlgorithmParameter;
-use JWX\Header\Parameter\EncryptionAlgorithmParameter;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 
 class JWE
@@ -83,7 +83,7 @@ class JWE
 		$segments = explode(".", $data);
 		if (count($segments) != 5) {
 			throw new \UnexpectedValueException(
-				"Not valid JWE compact serialization");
+				"Invalid JWE compact serialization");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
 		$encrypted_key = Base64::urlDecode($segments[1]);

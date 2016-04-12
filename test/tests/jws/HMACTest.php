@@ -4,7 +4,7 @@ use JWX\JWT\Claims;
 use JWX\JWT\Claim\IssuerClaim;
 use JWX\JWT\Claim\SubjectClaim;
 use JWX\JWS\Algorithm\HS256Algorithm;
-use JWX\Header\Header;
+use JWX\JWT\Header;
 use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\Algorithm\HS384Algorithm;

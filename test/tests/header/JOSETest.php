@@ -1,10 +1,10 @@
 <?php
 
-use JWX\Header\JOSE;
-use JWX\Header\Header;
-use JWX\Header\Parameter\TypeParameter;
-use JWX\Header\Parameter\ContentTypeParameter;
-use JWX\Header\Parameter\RegisteredParameter;
+use JWX\JWT\JOSE;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\TypeParameter;
+use JWX\JWT\Parameter\ContentTypeParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -15,7 +15,7 @@ class JOSETest extends PHPUnit_Framework_TestCase
 	public function testCreate() {
 		$header = new Header(new TypeParameter("test"));
 		$jose = new JOSE($header);
-		$this->assertTrue($jose->has(RegisteredParameter::NAME_TYPE));
+		$this->assertTrue($jose->has(RegisteredJWTParameter::PARAM_TYPE));
 	}
 	
 	public function testMerge() {

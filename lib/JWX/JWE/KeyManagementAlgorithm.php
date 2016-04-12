@@ -2,7 +2,7 @@
 
 namespace JWX\JWE;
 
-use JWX\Header\AlgorithmParameterValue;
+use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 
 interface KeyManagementAlgorithm extends AlgorithmParameterValue

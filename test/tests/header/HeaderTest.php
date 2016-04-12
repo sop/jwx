@@ -1,9 +1,9 @@
 <?php
 
-use JWX\Header\Header;
-use JWX\Header\Parameter\TypeParameter;
-use JWX\Header\Parameter\RegisteredParameter;
-use JWX\Header\Parameter\ContentTypeParameter;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\TypeParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\ContentTypeParameter;
 
 
 /**
@@ -32,7 +32,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 * @param Header $header
 	 */
 	public function testHas(Header $header) {
-		$this->assertTrue($header->has(RegisteredParameter::NAME_TYPE));
+		$this->assertTrue($header->has(RegisteredJWTParameter::PARAM_TYPE));
 	}
 	
 	/**
@@ -41,7 +41,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 * @param Header $header
 	 */
 	public function testGet(Header $header) {
-		$param = $header->get(RegisteredParameter::NAME_TYPE);
+		$param = $header->get(RegisteredJWTParameter::PARAM_TYPE);
 		$this->assertInstanceOf(TypeParameter::class, $param);
 	}
 	
@@ -73,7 +73,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	public function testModify(Header $header) {
 		$header = $header->withParameters(new TypeParameter("modified"));
 		$this->assertEquals("modified", 
-			$header->get(RegisteredParameter::NAME_TYPE)
+			$header->get(RegisteredJWTParameter::PARAM_TYPE)
 				->value());
 	}
 	

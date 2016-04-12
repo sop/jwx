@@ -3,10 +3,10 @@
 namespace JWX\JWS;
 
 use JWX\Util\Base64;
-use JWX\Header\JOSE;
-use JWX\Header\Header;
-use JWX\Header\Parameter\AlgorithmParameter;
-use JWX\Header\Parameter\RegisteredParameter;
+use JWX\JWT\JOSE;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 class JWS
@@ -57,7 +57,7 @@ class JWS
 		$segments = explode(".", $data);
 		if (count($segments) != 3) {
 			throw new \UnexpectedValueException(
-				"Not valid JWS compact serialization");
+				"Invalid JWS compact serialization");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
 		$payload = Base64::urlDecode($segments[1]);
@@ -100,7 +100,7 @@ class JWS
 	 */
 	public function algorithmName() {
 		return $this->header()
-			->get(RegisteredParameter::NAME_ALGORITHM)
+			->get(RegisteredJWTParameter::PARAM_ALGORITHM)
 			->value();
 	}
 	

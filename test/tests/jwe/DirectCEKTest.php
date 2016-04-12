@@ -1,6 +1,6 @@
 <?php
 
-use JWX\Header\Header;
+use JWX\JWT\Header;
 use JWX\JWT\Claims;
 use JWX\JWT\Claim\IssuerClaim;
 use JWX\JWT\Claim\SubjectClaim;

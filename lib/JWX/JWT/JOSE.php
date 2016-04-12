@@ -1,9 +1,8 @@
 <?php
 
-namespace JWX\Header;
+namespace JWX\JWT;
 
-use JWX\Header\Parameter\Parameter;
-use JWX\Header\Parameter\RegisteredParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 class JOSE extends Header
@@ -32,8 +31,8 @@ class JOSE extends Header
 	 * @return bool
 	 */
 	public function isJWS() {
-		return $this->has(RegisteredParameter::NAME_ALGORITHM) &&
-			 !$this->has(RegisteredParameter::NAME_ENCRYPTION_ALGORITHM);
+		return $this->has(RegisteredJWTParameter::PARAM_ALGORITHM) &&
+			 !$this->has(RegisteredJWTParameter::PARAM_ENCRYPTION_ALGORITHM);
 	}
 	
 	/**
@@ -42,6 +41,6 @@ class JOSE extends Header
 	 * @return bool
 	 */
 	public function isJWE() {
-		return $this->has(RegisteredParameter::NAME_ENCRYPTION_ALGORITHM);
+		return $this->has(RegisteredJWTParameter::PARAM_ENCRYPTION_ALGORITHM);
 	}
 }

@@ -1,14 +1,12 @@
 <?php
 
-namespace JWX\Header\Parameter;
-
-use JWX\Header\AlgorithmParameterValue;
+namespace JWX\JWT\Parameter;
 
 
-class AlgorithmParameter extends RegisteredParameter
+class AlgorithmParameter extends RegisteredJWTParameter
 {
 	public function __construct($value) {
-		parent::__construct(self::NAME_ALGORITHM, $value);
+		parent::__construct(self::PARAM_ALGORITHM, $value);
 	}
 	
 	public static function fromAlgorithm(AlgorithmParameterValue $value) {
