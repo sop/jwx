@@ -4,7 +4,7 @@
 	"homepage": "https://github.com/sop/jwx",
 	"license": "MIT",
 	"type": "library",
-	"keywords": ["jwt", "jws", "jwe", "json web tokens"],
+	"keywords": ["jwt", "jws", "jwe", "jwk", "json web tokens"],
 	"authors": [
 		{
 			"name": "Joni Eskelinen",
