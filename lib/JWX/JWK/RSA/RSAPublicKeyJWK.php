@@ -10,6 +10,9 @@ use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use CryptoUtil\PEM\PEM;
 use CryptoUtil\ASN1\RSA\RSAPublicKey;
+use CryptoUtil\ASN1\PublicKeyInfo;
+use CryptoUtil\ASN1\AlgorithmIdentifier;
+use CryptoUtil\ASN1\RSA\RSAEncryptionAlgorithmIdentifier;
 
 
 class RSAPublicKeyJWK extends JWK
@@ -23,9 +26,8 @@ class RSAPublicKeyJWK extends JWK
 	 */
 	public function __construct(ModulusParameter $n, ExponentParameter $e, 
 		JWKParameter ...$params) {
-		$params = array_merge(
-			array(new KeyTypeParameter(KeyTypeParameter::TYPE_RSA), $n, $e), 
-			$params);
+		$params = array_merge($params, 
+			array(new KeyTypeParameter(KeyTypeParameter::TYPE_RSA), $n, $e));
 		parent::__construct(...$params);
 	}
 	
@@ -45,7 +47,7 @@ class RSAPublicKeyJWK extends JWK
 	/**
 	 * Convert JWK to PEM
 	 *
-	 * @return PEM
+	 * @return PEM PUBLIC KEY
 	 */
 	public function toPEM() {
 		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS)
@@ -55,6 +57,8 @@ class RSAPublicKeyJWK extends JWK
 			->number()
 			->base10();
 		$pk = new RSAPublicKey($n, $e);
-		return $pk->toPEM();
+		$pki = new PublicKeyInfo(new RSAEncryptionAlgorithmIdentifier(), 
+			$pk->toDER());
+		return $pki->toPEM();
 	}
 }

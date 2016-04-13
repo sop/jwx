@@ -3,6 +3,8 @@
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWK\RSA\RSAPrivateKeyJWK;
 
 
 /**
@@ -14,14 +16,14 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	/**
 	 * Public key
 	 *
-	 * @var string $_publicKey
+	 * @var RSAPublicKeyJWK $_publicKey
 	 */
 	protected $_publicKey;
 	
 	/**
 	 * Private key
 	 *
-	 * @var string $_privateKey
+	 * @var RSAPrivateKeyJWK|null $_privateKey
 	 */
 	protected $_privateKey;
 	
@@ -35,29 +37,33 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	/**
 	 * Initialize from public key
 	 *
-	 * @param string $pem PEM formatted public key
+	 * @param RSAPublicKeyJWK $jwk
 	 * @return self
 	 */
-	public static function fromPublicKey($pem) {
+	public static function fromPublicKey(RSAPublicKeyJWK $jwk) {
 		$obj = new static();
-		$obj->_publicKey = $pem;
+		$obj->_publicKey = $jwk;
 		return $obj;
 	}
 	
 	/**
 	 * Initialize from private key
 	 *
-	 * @param string $pem PEM formatted private key
+	 * @param RSAPrivateKeyJWK $jwk
 	 * @return self
 	 */
-	public static function fromPrivateKey($pem) {
+	public static function fromPrivateKey(RSAPrivateKeyJWK $jwk) {
 		$obj = new static();
-		$obj->_privateKey = $pem;
+		$obj->_publicKey = $jwk->publicKey();
+		$obj->_privateKey = $jwk;
 		return $obj;
 	}
 	
 	public function computeSignature($data) {
-		$key = openssl_pkey_get_private($this->_privateKey);
+		if (!isset($this->_privateKey)) {
+			throw new \LogicException("Private key not set");
+		}
+		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->str());
 		if (!$key) {
 			throw new \RuntimeException("Failed to load private key");
 		}
@@ -69,7 +75,7 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	}
 	
 	public function validateSignature($data, $signature) {
-		$key = openssl_pkey_get_public($this->_publicKey);
+		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->str());
 		if (!$key) {
 			throw new \RuntimeException("Failed to load public key");
 		}
