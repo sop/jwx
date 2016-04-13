@@ -1,6 +1,7 @@
 {
 	"name": "sop/jwx",
 	"description": "A PHP library for JSON web tokens (JWT) with signature (JWS) and encryption (JWE) support.",
+	"homepage": "https://github.com/sop/jwx",
 	"license": "MIT",
 	"type": "library",
 	"keywords": ["jwt", "jws", "jwe", "json web tokens"],
