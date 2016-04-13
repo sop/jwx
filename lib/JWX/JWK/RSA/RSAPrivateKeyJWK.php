@@ -13,6 +13,7 @@ use JWX\JWK\Parameter\SecondPrimeFactorParameter;
 use JWX\JWK\Parameter\FirstFactorCRTExponentParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
 use CryptoUtil\PEM\PEM;
 use CryptoUtil\ASN1\RSA\RSAPrivateKey;
 
@@ -60,5 +61,41 @@ class RSAPrivateKeyJWK extends JWK
 		$dq = SecondFactorCRTExponentParameter::fromNumber($pk->exponent2());
 		$qi = FirstCRTCoefficientParameter::fromNumber($pk->coefficient());
 		return new self($n, $e, $d, $p, $q, $dp, $dq, $qi);
+	}
+	
+	/**
+	 * Convert JWK to PEM
+	 *
+	 * @return PEM
+	 */
+	public function toPEM() {
+		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS)
+			->number()
+			->base10();
+		$e = $this->get(RegisteredJWKParameter::PARAM_EXPONENT)
+			->number()
+			->base10();
+		$d = $this->get(RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT)
+			->number()
+			->base10();
+		$p = $this->get(RegisteredJWKParameter::PARAM_FIRST_PRIME_FACTOR)
+			->number()
+			->base10();
+		$q = $this->get(RegisteredJWKParameter::PARAM_SECOND_PRIME_FACTOR)
+			->number()
+			->base10();
+		$dp = $this->get(
+			RegisteredJWKParameter::PARAM_FIRST_FACTOR_CRT_EXPONENT)
+			->number()
+			->base10();
+		$dq = $this->get(
+			RegisteredJWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT)
+			->number()
+			->base10();
+		$qi = $this->get(RegisteredJWKParameter::PARAM_FIRST_CRT_COEFFICIENT)
+			->number()
+			->base10();
+		$pk = new RSAPrivateKey($n, $e, $d, $p, $q, $dp, $dq, $qi);
+		return $pk->toPEM();
 	}
 }

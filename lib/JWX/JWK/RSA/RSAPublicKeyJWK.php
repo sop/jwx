@@ -7,6 +7,7 @@ use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\ExponentParameter;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
 use CryptoUtil\PEM\PEM;
 use CryptoUtil\ASN1\RSA\RSAPublicKey;
 
@@ -39,5 +40,21 @@ class RSAPublicKeyJWK extends JWK
 		$n = ModulusParameter::fromNumber($pk->modulus());
 		$e = ExponentParameter::fromNumber($pk->publicExponent());
 		return new self($n, $e);
+	}
+	
+	/**
+	 * Convert JWK to PEM
+	 *
+	 * @return PEM
+	 */
+	public function toPEM() {
+		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS)
+			->number()
+			->base10();
+		$e = $this->get(RegisteredJWKParameter::PARAM_EXPONENT)
+			->number()
+			->base10();
+		$pk = new RSAPublicKey($n, $e);
+		return $pk->toPEM();
 	}
 }
