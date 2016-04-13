@@ -2,6 +2,8 @@
 
 namespace JWX\JWS\Algorithm;
 
+use JWX\JWT\Parameter\AlgorithmParameter;
+
 
 class RS384Algorithm extends RSAPKCS1Algorithm
 {
@@ -10,6 +12,6 @@ class RS384Algorithm extends RSAPKCS1Algorithm
 	}
 	
 	public function algorithmParamValue() {
-		return "RS384";
+		return AlgorithmParameter::ALGO_RS384;
 	}
 }

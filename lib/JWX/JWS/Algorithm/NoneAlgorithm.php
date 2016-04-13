@@ -3,12 +3,13 @@
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 class NoneAlgorithm implements SignatureAlgorithm
 {
 	public function algorithmParamValue() {
-		return "none";
+		return AlgorithmParameter::ALGO_NONE;
 	}
 	
 	public function computeSignature($data) {
