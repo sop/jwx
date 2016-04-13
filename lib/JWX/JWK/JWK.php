@@ -52,7 +52,7 @@ class JWK implements \Countable
 		if (!is_array($members)) {
 			throw new \UnexpectedValueException("Invalid JSON");
 		}
-		return self::fromArray($members);
+		return static::fromArray($members);
 	}
 	
 	/**
