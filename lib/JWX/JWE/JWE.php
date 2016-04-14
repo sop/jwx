@@ -63,7 +63,7 @@ class JWE
 	 * @param string|null $aad Additional authenticated data
 	 */
 	public function __construct(Header $protected_header, $encrypted_key, $iv, 
-			$ciphertext, $auth_tag, $aad = null) {
+		$ciphertext, $auth_tag, $aad = null) {
 		$this->_protectedHeader = $protected_header;
 		$this->_encryptedKey = $encrypted_key;
 		$this->_iv = $iv;
@@ -76,20 +76,29 @@ class JWE
 	 * Initialize from compact serialization
 	 *
 	 * @param string $data
-	 * @throws \UnexpectedValueException
 	 * @return self
 	 */
 	public static function fromCompact($data) {
-		$segments = explode(".", $data);
-		if (count($segments) != 5) {
+		return self::fromParts(explode(".", $data));
+	}
+	
+	/**
+	 * Initialize from parts of compact serialization
+	 *
+	 * @param array $parts
+	 * @throws \UnexpectedValueException
+	 * @return self
+	 */
+	public static function fromParts(array $parts) {
+		if (count($parts) != 5) {
 			throw new \UnexpectedValueException(
 				"Invalid JWE compact serialization");
 		}
-		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
-		$encrypted_key = Base64::urlDecode($segments[1]);
-		$iv = Base64::urlDecode($segments[2]);
-		$ciphertext = Base64::urlDecode($segments[3]);
-		$auth_tag = Base64::urlDecode($segments[4]);
+		$header = Header::fromJSON(Base64::urlDecode($parts[0]));
+		$encrypted_key = Base64::urlDecode($parts[1]);
+		$iv = Base64::urlDecode($parts[2]);
+		$ciphertext = Base64::urlDecode($parts[3]);
+		$auth_tag = Base64::urlDecode($parts[4]);
 		return new self($header, $encrypted_key, $iv, $ciphertext, $auth_tag);
 	}
 	
@@ -104,8 +113,7 @@ class JWE
 	 * @return self
 	 */
 	public static function encrypt($payload, Header $header, 
-			KeyManagementAlgorithm $key_algo, 
-			ContentEncryptionAlgorithm $enc_algo) {
+		KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo) {
 		$cek = $key_algo->contentEncryptionKey();
 		// generate random IV
 		$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
@@ -114,8 +122,8 @@ class JWE
 			AlgorithmParameter::fromAlgorithm($key_algo), 
 			EncryptionAlgorithmParameter::fromAlgorithm($enc_algo));
 		$aad = Base64::urlEncode($header->toJSON());
-		list ($ciphertext, $auth_tag) = $enc_algo->encrypt(
-			$payload, $cek, $iv, $aad);
+		list($ciphertext, $auth_tag) = $enc_algo->encrypt($payload, $cek, $iv, 
+			$aad);
 		return new self($header, $key_algo->encryptedKey(), $iv, $ciphertext, 
 			$auth_tag);
 	}
@@ -128,7 +136,7 @@ class JWE
 	 * @return string Plaintext payload
 	 */
 	public function decrypt(KeyManagementAlgorithm $key_algo, 
-			ContentEncryptionAlgorithm $enc_algo) {
+		ContentEncryptionAlgorithm $enc_algo) {
 		$cek = $key_algo->contentEncryptionKey();
 		$aad = Base64::urlEncode($this->_protectedHeader->toJSON());
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
