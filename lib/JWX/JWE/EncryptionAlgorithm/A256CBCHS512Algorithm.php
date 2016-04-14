@@ -2,6 +2,8 @@
 
 namespace JWX\JWE\EncryptionAlgorithm;
 
+use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+
 
 class A256CBCHS512Algorithm extends AESCBCAlgorithm
 {
@@ -10,7 +12,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
 	}
 	
 	public function encryptionAlgorithmParamValue() {
-		return "A256CBC-HS512";
+		return EncryptionAlgorithmParameter::ALGO_A256CBC_HS512;
 	}
 	
 	protected function _cipherMethod() {
