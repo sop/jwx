@@ -8,8 +8,7 @@ use JWX\JWK\RSA\RSAPrivateKeyJWK;
 
 
 /**
- * NOTE: OpenSSL uses PKCS#1 v1.5 padding by default, so
- * no explicit padding is required by sign and verify operations.
+ * Base class for algorithms implementing signature with PKCS #1.
  */
 abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 {
@@ -33,6 +32,14 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	 * @return string
 	 */
 	abstract protected function _mdMethod();
+	
+	/**
+	 * Constructor
+	 *
+	 * Use <b>fromPublicKey</b> or <b>fromPrivateKey</b>
+	 * static initializers instead.
+	 */
+	protected function __construct() {}
 	
 	/**
 	 * Initialize from public key
@@ -59,6 +66,12 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 		return $obj;
 	}
 	
+	/**
+	 * NOTE: OpenSSL uses PKCS #1 v1.5 padding by default, so
+	 * no explicit padding is required by sign and verify operations.
+	 *
+	 * @see \JWX\JWS\SignatureAlgorithm::computeSignature()
+	 */
 	public function computeSignature($data) {
 		if (!isset($this->_privateKey)) {
 			throw new \LogicException("Private key not set");

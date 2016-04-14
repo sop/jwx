@@ -5,6 +5,9 @@ namespace JWX\JWS\Algorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
+/**
+ * HMAC using SHA-256
+ */
 class HS256Algorithm extends HMACAlgorithm
 {
 	protected function _hashAlgo() {

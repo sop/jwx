@@ -20,7 +20,7 @@ class Claims implements \IteratorAggregate
 	/**
 	 * Constructor
 	 *
-	 * @param Claim ...$claims
+	 * @param Claim ...$claims Zero or more claims
 	 */
 	public function __construct(Claim ...$claims) {
 		$this->_claims = array();
@@ -121,5 +121,9 @@ class Claims implements \IteratorAggregate
 	 */
 	public function getIterator() {
 		return new \ArrayIterator($this->_claims);
+	}
+	
+	public function __toString() {
+		return $this->toJSON();
 	}
 }

@@ -5,6 +5,9 @@ namespace JWX\JWS\Algorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
+/**
+ * HMAC using SHA-512
+ */
 class HS512Algorithm extends HMACAlgorithm
 {
 	protected function _hashAlgo() {

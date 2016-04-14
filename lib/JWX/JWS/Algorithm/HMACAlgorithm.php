@@ -5,6 +5,11 @@ namespace JWX\JWS\Algorithm;
 use JWX\JWS\SignatureAlgorithm;
 
 
+/**
+ * Base class for algorithms implementing HMAC signature.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-3.2
+ */
 abstract class HMACAlgorithm implements SignatureAlgorithm
 {
 	/**

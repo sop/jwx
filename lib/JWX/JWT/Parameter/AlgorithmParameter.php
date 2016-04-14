@@ -3,6 +3,12 @@
 namespace JWX\JWT\Parameter;
 
 
+/**
+ * Algorithm parameter for JWS/JWE headers.
+ *
+ * @link
+ *       http://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters
+ */
 class AlgorithmParameter extends RegisteredJWTParameter
 {
 	const ALGO_HS256 = "HS256";
