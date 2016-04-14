@@ -37,9 +37,16 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	 * Constructor
 	 *
 	 * Use <b>fromPublicKey</b> or <b>fromPrivateKey</b>
-	 * static initializers instead.
+	 * static initializer instead!
+	 *
+	 * @param RSAPublicKeyJWK $pub_key
+	 * @param RSAPrivateKeyJWK $priv_key
 	 */
-	protected function __construct() {}
+	protected function __construct(RSAPublicKeyJWK $pub_key, 
+		RSAPrivateKeyJWK $priv_key = null) {
+		$this->_publicKey = $pub_key;
+		$this->_privateKey = $priv_key;
+	}
 	
 	/**
 	 * Initialize from public key
@@ -48,9 +55,7 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	 * @return self
 	 */
 	public static function fromPublicKey(RSAPublicKeyJWK $jwk) {
-		$obj = new static();
-		$obj->_publicKey = $jwk;
-		return $obj;
+		return new static($jwk);
 	}
 	
 	/**
@@ -60,10 +65,7 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	 * @return self
 	 */
 	public static function fromPrivateKey(RSAPrivateKeyJWK $jwk) {
-		$obj = new static();
-		$obj->_publicKey = $jwk->publicKey();
-		$obj->_privateKey = $jwk;
-		return $obj;
+		return new static($jwk->publicKey(), $jwk);
 	}
 	
 	/**
