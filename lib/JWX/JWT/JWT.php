@@ -5,6 +5,7 @@ namespace JWX\JWT;
 use JWX\JWT\JOSE;
 use JWX\JWT\Header;
 use JWX\JWT\Claims;
+use JWX\JWT\Exception\ValidationException;
 use JWX\JWS\JWS;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
@@ -156,6 +157,25 @@ class JWT
 	public function header() {
 		$header = Header::fromJSON(Base64::urlDecode($this->_parts[0]));
 		return new JOSE($header);
+	}
+	
+	/**
+	 * Get claims from signed JWS
+	 *
+	 * @param SignatureAlgorithm $algo Signature algorithm
+	 * @param ValidationContext $ctx Validation context
+	 * @throws ValidationException
+	 * @return Claims
+	 */
+	public function claimsFromJWS(SignatureAlgorithm $algo, 
+		ValidationContext $ctx) {
+		$jws = $this->JWS();
+		if (!$jws->validate($algo)) {
+			throw new ValidationException("JWS signature is invalid");
+		}
+		$claims = Claims::fromJSON($jws->payload());
+		$ctx->validate($claims);
+		return $claims;
 	}
 	
 	/**
