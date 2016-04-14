@@ -1,36 +1,22 @@
 <?php
 
-use JWX\JWT\Header;
 use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\NoneAlgorithm;
-use JWX\JWT\Claims;
-use JWX\JWT\Claim\IssuerClaim;
-use JWX\JWT\Claim\SubjectClaim;
 
 
 /**
  * @group jws
  */
-class NoneTest extends PHPUnit_Framework_TestCase
+class NoneSignatureTest extends PHPUnit_Framework_TestCase
 {
-	protected $_claims;
-	
-	public function setUp() {
-		$this->_claims = new Claims(new IssuerClaim("test"), 
-			new SubjectClaim("test"));
-	}
-	
-	public function tearDown() {
-		$this->_claims = null;
-	}
+	const PAYLOAD = "PAYLOAD";
 	
 	/**
 	 *
 	 * @return JWS
 	 */
 	public function testCreate() {
-		$jws = JWS::sign($this->_claims->toJSON(), new Header(), 
-			new NoneAlgorithm());
+		$jws = JWS::sign(self::PAYLOAD, new NoneAlgorithm());
 		$this->assertInstanceOf(JWS::class, $jws);
 		return $jws;
 	}
@@ -62,6 +48,6 @@ class NoneTest extends PHPUnit_Framework_TestCase
 	 * @param JWS $jws
 	 */
 	public function testRecodedPayload(JWS $jws) {
-		$this->assertEquals($this->_claims, Claims::fromJSON($jws->payload()));
+		$this->assertEquals(self::PAYLOAD, $jws->payload());
 	}
 }
