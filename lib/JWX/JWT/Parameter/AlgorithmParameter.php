@@ -6,6 +6,8 @@ namespace JWX\JWT\Parameter;
 /**
  * Algorithm parameter for JWS/JWE headers.
  *
+ * @link https://tools.ietf.org/html/rfc7515#section-4.1.1
+ * @link https://tools.ietf.org/html/rfc7516#section-4.1.1
  * @link
  *       http://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters
  */
@@ -42,10 +44,21 @@ class AlgorithmParameter extends RegisteredJWTParameter
 	const ALGO_PBES2_HS384_A192KW = "PBES2-HS384+A192KW";
 	const ALGO_PBES2_HS512_A256KW = "PBES2-HS512+A256KW";
 	
-	public function __construct($value) {
-		parent::__construct(self::PARAM_ALGORITHM, $value);
+	/**
+	 * Constructor
+	 *
+	 * @param string $algo Algorithm name
+	 */
+	public function __construct($algo) {
+		parent::__construct(self::PARAM_ALGORITHM, $algo);
 	}
 	
+	/**
+	 * Initialize from AlgorithmParameterValue
+	 *
+	 * @param AlgorithmParameterValue $value
+	 * @return self
+	 */
 	public static function fromAlgorithm(AlgorithmParameterValue $value) {
 		return new self($value->algorithmParamValue());
 	}

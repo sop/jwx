@@ -3,6 +3,9 @@
 namespace JWX\JWT\Parameter;
 
 
+/**
+ * Interface for algorithms providing value for 'alg' header parameter.
+ */
 interface AlgorithmParameterValue
 {
 	/**
