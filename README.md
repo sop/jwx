@@ -37,7 +37,8 @@ $claims = new Claims(
     IssuedAtClaim::now(),
     NotBeforeClaim::now(),
     ExpirationTimeClaim::fromString("now + 30 minutes"),
-    new JWTIDClaim(UUIDv4::createRandom())
+    new JWTIDClaim(UUIDv4::createRandom()),
+    new Claim("custom claim", ["any", "values"])
 );
 $jwt = JWT::signedFromClaims($claims,
     new HS256Algorithm("secret"));
@@ -50,7 +51,7 @@ Outputs (truncated):
 
 ### Consume signed token
 Validate signature and claims of the JWS token created above
-and display JWT ID claim.
+and display *JWT ID* claim.
 
 ```php
 $jwt = new JWT($token);
@@ -63,30 +64,56 @@ $claims = $jwt->claimsFromJWS(
 echo $claims->get(RegisteredClaim::NAME_JWT_ID)->value();
 ```
 
-Outputs (random):
+Outputs:
 
     d9b9f019-5ccf-4a7b-aa13-c20e83d9be43
 
 ### Create encrypted token
-Produce a token encrypted with AES-128 in CBC block cipher mode and
-authenticated using HMAC with SHA-256.
-RSAES-PKCS1-v1_5 shall be used for key derivation.
+Produce a token encrypted with AES-128 in CBC mode and authenticated
+using HMAC with SHA-256.
+Key management shall be done with RSAES-PKCS1-v1_5.
+Public key is used at the sender's end to encrypt CEK.
 The claims are same as in previous example.
 
 ```php
 $jwk = RSAPublicKeyJWK::fromPEM(
-	PEM::fromFile("path/to/public_key.pem");
+	PEM::fromFile("path/to/public_key.pem"));
 $key_algo = RSAESPKCS1Algorithm::fromPublicKey($jwk);
 $enc_algo = new A128CBCHS256Algorithm();
 $cek = $enc_algo->generateRandomCEK();
 $jwt = JWT::encryptedFromClaims(
     $claims, $cek, $key_algo, $enc_algo);
-echo $jwt->token;
+echo $jwt->token();
 ```
 
 Outputs (truncated):
 
     eyJhbGciOi***.UaYBykrPwy***.kZ4i3uBqli***.Lk-mDXks-k***.LQPofSXAzC***
+
+### Decrypt token
+Decrypt JWE token created above and print *custom claim* value.
+CEK is derived by decrypting encrypted key with private key.
+The validation context `$ctx` is same as in signing example.
+
+```php
+$jwt = new JWT($token);
+$jwk = RSAPrivateKeyJWK::fromPEM(
+    PEM::fromFile("path/to/private_key.pem"));
+$key_algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
+$enc_algo = new A128CBCHS256Algorithm();
+$claims = $jwt->claimsFromJWE($key_algo, $enc_algo, $ctx);
+print_r($claims->get("custom claim")->value());
+```
+
+Outputs:
+
+```
+Array
+(
+    [0] => any
+    [1] => values
+)
+```
 
 ## License
 This project is licensed under the MIT License.
