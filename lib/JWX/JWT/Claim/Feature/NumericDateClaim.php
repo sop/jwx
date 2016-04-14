@@ -11,11 +11,12 @@ trait NumericDateClaim
 	/**
 	 * Initialize instance from date/time string
 	 *
-	 * @param string $time
+	 * @param string $time <code>strtotime</code> compatible time string
+	 * @param string $tz Default timezone
 	 * @return static
 	 */
-	public static function fromString($time) {
-		$dt = new \DateTimeImmutable($time, new \DateTimeZone("UTC"));
+	public static function fromString($time, $tz = "UTC") {
+		$dt = new \DateTimeImmutable($time, new \DateTimeZone($tz));
 		return new static($dt->getTimestamp());
 	}
 	
@@ -25,7 +26,7 @@ trait NumericDateClaim
 	 * @return int
 	 */
 	public function timestamp() {
-		return (int)$this->_value;
+		return (int) $this->_value;
 	}
 	
 	/**
