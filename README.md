@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sop/jwx.svg?branch=master)](https://travis-ci.org/sop/jwx)
+
 # JWX
 A PHP library for JSON web tokens (JWT) with signature (JWS)
 and encryption (JWE) support.
