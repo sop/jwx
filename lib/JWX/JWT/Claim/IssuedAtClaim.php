@@ -22,4 +22,13 @@ class IssuedAtClaim extends RegisteredClaim
 	public function __construct($issue_time) {
 		parent::__construct(self::NAME_ISSUED_AT, $issue_time);
 	}
+	
+	/**
+	 * Initialize with time set to current time
+	 *
+	 * @return self
+	 */
+	public static function now() {
+		return new self(time());
+	}
 }

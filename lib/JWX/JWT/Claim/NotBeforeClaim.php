@@ -26,4 +26,13 @@ class NotBeforeClaim extends RegisteredClaim
 		parent::__construct(self::NAME_NOT_BEFORE, $not_before, 
 			new LessOrEqualValidator());
 	}
+	
+	/**
+	 * Initialize with time set to current time
+	 *
+	 * @return self
+	 */
+	public static function now() {
+		return new self(time());
+	}
 }
