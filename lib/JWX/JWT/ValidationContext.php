@@ -3,8 +3,12 @@
 namespace JWX\JWT;
 
 use JWX\JWT\Claim\RegisteredClaim;
+use JWX\JWT\Exception\ValidationException;
 
 
+/**
+ * Class to provide context for claims validation.
+ */
 class ValidationContext
 {
 	/**
@@ -17,7 +21,7 @@ class ValidationContext
 	/**
 	 * Validation constraints
 	 *
-	 * @var string $_constraints
+	 * @var array $_constraints
 	 */
 	protected $_constraints;
 	
@@ -152,7 +156,7 @@ class ValidationContext
 	public function validate(Claims $claims) {
 		foreach ($claims as $claim) {
 			if (!$claim->validate($this)) {
-				throw new \RuntimeException(
+				throw new ValidationException(
 					"Validation of claim '" . $claim->name() . "' failed");
 			}
 		}
