@@ -130,8 +130,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		}
 		$auth_data = $aad . $iv . $ciphertext . $this->_aadLen($aad);
 		$auth_tag = $this->_computeAuthTag($auth_data, $key);
-		return array($ciphertext,$auth_tag
-		);
+		return array($ciphertext, $auth_tag);
 	}
 	
 	public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag) {
@@ -151,5 +150,14 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	
 	public function ivSize() {
 		return 16;
+	}
+	
+	/**
+	 * Generate random content encryption key
+	 *
+	 * @return string
+	 */
+	public function generateRandomCEK() {
+		return openssl_random_pseudo_bytes($this->keySize());
 	}
 }
