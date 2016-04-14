@@ -131,7 +131,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 */
 	public function toJSON() {
 		$data = array("keys" => $this->_jwks);
-		return json_encode($data, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
+		return json_encode((object) $data, JSON_UNESCAPED_SLASHES);
 	}
 	
 	/**

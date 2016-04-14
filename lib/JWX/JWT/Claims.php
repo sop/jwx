@@ -95,7 +95,7 @@ class Claims implements \IteratorAggregate
 		foreach ($this->_claims as $claim) {
 			$data[$claim->name()] = $claim->value();
 		}
-		return json_encode($data, JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES);
+		return json_encode((object) $data, JSON_UNESCAPED_SLASHES);
 	}
 	
 	/**
