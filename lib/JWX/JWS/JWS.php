@@ -39,8 +39,8 @@ class JWS
 	 * @param string $payload JWS Payload
 	 * @param string $signature JWS Signature
 	 */
-	protected function __construct(Header $protected_header, $payload,
-			$signature) {
+	protected function __construct(Header $protected_header, $payload, 
+		$signature) {
 		$this->_protectedHeader = $protected_header;
 		$this->_payload = $payload;
 		$this->_signature = $signature;
@@ -50,18 +50,27 @@ class JWS
 	 * Initialize from compact serialization
 	 *
 	 * @param string $data
-	 * @throws \UnexpectedValueException
 	 * @return self
 	 */
 	public static function fromCompact($data) {
-		$segments = explode(".", $data);
-		if (count($segments) != 3) {
+		return self::fromParts(explode(".", $data));
+	}
+	
+	/**
+	 * Initialize from parts of compact serialization
+	 *
+	 * @param array $parts
+	 * @throws \UnexpectedValueException
+	 * @return self
+	 */
+	public static function fromParts(array $parts) {
+		if (count($parts) != 3) {
 			throw new \UnexpectedValueException(
 				"Invalid JWS compact serialization");
 		}
-		$header = Header::fromJSON(Base64::urlDecode($segments[0]));
-		$payload = Base64::urlDecode($segments[1]);
-		$signature = Base64::urlDecode($segments[2]);
+		$header = Header::fromJSON(Base64::urlDecode($parts[0]));
+		$payload = Base64::urlDecode($parts[1]);
+		$signature = Base64::urlDecode($parts[2]);
 		return new self($header, $payload, $signature);
 	}
 	
@@ -69,13 +78,16 @@ class JWS
 	 * Initialize by signing payload with given algorithm
 	 *
 	 * @param string $payload JWS Payload
-	 * @param Header $header Desired header. Algorithm specific parameters are
-	 *        added automatically.
 	 * @param SignatureAlgorithm $algo Signature algorithm
+	 * @param Header|null $header Desired header. Algorithm specific
+	 *        parameters are added automatically.
 	 * @return self
 	 */
-	public static function sign($payload, Header $header, 
-			SignatureAlgorithm $algo) {
+	public static function sign($payload, SignatureAlgorithm $algo, 
+		Header $header = null) {
+		if (!isset($header)) {
+			$header = new Header();
+		}
 		$header = $header->withParameters(
 			AlgorithmParameter::fromAlgorithm($algo));
 		$data = Base64::urlEncode($header->toJSON()) . "." .
