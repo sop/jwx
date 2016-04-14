@@ -18,6 +18,7 @@ class JWTIDClaim extends RegisteredClaim
 	 * @param string $id JWT unique identifier
 	 */
 	public function __construct($id) {
-		parent::__construct(self::NAME_JWT_ID, $id, new EqualsValidator());
+		parent::__construct(self::NAME_JWT_ID, (string) $id, 
+			new EqualsValidator());
 	}
 }
