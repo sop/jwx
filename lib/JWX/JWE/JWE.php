@@ -105,16 +105,20 @@ class JWE
 	/**
 	 * Initialize by encrypting given payload
 	 *
-	 * @param string $payload
-	 * @param Header $header Desired header. Algorithm specific parameters
-	 *        are automatically added.
+	 * @param string $payload Payload
+	 * @param string $cek Content encryption key
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
+	 * @param Header|null $header Desired header. Algorithm specific parameters
+	 *        are automatically added.
 	 * @return self
 	 */
-	public static function encrypt($payload, Header $header, 
-		KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo) {
-		$cek = $key_algo->contentEncryptionKey();
+	public static function encrypt($payload, $cek, 
+		KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo, 
+		Header $header = null) {
+		if (!isset($header)) {
+			$header = new Header();
+		}
 		// generate random IV
 		$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
 		// @todo add support for compression
@@ -124,7 +128,7 @@ class JWE
 		$aad = Base64::urlEncode($header->toJSON());
 		list($ciphertext, $auth_tag) = $enc_algo->encrypt($payload, $cek, $iv, 
 			$aad);
-		return new self($header, $key_algo->encryptedKey(), $iv, $ciphertext, 
+		return new self($header, $key_algo->encrypt($cek), $iv, $ciphertext, 
 			$auth_tag);
 	}
 	
@@ -137,7 +141,7 @@ class JWE
 	 */
 	public function decrypt(KeyManagementAlgorithm $key_algo, 
 		ContentEncryptionAlgorithm $enc_algo) {
-		$cek = $key_algo->contentEncryptionKey();
+		$cek = $key_algo->decrypt($this->_encryptedKey);
 		$aad = Base64::urlEncode($this->_protectedHeader->toJSON());
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
 			$aad, $this->_authenticationTag);

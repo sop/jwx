@@ -81,28 +81,29 @@ class JWT
 		if (!isset($header)) {
 			$header = new Header();
 		}
-		$token = JWS::sign($payload, $algo, $header)->toCompact();
-		return new self($token);
+		$jws = JWS::sign($payload, $algo, $header);
+		return new self($jws->toCompact());
 	}
 	
 	/**
 	 * Convert claims set to encrypted JWE token
 	 *
 	 * @param Claims $claims Claims set
+	 * @param string $cek Content encryption key
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
-	 * @param Header $header Optional header
+	 * @param Header|null $header Optional header
 	 * @return string
 	 */
-	public static function encryptedFromClaims(Claims $claims, 
+	public static function encryptedFromClaims(Claims $claims, $cek, 
 		KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo, 
 		Header $header = null) {
 		$payload = $claims->toJSON();
 		if (!isset($header)) {
 			$header = new Header();
 		}
-		$token = JWE::encrypt($payload, $header, $key_algo, $enc_algo)->toCompact();
-		return new self($token);
+		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, $header);
+		return new self($jwe->toCompact());
 	}
 	
 	/**
