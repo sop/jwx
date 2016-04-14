@@ -48,12 +48,11 @@ class JWT
 		$this->_parts = explode(".", $token);
 		if (count($this->_parts) == 3) {
 			$this->_type = self::TYPE_JWS;
-		} else 
-			if (count($this->_parts) == 5) {
-				$this->_type = self::TYPE_JWE;
-			} else {
-				throw new \UnexpectedValueException("Not a JWT token");
-			}
+		} else if (count($this->_parts) == 5) {
+			$this->_type = self::TYPE_JWE;
+		} else {
+			throw new \UnexpectedValueException("Not a JWT token");
+		}
 	}
 	
 	/**
