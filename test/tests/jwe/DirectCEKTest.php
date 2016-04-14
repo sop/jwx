@@ -1,9 +1,5 @@
 <?php
 
-use JWX\JWT\Header;
-use JWX\JWT\Claims;
-use JWX\JWT\Claim\IssuerClaim;
-use JWX\JWT\Claim\SubjectClaim;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
@@ -16,28 +12,20 @@ use JWX\JWE\EncryptionAlgorithm\A256CBCHS512Algorithm;
  */
 class DirectCEKTest extends PHPUnit_Framework_TestCase
 {
-	protected $_claims;
+	const PAYLOAD = "PAYLOAD";
 	
 	const CEK_A128 = "123456789 123456789 123456789 12";
 	const CEK_A192 = "123456789 123456789 123456789 123456789 12345678";
 	const CEK_A256 = self::CEK_A128 . self::CEK_A128;
-	
-	public function setUp() {
-		$this->_claims = new Claims(new IssuerClaim("test"), 
-			new SubjectClaim("test"));
-	}
-	
-	public function tearDown() {
-		$this->_claims = null;
-	}
 	
 	/**
 	 *
 	 * @return JWE
 	 */
 	public function testEncryptA128() {
-		$jwe = JWE::encrypt($this->_claims->toJSON(), new Header(), 
-			new DirectCEKAlgorithm(self::CEK_A128), new A128CBCHS256Algorithm());
+		$cek = self::CEK_A128;
+		$jwe = JWE::encrypt(self::PAYLOAD, $cek, new DirectCEKAlgorithm($cek), 
+			new A128CBCHS256Algorithm());
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}
@@ -73,7 +61,7 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	public function testDecryptA128(JWE $jwe) {
 		$payload = $jwe->decrypt(new DirectCEKAlgorithm(self::CEK_A128), 
 			new A128CBCHS256Algorithm());
-		$this->assertEquals($this->_claims->toJSON(), $payload);
+		$this->assertEquals(self::PAYLOAD, $payload);
 	}
 	
 	/**
@@ -81,8 +69,9 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	 * @return JWE
 	 */
 	public function testEncryptA192() {
-		$jwe = JWE::encrypt($this->_claims->toJSON(), new Header(), 
-			new DirectCEKAlgorithm(self::CEK_A192), new A192CBCHS384Algorithm());
+		$cek = self::CEK_A192;
+		$jwe = JWE::encrypt(self::PAYLOAD, $cek, new DirectCEKAlgorithm($cek), 
+			new A192CBCHS384Algorithm());
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}
@@ -95,7 +84,7 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	public function testDecryptA192(JWE $jwe) {
 		$payload = $jwe->decrypt(new DirectCEKAlgorithm(self::CEK_A192), 
 			new A192CBCHS384Algorithm());
-		$this->assertEquals($this->_claims->toJSON(), $payload);
+		$this->assertEquals(self::PAYLOAD, $payload);
 	}
 	
 	/**
@@ -103,8 +92,9 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	 * @return JWE
 	 */
 	public function testEncryptA256() {
-		$jwe = JWE::encrypt($this->_claims->toJSON(), new Header(), 
-			new DirectCEKAlgorithm(self::CEK_A256), new A256CBCHS512Algorithm());
+		$cek = self::CEK_A256;
+		$jwe = JWE::encrypt(self::PAYLOAD, $cek, new DirectCEKAlgorithm($cek), 
+			new A256CBCHS512Algorithm());
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}
@@ -117,14 +107,15 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	public function testDecryptA256(JWE $jwe) {
 		$payload = $jwe->decrypt(new DirectCEKAlgorithm(self::CEK_A256), 
 			new A256CBCHS512Algorithm());
-		$this->assertEquals($this->_claims->toJSON(), $payload);
+		$this->assertEquals(self::PAYLOAD, $payload);
 	}
 	
 	/**
 	 * @expectedException RuntimeException
 	 */
 	public function testInvalidKeySize() {
-		JWE::encrypt($this->_claims->toJSON(), new Header(), 
-			new DirectCEKAlgorithm("nope"), new A128CBCHS256Algorithm());
+		$cek = "nope";
+		JWE::encrypt(self::PAYLOAD, $cek, new DirectCEKAlgorithm($cek), 
+			new A128CBCHS256Algorithm());
 	}
 }
