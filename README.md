@@ -27,7 +27,7 @@ This library is available on
 Here are some simple usage examples. Namespaces are omitted for brevity.
 
 ### Create signed token
-Compose JWT claims and produce token signed with HMAC using SHA-256.
+Compose JWT claims and produce a token signed with HMAC using SHA-256.
 
 ```php
 $claims = new Claims(
@@ -66,6 +66,27 @@ echo $claims->get(RegisteredClaim::NAME_JWT_ID)->value();
 Outputs (random):
 
     d9b9f019-5ccf-4a7b-aa13-c20e83d9be43
+
+### Create encrypted token
+Produce a token encrypted with AES-128 in CBC block cipher mode and
+authenticated using HMAC with SHA-256.
+RSAES-PKCS1-v1_5 shall be used for key derivation.
+The claims are same as in previous example.
+
+```php
+$jwk = RSAPublicKeyJWK::fromPEM(
+	PEM::fromFile("path/to/public_key.pem");
+$key_algo = RSAESPKCS1Algorithm::fromPublicKey($jwk);
+$enc_algo = new A128CBCHS256Algorithm();
+$cek = $enc_algo->generateRandomCEK();
+$jwt = JWT::encryptedFromClaims(
+    $claims, $cek, $key_algo, $enc_algo);
+echo $jwt->token;
+```
+
+Outputs (truncated):
+
+    eyJhbGciOi***.UaYBykrPwy***.kZ4i3uBqli***.Lk-mDXks-k***.LQPofSXAzC***
 
 ## License
 This project is licensed under the MIT License.
