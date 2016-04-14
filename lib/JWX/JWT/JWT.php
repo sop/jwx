@@ -48,11 +48,12 @@ class JWT
 		$this->_parts = explode(".", $token);
 		if (count($this->_parts) == 3) {
 			$this->_type = self::TYPE_JWS;
-		} else if (count($this->_parts) == 5) {
-			$this->_type = self::TYPE_JWE;
-		} else {
-			throw new \UnexpectedValueException("Not a JWT token");
-		}
+		} else 
+			if (count($this->_parts) == 5) {
+				$this->_type = self::TYPE_JWE;
+			} else {
+				throw new \UnexpectedValueException("Not a JWT token");
+			}
 	}
 	
 	/**
@@ -175,6 +176,22 @@ class JWT
 			throw new ValidationException("JWS signature is invalid");
 		}
 		$claims = Claims::fromJSON($jws->payload());
+		$ctx->validate($claims);
+		return $claims;
+	}
+	
+	/**
+	 * Get claims from encrypted JWE
+	 *
+	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
+	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
+	 * @param ValidationContext $ctx Validation context
+	 * @return Claims
+	 */
+	public function claimsFromJWE(KeyManagementAlgorithm $key_algo, 
+		ContentEncryptionAlgorithm $enc_algo, ValidationContext $ctx) {
+		$jwe = $this->JWE();
+		$claims = Claims::fromJSON($jwe->decrypt($key_algo, $enc_algo));
 		$ctx->validate($claims);
 		return $claims;
 	}
