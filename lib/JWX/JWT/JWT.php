@@ -80,7 +80,7 @@ class JWT
 		if (!isset($header)) {
 			$header = new Header();
 		}
-		$token = JWS::sign($payload, $header, $algo)->toCompact();
+		$token = JWS::sign($payload, $algo, $header)->toCompact();
 		return new self($token);
 	}
 	
