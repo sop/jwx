@@ -77,17 +77,27 @@ class Claim
 	}
 	
 	/**
+	 * Validate claim against given constraint
+	 *
+	 * @param mixed $constraint True if claim is valid
+	 * @return bool
+	 */
+	public function validate($constraint) {
+		if (isset($this->_validator)) {
+			return $this->_validator->validate($this->_value, $constraint);
+		}
+		return true;
+	}
+	
+	/**
 	 * Validate claim in given context.
 	 *
 	 * @param ValidationContext $ctx
 	 * @return bool True if claim is valid
 	 */
-	public function validate(ValidationContext $ctx) {
-		if (isset($this->_validator)) {
-			if ($ctx->hasConstraint($this->_name)) {
-				return $this->_validator->__invoke($this->_value, 
-					$ctx->constraint($this->_name));
-			}
+	public function validateWithContext(ValidationContext $ctx) {
+		if ($ctx->hasConstraint($this->_name)) {
+			return $this->validate($ctx->constraint($this->_name));
 		}
 		return true;
 	}

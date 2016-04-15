@@ -19,6 +19,13 @@ class ValidationContext
 	protected $_refTime;
 	
 	/**
+	 * Leeway in seconds to reference time constraints
+	 *
+	 * @var int $_leeway
+	 */
+	protected $_leeway;
+	
+	/**
 	 * Validation constraints
 	 *
 	 * @var array $_constraints
@@ -32,6 +39,7 @@ class ValidationContext
 	 */
 	public function __construct(array $constraints = array()) {
 		$this->_refTime = time();
+		$this->_leeway = 60;
 		$this->_constraints = $constraints;
 	}
 	
@@ -67,6 +75,27 @@ class ValidationContext
 			throw new \LogicException("Reference time not set");
 		}
 		return $this->_refTime;
+	}
+	
+	/**
+	 * Get self with reference time leeway
+	 *
+	 * @param int $seconds
+	 * @return self
+	 */
+	public function withLeeway($seconds) {
+		$obj = clone $this;
+		$obj->_leeway = $seconds;
+		return $obj;
+	}
+	
+	/**
+	 * Get reference time leeway
+	 *
+	 * @return int
+	 */
+	public function leeway() {
+		return $this->_leeway;
 	}
 	
 	/**
@@ -155,7 +184,7 @@ class ValidationContext
 	 */
 	public function validate(Claims $claims) {
 		foreach ($claims as $claim) {
-			if (!$claim->validate($this)) {
+			if (!$claim->validateWithContext($this)) {
 				throw new ValidationException(
 					"Validation of claim '" . $claim->name() . "' failed");
 			}
