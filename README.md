@@ -1,8 +1,12 @@
 [![Build Status](https://travis-ci.org/sop/jwx.svg?branch=master)](https://travis-ci.org/sop/jwx)
 
 # JWX
-A PHP library for JSON web tokens (JWT) with signature (JWS)
-and encryption (JWE) support.
+A PHP library for JSON web tokens
+([JWT](https://tools.ietf.org/html/rfc7519))
+with signature
+([JWS](https://tools.ietf.org/html/rfc7515))
+and encryption
+([JWE](https://tools.ietf.org/html/rfc7516)) support.
 
 ## Features
 * Signing and signature validation (JWS)
@@ -13,6 +17,17 @@ and encryption (JWE) support.
     * Configurable with sensible defaults
 * JSON Web Keys (JWK)
     * Convert PEM encoded keys to JWK and vice versa
+
+## Supported algorithms
+* Signature
+    * HMAC with SHA-256, SHA-384 and SHA-512
+    * RSASSA-PKCS1-v1_5 with SHA-256, SHA-384 and SHA-512
+* Content encryption
+    * AES-CBC with 128, 192 and 256 bit key sizes
+* Key management
+    * Shared symmetric key (direct)
+    * RSAES-PKCS1-v1_5
+    * RSAES OAEP
 
 ## Installation
 This library is available on
