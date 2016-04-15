@@ -20,7 +20,7 @@ class IssuedAtClaim extends RegisteredClaim
 	 * @param int $issue_time Issued at time
 	 */
 	public function __construct($issue_time) {
-		parent::__construct(self::NAME_ISSUED_AT, $issue_time);
+		parent::__construct(self::NAME_ISSUED_AT, intval($issue_time));
 	}
 	
 	/**

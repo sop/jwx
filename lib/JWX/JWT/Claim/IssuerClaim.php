@@ -18,6 +18,7 @@ class IssuerClaim extends RegisteredClaim
 	 * @param string $issuer
 	 */
 	public function __construct($issuer) {
-		parent::__construct(self::NAME_ISSUER, $issuer, new EqualsValidator());
+		parent::__construct(self::NAME_ISSUER, (string) $issuer, 
+			new EqualsValidator());
 	}
 }

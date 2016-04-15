@@ -23,7 +23,8 @@ class NotBeforeClaim extends RegisteredClaim
 	 * @param int $not_before Not before time
 	 */
 	public function __construct($not_before) {
-		parent::__construct(self::NAME_NOT_BEFORE, $not_before, 
+		// validate that claim is before or at the constraint (reference time)
+		parent::__construct(self::NAME_NOT_BEFORE, intval($not_before), 
 			new LessOrEqualValidator());
 	}
 	

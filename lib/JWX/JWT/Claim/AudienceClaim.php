@@ -20,10 +20,10 @@ class AudienceClaim extends RegisteredClaim
 	public function __construct(...$audiences) {
 		parent::__construct(self::NAME_AUDIENCE, $audiences, 
 			new ContainsValidator());
-	
 	}
 	
 	public static function fromJSONValue($value) {
-		return is_array($value) ? new self(...$value) : new self($value);
+		$value = (array) $value;
+		return new self(...$value);
 	}
 }

@@ -23,7 +23,8 @@ class ExpirationTimeClaim extends RegisteredClaim
 	 * @param int $exp_time Expiration time
 	 */
 	public function __construct($exp_time) {
-		parent::__construct(self::NAME_EXPIRATION_TIME, $exp_time, 
+		// validate that claim is after the constraint (reference time)
+		parent::__construct(self::NAME_EXPIRATION_TIME, intval($exp_time), 
 			new GreaterValidator());
 	}
 }

@@ -18,6 +18,7 @@ class SubjectClaim extends RegisteredClaim
 	 * @param string $subject Subject
 	 */
 	public function __construct($subject) {
-		parent::__construct(self::NAME_SUBJECT, $subject, new EqualsValidator());
+		parent::__construct(self::NAME_SUBJECT, (string) $subject, 
+			new EqualsValidator());
 	}
 }
