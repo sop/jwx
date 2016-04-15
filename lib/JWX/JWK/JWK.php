@@ -37,7 +37,7 @@ class JWK implements \Countable
 		foreach ($members as $name => $value) {
 			$params[] = JWKParameter::fromNameAndValue($name, $value);
 		}
-		return new self(...$params);
+		return new static(...$params);
 	}
 	
 	/**
