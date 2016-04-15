@@ -50,6 +50,26 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	abstract protected function _tagLen();
 	
 	/**
+	 * Get cipher method and validate that it's supported
+	 *
+	 * @throws \RuntimeException
+	 * @return string
+	 */
+	final protected function _getCipherMethod() {
+		static $supported;
+		if (!isset($supported)) {
+			$supported = array_flip(openssl_get_cipher_methods());
+		}
+		$method = $this->_cipherMethod();
+		if (!isset($supported[$method])) {
+			throw new \RuntimeException(
+				"Cipher method $method is not" .
+					 " supported by this version of OpenSSL");
+		}
+		return $method;
+	}
+	
+	/**
 	 * Check that key is valid
 	 *
 	 * @param string $key
@@ -68,7 +88,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	 * @throws \RuntimeException
 	 */
 	final protected function _validateIV($iv) {
-		$len = openssl_cipher_iv_length($this->_cipherMethod());
+		$len = openssl_cipher_iv_length($this->_getCipherMethod());
 		if ($len != strlen($iv)) {
 			throw new \RuntimeException("Invalid IV length");
 		}
@@ -123,7 +143,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	public function encrypt($plaintext, $key, $iv, $aad) {
 		$this->_validateKey($key);
 		$this->_validateIV($iv);
-		$ciphertext = openssl_encrypt($plaintext, $this->_cipherMethod(), 
+		$ciphertext = openssl_encrypt($plaintext, $this->_getCipherMethod(), 
 			$this->_encKey($key), OPENSSL_RAW_DATA, $iv);
 		if (false === $ciphertext) {
 			throw new \RuntimeException("openssl_encrypt failed");
@@ -140,7 +160,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		if ($this->_computeAuthTag($auth_data, $key) != $auth_tag) {
 			throw new \RuntimeException("Message authentication failed");
 		}
-		$plaintext = openssl_decrypt($ciphertext, $this->_cipherMethod(), 
+		$plaintext = openssl_decrypt($ciphertext, $this->_getCipherMethod(), 
 			$this->_encKey($key), OPENSSL_RAW_DATA, $iv);
 		if (false === $plaintext) {
 			throw new \RuntimeException("openssl_decrypt failed");
