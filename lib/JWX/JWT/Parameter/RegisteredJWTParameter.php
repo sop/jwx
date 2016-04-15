@@ -3,6 +3,12 @@
 namespace JWX\JWT\Parameter;
 
 
+/**
+ * Registered header parameters.
+ *
+ * @link
+ *       http://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters
+ */
 abstract class RegisteredJWTParameter extends JWTParameter
 {
 	const PARAM_ALGORITHM = "alg";

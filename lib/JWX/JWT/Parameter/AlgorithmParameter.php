@@ -9,7 +9,7 @@ namespace JWX\JWT\Parameter;
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.1
  * @link https://tools.ietf.org/html/rfc7516#section-4.1.1
  * @link
- *       http://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters
+ *       http://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms
  */
 class AlgorithmParameter extends RegisteredJWTParameter
 {
