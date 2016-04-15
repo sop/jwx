@@ -40,7 +40,7 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	 * @var array
 	 */
 	public static $nameToCls = array(
-		// @formatter:off
+		/* @formatter:off */
 		self::PARAM_KEY_TYPE => KeyTypeParameter::class,
 		self::PARAM_PUBLIC_KEY_USE => PublicKeyUseParameter::class,
 		self::PARAM_KEY_OPERATIONS => KeyOperationsParameter::class,
@@ -63,9 +63,9 @@ abstract class RegisteredJWKParameter extends JWKParameter
 			FirstCRTCoefficientParameter::class,
 		self::PARAM_OTHER_PRIMES_INFO => OtherPrimesInfoParameter::class,
 		self::PARAM_KEY_VALUE => KeyValueParameter::class
-	);	// @formatter:on
+		/* @formatter:on */
+	);
 	
-
 	/**
 	 * Initialize concrete JWK parameter instance from JSON value
 	 *

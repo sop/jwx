@@ -36,14 +36,14 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	 * @var array
 	 */
 	public static $nameToCls = array(
-		// @formatter:off
+		/* @formatter:off */
 		self::PARAM_ALGORITHM => AlgorithmParameter::class,
 		self::PARAM_TYPE => TypeParameter::class,
 		self::PARAM_CONTENT_TYPE => ContentTypeParameter::class,
 		self::PARAM_ENCRYPTION_ALGORITHM => EncryptionAlgorithmParameter::class
-	);	// @formatter:on
+		/* @formatter:on */
+	);
 	
-
 	/**
 	 * Initialize concrete JWT parameter instance from JSON value
 	 *

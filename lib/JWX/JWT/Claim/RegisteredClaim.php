@@ -54,7 +54,7 @@ abstract class RegisteredClaim extends Claim
 	 * @var array
 	 */
 	public static $nameToCls = array(
-		// @formatter:off
+		/* @formatter:off */
 		self::NAME_ISSUER => IssuerClaim::class,
 		self::NAME_SUBJECT => SubjectClaim::class,
 		self::NAME_AUDIENCE => AudienceClaim::class,
@@ -62,9 +62,9 @@ abstract class RegisteredClaim extends Claim
 		self::NAME_NOT_BEFORE => NotBeforeClaim::class,
 		self::NAME_ISSUED_AT => IssuedAtClaim::class,
 		self::NAME_JWT_ID => JWTIDClaim::class
-	);	// @formatter:on
+		/* @formatter:on */
+	);
 	
-
 	/**
 	 * Initialize concrete claim instance from JSON value
 	 *
