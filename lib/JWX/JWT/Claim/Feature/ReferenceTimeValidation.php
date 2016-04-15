@@ -12,17 +12,23 @@ trait ReferenceTimeValidation
 	 *
 	 * Uses reference time of the validation context as a constraint.
 	 *
-	 * @see JWX\JWT\Claim\Claim::validate
+	 * @see JWX\JWT\Claim\Claim::validateWithContext
 	 * @param ValidationContext $ctx
 	 * @return bool
 	 */
-	public function validate(ValidationContext $ctx) {
-		if (isset($this->_validator)) {
-			if ($ctx->hasReferenceTime()) {
-				return $this->_validator->__invoke($this->_value, 
-					$ctx->referenceTime());
+	public function validateWithContext(ValidationContext $ctx) {
+		if ($ctx->hasReferenceTime()) {
+			// try to validate with leeway added
+			if ($this->validate($ctx->referenceTime() + $ctx->leeway())) {
+				return true;
 			}
+			// try to validate with leeway substracted
+			if ($this->validate($ctx->referenceTime() - $ctx->leeway())) {
+				return true;
+			}
+			return false;
 		}
+		// reference time constraint
 		return true;
 	}
 }
