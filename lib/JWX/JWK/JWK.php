@@ -103,17 +103,27 @@ class JWK implements \Countable
 	}
 	
 	/**
+	 * Convert to array
+	 *
+	 * @return array Parameter values keyed by parameter names
+	 */
+	public function toArray() {
+		$a = array();
+		foreach ($this->_parameters as $param) {
+			$a[$param->name()] = $param->value();
+		}
+		return $a;
+	}
+	
+	/**
 	 * Convert to JSON
 	 *
 	 * @return string
 	 */
 	public function toJSON() {
-		if (empty($this->_parameters)) {
+		$data = $this->toArray();
+		if (empty($data)) {
 			return "";
-		}
-		$data = array();
-		foreach ($this->_parameters as $param) {
-			$data[$param->name()] = $param->value();
 		}
 		return json_encode((object) $data, JSON_UNESCAPED_SLASHES);
 	}
