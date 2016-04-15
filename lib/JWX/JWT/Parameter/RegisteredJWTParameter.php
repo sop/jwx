@@ -31,9 +31,6 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	const PARAM_AUTHENTICATION_TAG = "tag";
 	const PARAM_PBES2_SALT_INPUT = "p2s";
 	const PARAM_PBES2_COUNT = "p2c";
-	const PARAM_ISSUER = "iss";
-	const PARAM_SUBJECT = "sub";
-	const PARAM_AUDIENCE = "aud";
 	const PARAM_BASE64URL_ENCODE_PAYLOAD = "b64";
 	
 	/**
@@ -44,9 +41,29 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	public static $nameToCls = array(
 		/* @formatter:off */
 		self::PARAM_ALGORITHM => AlgorithmParameter::class,
+		self::PARAM_JWK_SET_URL => JWKSetURLParameter::class,
+		self::PARAM_JSON_WEB_KEY => JSONWebKeyParameter::class,
+		self::PARAM_KEY_ID => KeyIDParameter::class,
+		self::PARAM_X509_URL => X509URLParameter::class,
+		self::PARAM_X509_CERTIFICATE_CHAIN =>
+			X509CertificateChainParameter::class,
+		self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT =>
+			X509CertificateSHA1ThumbprintParameter::class,
+		self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT =>
+			X509CertificateSHA256ThumbprintParameter::class,
 		self::PARAM_TYPE => TypeParameter::class,
 		self::PARAM_CONTENT_TYPE => ContentTypeParameter::class,
-		self::PARAM_ENCRYPTION_ALGORITHM => EncryptionAlgorithmParameter::class
+		self::PARAM_CRITICAL => CriticalParameter::class,
+		self::PARAM_ENCRYPTION_ALGORITHM =>
+			EncryptionAlgorithmParameter::class,
+		self::PARAM_COMPRESSION_ALGORITHM =>
+			CompressionAlgorithmParameter::class,
+		self::PARAM_INITIALIZATION_VECTOR =>
+			InitializationVectorParameter::class,
+		self::PARAM_AUTHENTICATION_TAG => AuthenticationTagParameter::class,
+		self::PARAM_PBES2_SALT_INPUT => PBES2SaltInputParameter::class,
+		self::PARAM_PBES2_COUNT => PBES2CountParameter::class,
+		self::PARAM_BASE64URL_ENCODE_PAYLOAD => B64EncodeParameter::class
 		/* @formatter:on */
 	);
 	

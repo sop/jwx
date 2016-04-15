@@ -18,7 +18,7 @@ class JSONWebKeyParameter extends RegisteredJWTParameter
 	 * @param JWK $jwk
 	 */
 	public function __construct(JWK $jwk) {
-		parent::__construct(self::PARAM_JSON_WEB_KEY, $jwk->toJSON());
+		parent::__construct(self::PARAM_JSON_WEB_KEY, $jwk->toArray());
 	}
 	
 	public static function fromJSONValue($value) {

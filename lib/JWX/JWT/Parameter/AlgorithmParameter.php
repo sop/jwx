@@ -50,7 +50,7 @@ class AlgorithmParameter extends RegisteredJWTParameter
 	 * @param string $algo Algorithm name
 	 */
 	public function __construct($algo) {
-		parent::__construct(self::PARAM_ALGORITHM, $algo);
+		parent::__construct(self::PARAM_ALGORITHM, (string) $algo);
 	}
 	
 	/**

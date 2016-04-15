@@ -16,6 +16,6 @@ class TypeParameter extends RegisteredJWTParameter
 	 * @param string $type
 	 */
 	public function __construct($type) {
-		parent::__construct(self::PARAM_TYPE, $type);
+		parent::__construct(self::PARAM_TYPE, (string) $type);
 	}
 }

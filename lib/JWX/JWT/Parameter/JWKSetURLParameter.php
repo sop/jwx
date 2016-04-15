@@ -16,6 +16,6 @@ class JWKSetURLParameter extends RegisteredJWTParameter
 	 * @param string $uri
 	 */
 	public function __construct($uri) {
-		parent::__construct(self::PARAM_JWK_SET_URL, $uri);
+		parent::__construct(self::PARAM_JWK_SET_URL, (string) $uri);
 	}
 }

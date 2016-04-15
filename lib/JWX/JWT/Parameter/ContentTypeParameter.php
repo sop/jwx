@@ -16,6 +16,6 @@ class ContentTypeParameter extends RegisteredJWTParameter
 	 * @param string $type
 	 */
 	public function __construct($type) {
-		parent::__construct(self::PARAM_CONTENT_TYPE, $type);
+		parent::__construct(self::PARAM_CONTENT_TYPE, (string) $type);
 	}
 }

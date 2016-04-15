@@ -16,6 +16,6 @@ class KeyIDParameter extends RegisteredJWTParameter
 	 * @param string $id
 	 */
 	public function __construct($id) {
-		parent::__construct(self::PARAM_KEY_ID, $id);
+		parent::__construct(self::PARAM_KEY_ID, (string) $id);
 	}
 }
