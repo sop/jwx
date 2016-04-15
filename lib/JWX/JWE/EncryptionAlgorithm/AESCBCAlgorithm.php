@@ -5,6 +5,11 @@ namespace JWX\JWE\EncryptionAlgorithm;
 use JWX\JWE\ContentEncryptionAlgorithm;
 
 
+/**
+ * Base class for algorithms implementing AES in CBC mode with HMAC-SHA.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-5.2
+ */
 abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 {
 	/**
