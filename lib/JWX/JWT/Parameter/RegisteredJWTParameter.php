@@ -11,6 +11,7 @@ namespace JWX\JWT\Parameter;
  */
 abstract class RegisteredJWTParameter extends JWTParameter
 {
+	// registered parameter names
 	const PARAM_ALGORITHM = "alg";
 	const PARAM_JWK_SET_URL = "jku";
 	const PARAM_JSON_WEB_KEY = "jwk";
@@ -33,6 +34,29 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	const PARAM_PBES2_COUNT = "p2c";
 	const PARAM_BASE64URL_ENCODE_PAYLOAD = "b64";
 	
+	// shorthand aliases for parameter names
+	const P_ALG = self::PARAM_ALGORITHM;
+	const P_JKU = self::PARAM_JWK_SET_URL;
+	const P_JWK = self::PARAM_JSON_WEB_KEY;
+	const P_KID = self::PARAM_KEY_ID;
+	const P_X5U = self::PARAM_X509_URL;
+	const P_X5C = self::PARAM_X509_CERTIFICATE_CHAIN;
+	const P_X5T = self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT;
+	const P_X5TS256 = self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT;
+	const P_TYP = self::PARAM_TYPE;
+	const P_CTY = self::PARAM_CONTENT_TYPE;
+	const P_CRIT = self::PARAM_CRITICAL;
+	const P_ENC = self::PARAM_ENCRYPTION_ALGORITHM;
+	const P_ZIP = self::PARAM_COMPRESSION_ALGORITHM;
+	const P_EPK = self::PARAM_EPHEMERAL_PUBLIC_KEY;
+	const P_APU = self::PARAM_AGREEMENT_PARTYUINFO;
+	const P_APV = self::PARAM_AGREEMENT_PARTYVINFO;
+	const P_IV = self::PARAM_INITIALIZATION_VECTOR;
+	const P_TAG = self::PARAM_AUTHENTICATION_TAG;
+	const P_P2S = self::PARAM_PBES2_SALT_INPUT;
+	const P_P2C = self::PARAM_PBES2_COUNT;
+	const P_B64 = self::PARAM_BASE64URL_ENCODE_PAYLOAD;
+	
 	/**
 	 * Mapping from registered JWT parameter name to class name
 	 *
@@ -40,30 +64,24 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	 */
 	public static $nameToCls = array(
 		/* @formatter:off */
-		self::PARAM_ALGORITHM => AlgorithmParameter::class,
-		self::PARAM_JWK_SET_URL => JWKSetURLParameter::class,
-		self::PARAM_JSON_WEB_KEY => JSONWebKeyParameter::class,
-		self::PARAM_KEY_ID => KeyIDParameter::class,
-		self::PARAM_X509_URL => X509URLParameter::class,
-		self::PARAM_X509_CERTIFICATE_CHAIN =>
-			X509CertificateChainParameter::class,
-		self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT =>
-			X509CertificateSHA1ThumbprintParameter::class,
-		self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT =>
-			X509CertificateSHA256ThumbprintParameter::class,
-		self::PARAM_TYPE => TypeParameter::class,
-		self::PARAM_CONTENT_TYPE => ContentTypeParameter::class,
-		self::PARAM_CRITICAL => CriticalParameter::class,
-		self::PARAM_ENCRYPTION_ALGORITHM =>
-			EncryptionAlgorithmParameter::class,
-		self::PARAM_COMPRESSION_ALGORITHM =>
-			CompressionAlgorithmParameter::class,
-		self::PARAM_INITIALIZATION_VECTOR =>
-			InitializationVectorParameter::class,
-		self::PARAM_AUTHENTICATION_TAG => AuthenticationTagParameter::class,
-		self::PARAM_PBES2_SALT_INPUT => PBES2SaltInputParameter::class,
-		self::PARAM_PBES2_COUNT => PBES2CountParameter::class,
-		self::PARAM_BASE64URL_ENCODE_PAYLOAD => B64EncodeParameter::class
+		self::P_ALG => AlgorithmParameter::class,
+		self::P_JKU => JWKSetURLParameter::class,
+		self::P_JWK => JSONWebKeyParameter::class,
+		self::P_KID => KeyIDParameter::class,
+		self::P_X5U => X509URLParameter::class,
+		self::P_X5C => X509CertificateChainParameter::class,
+		self::P_X5T => X509CertificateSHA1ThumbprintParameter::class,
+		self::P_X5TS256 => X509CertificateSHA256ThumbprintParameter::class,
+		self::P_TYP => TypeParameter::class,
+		self::P_CTY => ContentTypeParameter::class,
+		self::P_CRIT => CriticalParameter::class,
+		self::P_ENC => EncryptionAlgorithmParameter::class,
+		self::P_ZIP => CompressionAlgorithmParameter::class,
+		self::P_IV => InitializationVectorParameter::class,
+		self::P_TAG => AuthenticationTagParameter::class,
+		self::P_P2S => PBES2SaltInputParameter::class,
+		self::P_P2C => PBES2CountParameter::class,
+		self::P_B64 => B64PayloadParameter::class
 		/* @formatter:on */
 	);
 	
