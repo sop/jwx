@@ -10,6 +10,7 @@ namespace JWX\JWK\Parameter;
  */
 abstract class RegisteredJWKParameter extends JWKParameter
 {
+	// registered parameter names
 	const PARAM_KEY_TYPE = "kty";
 	const PARAM_PUBLIC_KEY_USE = "use";
 	const PARAM_KEY_OPERATIONS = "key_ops";
@@ -34,6 +35,31 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	const PARAM_OTHER_PRIMES_INFO = "oth";
 	const PARAM_KEY_VALUE = "k";
 	
+	// shorthand aliases for parameter names
+	const P_KTY = self::PARAM_KEY_TYPE;
+	const P_USE = self::PARAM_PUBLIC_KEY_USE;
+	const P_KEY_OPS = self::PARAM_KEY_OPERATIONS;
+	const P_ALG = self::PARAM_ALGORITHM;
+	const P_KID = self::PARAM_KEY_ID;
+	const P_X5U = self::PARAM_X509_URL;
+	const P_X5C = self::PARAM_X509_CERTIFICATE_CHAIN;
+	const P_X5T = self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT;
+	const P_X5TS256 = self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT;
+	const P_CRV = self::PARAM_CURVE;
+	const P_X = self::PARAM_X_COORDINATE;
+	const P_Y = self::PARAM_Y_COORDINATE;
+	const P_ECC_D = self::PARAM_ECC_PRIVATE_KEY;
+	const P_N = self::PARAM_MODULUS;
+	const P_E = self::PARAM_EXPONENT;
+	const P_RSA_D = self::PARAM_PRIVATE_EXPONENT;
+	const P_P = self::PARAM_FIRST_PRIME_FACTOR;
+	const P_Q = self::PARAM_SECOND_PRIME_FACTOR;
+	const P_DP = self::PARAM_FIRST_FACTOR_CRT_EXPONENT;
+	const P_DQ = self::PARAM_SECOND_FACTOR_CRT_EXPONENT;
+	const P_QI = self::PARAM_FIRST_CRT_COEFFICIENT;
+	const P_OTH = self::PARAM_OTHER_PRIMES_INFO;
+	const P_K = self::PARAM_KEY_VALUE;
+	
 	/**
 	 * Mapping from registered JWK parameter name to class name
 	 *
@@ -41,28 +67,25 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	 */
 	public static $nameToCls = array(
 		/* @formatter:off */
-		self::PARAM_KEY_TYPE => KeyTypeParameter::class,
-		self::PARAM_PUBLIC_KEY_USE => PublicKeyUseParameter::class,
-		self::PARAM_KEY_OPERATIONS => KeyOperationsParameter::class,
-		self::PARAM_ALGORITHM => AlgorithmParameter::class,
-		self::PARAM_KEY_ID => KeyIDParameter::class,
-		self::PARAM_CURVE => CurveParameter::class,
-		self::PARAM_X_COORDINATE => XCoordinateParameter::class,
-		self::PARAM_Y_COORDINATE => YCoordinateParameter::class,
-		self::PARAM_ECC_PRIVATE_KEY => ECCPrivateKeyParameter::class,
-		self::PARAM_MODULUS => ModulusParameter::class,
-		self::PARAM_EXPONENT => ExponentParameter::class,
-		self::PARAM_PRIVATE_EXPONENT => PrivateExponentParameter::class,
-		self::PARAM_FIRST_PRIME_FACTOR => FirstPrimeFactorParameter::class,
-		self::PARAM_SECOND_PRIME_FACTOR => SecondPrimeFactorParameter::class,
-		self::PARAM_FIRST_FACTOR_CRT_EXPONENT => 
-			FirstFactorCRTExponentParameter::class,
-		self::PARAM_SECOND_FACTOR_CRT_EXPONENT => 
-			SecondFactorCRTExponentParameter::class,
-		self::PARAM_FIRST_CRT_COEFFICIENT =>
-			FirstCRTCoefficientParameter::class,
-		self::PARAM_OTHER_PRIMES_INFO => OtherPrimesInfoParameter::class,
-		self::PARAM_KEY_VALUE => KeyValueParameter::class
+		self::P_KTY => KeyTypeParameter::class,
+		self::P_USE => PublicKeyUseParameter::class,
+		self::P_KEY_OPS => KeyOperationsParameter::class,
+		self::P_ALG => AlgorithmParameter::class,
+		self::P_KID => KeyIDParameter::class,
+		self::P_CRV => CurveParameter::class,
+		self::P_X => XCoordinateParameter::class,
+		self::P_Y => YCoordinateParameter::class,
+		self::P_ECC_D => ECCPrivateKeyParameter::class,
+		self::P_N => ModulusParameter::class,
+		self::P_E => ExponentParameter::class,
+		self::P_RSA_D => PrivateExponentParameter::class,
+		self::P_P => FirstPrimeFactorParameter::class,
+		self::P_Q => SecondPrimeFactorParameter::class,
+		self::P_DP => FirstFactorCRTExponentParameter::class,
+		self::P_DQ => SecondFactorCRTExponentParameter::class,
+		self::P_QI => FirstCRTCoefficientParameter::class,
+		self::P_OTH => OtherPrimesInfoParameter::class,
+		self::P_K => KeyValueParameter::class
 		/* @formatter:on */
 	);
 	
