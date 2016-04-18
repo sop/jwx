@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7797#section-3
  */
-class B64EncodeParameter extends RegisteredJWTParameter
+class B64PayloadParameter extends RegisteredJWTParameter
 {
 	/**
 	 * Constructor
