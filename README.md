@@ -8,10 +8,13 @@ with signature
 and encryption
 ([JWE](https://tools.ietf.org/html/rfc7516)) support.
 
+Also implements unencoded payload option
+([RFC 7797](https://tools.ietf.org/html/rfc7797)).
+
 ## Features
 * Signing and signature validation (JWS)
     * HMAC and RSA
-* Encryption and decryption with integrity protection (JWE)
+* Encryption and decryption with compression and integrity protection (JWE)
     * AES
 * Claims validation
     * Configurable with sensible defaults
@@ -28,6 +31,8 @@ and encryption
     * Shared symmetric key (direct)
     * RSAES-PKCS1-v1_5
     * RSAES OAEP
+* Compression
+    * DEFLATE
 
 ## Installation
 This library is available on
