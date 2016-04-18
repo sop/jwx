@@ -5,7 +5,9 @@ namespace JWX\JWE;
 use JWX\Util\Base64;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+use JWX\JWE\CompressionAlgorithm\CompressionFactory;
 
 
 class JWE
@@ -121,7 +123,13 @@ class JWE
 		}
 		// generate random IV
 		$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
-		// @todo add support for compression
+		// compress
+		if ($header->has(RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)) {
+			$comp_algo_name = $header->get(
+				RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)->value();
+			$compressor = CompressionFactory::algoByName($comp_algo_name);
+			$payload = $compressor->compress($payload);
+		}
 		$header = $header->withParameters(
 			AlgorithmParameter::fromAlgorithm($key_algo), 
 			EncryptionAlgorithmParameter::fromAlgorithm($enc_algo));
@@ -145,7 +153,14 @@ class JWE
 		$aad = Base64::urlEncode($this->_protectedHeader->toJSON());
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
 			$aad, $this->_authenticationTag);
-		// @todo add support for uncompression
+		// decompress
+		if ($this->_protectedHeader->has(
+			RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)) {
+			$comp_algo_name = $this->_protectedHeader->get(
+				RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)->value();
+			$decompressor = CompressionFactory::algoByName($comp_algo_name);
+			$payload = $decompressor->decompress($payload);
+		}
 		return $payload;
 	}
 	
