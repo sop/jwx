@@ -138,6 +138,15 @@ class JWS
 	}
 	
 	/**
+	 * Get signature
+	 *
+	 * @return string
+	 */
+	public function signature() {
+		return $this->_signature;
+	}
+	
+	/**
 	 * Get payload encoded for serialization
 	 *
 	 * @return string
