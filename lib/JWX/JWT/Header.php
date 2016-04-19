@@ -30,6 +30,20 @@ class Header implements \Countable
 	}
 	
 	/**
+	 * Initialize from array representing JSON object
+	 *
+	 * @param array $members
+	 * @return self
+	 */
+	public static function fromArray(array $members) {
+		$params = array();
+		foreach ($members as $name => $value) {
+			$params[] = JWTParameter::fromNameAndValue($name, $value);
+		}
+		return new self(...$params);
+	}
+	
+	/**
 	 * Initialize from JSON
 	 *
 	 * @param string $json
@@ -37,15 +51,11 @@ class Header implements \Countable
 	 * @return self
 	 */
 	public static function fromJSON($json) {
-		$params = array();
-		$fields = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
-		if (!is_array($fields)) {
+		$members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
+		if (!is_array($members)) {
 			throw new \UnexpectedValueException("Invalid JSON");
 		}
-		foreach ($fields as $name => $value) {
-			$params[] = JWTParameter::fromNameAndValue($name, $value);
-		}
-		return new self(...$params);
+		return self::fromArray($members);
 	}
 	
 	/**
