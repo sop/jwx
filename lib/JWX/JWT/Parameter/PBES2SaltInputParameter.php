@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Util\Base64;
+
 
 /**
  * PBES2 Salt Input parameter
@@ -17,5 +19,15 @@ class PBES2SaltInputParameter extends RegisteredJWTParameter
 	 */
 	public function __construct($salt) {
 		parent::__construct(self::PARAM_PBES2_SALT_INPUT, (string) $salt);
+	}
+	
+	/**
+	 * Get computed salt value
+	 *
+	 * @param AlgorithmParameter $algo
+	 * @return string
+	 */
+	public function salt(AlgorithmParameter $algo) {
+		return $algo->value() . "\0" . Base64::urlDecode($this->value());
 	}
 }
