@@ -17,7 +17,7 @@ interface ContentEncryptionAlgorithm extends EncryptionAlgorithmParameterValue
 	 * @param string $key Encryption key
 	 * @param string $iv Initialization vector
 	 * @param string $aad Additional authenticated data
-	 * @return string Ciphertext
+	 * @return array Tuple of ciphertext and authentication tag
 	 */
 	public function encrypt($plaintext, $key, $iv, $aad);
 	
