@@ -11,6 +11,9 @@
 		<testsuite name="Default">
 			<directory>test/tests</directory>
 		</testsuite>
+		<testsuite name="JOSE Cookbook">
+			<directory suffix=".php">test/cookbook</directory>
+		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist>
