@@ -24,9 +24,26 @@
 		"sop/crypto-util": "^1.0.0",
 		"sop/aes-kw": "^1.0.0"
 	},
+	"require-dev": {
+		"ietf-jose/cookbook": "*"
+	},
 	"autoload": {
 		"psr-4": {
 			"JWX\\": "lib/JWX/"
 		}
-	}
+	},
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "ietf-jose/cookbook",
+				"version": "1.0.0",
+				"source": {
+					"url": "https://github.com/ietf-jose/cookbook.git",
+					"type": "git",
+					"reference": "master"
+				}
+			}
+		}
+	]
 }
