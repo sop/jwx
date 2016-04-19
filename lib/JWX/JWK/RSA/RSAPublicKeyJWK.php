@@ -11,24 +11,34 @@ use JWX\JWK\Parameter\RegisteredJWKParameter;
 use CryptoUtil\PEM\PEM;
 use CryptoUtil\ASN1\RSA\RSAPublicKey;
 use CryptoUtil\ASN1\PublicKeyInfo;
-use CryptoUtil\ASN1\AlgorithmIdentifier;
 use CryptoUtil\ASN1\RSA\RSAEncryptionAlgorithmIdentifier;
 
 
 class RSAPublicKeyJWK extends JWK
 {
 	/**
+	 * Parameter names managed by this class
+	 *
+	 * @var string[]
+	 */
+	private static $_managedParams = array(
+		RegisteredJWKParameter::PARAM_KEY_TYPE, 
+		RegisteredJWKParameter::PARAM_MODULUS, 
+		RegisteredJWKParameter::PARAM_EXPONENT);
+	
+	/**
 	 * Constructor
 	 *
-	 * @param ModulusParameter $n
-	 * @param ExponentParameter $e
-	 * @param JWKParameter ...$params Additional parameters
+	 * @param JWKParameter ...$params
+	 * @throws \UnexpectedValueException If missing required parameter
 	 */
-	public function __construct(ModulusParameter $n, ExponentParameter $e, 
-		JWKParameter ...$params) {
-		$params = array_merge($params, 
-			array(new KeyTypeParameter(KeyTypeParameter::TYPE_RSA), $n, $e));
+	public function __construct(JWKParameter ...$params) {
 		parent::__construct(...$params);
+		foreach (self::$_managedParams as $name) {
+			if (!$this->has($name)) {
+				throw new \UnexpectedValueException("Missing '$name' parameter");
+			}
+		}
 	}
 	
 	/**
@@ -41,7 +51,17 @@ class RSAPublicKeyJWK extends JWK
 		$pk = RSAPublicKey::fromPEM($pem);
 		$n = ModulusParameter::fromNumber($pk->modulus());
 		$e = ExponentParameter::fromNumber($pk->publicExponent());
-		return new self($n, $e);
+		$key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_RSA);
+		return new self($key_type, $n, $e);
+	}
+	
+	public static function fromArray(array $members) {
+		$obj = parent::fromArray($members);
+		if ($obj->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !==
+			 KeyTypeParameter::TYPE_RSA) {
+			throw new \UnexpectedValueException("Not an RSA key");
+		}
+		return $obj;
 	}
 	
 	/**
