@@ -9,8 +9,8 @@ use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use CryptoUtil\PEM\PEM;
-use CryptoUtil\ASN1\RSA\RSAPublicKey;
 use CryptoUtil\ASN1\PublicKeyInfo;
+use CryptoUtil\ASN1\RSA\RSAPublicKey;
 use CryptoUtil\ASN1\RSA\RSAEncryptionAlgorithmIdentifier;
 
 
@@ -39,6 +39,10 @@ class RSAPublicKeyJWK extends JWK
 				throw new \UnexpectedValueException("Missing '$name' parameter");
 			}
 		}
+		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
+			 KeyTypeParameter::TYPE_RSA) {
+			throw new \UnexpectedValueException("Invalid key type");
+		}
 	}
 	
 	/**
@@ -53,15 +57,6 @@ class RSAPublicKeyJWK extends JWK
 		$e = ExponentParameter::fromNumber($pk->publicExponent());
 		$key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_RSA);
 		return new self($key_type, $n, $e);
-	}
-	
-	public static function fromArray(array $members) {
-		$obj = parent::fromArray($members);
-		if ($obj->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !==
-			 KeyTypeParameter::TYPE_RSA) {
-			throw new \UnexpectedValueException("Not an RSA key");
-		}
-		return $obj;
 	}
 	
 	/**

@@ -15,8 +15,8 @@ use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use CryptoUtil\PEM\PEM;
-use CryptoUtil\ASN1\RSA\RSAPrivateKey;
 use CryptoUtil\ASN1\PrivateKeyInfo;
+use CryptoUtil\ASN1\RSA\RSAPrivateKey;
 use CryptoUtil\ASN1\RSA\RSAEncryptionAlgorithmIdentifier;
 
 
@@ -51,6 +51,10 @@ class RSAPrivateKeyJWK extends JWK
 				throw new \UnexpectedValueException("Missing '$name' parameter");
 			}
 		}
+		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
+			 KeyTypeParameter::TYPE_RSA) {
+			throw new \UnexpectedValueException("Invalid key type");
+		}
 	}
 	
 	/**
@@ -71,15 +75,6 @@ class RSAPrivateKeyJWK extends JWK
 		$qi = FirstCRTCoefficientParameter::fromNumber($pk->coefficient());
 		$key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_RSA);
 		return new self($key_type, $n, $e, $d, $p, $q, $dp, $dq, $qi);
-	}
-	
-	public static function fromArray(array $members) {
-		$obj = parent::fromArray($members);
-		if ($obj->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !==
-			 KeyTypeParameter::TYPE_RSA) {
-			throw new \UnexpectedValueException("Not an RSA key");
-		}
-		return $obj;
 	}
 	
 	/**
