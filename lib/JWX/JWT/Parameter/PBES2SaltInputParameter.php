@@ -4,18 +4,18 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * PBES2 Count parameter
+ * PBES2 Salt Input parameter
  *
- * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.2
+ * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.1
  */
-class PBES2CountParameter extends RegisteredJWTParameter
+class PBES2SaltInputParameter extends RegisteredJWTParameter
 {
 	/**
 	 * Constructor
 	 *
-	 * @param int $count
+	 * @param string $salt Base64url encoded salt input value
 	 */
-	public function __construct($count) {
-		parent::__construct(self::PARAM_PBES2_COUNT, intval($count));
+	public function __construct($salt) {
+		parent::__construct(self::PARAM_PBES2_SALT_INPUT, (string) $salt);
 	}
 }
