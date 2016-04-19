@@ -83,9 +83,10 @@ class RSAPrivateKeyJWK extends JWK
 	 * @return RSAPublicKeyJWK
 	 */
 	public function publicKey() {
+		$kty = $this->get(RegisteredJWKParameter::PARAM_KEY_TYPE);
 		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS);
 		$e = $this->get(RegisteredJWKParameter::PARAM_EXPONENT);
-		return new RSAPublicKeyJWK($n, $e);
+		return new RSAPublicKeyJWK($kty, $n, $e);
 	}
 	
 	/**
