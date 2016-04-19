@@ -32,6 +32,7 @@ Also implements unencoded payload option
     * RSAES-PKCS1-v1_5
     * RSAES OAEP
     * AES Key Wrap with 128, 192 and 256 bit key sizes
+    * Password-based encryption (PBES2 with AES Key Wrap)
 * Compression
     * DEFLATE
 
