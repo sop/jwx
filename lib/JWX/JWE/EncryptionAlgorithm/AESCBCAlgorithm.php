@@ -140,7 +140,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	 * @param string $key CEK
 	 * @return string
 	 */
-	protected function _computeAuthTag($data, $key) {
+	final protected function _computeAuthTag($data, $key) {
 		$tag = hash_hmac($this->_hashAlgo(), $data, $this->_macKey($key), true);
 		return substr($tag, 0, $this->_tagLen());
 	}
@@ -155,7 +155,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		}
 		$auth_data = $aad . $iv . $ciphertext . $this->_aadLen($aad);
 		$auth_tag = $this->_computeAuthTag($auth_data, $key);
-		return array($ciphertext, $auth_tag);
+		return [$ciphertext, $auth_tag];
 	}
 	
 	public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag) {
