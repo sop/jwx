@@ -31,6 +31,7 @@ Also implements unencoded payload option
     * Shared symmetric key (direct)
     * RSAES-PKCS1-v1_5
     * RSAES OAEP
+    * AES Key Wrap with 128, 192 and 256 bit key sizes
 * Compression
     * DEFLATE
 
