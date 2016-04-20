@@ -95,35 +95,42 @@ class RSAPrivateKeyJWK extends JWK
 	 * @return PEM PRIVATE KEY
 	 */
 	public function toPEM() {
-		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS)
+		$n = $this->get(RegisteredJWKParameter::P_N)
 			->number()
 			->base10();
-		$e = $this->get(RegisteredJWKParameter::PARAM_EXPONENT)
+		$e = $this->get(RegisteredJWKParameter::P_E)
 			->number()
 			->base10();
-		$d = $this->get(RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT)
+		$d = $this->get(RegisteredJWKParameter::P_RSA_D)
 			->number()
 			->base10();
-		$p = $this->get(RegisteredJWKParameter::PARAM_FIRST_PRIME_FACTOR)
+		$p = $this->get(RegisteredJWKParameter::P_P)
 			->number()
 			->base10();
-		$q = $this->get(RegisteredJWKParameter::PARAM_SECOND_PRIME_FACTOR)
+		$q = $this->get(RegisteredJWKParameter::P_Q)
 			->number()
 			->base10();
-		$dp = $this->get(
-			RegisteredJWKParameter::PARAM_FIRST_FACTOR_CRT_EXPONENT)
+		$dp = $this->get(RegisteredJWKParameter::P_DP)
 			->number()
 			->base10();
-		$dq = $this->get(
-			RegisteredJWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT)
+		$dq = $this->get(RegisteredJWKParameter::P_DQ)
 			->number()
 			->base10();
-		$qi = $this->get(RegisteredJWKParameter::PARAM_FIRST_CRT_COEFFICIENT)
+		$qi = $this->get(RegisteredJWKParameter::P_QI)
 			->number()
 			->base10();
 		$pk = new RSAPrivateKey($n, $e, $d, $p, $q, $dp, $dq, $qi);
 		$pki = new PrivateKeyInfo(new RSAEncryptionAlgorithmIdentifier(), 
 			$pk->toDER());
 		return $pki->toPEM();
+	}
+	
+	/**
+	 * Get parameter names required for the RSA private key
+	 *
+	 * @return string[]
+	 */
+	public static function requiredParams() {
+		return self::$_managedParams;
 	}
 }

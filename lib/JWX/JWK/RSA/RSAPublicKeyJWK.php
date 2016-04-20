@@ -65,15 +65,24 @@ class RSAPublicKeyJWK extends JWK
 	 * @return PEM PUBLIC KEY
 	 */
 	public function toPEM() {
-		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS)
+		$n = $this->get(RegisteredJWKParameter::P_N)
 			->number()
 			->base10();
-		$e = $this->get(RegisteredJWKParameter::PARAM_EXPONENT)
+		$e = $this->get(RegisteredJWKParameter::P_E)
 			->number()
 			->base10();
 		$pk = new RSAPublicKey($n, $e);
 		$pki = new PublicKeyInfo(new RSAEncryptionAlgorithmIdentifier(), 
 			$pk->toDER());
 		return $pki->toPEM();
+	}
+	
+	/**
+	 * Get parameter names required for the RSA public key
+	 *
+	 * @return string[]
+	 */
+	public static function requiredParams() {
+		return self::$_managedParams;
 	}
 }
