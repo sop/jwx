@@ -40,15 +40,17 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	}
 	
 	/**
-	 * Initialize from JWK
+	 * Initialize from JWK.
+	 *
+	 * If algorithm is not specified, look from JWK.
 	 *
 	 * @param JWK $jwk
+	 * @param string|null $alg Algorithm name
 	 * @throws \UnexpectedValueException
 	 * @return self
 	 */
-	public static function fromJWK(JWK $jwk) {
+	public static function fromJWK(JWK $jwk, $alg = null) {
 		static $params = array(RegisteredJWKParameter::PARAM_KEY_TYPE, 
-			RegisteredJWKParameter::PARAM_ALGORITHM, 
 			RegisteredJWKParameter::PARAM_KEY_VALUE);
 		// check that all the parameters are present
 		if (!$jwk->has(...$params)) {
@@ -59,8 +61,15 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 		if ($kty != KeyTypeParameter::TYPE_OCT) {
 			throw new \UnexpectedValueException("Invalid key type");
 		}
-		$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
 		$key = $jwk->get(RegisteredJWKParameter::PARAM_KEY_VALUE)->key();
+		// if algorithm is not explicitly given, consult JWK
+		if (!isset($alg)) {
+			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
+				throw new \UnexpectedValueException(
+					"Missing algorithm parameter");
+			}
+			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
+		}
 		switch ($alg) {
 		case JWA::ALGO_HS256:
 			return new HS256Algorithm($key);
