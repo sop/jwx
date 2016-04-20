@@ -2,7 +2,7 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 use AESKW\AESKW128;
 
 
@@ -13,6 +13,6 @@ class A128KWAlgorithm extends AESKWAlgorithm
 	}
 	
 	public function algorithmParamValue() {
-		return AlgorithmParameter::ALGO_A128KW;
+		return JWA::ALGO_A128KW;
 	}
 }

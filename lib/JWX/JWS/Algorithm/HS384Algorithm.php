@@ -2,7 +2,7 @@
 
 namespace JWX\JWS\Algorithm;
 
-use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 
 
 /**
@@ -15,6 +15,6 @@ class HS384Algorithm extends HMACAlgorithm
 	}
 	
 	public function algorithmParamValue() {
-		return AlgorithmParameter::ALGO_HS384;
+		return JWA::ALGO_HS384;
 	}
 }

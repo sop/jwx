@@ -2,7 +2,7 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 use AESKW\AESKW256;
 
 
@@ -24,6 +24,6 @@ class PBES2HS512A256KWAlgorithm extends PBES2Algorithm
 	}
 	
 	public function algorithmParamValue() {
-		return AlgorithmParameter::ALGO_PBES2_HS512_A256KW;
+		return JWA::ALGO_PBES2_HS512_A256KW;
 	}
 }

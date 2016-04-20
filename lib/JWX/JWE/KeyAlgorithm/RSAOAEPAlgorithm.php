@@ -2,7 +2,7 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 
 
 /**
@@ -17,6 +17,6 @@ class RSAOAEPAlgorithm extends RSAESKeyAlgorithm
 	}
 	
 	public function algorithmParamValue() {
-		return AlgorithmParameter::ALGO_RSA_OAEP;
+		return JWA::ALGO_RSA_OAEP;
 	}
 }

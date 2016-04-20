@@ -2,7 +2,7 @@
 
 namespace JWX\JWE\EncryptionAlgorithm;
 
-use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+use JWX\JWA\JWA;
 
 
 class A192CBCHS384Algorithm extends AESCBCAlgorithm
@@ -12,7 +12,7 @@ class A192CBCHS384Algorithm extends AESCBCAlgorithm
 	}
 	
 	public function encryptionAlgorithmParamValue() {
-		return EncryptionAlgorithmParameter::ALGO_A192CBC_HS384;
+		return JWA::ALGO_A192CBC_HS384;
 	}
 	
 	protected function _cipherMethod() {

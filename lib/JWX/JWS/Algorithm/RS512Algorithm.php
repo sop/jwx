@@ -2,7 +2,7 @@
 
 namespace JWX\JWS\Algorithm;
 
-use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 
 
 /**
@@ -15,6 +15,6 @@ class RS512Algorithm extends RSAPKCS1Algorithm
 	}
 	
 	public function algorithmParamValue() {
-		return AlgorithmParameter::ALGO_RS512;
+		return JWA::ALGO_RS512;
 	}
 }

@@ -2,9 +2,10 @@
 
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\Util\Base64;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWS\Algorithm\RS256Algorithm;
+use JWX\JWA\JWA;
+use JWX\Util\Base64;
 
 
 /**
@@ -58,8 +59,7 @@ class JWSUsingRS256Test extends PHPUnit_Framework_TestCase
 	
 	public function testEncodeHeader() {
 		static $expected = "eyJhbGciOiJSUzI1NiJ9";
-		$header = new Header(
-			new AlgorithmParameter(AlgorithmParameter::ALGO_RS256));
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_RS256));
 		$json = $header->toJSON();
 		$data = Base64::urlEncode($json);
 		$this->assertEquals($expected, $data);

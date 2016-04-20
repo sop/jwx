@@ -2,7 +2,7 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 
 
 /**
@@ -17,6 +17,6 @@ class RSAESPKCS1Algorithm extends RSAESKeyAlgorithm
 	}
 	
 	public function algorithmParamValue() {
-		return AlgorithmParameter::ALGO_RSA1_5;
+		return JWA::ALGO_RSA1_5;
 	}
 }
