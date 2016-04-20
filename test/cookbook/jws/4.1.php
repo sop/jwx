@@ -2,10 +2,10 @@
 
 use JWX\JWT\Header;
 use JWX\JWS\JWS;
+use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\Util\Base64;
-use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 
 
 class CookbookRSAv15SignatureTest extends PHPUnit_Framework_TestCase

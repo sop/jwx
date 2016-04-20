@@ -2,11 +2,10 @@
 
 use JWX\JWT\Header;
 use JWX\JWS\JWS;
-use JWX\JWS\Algorithm\HS256Algorithm;
-use JWX\JWK\JWK;
-use JWX\Util\Base64;
-use JWX\JWK\SymmetricKeyJWK;
 use JWX\JWS\Algorithm\HMACAlgorithm;
+use JWX\JWK\JWK;
+use JWX\JWK\SymmetricKeyJWK;
+use JWX\Util\Base64;
 
 
 class CookbookHMACSHA2IntegrityProtectionTest extends PHPUnit_Framework_TestCase
