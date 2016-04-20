@@ -64,7 +64,7 @@ class JWK implements \Countable
 	 * @return self
 	 */
 	public static function fromJWK(self $jwk) {
-		return new static(...$jwk->_parameters);
+		return new static(...array_values($jwk->_parameters));
 	}
 	
 	/**
