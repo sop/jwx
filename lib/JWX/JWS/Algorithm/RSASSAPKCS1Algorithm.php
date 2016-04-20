@@ -13,7 +13,7 @@ use JWX\JWA\JWA;
 /**
  * Base class for algorithms implementing signature with PKCS #1.
  */
-abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
+abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 {
 	/**
 	 * Public key

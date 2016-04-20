@@ -8,7 +8,7 @@ use JWX\JWA\JWA;
 /**
  * RSASSA-PKCS1-v1_5 using SHA-512
  */
-class RS512Algorithm extends RSAPKCS1Algorithm
+class RS512Algorithm extends RSASSAPKCS1Algorithm
 {
 	protected function _mdMethod() {
 		return "sha512WithRSAEncryption";
