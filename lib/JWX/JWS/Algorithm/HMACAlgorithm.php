@@ -24,6 +24,18 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	protected $_key;
 	
 	/**
+	 * Mapping from algorithm name to class name
+	 *
+	 * @var array
+	 */
+	private static $_algoToCls = array(
+		/* @formatter:off */
+		JWA::ALGO_HS256 => HS256Algorithm::class, 
+		JWA::ALGO_HS384 => HS384Algorithm::class, 
+		JWA::ALGO_HS512 => HS512Algorithm::class
+	);	/* @formatter:on */
+	
+	/**
 	 * Get algorithm name that is recognized by the Hash extension
 	 *
 	 * @return string
@@ -70,15 +82,11 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 			}
 			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
 		}
-		switch ($alg) {
-		case JWA::ALGO_HS256:
-			return new HS256Algorithm($key);
-		case JWA::ALGO_HS384:
-			return new HS384Algorithm($key);
-		case JWA::ALGO_HS512:
-			return new HS512Algorithm($key);
+		if (!isset(self::$_algoToCls[$alg])) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'");
 		}
-		throw new \UnexpectedValueException("Unsupported algorithm '$alg'");
+		$cls = self::$_algoToCls[$alg];
+		return new $cls($key);
 	}
 	
 	public function computeSignature($data) {
