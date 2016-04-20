@@ -3,6 +3,10 @@
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWA\JWA;
 
 
 /**
@@ -41,6 +45,18 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	private $_derivedKey;
 	
 	/**
+	 * Mapping from algorithm name to class name
+	 *
+	 * @var array
+	 */
+	private static $_algoToCls = array(
+		/* @formatter:off */
+		JWA::ALGO_PBES2_HS256_A128KW => PBES2HS256A128KWAlgorithm::class, 
+		JWA::ALGO_PBES2_HS384_A192KW => PBES2HS384A192KWAlgorithm::class, 
+		JWA::ALGO_PBES2_HS512_A256KW => PBES2HS512A256KWAlgorithm::class
+	);	/* @formatter:on */
+	
+	/**
 	 * Get hash algorithm for hash_pbkdf2
 	 *
 	 * @return string
@@ -72,6 +88,39 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 		$this->_password = $password;
 		$this->_salt = $salt;
 		$this->_count = $count;
+	}
+	
+	/**
+	 * Initialize from header.
+	 *
+	 * If algorithm is not explicitly specified, use one from header.
+	 *
+	 * @param Header $header Header
+	 * @param string $password Password
+	 * @param string|null $alg Algorithm
+	 * @throws \UnexpectedValueException
+	 * @return self
+	 */
+	public static function fromHeader(Header $header, $password, $alg = null) {
+		$params = array(RegisteredJWTParameter::PARAM_PBES2_SALT_INPUT, 
+			RegisteredJWTParameter::PARAM_PBES2_COUNT);
+		if (!$header->has(...$params)) {
+			throw new \UnexpectedValueException("Missing header parameters");
+		}
+		if (!isset($alg)) {
+			if (!$header->has(RegisteredJWTParameter::P_ALG)) {
+				throw new \UnexpectedValueException("No algorithm parameter");
+			}
+			$alg = $header->get(RegisteredJWTParameter::P_ALG)->value();
+		}
+		if (!isset(self::$_algoToCls[$alg])) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'");
+		}
+		$cls = self::$_algoToCls[$alg];
+		$salt = $header->get(RegisteredJWTParameter::P_P2S)->salt(
+			new AlgorithmParameter($alg));
+		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
+		return new $cls($password, $salt, $count);
 	}
 	
 	/**
