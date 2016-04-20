@@ -2,10 +2,10 @@
 
 use JWX\JWT\Header;
 use JWX\JWS\JWS;
-use JWX\JWS\Algorithm\RS256Algorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\Util\Base64;
+use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 
 
 class CookbookRSAv15SignatureTest extends PHPUnit_Framework_TestCase
@@ -45,7 +45,8 @@ class CookbookRSAv15SignatureTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(RSAPrivateKeyJWK $jwk, Header $header) {
 		$payload = self::$_testData["input"]["payload"];
-		$algo = RS256Algorithm::fromPrivateKey($jwk);
+		$algo = RSASSAPKCS1Algorithm::fromJWK($jwk, 
+			self::$_testData["input"]["alg"]);
 		$jws = JWS::sign($payload, $algo, $header);
 		$this->assertEquals(self::$_testData["signing"]["sig"], 
 			Base64::urlEncode($jws->signature()));
