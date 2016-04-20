@@ -3,8 +3,11 @@
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWK\JWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWA\JWA;
 
 
 /**
@@ -25,6 +28,19 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	 * @var RSAPrivateKeyJWK|null $_privateKey
 	 */
 	protected $_privateKey;
+	
+	/**
+	 * Mapping from algorithm name to class name
+	 *
+	 * @var array
+	 */
+	private static $_algoToCls = array(
+		/* @formatter:off */
+		JWA::ALGO_RS256 => RS256Algorithm::class,
+		JWA::ALGO_RS384 => RS384Algorithm::class,
+		JWA::ALGO_RS512 => RS512Algorithm::class
+		/* @formatter:on */
+	);
 	
 	/**
 	 * Get message digest method name supported by openssl
@@ -66,6 +82,37 @@ abstract class RSAPKCS1Algorithm implements SignatureAlgorithm
 	 */
 	public static function fromPrivateKey(RSAPrivateKeyJWK $jwk) {
 		return new static($jwk->publicKey(), $jwk);
+	}
+	
+	/**
+	 * Initialize from JWK.
+	 *
+	 * @param JWK $jwk
+	 * @throws \UnexpectedValueException
+	 * @return self
+	 */
+	public static function fromJWK(JWK $jwk, $alg = null) {
+		// if algorithm is not explicitly given, consult JWK
+		if (!isset($alg)) {
+			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
+				throw new \UnexpectedValueException(
+					"Missing algorithm parameter");
+			}
+			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
+		}
+		if (!isset(self::$_algoToCls[$alg])) {
+			throw new \UnexpectedValueException("Algorithm '$alg' not supported");
+		}
+		$cls = self::$_algoToCls[$alg];
+		$params = RSAPrivateKeyJWK::requiredParams();
+		if ($jwk->has(...$params)) {
+			return $cls::fromPrivateKey(RSAPrivateKeyJWK::fromJWK($jwk));
+		}
+		$params = RSAPublicKeyJWK::requiredParams();
+		if ($jwk->has(...$params)) {
+			return $cls::fromPublicKey(RSAPublicKeyJWK::fromJWK($jwk));
+		}
+		throw new \UnexpectedValueException("Not an RSA key");
 	}
 	
 	/**
