@@ -56,6 +56,18 @@ class JWK implements \Countable
 	}
 	
 	/**
+	 * Initialize from another JWK.
+	 *
+	 * Allows casting to subclass by late static binding.
+	 *
+	 * @param self $jwk
+	 * @return self
+	 */
+	public static function fromJWK(self $jwk) {
+		return new static(...$jwk->_parameters);
+	}
+	
+	/**
 	 * Get self with parameters added
 	 *
 	 * @param JWKParameter ...$params
