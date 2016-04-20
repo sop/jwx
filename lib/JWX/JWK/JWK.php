@@ -79,13 +79,20 @@ class JWK implements \Countable
 	}
 	
 	/**
-	 * Whether parameter is present
+	 * Whether parameters are present.
 	 *
-	 * @param string $name Parameter name
+	 * Returns false if any of give given parameters is not set.
+	 *
+	 * @param string ...$names Parameter names
 	 * @return boolean
 	 */
-	public function has($name) {
-		return isset($this->_parameters[$name]);
+	public function has(...$names) {
+		foreach ($names as $name) {
+			if (!isset($this->_parameters[$name])) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
