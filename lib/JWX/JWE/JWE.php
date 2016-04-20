@@ -2,12 +2,13 @@
 
 namespace JWX\JWE;
 
-use JWX\Util\Base64;
+use JWX\JWT\JOSE;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
+use JWX\Util\Base64;
 
 
 class JWE
@@ -113,16 +114,23 @@ class JWE
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
 	 * @param Header|null $header Desired header. Algorithm specific parameters
 	 *        are automatically added.
+	 * @param string|null $iv Initialization vector. Randomly generated if not
+	 *        set.
 	 * @return self
 	 */
 	public static function encrypt($payload, $cek, 
 		KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo, 
-		Header $header = null) {
+		Header $header = null, $iv = null) {
 		if (!isset($header)) {
 			$header = new Header();
 		}
 		// generate random IV
-		$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
+		if (!isset($iv)) {
+			$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
+		}
+		if (strlen($iv) != $enc_algo->ivSize()) {
+			throw new \UnexpectedValueException("Invalid IV size");
+		}
 		// compress
 		if ($header->has(RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)) {
 			$comp_algo_name = $header->get(
@@ -162,6 +170,51 @@ class JWE
 			$payload = $decompressor->decompress($payload);
 		}
 		return $payload;
+	}
+	
+	/**
+	 * Get JOSE header
+	 *
+	 * @return JOSE
+	 */
+	public function header() {
+		return new JOSE($this->_protectedHeader);
+	}
+	
+	/**
+	 * Get encrypted CEK
+	 *
+	 * @return string
+	 */
+	public function encryptedKey() {
+		return $this->_encryptedKey;
+	}
+	
+	/**
+	 * Get initialization vector
+	 *
+	 * @return string
+	 */
+	public function initializationVector() {
+		return $this->_iv;
+	}
+	
+	/**
+	 * Get ciphertext
+	 *
+	 * @return string
+	 */
+	public function ciphertext() {
+		return $this->_ciphertext;
+	}
+	
+	/**
+	 * Get authentication tag
+	 *
+	 * @return string
+	 */
+	public function authenticationTag() {
+		return $this->_authenticationTag;
 	}
 	
 	/**
