@@ -6,6 +6,7 @@ use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWK\JWK;
 use JWX\Util\Base64;
 use JWX\JWK\SymmetricKeyJWK;
+use JWX\JWS\Algorithm\HMACAlgorithm;
 
 
 class CookbookHMACSHA2IntegrityProtectionTest extends PHPUnit_Framework_TestCase
@@ -45,7 +46,7 @@ class CookbookHMACSHA2IntegrityProtectionTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(SymmetricKeyJWK $jwk, Header $header) {
 		$payload = self::$_testData["input"]["payload"];
-		$algo = new HS256Algorithm($jwk->key());
+		$algo = HMACAlgorithm::fromJWK($jwk);
 		$jws = JWS::sign($payload, $algo, $header);
 		$this->assertEquals(self::$_testData["signing"]["sig"], 
 			Base64::urlEncode($jws->signature()));
