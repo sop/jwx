@@ -3,31 +3,34 @@
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWE\KeyManagementAlgorithm;
-use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWK\RSA\RSAPublicKeyJWK;
 
 
 /**
  * Base class for algorithms implementing RSA based key encryption.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-4.2
+ * @link https://tools.ietf.org/html/rfc7518#section-4.3
  */
 abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 {
 	/**
-	 * Public key
+	 * Public key.
 	 *
 	 * @var RSAPublicKeyJWK $_publicKey
 	 */
 	protected $_publicKey;
 	
 	/**
-	 * Private key
+	 * Private key.
 	 *
 	 * @var RSAPrivateKeyJWK $_privateKey
 	 */
 	protected $_privateKey;
 	
 	/**
-	 * Get padding scheme
+	 * Get padding scheme.
 	 *
 	 * @return int
 	 */
@@ -42,13 +45,13 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 	 * @param RSAPrivateKeyJWK $priv_key
 	 */
 	protected function __construct(RSAPublicKeyJWK $pub_key, 
-		RSAPrivateKeyJWK $priv_key = null) {
+			RSAPrivateKeyJWK $priv_key = null) {
 		$this->_publicKey = $pub_key;
 		$this->_privateKey = $priv_key;
 	}
 	
 	/**
-	 * Initialize from public key
+	 * Initialize from public key.
 	 *
 	 * @param RSAPublicKeyJWK $jwk
 	 * @return self
@@ -58,7 +61,7 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Initialize from private key
+	 * Initialize from private key.
 	 *
 	 * @param RSAPrivateKeyJWK $jwk
 	 * @return self
@@ -70,28 +73,28 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 	public function encrypt($cek) {
 		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->str());
 		if (false === $key) {
-			throw new \RuntimeException("Failed to load public key");
+			throw new \RuntimeException("Failed to load public key.");
 		}
 		$result = openssl_public_encrypt($cek, $crypted, $key, 
 			$this->_paddingScheme());
 		if (!$result) {
-			throw new \RuntimeException("openssl_public_encrypt() failed");
+			throw new \RuntimeException("openssl_public_encrypt() failed.");
 		}
 		return $crypted;
 	}
 	
 	public function decrypt($data) {
 		if (!isset($this->_privateKey)) {
-			throw new \LogicException("Private key not set");
+			throw new \LogicException("Private key not set.");
 		}
 		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->str());
 		if (!$key) {
-			throw new \RuntimeException("Failed to load private key");
+			throw new \RuntimeException("Failed to load private key.");
 		}
 		$result = openssl_private_decrypt($data, $cek, $key, 
 			$this->_paddingScheme());
 		if (!$result) {
-			throw new \RuntimeException("openssl_private_decrypt() failed");
+			throw new \RuntimeException("openssl_private_decrypt() failed.");
 		}
 		return $cek;
 	}

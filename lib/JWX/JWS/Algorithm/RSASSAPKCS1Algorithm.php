@@ -2,39 +2,41 @@
 
 namespace JWX\JWS\Algorithm;
 
-use JWX\JWS\SignatureAlgorithm;
-use JWX\JWK\JWK;
-use JWX\JWK\RSA\RSAPublicKeyJWK;
-use JWX\JWK\RSA\RSAPrivateKeyJWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWA\JWA;
+use JWX\JWK\JWK;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWS\SignatureAlgorithm;
 
 
 /**
  * Base class for algorithms implementing signature with PKCS #1.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-3.3
  */
 abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 {
 	/**
-	 * Public key
+	 * Public key.
 	 *
 	 * @var RSAPublicKeyJWK $_publicKey
 	 */
 	protected $_publicKey;
 	
 	/**
-	 * Private key
+	 * Private key.
 	 *
 	 * @var RSAPrivateKeyJWK|null $_privateKey
 	 */
 	protected $_privateKey;
 	
 	/**
-	 * Mapping from algorithm name to class name
+	 * Mapping from algorithm name to class name.
 	 *
 	 * @var array
 	 */
-	private static $_algoToCls = array(
+	const ALGO_TO_CLS = array(
 		/* @formatter:off */
 		JWA::ALGO_RS256 => RS256Algorithm::class,
 		JWA::ALGO_RS384 => RS384Algorithm::class,
@@ -43,7 +45,7 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	);
 	
 	/**
-	 * Get message digest method name supported by openssl
+	 * Get message digest method name supported by OpenSSL.
 	 *
 	 * @return string
 	 */
@@ -59,13 +61,13 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	 * @param RSAPrivateKeyJWK $priv_key
 	 */
 	protected function __construct(RSAPublicKeyJWK $pub_key, 
-		RSAPrivateKeyJWK $priv_key = null) {
+			RSAPrivateKeyJWK $priv_key = null) {
 		$this->_publicKey = $pub_key;
 		$this->_privateKey = $priv_key;
 	}
 	
 	/**
-	 * Initialize from public key
+	 * Initialize from a public key.
 	 *
 	 * @param RSAPublicKeyJWK $jwk
 	 * @return self
@@ -75,7 +77,7 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	}
 	
 	/**
-	 * Initialize from private key
+	 * Initialize from a private key.
 	 *
 	 * @param RSAPrivateKeyJWK $jwk
 	 * @return self
@@ -85,7 +87,7 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	}
 	
 	/**
-	 * Initialize from JWK.
+	 * Initialize from a JWK.
 	 *
 	 * @param JWK $jwk
 	 * @throws \UnexpectedValueException
@@ -96,42 +98,41 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 		if (!isset($alg)) {
 			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
 				throw new \UnexpectedValueException(
-					"Missing algorithm parameter");
+					"Missing algorithm parameter.");
 			}
 			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
 		}
-		if (!isset(self::$_algoToCls[$alg])) {
-			throw new \UnexpectedValueException("Algorithm '$alg' not supported");
+		if (!array_key_exists($alg, self::ALGO_TO_CLS)) {
+			throw new \UnexpectedValueException(
+				"Algorithm '$alg' not supported.");
 		}
-		$cls = self::$_algoToCls[$alg];
-		$params = RSAPrivateKeyJWK::requiredParams();
+		$cls = self::ALGO_TO_CLS[$alg];
+		$params = RSAPrivateKeyJWK::MANAGED_PARAMS;
 		if ($jwk->has(...$params)) {
 			return $cls::fromPrivateKey(RSAPrivateKeyJWK::fromJWK($jwk));
 		}
-		$params = RSAPublicKeyJWK::requiredParams();
+		$params = RSAPublicKeyJWK::MANAGED_PARAMS;
 		if ($jwk->has(...$params)) {
 			return $cls::fromPublicKey(RSAPublicKeyJWK::fromJWK($jwk));
 		}
-		throw new \UnexpectedValueException("Not an RSA key");
+		throw new \UnexpectedValueException("Not an RSA key.");
 	}
 	
-	/**
-	 * NOTE: OpenSSL uses PKCS #1 v1.5 padding by default, so
-	 * no explicit padding is required by sign and verify operations.
-	 *
-	 * @see \JWX\JWS\SignatureAlgorithm::computeSignature()
-	 */
 	public function computeSignature($data) {
+		/**
+		 * NOTE: OpenSSL uses PKCS #1 v1.5 padding by default, so no explicit
+		 * padding is required by sign and verify operations.
+		 */
 		if (!isset($this->_privateKey)) {
-			throw new \LogicException("Private key not set");
+			throw new \LogicException("Private key not set.");
 		}
 		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->str());
 		if (!$key) {
-			throw new \RuntimeException("Failed to load private key");
+			throw new \RuntimeException("Failed to load private key.");
 		}
 		$result = openssl_sign($data, $signature, $key, $this->_mdMethod());
 		if (!$result) {
-			throw new \RuntimeException("openssl_sign failed");
+			throw new \RuntimeException("openssl_sign failed.");
 		}
 		return $signature;
 	}
@@ -139,11 +140,11 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	public function validateSignature($data, $signature) {
 		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->str());
 		if (!$key) {
-			throw new \RuntimeException("Failed to load public key");
+			throw new \RuntimeException("Failed to load public key.");
 		}
 		$result = openssl_verify($data, $signature, $key, $this->_mdMethod());
 		if ($result == -1) {
-			throw new \RuntimeException("openssl_verify failed");
+			throw new \RuntimeException("openssl_verify failed.");
 		}
 		return $result == 1;
 	}

@@ -2,11 +2,11 @@
 
 namespace JWX\JWS\Algorithm;
 
-use JWX\JWS\SignatureAlgorithm;
 use JWX\JWA\JWA;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWS\SignatureAlgorithm;
 
 
 /**
@@ -17,26 +17,27 @@ use JWX\JWK\Parameter\KeyTypeParameter;
 abstract class HMACAlgorithm implements SignatureAlgorithm
 {
 	/**
-	 * Shared secret key
+	 * Shared secret key.
 	 *
 	 * @var string $_key
 	 */
 	protected $_key;
 	
 	/**
-	 * Mapping from algorithm name to class name
+	 * Mapping from algorithm name to class name.
 	 *
 	 * @var array
 	 */
-	private static $_algoToCls = array(
+	const ALGO_TO_CLS = array(
 		/* @formatter:off */
 		JWA::ALGO_HS256 => HS256Algorithm::class, 
 		JWA::ALGO_HS384 => HS384Algorithm::class, 
 		JWA::ALGO_HS512 => HS512Algorithm::class
-	);	/* @formatter:on */
+		/* @formatter:on */
+	);
 	
 	/**
-	 * Get algorithm name that is recognized by the Hash extension
+	 * Get algorithm name recognized by the Hash extension.
 	 *
 	 * @return string
 	 */
@@ -52,7 +53,7 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	}
 	
 	/**
-	 * Initialize from JWK.
+	 * Initialize from a JWK.
 	 *
 	 * If algorithm is not specified, look from JWK.
 	 *
@@ -66,33 +67,33 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 			RegisteredJWKParameter::PARAM_KEY_VALUE);
 		// check that all the parameters are present
 		if (!$jwk->has(...$params)) {
-			throw new \UnexpectedValueException("Missing parameters");
+			throw new \UnexpectedValueException("Missing parameters.");
 		}
 		// check that key type is correct
 		$kty = $jwk->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value();
 		if ($kty != KeyTypeParameter::TYPE_OCT) {
-			throw new \UnexpectedValueException("Invalid key type");
+			throw new \UnexpectedValueException("Invalid key type.");
 		}
 		$key = $jwk->get(RegisteredJWKParameter::PARAM_KEY_VALUE)->key();
 		// if algorithm is not explicitly given, consult JWK
 		if (!isset($alg)) {
 			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
 				throw new \UnexpectedValueException(
-					"Missing algorithm parameter");
+					"Missing algorithm parameter.");
 			}
 			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
 		}
-		if (!isset(self::$_algoToCls[$alg])) {
-			throw new \UnexpectedValueException("Unsupported algorithm '$alg'");
+		if (!array_key_exists($alg, self::ALGO_TO_CLS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		$cls = self::$_algoToCls[$alg];
+		$cls = self::ALGO_TO_CLS[$alg];
 		return new $cls($key);
 	}
 	
 	public function computeSignature($data) {
 		$result = hash_hmac($this->_hashAlgo(), $data, $this->_key, true);
 		if (false === $result) {
-			throw new \RuntimeException("hash_hmac failed");
+			throw new \RuntimeException("hash_hmac failed.");
 		}
 		return $result;
 	}

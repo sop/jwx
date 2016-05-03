@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Authentication Tag parameter
+ * Implements 'Authentication Tag' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.7.1.2
  */

@@ -6,7 +6,7 @@ use JWX\JWA\JWA;
 
 
 /**
- * Key Encryption with RSAES OAEP
+ * Implements key encryption with RSAES OAEP.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.3
  */

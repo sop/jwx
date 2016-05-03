@@ -3,6 +3,9 @@
 namespace JWX\JWT\Claim\Validator;
 
 
+/**
+ * Base class for the claim validators.
+ */
 abstract class Validator
 {
 	/**
@@ -15,7 +18,7 @@ abstract class Validator
 	abstract public function validate($value, $constraint);
 	
 	/**
-	 * Functor method
+	 * Functor method.
 	 *
 	 * @param mixed $value
 	 * @param mixed $constraint

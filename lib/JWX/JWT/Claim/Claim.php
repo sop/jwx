@@ -2,28 +2,33 @@
 
 namespace JWX\JWT\Claim;
 
-use JWX\JWT\ValidationContext;
 use JWX\JWT\Claim\Validator\Validator;
+use JWX\JWT\ValidationContext;
 
 
+/**
+ * Represents a JWT claim.
+ *
+ * @link https://tools.ietf.org/html/rfc7519#section-4
+ */
 class Claim
 {
 	/**
-	 * Claim name
+	 * Claim name.
 	 *
 	 * @var string $_name
 	 */
 	protected $_name;
 	
 	/**
-	 * Claim value
+	 * Claim value.
 	 *
 	 * @var mixed $_value
 	 */
 	protected $_value;
 	
 	/**
-	 * Claim validator
+	 * Claim validator.
 	 *
 	 * @var Validator|null $_validator
 	 */
@@ -44,22 +49,22 @@ class Claim
 	}
 	
 	/**
-	 * Initialize from name and value
+	 * Initialize from name and value.
 	 *
 	 * @param string $name
 	 * @param mixed $value
 	 * @return Claim
 	 */
 	public static function fromNameAndValue($name, $value) {
-		if (isset(RegisteredClaim::$nameToCls[$name])) {
-			$cls = RegisteredClaim::$nameToCls[$name];
+		if (array_key_exists($name, RegisteredClaim::NAME_TO_CLS)) {
+			$cls = RegisteredClaim::NAME_TO_CLS[$name];
 			return $cls::fromJSONValue($value);
 		}
 		return new self($name, $value);
 	}
 	
 	/**
-	 * Get claim name
+	 * Get the claim name.
 	 *
 	 * @return string
 	 */
@@ -68,7 +73,7 @@ class Claim
 	}
 	
 	/**
-	 * Get claim value
+	 * Get the claim value.
 	 *
 	 * @return mixed
 	 */
@@ -77,7 +82,7 @@ class Claim
 	}
 	
 	/**
-	 * Validate claim against given constraint
+	 * Validate the claim against given constraint.
 	 *
 	 * @param mixed $constraint True if claim is valid
 	 * @return bool
@@ -90,7 +95,7 @@ class Claim
 	}
 	
 	/**
-	 * Validate claim in given context.
+	 * Validate the claim in a given context.
 	 *
 	 * @param ValidationContext $ctx
 	 * @return bool True if claim is valid

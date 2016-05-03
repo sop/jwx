@@ -2,8 +2,8 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWA\JWA;
+use JWX\JWE\KeyManagementAlgorithm;
 
 
 /**
@@ -14,7 +14,7 @@ use JWX\JWA\JWA;
 class DirectCEKAlgorithm implements KeyManagementAlgorithm
 {
 	/**
-	 * Content encryption key
+	 * Content encryption key.
 	 *
 	 * @var string $_key
 	 */

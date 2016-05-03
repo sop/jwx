@@ -6,7 +6,7 @@ use JWX\JWA\JWA;
 
 
 /**
- * Key Encryption with RSAES-PKCS1-v1_5
+ * Implements key encryption with RSAES-PKCS1-v1_5.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.2
  */

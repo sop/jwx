@@ -6,7 +6,7 @@ use JWX\JWT\Claim\Validator\EqualsValidator;
 
 
 /**
- * Implements 'jti' claim specified in rfc7519 section 4.1.7
+ * Implements 'JWT ID' claim.
  *
  * @link https://tools.ietf.org/html/rfc7519#section-4.1.7
  */

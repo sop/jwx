@@ -30,7 +30,7 @@ namespace JWX\Util;
 class UUIDv4
 {
 	/**
-	 * UUID
+	 * UUID.
 	 *
 	 * @var string $_uuid
 	 */
@@ -46,7 +46,7 @@ class UUIDv4
 	}
 	
 	/**
-	 * Create new random UUIDv4
+	 * Create new random UUIDv4.
 	 *
 	 * @return self
 	 */
@@ -79,7 +79,7 @@ class UUIDv4
 	}
 	
 	/**
-	 * Get UUIDv4 in canonical form
+	 * Get UUIDv4 in canonical form.
 	 *
 	 * @return string
 	 */

@@ -3,6 +3,11 @@
 namespace JWX\JWK\Parameter;
 
 
+/**
+ * Implements 'ECC Private Key' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-6.2.2.1
+ */
 class ECCPrivateKeyParameter extends RegisteredJWKParameter
 {
 	/**

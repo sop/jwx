@@ -6,7 +6,9 @@ use JWX\JWA\JWA;
 
 
 /**
- * HMAC using SHA-384
+ * Implements HMAC using SHA-384.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-3.2
  */
 class HS384Algorithm extends HMACAlgorithm
 {

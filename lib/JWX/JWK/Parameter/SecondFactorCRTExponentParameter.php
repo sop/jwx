@@ -5,6 +5,11 @@ namespace JWX\JWK\Parameter;
 use JWX\JWK\Parameter\Feature\Base64UIntValue;
 
 
+/**
+ * Implements 'Second Factor CRT Exponent' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.5
+ */
 class SecondFactorCRTExponentParameter extends RegisteredJWKParameter
 {
 	use Base64UIntValue;

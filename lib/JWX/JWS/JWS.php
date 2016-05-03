@@ -2,32 +2,37 @@
 
 namespace JWX\JWS;
 
-use JWX\Util\Base64;
-use JWX\JWT\JOSE;
 use JWX\JWT\Header;
+use JWX\JWT\JOSE;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\Util\Base64;
 
 
+/**
+ * Class to represent JWS structure.
+ *
+ * @link https://tools.ietf.org/html/rfc7515#section-3
+ */
 class JWS
 {
 	/**
-	 * Header
+	 * Protected header.
 	 *
 	 * @var Header $_protectedHeader
 	 */
 	protected $_protectedHeader;
 	
 	/**
-	 * Payload
+	 * Payload.
 	 *
 	 * @var string $_payload
 	 */
 	protected $_payload;
 	
 	/**
-	 * Signature
+	 * Signature.
 	 *
 	 * @var string $_signature
 	 */
@@ -41,14 +46,14 @@ class JWS
 	 * @param string $signature JWS Signature
 	 */
 	protected function __construct(Header $protected_header, $payload, 
-		$signature) {
+			$signature) {
 		$this->_protectedHeader = $protected_header;
 		$this->_payload = $payload;
 		$this->_signature = $signature;
 	}
 	
 	/**
-	 * Initialize from compact serialization
+	 * Initialize from a compact serialization.
 	 *
 	 * @param string $data
 	 * @return self
@@ -58,7 +63,7 @@ class JWS
 	}
 	
 	/**
-	 * Initialize from parts of compact serialization
+	 * Initialize from the parts of a compact serialization.
 	 *
 	 * @param array $parts
 	 * @throws \UnexpectedValueException
@@ -67,18 +72,18 @@ class JWS
 	public static function fromParts(array $parts) {
 		if (count($parts) != 3) {
 			throw new \UnexpectedValueException(
-				"Invalid JWS compact serialization");
+				"Invalid JWS compact serialization.");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($parts[0]));
-		$b64 = $header->has(RegisteredJWTParameter::P_B64) ?
-			$header->get(RegisteredJWTParameter::P_B64)->value() : true;
+		$b64 = $header->has(RegisteredJWTParameter::P_B64) ? $header->get(
+			RegisteredJWTParameter::P_B64)->value() : true;
 		$payload = $b64 ? Base64::urlDecode($parts[1]) : $parts[1];
 		$signature = Base64::urlDecode($parts[2]);
 		return new self($header, $payload, $signature);
 	}
 	
 	/**
-	 * Initialize by signing payload with given algorithm
+	 * Initialize by signing the payload with given algorithm.
 	 *
 	 * @param string $payload JWS Payload
 	 * @param SignatureAlgorithm $algo Signature algorithm
@@ -87,7 +92,7 @@ class JWS
 	 * @return self
 	 */
 	public static function sign($payload, SignatureAlgorithm $algo, 
-		Header $header = null) {
+			Header $header = null) {
 		if (!isset($header)) {
 			$header = new Header();
 		}
@@ -98,8 +103,8 @@ class JWS
 			if (!$header->has(RegisteredJWTParameter::P_CRIT)) {
 				$crit = new CriticalParameter(RegisteredJWTParameter::P_B64);
 			} else {
-				$crit = $header->get(RegisteredJWTParameter::P_CRIT)
-					->with(RegisteredJWTParameter::P_B64);
+				$crit = $header->get(RegisteredJWTParameter::P_CRIT)->with(
+					RegisteredJWTParameter::P_B64);
 			}
 			$header = $header->withParameters($crit);
 		}
@@ -109,7 +114,7 @@ class JWS
 	}
 	
 	/**
-	 * Get JOSE header
+	 * Get JOSE header.
 	 *
 	 * @return JOSE
 	 */
@@ -118,7 +123,7 @@ class JWS
 	}
 	
 	/**
-	 * Get signature algorithm name
+	 * Get the signature algorithm name.
 	 *
 	 * @return string
 	 */
@@ -129,7 +134,7 @@ class JWS
 	}
 	
 	/**
-	 * Get payload
+	 * Get the payload.
 	 *
 	 * @return string
 	 */
@@ -138,7 +143,7 @@ class JWS
 	}
 	
 	/**
-	 * Get signature
+	 * Get the signature.
 	 *
 	 * @return string
 	 */
@@ -147,19 +152,18 @@ class JWS
 	}
 	
 	/**
-	 * Get payload encoded for serialization
+	 * Get the payload encoded for serialization.
 	 *
 	 * @return string
 	 */
 	protected function _encodedPayload() {
-		$b64 = $this->_protectedHeader->has(RegisteredJWTParameter::P_B64) ?
-			$this->_protectedHeader->get(
-				RegisteredJWTParameter::P_B64)->value() : true;
+		$b64 = $this->_protectedHeader->has(RegisteredJWTParameter::P_B64) ? $this->_protectedHeader->get(
+			RegisteredJWTParameter::P_B64)->value() : true;
 		return $b64 ? Base64::urlEncode($this->_payload) : $this->_payload;
 	}
 	
 	/**
-	 * Validate signature
+	 * Validate signature.
 	 *
 	 * @param SignatureAlgorithm $algo
 	 * @throws \UnexpectedValueException
@@ -167,7 +171,7 @@ class JWS
 	 */
 	public function validate(SignatureAlgorithm $algo) {
 		if ($algo->algorithmParamValue() != $this->algorithmName()) {
-			throw new \UnexpectedValueException("Invalid signature algorithm");
+			throw new \UnexpectedValueException("Invalid signature algorithm.");
 		}
 		$data = self::_getSignatureInput($this->_payload, 
 			$this->_protectedHeader);
@@ -175,7 +179,7 @@ class JWS
 	}
 	
 	/**
-	 * Convert to compact serialization
+	 * Convert to compact serialization.
 	 *
 	 * @return string
 	 */
@@ -186,7 +190,7 @@ class JWS
 	}
 	
 	/**
-	 * Convert to compact serialization with payload detached
+	 * Convert to compact serialization with payload detached.
 	 *
 	 * @return string
 	 */
@@ -196,22 +200,22 @@ class JWS
 	}
 	
 	/**
-	 * Get input for signature algorithm
+	 * Get input for the signature algorithm.
 	 *
 	 * @param string $payload Payload
 	 * @param Header $header Protected header
 	 * @return string
 	 */
 	protected static function _getSignatureInput($payload, Header $header) {
-		$b64 = $header->has(RegisteredJWTParameter::P_B64) ?
-			$header->get(RegisteredJWTParameter::P_B64)->value() : true;
+		$b64 = $header->has(RegisteredJWTParameter::P_B64) ? $header->get(
+			RegisteredJWTParameter::P_B64)->value() : true;
 		$data = Base64::urlEncode($header->toJSON()) . ".";
 		$data .= $b64 ? Base64::urlEncode($payload) : $payload;
 		return $data;
 	}
 	
 	/**
-	 * Convert JWS to string
+	 * Convert JWS to string.
 	 *
 	 * @return string
 	 */

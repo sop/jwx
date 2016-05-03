@@ -5,6 +5,9 @@ namespace JWX\JWT\Claim\Feature;
 use JWX\JWT\ValidationContext;
 
 
+/**
+ * Trait for claims using reference time as a validation constraint.
+ */
 trait ReferenceTimeValidation
 {
 	/**
@@ -28,7 +31,6 @@ trait ReferenceTimeValidation
 			}
 			return false;
 		}
-		// reference time constraint
 		return true;
 	}
 }

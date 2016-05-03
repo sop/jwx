@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * JWK Set URL parameter
+ * Implements 'JWK Set URL' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.2
  */

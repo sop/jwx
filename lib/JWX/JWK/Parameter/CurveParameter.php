@@ -3,6 +3,11 @@
 namespace JWX\JWK\Parameter;
 
 
+/**
+ * Implements 'Curve' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-6.2.1.1
+ */
 class CurveParameter extends RegisteredJWKParameter
 {
 	const CURVE_P256 = "P-256";

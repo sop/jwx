@@ -8,16 +8,24 @@ use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\Util\Base64;
 
 
+/**
+ * JWK containing a symmetric key.
+ *
+ * @link http://tools.ietf.org/html/rfc7518#section-6.4
+ */
 class SymmetricKeyJWK extends JWK
 {
 	/**
-	 * Parameter names managed by this class
+	 * Parameter names managed by this class.
 	 *
 	 * @var string[]
 	 */
-	private static $_managedParams = array(
+	const MANAGED_PARAMS = array(
+		/* @formatter:off */
 		RegisteredJWKParameter::PARAM_KEY_TYPE, 
-		RegisteredJWKParameter::PARAM_KEY_VALUE);
+		RegisteredJWKParameter::PARAM_KEY_VALUE
+		/* @formatter:on */
+	);
 	
 	/**
 	 * Constructor
@@ -27,19 +35,19 @@ class SymmetricKeyJWK extends JWK
 	 */
 	public function __construct(JWKParameter ...$params) {
 		parent::__construct(...$params);
-		foreach (self::$_managedParams as $name) {
+		foreach (self::MANAGED_PARAMS as $name) {
 			if (!$this->has($name)) {
-				throw new \UnexpectedValueException("Missing '$name' parameter");
+				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
 		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
 			 KeyTypeParameter::TYPE_OCT) {
-			throw new \UnexpectedValueException("Invalid key type");
+			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}
 	
 	/**
-	 * Get symmetric key
+	 * Get the symmetric key.
 	 *
 	 * @return string
 	 */

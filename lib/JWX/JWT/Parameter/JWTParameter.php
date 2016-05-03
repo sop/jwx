@@ -3,17 +3,20 @@
 namespace JWX\JWT\Parameter;
 
 
+/**
+ * Represents a header parameter.
+ */
 class JWTParameter
 {
 	/**
-	 * Parameter name
+	 * Parameter name.
 	 *
 	 * @var string $_name
 	 */
 	protected $_name;
 	
 	/**
-	 * Parameter value
+	 * Parameter value.
 	 *
 	 * @var mixed $_value
 	 */
@@ -40,15 +43,15 @@ class JWTParameter
 	 * @return self
 	 */
 	public static function fromNameAndValue($name, $value) {
-		if (isset(RegisteredJWTParameter::$nameToCls[$name])) {
-			$cls = RegisteredJWTParameter::$nameToCls[$name];
+		if (array_key_exists($name, RegisteredJWTParameter::NAME_TO_CLS)) {
+			$cls = RegisteredJWTParameter::NAME_TO_CLS[$name];
 			return $cls::fromJSONValue($value);
 		}
 		return new self($name, $value);
 	}
 	
 	/**
-	 * Get parameter name
+	 * Get parameter name.
 	 *
 	 * @return string
 	 */
@@ -57,7 +60,7 @@ class JWTParameter
 	}
 	
 	/**
-	 * Get parameter value
+	 * Get parameter value.
 	 *
 	 * @return mixed
 	 */

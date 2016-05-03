@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Initialization Vector parameter
+ * Implements 'Initialization Vector' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.7.1.1
  */

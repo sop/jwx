@@ -4,7 +4,7 @@ namespace JWX\JWT\Claim;
 
 
 /**
- * Base class for registered claims
+ * Base class for registered claims.
  *
  * @link http://www.iana.org/assignments/jwt/jwt.xhtml
  */
@@ -49,11 +49,11 @@ abstract class RegisteredClaim extends Claim
 	const NAME_SUB_JWK = "sub_jwk";
 	
 	/**
-	 * Mapping from registered claim name to class name
+	 * Mapping from registered claim name to class name.
 	 *
 	 * @var array
 	 */
-	public static $nameToCls = array(
+	const NAME_TO_CLS = array(
 		/* @formatter:off */
 		self::NAME_ISSUER => IssuerClaim::class,
 		self::NAME_SUBJECT => SubjectClaim::class,
@@ -66,7 +66,7 @@ abstract class RegisteredClaim extends Claim
 	);
 	
 	/**
-	 * Initialize concrete claim instance from JSON value
+	 * Initialize concrete claim instance from a JSON value.
 	 *
 	 * @param mixed $value
 	 * @return RegisteredClaim

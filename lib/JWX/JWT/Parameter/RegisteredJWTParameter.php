@@ -58,11 +58,11 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	const P_B64 = self::PARAM_BASE64URL_ENCODE_PAYLOAD;
 	
 	/**
-	 * Mapping from registered JWT parameter name to class name
+	 * Mapping from registered JWT parameter name to class name.
 	 *
 	 * @var array
 	 */
-	public static $nameToCls = array(
+	const NAME_TO_CLS = array(
 		/* @formatter:off */
 		self::P_ALG => AlgorithmParameter::class,
 		self::P_JKU => JWKSetURLParameter::class,
@@ -86,7 +86,7 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	);
 	
 	/**
-	 * Initialize concrete JWT parameter instance from JSON value
+	 * Initialize concrete JWT parameter instance from a JSON value.
 	 *
 	 * @param mixed $value
 	 * @return RegisteredJWTParameter

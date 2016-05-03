@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * X.509 Certificate SHA-1 Thumbprint parameter
+ * Implements 'X.509 Certificate SHA-1 Thumbprint' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.7
  */

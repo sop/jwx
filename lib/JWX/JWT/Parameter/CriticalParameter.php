@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Critical parameter
+ * Implements 'Critical' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.11
  */
@@ -21,13 +21,13 @@ class CriticalParameter extends RegisteredJWTParameter
 	
 	public static function fromJSONValue($value) {
 		if (!is_array($value)) {
-			throw new \UnexpectedValueException("Array expected");
+			throw new \UnexpectedValueException("Array expected.");
 		}
 		return new static(...$value);
 	}
 	
 	/**
-	 * Get self with parameter name added
+	 * Get self with parameter name added.
 	 *
 	 * @param string $name
 	 * @return self
@@ -40,7 +40,7 @@ class CriticalParameter extends RegisteredJWTParameter
 	}
 	
 	/**
-	 * Check whether given parameter name is critical
+	 * Check whether given parameter name is critical.
 	 *
 	 * @param string $name
 	 * @return bool

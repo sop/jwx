@@ -5,10 +5,16 @@ namespace JWX\JWE\CompressionAlgorithm;
 use JWX\JWE\CompressionAlgorithm;
 
 
+/**
+ * Implements DEFLATE compression algorithm.
+ *
+ * @link https://tools.ietf.org/html/rfc7516#section-4.1.3
+ * @link https://tools.ietf.org/html/rfc1951
+ */
 class DeflateAlgorithm implements CompressionAlgorithm
 {
 	/**
-	 * Compression level
+	 * Compression level.
 	 *
 	 * @var int $_compressionLevel
 	 */

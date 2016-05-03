@@ -6,7 +6,7 @@ use JWX\JWK\JWK;
 
 
 /**
- * JSON Web Key parameter
+ * Implements 'JSON Web Key' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.3
  */
@@ -23,7 +23,7 @@ class JSONWebKeyParameter extends RegisteredJWTParameter
 	
 	public static function fromJSONValue($value) {
 		if (!is_array($value)) {
-			throw new \UnexpectedValueException("Array expected");
+			throw new \UnexpectedValueException("Array expected.");
 		}
 		return new static(JWK::fromArray($value));
 	}

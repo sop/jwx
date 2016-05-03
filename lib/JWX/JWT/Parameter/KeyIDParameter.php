@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Key ID parameter
+ * Implements 'Key ID' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.4
  */

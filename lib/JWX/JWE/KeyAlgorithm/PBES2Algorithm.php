@@ -2,78 +2,80 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
+use AESKW\AESKeyWrapAlgorithm;
+use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWT\Header;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWA\JWA;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
- * Base class for algorithms implementing PBES2 key encryption
+ * Base class for algorithms implementing PBES2 key encryption.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.8
  */
 abstract class PBES2Algorithm implements KeyManagementAlgorithm
 {
 	/**
-	 * Password
+	 * Password.
 	 *
 	 * @var string $_password
 	 */
 	protected $_password;
 	
 	/**
-	 * Salt
+	 * Salt.
 	 *
 	 * @var string $_salt
 	 */
 	protected $_salt;
 	
 	/**
-	 * Iteration count
+	 * Iteration count.
 	 *
 	 * @var int $_count
 	 */
 	protected $_count;
 	
 	/**
-	 * Derived key
+	 * Derived key.
 	 *
 	 * @var string
 	 */
 	private $_derivedKey;
 	
 	/**
-	 * Mapping from algorithm name to class name
+	 * Mapping from algorithm name to class name.
 	 *
 	 * @var array
 	 */
-	private static $_algoToCls = array(
+	const ALGO_TO_CLS = array(
 		/* @formatter:off */
 		JWA::ALGO_PBES2_HS256_A128KW => PBES2HS256A128KWAlgorithm::class, 
 		JWA::ALGO_PBES2_HS384_A192KW => PBES2HS384A192KWAlgorithm::class, 
 		JWA::ALGO_PBES2_HS512_A256KW => PBES2HS512A256KWAlgorithm::class
-	);	/* @formatter:on */
+		/* @formatter:on */
+	);
 	
 	/**
-	 * Get hash algorithm for hash_pbkdf2
+	 * Get hash algorithm for hash_pbkdf2.
 	 *
 	 * @return string
 	 */
 	abstract protected function _hashAlgo();
 	
 	/**
-	 * Get derived key length
+	 * Get derived key length.
 	 *
 	 * @return int
 	 */
 	abstract protected function _keyLength();
 	
 	/**
-	 * Get key wrapping algoritym
+	 * Get key wrapping algoritym.
 	 *
-	 * @return \AESKW\AESKeyWrapAlgorithm
+	 * @return AESKeyWrapAlgorithm
 	 */
 	abstract protected function _kwAlgo();
 	
@@ -105,18 +107,18 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 		$params = array(RegisteredJWTParameter::PARAM_PBES2_SALT_INPUT, 
 			RegisteredJWTParameter::PARAM_PBES2_COUNT);
 		if (!$header->has(...$params)) {
-			throw new \UnexpectedValueException("Missing header parameters");
+			throw new \UnexpectedValueException("Missing header parameters.");
 		}
 		if (!isset($alg)) {
 			if (!$header->has(RegisteredJWTParameter::P_ALG)) {
-				throw new \UnexpectedValueException("No algorithm parameter");
+				throw new \UnexpectedValueException("No algorithm parameter.");
 			}
 			$alg = $header->get(RegisteredJWTParameter::P_ALG)->value();
 		}
-		if (!isset(self::$_algoToCls[$alg])) {
-			throw new \UnexpectedValueException("Unsupported algorithm '$alg'");
+		if (!array_key_exists($alg, self::ALGO_TO_CLS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		$cls = self::$_algoToCls[$alg];
+		$cls = self::ALGO_TO_CLS[$alg];
 		$salt = $header->get(RegisteredJWTParameter::P_P2S)->salt(
 			new AlgorithmParameter($alg));
 		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
@@ -124,7 +126,7 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Get derived key
+	 * Get derived key.
 	 *
 	 * @return string
 	 */

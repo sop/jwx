@@ -6,7 +6,7 @@ use JWX\JWT\Claim\Feature\NumericDateClaim;
 
 
 /**
- * Implements 'iat' claim specified in rfc7519 section 4.1.6
+ * Implements 'Issued At' claim.
  *
  * @link https://tools.ietf.org/html/rfc7519#section-4.1.6
  */

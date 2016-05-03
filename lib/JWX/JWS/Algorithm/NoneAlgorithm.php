@@ -2,8 +2,8 @@
 
 namespace JWX\JWS\Algorithm;
 
-use JWX\JWS\SignatureAlgorithm;
 use JWX\JWA\JWA;
+use JWX\JWS\SignatureAlgorithm;
 
 
 /**

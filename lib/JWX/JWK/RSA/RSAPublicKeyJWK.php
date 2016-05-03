@@ -28,10 +28,13 @@ class RSAPublicKeyJWK extends JWK
 	 *
 	 * @var string[]
 	 */
-	private static $_managedParams = array(
+	const MANAGED_PARAMS = array(
+		/* @formatter:off */
 		RegisteredJWKParameter::PARAM_KEY_TYPE,
 		RegisteredJWKParameter::PARAM_MODULUS,
-		RegisteredJWKParameter::PARAM_EXPONENT);
+		RegisteredJWKParameter::PARAM_EXPONENT
+		/* @formatter:on */
+	);
 	
 	/**
 	 * Constructor
@@ -41,14 +44,14 @@ class RSAPublicKeyJWK extends JWK
 	 */
 	public function __construct(JWKParameter ...$params) {
 		parent::__construct(...$params);
-		foreach (self::$_managedParams as $name) {
+		foreach (self::MANAGED_PARAMS as $name) {
 			if (!$this->has($name)) {
-				throw new \UnexpectedValueException("Missing '$name' parameter");
+				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
 		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
 			 KeyTypeParameter::TYPE_RSA) {
-			throw new \UnexpectedValueException("Invalid key type");
+			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}
 	
@@ -82,14 +85,5 @@ class RSAPublicKeyJWK extends JWK
 		$pki = new PublicKeyInfo(new RSAEncryptionAlgorithmIdentifier(), 
 			$pk->toDER());
 		return $pki->toPEM();
-	}
-	
-	/**
-	 * Get parameter names required for the RSA public key.
-	 *
-	 * @return string[]
-	 */
-	public static function requiredParams() {
-		return self::$_managedParams;
 	}
 }

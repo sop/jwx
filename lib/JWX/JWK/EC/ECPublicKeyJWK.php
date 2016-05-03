@@ -8,17 +8,27 @@ use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
+/**
+ * Class representing elliptic curve public key as a JWK.
+ *
+ * @link https://tools.ietf.org/html/rfc7517#section-4
+ * @link https://tools.ietf.org/html/rfc7518#section-6.2
+ * @link https://tools.ietf.org/html/rfc7518#section-6.2.1
+ */
 class ECPublicKeyJWK extends JWK
 {
 	/**
-	 * Parameter names managed by this class
+	 * Parameter names managed by this class.
 	 *
 	 * @var string[]
 	 */
-	private static $_managedParams = array(
+	const MANAGED_PARAMS = array(
+		/* @formatter:off */
 		RegisteredJWKParameter::PARAM_KEY_TYPE, 
 		RegisteredJWKParameter::PARAM_CURVE, 
-		RegisteredJWKParameter::PARAM_X_COORDINATE);
+		RegisteredJWKParameter::PARAM_X_COORDINATE
+		/* @formatter:on */
+	);
 	
 	/**
 	 * Constructor
@@ -28,14 +38,14 @@ class ECPublicKeyJWK extends JWK
 	 */
 	public function __construct(JWKParameter ...$params) {
 		parent::__construct(...$params);
-		foreach (self::$_managedParams as $name) {
+		foreach (self::MANAGED_PARAMS as $name) {
 			if (!$this->has($name)) {
-				throw new \UnexpectedValueException("Missing '$name' parameter");
+				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
 		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
 			 KeyTypeParameter::TYPE_EC) {
-			throw new \UnexpectedValueException("Invalid key type");
+			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}
 }

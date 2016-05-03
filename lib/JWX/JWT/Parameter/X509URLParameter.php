@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * X.509 URL parameter
+ * Implements 'X.509 URL' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.5
  */

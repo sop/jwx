@@ -3,6 +3,11 @@
 namespace JWX\JWK\Parameter;
 
 
+/**
+ * Implements 'Y Coordinate' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-6.2.1.3
+ */
 class YCoordinateParameter extends RegisteredJWKParameter
 {
 	/**

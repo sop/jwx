@@ -6,7 +6,9 @@ use JWX\JWA\JWA;
 
 
 /**
- * HMAC using SHA-256
+ * Implements HMAC using SHA-256.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-3.2
  */
 class HS256Algorithm extends HMACAlgorithm
 {

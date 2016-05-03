@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Encryption Algorithm parameter for JWE headers.
+ * Implements 'Encryption Algorithm' parameter for JWE headers.
  *
  * @link https://tools.ietf.org/html/rfc7516#section-4.1.2
  */
@@ -20,13 +20,13 @@ class EncryptionAlgorithmParameter extends RegisteredJWTParameter
 	}
 	
 	/**
-	 * Initialize from EncryptionAlgorithmParameterValue
+	 * Initialize from EncryptionAlgorithmParameterValue.
 	 *
 	 * @param EncryptionAlgorithmParameterValue $value
 	 * @return self
 	 */
 	public static function fromAlgorithm(
-		EncryptionAlgorithmParameterValue $value) {
+			EncryptionAlgorithmParameterValue $value) {
 		return new self($value->encryptionAlgorithmParamValue());
 	}
 }

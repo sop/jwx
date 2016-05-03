@@ -6,12 +6,12 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 
 /**
- * Interface for algorithms usable for signing and validating JWS's
+ * Interface for algorithms usable for signing and validating JWS's.
  */
 interface SignatureAlgorithm extends AlgorithmParameterValue
 {
 	/**
-	 * Compute signature
+	 * Compute signature.
 	 *
 	 * @param string $data Data for which the signature is computed
 	 * @return string
@@ -19,7 +19,7 @@ interface SignatureAlgorithm extends AlgorithmParameterValue
 	public function computeSignature($data);
 	
 	/**
-	 * Validate signature
+	 * Validate signature.
 	 *
 	 * @param string $data Data to validate
 	 * @param string $signature Signature to compare

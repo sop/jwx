@@ -5,6 +5,11 @@ namespace JWX\JWE\EncryptionAlgorithm;
 use JWX\JWA\JWA;
 
 
+/**
+ * Implements AES with 128-bit key in CBC mode with HMAC SHA-256 authentication.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-5.2.3
+ */
 class A128CBCHS256Algorithm extends AESCBCAlgorithm
 {
 	public function keySize() {

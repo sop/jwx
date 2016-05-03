@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * "base64url-encode payload" parameter
+ * Implements 'base64url-encode payload' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7797#section-3
  */

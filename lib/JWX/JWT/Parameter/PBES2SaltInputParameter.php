@@ -6,7 +6,7 @@ use JWX\Util\Base64;
 
 
 /**
- * PBES2 Salt Input parameter
+ * Implements 'PBES2 Salt Input' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.1
  */
@@ -22,7 +22,7 @@ class PBES2SaltInputParameter extends RegisteredJWTParameter
 	}
 	
 	/**
-	 * Get computed salt value
+	 * Get computed salt value.
 	 *
 	 * @param AlgorithmParameter $algo
 	 * @return string

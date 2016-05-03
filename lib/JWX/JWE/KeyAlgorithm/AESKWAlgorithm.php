@@ -2,22 +2,28 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
+use AESKW\AESKeyWrapAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 
 
+/**
+ * Base class for algorithms implementing AES key wrap.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-4.4
+ */
 abstract class AESKWAlgorithm implements KeyManagementAlgorithm
 {
 	/**
-	 * Key encryption key
+	 * Key encryption key.
 	 *
 	 * @var string $_kek
 	 */
 	protected $_kek;
 	
 	/**
-	 * Get key wrapping algorithm
+	 * Get key wrapping algorithm.
 	 *
-	 * @return \AESKW\AESKeyWrapAlgorithm
+	 * @return AESKeyWrapAlgorithm
 	 */
 	abstract protected function _AESKWAlgo();
 	

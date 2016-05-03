@@ -6,12 +6,14 @@ use JWX\JWT\Claim\Claim;
 
 
 /**
- * Set of Claim objects
+ * Represents a set of Claim objects.
+ *
+ * @link https://tools.ietf.org/html/rfc7519#section-4
  */
 class Claims implements \IteratorAggregate
 {
 	/**
-	 * Claims
+	 * Claims.
 	 *
 	 * @var Claim[] $_claims
 	 */
@@ -30,7 +32,7 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
-	 * Initialize from JSON
+	 * Initialize from a JSON string.
 	 *
 	 * @param string $json
 	 * @throws \UnexpectedValueException
@@ -40,7 +42,7 @@ class Claims implements \IteratorAggregate
 		$claims = array();
 		$fields = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
 		if (!is_array($fields)) {
-			throw new \UnexpectedValueException("Invalid JSON");
+			throw new \UnexpectedValueException("Invalid JSON.");
 		}
 		foreach ($fields as $name => $value) {
 			$claims[] = Claim::fromNameAndValue($name, $value);
@@ -49,7 +51,7 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
-	 * Get self with Claim objects added
+	 * Get self with Claim objects added.
 	 *
 	 * @param Claim ...$claims One or more Claim objects
 	 * @return self
@@ -63,7 +65,7 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
-	 * Whether claim is present
+	 * Check whether claim is present.
 	 *
 	 * @param string $name Claim name
 	 */
@@ -72,7 +74,7 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
-	 * Get claim by name
+	 * Get claim by name.
 	 *
 	 * @param string $name Claim name
 	 * @throws \LogicException If claim is not present
@@ -80,13 +82,13 @@ class Claims implements \IteratorAggregate
 	 */
 	public function get($name) {
 		if (!isset($this->_claims[$name])) {
-			throw new \LogicException("Claim $name not set");
+			throw new \LogicException("Claim $name not set.");
 		}
 		return $this->_claims[$name];
 	}
 	
 	/**
-	 * Convert to JSON
+	 * Convert to a JSON.
 	 *
 	 * @return string
 	 */
@@ -99,7 +101,7 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
-	 * Check whether claims set is valid in given context
+	 * Check whether a claims set is valid in the given context.
 	 *
 	 * @param ValidationContext $ctx
 	 * @return boolean
@@ -114,7 +116,7 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
-	 * Get iterator for Claim objects keyed by claim name
+	 * Get iterator for Claim objects keyed by claim name.
 	 *
 	 * @see IteratorAggregate::getIterator()
 	 * @return Claim[]
@@ -123,6 +125,11 @@ class Claims implements \IteratorAggregate
 		return new \ArrayIterator($this->_claims);
 	}
 	
+	/**
+	 * Convert to string.
+	 *
+	 * @return string
+	 */
 	public function __toString() {
 		return $this->toJSON();
 	}

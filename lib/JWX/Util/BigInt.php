@@ -3,10 +3,13 @@
 namespace JWX\Util;
 
 
+/**
+ * Class for handling big integers.
+ */
 class BigInt
 {
 	/**
-	 * Number
+	 * Number.
 	 *
 	 * @var \GMP $_num
 	 */
@@ -22,7 +25,7 @@ class BigInt
 	}
 	
 	/**
-	 * Initialize from base10 number
+	 * Initialize from a base10 number.
 	 *
 	 * @param string|int $number
 	 * @return self
@@ -33,7 +36,7 @@ class BigInt
 	}
 	
 	/**
-	 * Initialize from base256 number.
+	 * Initialize from a base256 number.
 	 *
 	 * Base64 number is an octet string of big endian, most significant word
 	 * first integer.
@@ -47,7 +50,7 @@ class BigInt
 	}
 	
 	/**
-	 * Convert to base10 string
+	 * Convert to base10 string.
 	 *
 	 * @return string
 	 */
@@ -56,7 +59,7 @@ class BigInt
 	}
 	
 	/**
-	 * Convert to base16 string
+	 * Convert to base16 string.
 	 *
 	 * @return string
 	 */
@@ -65,7 +68,7 @@ class BigInt
 	}
 	
 	/**
-	 * Convert to base256 string
+	 * Convert to base256 string.
 	 *
 	 * @return string
 	 */

@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Compression Algorithm parameter
+ * Implements 'Compression Algorithm' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7516#section-4.1.3
  * @link

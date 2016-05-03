@@ -12,21 +12,21 @@ use JWX\JWT\Exception\ValidationException;
 class ValidationContext
 {
 	/**
-	 * Reference time
+	 * Reference time.
 	 *
 	 * @var int $_refTime
 	 */
 	protected $_refTime;
 	
 	/**
-	 * Leeway in seconds to reference time constraints
+	 * Leeway in seconds for the reference time constraints.
 	 *
 	 * @var int $_leeway
 	 */
 	protected $_leeway;
 	
 	/**
-	 * Validation constraints
+	 * Validation constraints.
 	 *
 	 * @var array $_constraints
 	 */
@@ -44,7 +44,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with reference time
+	 * Get self with reference time.
 	 *
 	 * @param int|null $ts Unix timestamp
 	 * @return self
@@ -56,7 +56,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Whether reference time is set
+	 * Check whether reference time is set.
 	 *
 	 * @return bool
 	 */
@@ -65,20 +65,20 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get reference time
+	 * Get reference time.
 	 *
 	 * @throws \LogicException
 	 * @return int
 	 */
 	public function referenceTime() {
 		if (!$this->hasReferenceTime()) {
-			throw new \LogicException("Reference time not set");
+			throw new \LogicException("Reference time not set.");
 		}
 		return $this->_refTime;
 	}
 	
 	/**
-	 * Get self with reference time leeway
+	 * Get self with reference time leeway.
 	 *
 	 * @param int $seconds
 	 * @return self
@@ -90,7 +90,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get reference time leeway
+	 * Get reference time leeway.
 	 *
 	 * @return int
 	 */
@@ -99,7 +99,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with validation constraint
+	 * Get self with validation constraint.
 	 *
 	 * @param string $name Claim name
 	 * @param mixed $constraint Value to check claim against
@@ -112,7 +112,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with issuer constraint
+	 * Get self with issuer constraint.
 	 *
 	 * @param string $issuer
 	 * @return self
@@ -122,7 +122,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with subject constraint
+	 * Get self with subject constraint.
 	 *
 	 * @param string $subject
 	 * @return self
@@ -132,7 +132,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with audience constraint
+	 * Get self with audience constraint.
 	 *
 	 * @param string $audience
 	 * @return self
@@ -142,7 +142,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with JWT ID constraint
+	 * Get self with JWT ID constraint.
 	 *
 	 * @param string $id
 	 * @return self
@@ -152,7 +152,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Whether constraint is present
+	 * Check whether constraint is present.
 	 *
 	 * @param string $name Claim name
 	 * @return bool
@@ -162,7 +162,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get constraint by claim name
+	 * Get constraint by claim name.
 	 *
 	 * @param string $name
 	 * @throws \LogicException
@@ -170,13 +170,13 @@ class ValidationContext
 	 */
 	public function constraint($name) {
 		if (!$this->hasConstraint($name)) {
-			throw new \LogicException("Constraint $name not set");
+			throw new \LogicException("Constraint $name not set.");
 		}
 		return $this->_constraints[$name];
 	}
 	
 	/**
-	 * Validate claims
+	 * Validate claims.
 	 *
 	 * @param Claims $claims
 	 * @throws \RuntimeException If any of the claims is not valid
@@ -186,7 +186,7 @@ class ValidationContext
 		foreach ($claims as $claim) {
 			if (!$claim->validateWithContext($this)) {
 				throw new ValidationException(
-					"Validation of claim '" . $claim->name() . "' failed");
+					"Validation of claim '" . $claim->name() . "' failed.");
 			}
 		}
 		return $this;

@@ -3,10 +3,13 @@
 namespace JWX\Util;
 
 
+/**
+ * Class offering Base64 encoding and decoding.
+ */
 class Base64
 {
 	/**
-	 * Encode string using base64url variant
+	 * Encode a string using base64url variant.
 	 *
 	 * @param string $data
 	 * @return string
@@ -16,7 +19,7 @@ class Base64
 	}
 	
 	/**
-	 * Decode string using base64url variant
+	 * Decode a string using base64url variant.
 	 *
 	 * @param string $data
 	 * @throws \UnexpectedValueException
@@ -34,11 +37,11 @@ class Base64
 			$data .= "=";
 			break;
 		default:
-			throw new \UnexpectedValueException("Malformed base64url encoding");
+			throw new \UnexpectedValueException("Malformed base64url encoding.");
 		}
 		$data = base64_decode($data, true);
 		if ($data === false) {
-			throw new \UnexpectedValueException("Malformed base64 encoding");
+			throw new \UnexpectedValueException("Malformed base64 encoding.");
 		}
 		return $data;
 	}

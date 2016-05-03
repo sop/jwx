@@ -5,6 +5,11 @@ namespace JWX\JWK\Parameter;
 use JWX\JWK\Parameter\Feature\Base64UIntValue;
 
 
+/**
+ * Implements 'First Prime Factor' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.2
+ */
 class FirstPrimeFactorParameter extends RegisteredJWKParameter
 {
 	use Base64UIntValue;

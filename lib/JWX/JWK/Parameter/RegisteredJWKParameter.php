@@ -4,7 +4,7 @@ namespace JWX\JWK\Parameter;
 
 
 /**
- * IANA registered JSON Web Key Parameters
+ * IANA registered JSON Web Key Parameters.
  *
  * @link http://www.iana.org/assignments/jose/jose.xhtml#web-key-parameters
  */
@@ -61,11 +61,11 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	const P_K = self::PARAM_KEY_VALUE;
 	
 	/**
-	 * Mapping from registered JWK parameter name to class name
+	 * Mapping from registered JWK parameter name to class name.
 	 *
 	 * @var array
 	 */
-	public static $nameToCls = array(
+	const NAME_TO_CLS = array(
 		/* @formatter:off */
 		self::P_KTY => KeyTypeParameter::class,
 		self::P_USE => PublicKeyUseParameter::class,
@@ -90,7 +90,7 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	);
 	
 	/**
-	 * Initialize concrete JWK parameter instance from JSON value
+	 * Initialize concrete JWK parameter instance from a JSON value.
 	 *
 	 * @param mixed $value
 	 * @return RegisteredJWKParameter

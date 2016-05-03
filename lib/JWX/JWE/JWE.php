@@ -2,54 +2,59 @@
 
 namespace JWX\JWE;
 
-use JWX\JWT\JOSE;
-use JWX\JWT\Header;
-use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
-use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
+use JWX\JWT\Header;
+use JWX\JWT\JOSE;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 
 
+/**
+ * Class to represent JWE structure.
+ *
+ * @link https://tools.ietf.org/html/rfc7516#section-3
+ */
 class JWE
 {
 	/**
-	 * Header
+	 * Protected header.
 	 *
 	 * @var Header $_protectedHeader
 	 */
 	protected $_protectedHeader;
 	
 	/**
-	 * Encrypted key
+	 * Encrypted key.
 	 *
 	 * @var string $_encryptedKey
 	 */
 	protected $_encryptedKey;
 	
 	/**
-	 * Initialization vector
+	 * Initialization vector.
 	 *
 	 * @var string
 	 */
 	protected $_iv;
 	
 	/**
-	 * Additional authenticated data
+	 * Additional authenticated data.
 	 *
 	 * @var string $_aad
 	 */
 	protected $_aad;
 	
 	/**
-	 * Ciphertext
+	 * Ciphertext.
 	 *
 	 * @var string $_ciphertext
 	 */
 	protected $_ciphertext;
 	
 	/**
-	 * Authentication tag
+	 * Authentication tag.
 	 *
 	 * @var string $_authenticationTag
 	 */
@@ -66,7 +71,7 @@ class JWE
 	 * @param string|null $aad Additional authenticated data
 	 */
 	public function __construct(Header $protected_header, $encrypted_key, $iv, 
-		$ciphertext, $auth_tag, $aad = null) {
+			$ciphertext, $auth_tag, $aad = null) {
 		$this->_protectedHeader = $protected_header;
 		$this->_encryptedKey = $encrypted_key;
 		$this->_iv = $iv;
@@ -76,7 +81,7 @@ class JWE
 	}
 	
 	/**
-	 * Initialize from compact serialization
+	 * Initialize from compact serialization.
 	 *
 	 * @param string $data
 	 * @return self
@@ -86,7 +91,7 @@ class JWE
 	}
 	
 	/**
-	 * Initialize from parts of compact serialization
+	 * Initialize from parts of compact serialization.
 	 *
 	 * @param array $parts
 	 * @throws \UnexpectedValueException
@@ -95,7 +100,7 @@ class JWE
 	public static function fromParts(array $parts) {
 		if (count($parts) != 5) {
 			throw new \UnexpectedValueException(
-				"Invalid JWE compact serialization");
+				"Invalid JWE compact serialization.");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($parts[0]));
 		$encrypted_key = Base64::urlDecode($parts[1]);
@@ -106,7 +111,7 @@ class JWE
 	}
 	
 	/**
-	 * Initialize by encrypting given payload
+	 * Initialize by encrypting the given payload.
 	 *
 	 * @param string $payload Payload
 	 * @param string $cek Content encryption key
@@ -119,8 +124,8 @@ class JWE
 	 * @return self
 	 */
 	public static function encrypt($payload, $cek, 
-		KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo, 
-		Header $header = null, $iv = null) {
+			KeyManagementAlgorithm $key_algo, 
+			ContentEncryptionAlgorithm $enc_algo, Header $header = null, $iv = null) {
 		if (!isset($header)) {
 			$header = new Header();
 		}
@@ -129,7 +134,7 @@ class JWE
 			$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
 		}
 		if (strlen($iv) != $enc_algo->ivSize()) {
-			throw new \UnexpectedValueException("Invalid IV size");
+			throw new \UnexpectedValueException("Invalid IV size.");
 		}
 		// compress
 		if ($header->has(RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)) {
@@ -149,14 +154,14 @@ class JWE
 	}
 	
 	/**
-	 * Decrypt content
+	 * Decrypt content.
 	 *
 	 * @param KeyManagementAlgorithm $key_algo
 	 * @param ContentEncryptionAlgorithm $enc_algo
 	 * @return string Plaintext payload
 	 */
 	public function decrypt(KeyManagementAlgorithm $key_algo, 
-		ContentEncryptionAlgorithm $enc_algo) {
+			ContentEncryptionAlgorithm $enc_algo) {
 		$cek = $key_algo->decrypt($this->_encryptedKey);
 		$aad = Base64::urlEncode($this->_protectedHeader->toJSON());
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
@@ -173,7 +178,7 @@ class JWE
 	}
 	
 	/**
-	 * Get JOSE header
+	 * Get JOSE header.
 	 *
 	 * @return JOSE
 	 */
@@ -182,7 +187,7 @@ class JWE
 	}
 	
 	/**
-	 * Get encrypted CEK
+	 * Get encrypted CEK.
 	 *
 	 * @return string
 	 */
@@ -191,7 +196,7 @@ class JWE
 	}
 	
 	/**
-	 * Get initialization vector
+	 * Get initialization vector.
 	 *
 	 * @return string
 	 */
@@ -200,7 +205,7 @@ class JWE
 	}
 	
 	/**
-	 * Get ciphertext
+	 * Get ciphertext.
 	 *
 	 * @return string
 	 */
@@ -209,7 +214,7 @@ class JWE
 	}
 	
 	/**
-	 * Get authentication tag
+	 * Get authentication tag.
 	 *
 	 * @return string
 	 */
@@ -218,7 +223,7 @@ class JWE
 	}
 	
 	/**
-	 * Convert to compact serialization
+	 * Convert to compact serialization.
 	 *
 	 * @return string
 	 */
@@ -231,7 +236,7 @@ class JWE
 	}
 	
 	/**
-	 * Convert JWE to string
+	 * Convert JWE to string.
 	 *
 	 * @return string
 	 */

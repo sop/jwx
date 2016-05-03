@@ -2,12 +2,14 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWA\JWA;
 use AESKW\AESKW192;
+use JWX\JWA\JWA;
 
 
 /**
- * PBES2 with HMAC SHA-384 and "A192KW" wrapping
+ * Implements PBES2 with HMAC SHA-384 and "A192KW" wrapping.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-4.8
  */
 class PBES2HS384A192KWAlgorithm extends PBES2Algorithm
 {

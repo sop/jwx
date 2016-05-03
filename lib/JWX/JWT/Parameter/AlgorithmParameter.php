@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Algorithm parameter for JWS/JWE headers.
+ * Implements 'Algorithm' parameter for JWS/JWE headers.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.1
  * @link https://tools.ietf.org/html/rfc7516#section-4.1.1

@@ -6,12 +6,12 @@ use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
- * Header used in JWS and JWE.
+ * Represents a header used in JWS and JWE.
  */
 class Header implements \Countable
 {
 	/**
-	 * Parameters
+	 * Parameters.
 	 *
 	 * @var JWTParameter[] $_parameters
 	 */
@@ -30,7 +30,7 @@ class Header implements \Countable
 	}
 	
 	/**
-	 * Initialize from array representing JSON object
+	 * Initialize from an array representing a JSON object.
 	 *
 	 * @param array $members
 	 * @return self
@@ -44,7 +44,7 @@ class Header implements \Countable
 	}
 	
 	/**
-	 * Initialize from JSON
+	 * Initialize from a JSON.
 	 *
 	 * @param string $json
 	 * @throws \UnexpectedValueException
@@ -53,13 +53,13 @@ class Header implements \Countable
 	public static function fromJSON($json) {
 		$members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
 		if (!is_array($members)) {
-			throw new \UnexpectedValueException("Invalid JSON");
+			throw new \UnexpectedValueException("Invalid JSON.");
 		}
 		return self::fromArray($members);
 	}
 	
 	/**
-	 * Get self with parameters added
+	 * Get self with parameters added.
 	 *
 	 * @param JWTParameter ...$param
 	 * @return self
@@ -73,7 +73,7 @@ class Header implements \Countable
 	}
 	
 	/**
-	 * Get all parameters
+	 * Get all parameters.
 	 *
 	 * @return JWTParameter[]
 	 */
@@ -84,7 +84,7 @@ class Header implements \Countable
 	/**
 	 * Whether parameters are present.
 	 *
-	 * Returns false if any of give given parameters is not set.
+	 * Returns false if any of the given parameters is not set.
 	 *
 	 * @param string ...$names Parameter names
 	 * @return boolean
@@ -99,7 +99,7 @@ class Header implements \Countable
 	}
 	
 	/**
-	 * Get parameter
+	 * Get a parameter.
 	 *
 	 * @param string $name Parameter name
 	 * @throws \LogicException
@@ -107,13 +107,13 @@ class Header implements \Countable
 	 */
 	public function get($name) {
 		if (!$this->has($name)) {
-			throw new \LogicException("Parameter $name doesn't exists");
+			throw new \LogicException("Parameter $name doesn't exists.");
 		}
 		return $this->_parameters[$name];
 	}
 	
 	/**
-	 * Convert to JSON
+	 * Convert to a JSON.
 	 *
 	 * @return string
 	 */
@@ -129,8 +129,7 @@ class Header implements \Countable
 	}
 	
 	/**
-	 *
-	 * {@inheritDoc}
+	 * Get the number of parameters.
 	 *
 	 * @see Countable::count()
 	 */

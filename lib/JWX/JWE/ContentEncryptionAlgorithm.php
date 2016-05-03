@@ -34,7 +34,7 @@ interface ContentEncryptionAlgorithm extends EncryptionAlgorithmParameterValue
 	public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag);
 	
 	/**
-	 * Get IV size in bytes
+	 * Get the IV size in bytes.
 	 *
 	 * @return int
 	 */

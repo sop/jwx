@@ -2,10 +2,15 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
-use JWX\JWA\JWA;
 use AESKW\AESKW192;
+use JWX\JWA\JWA;
 
 
+/**
+ * Implements AES key wrap with 192-bit key.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-4.4
+ */
 class A192KWAlgorithm extends AESKWAlgorithm
 {
 	protected function _AESKWAlgo() {

@@ -2,14 +2,19 @@
 
 namespace JWX\JWK\Parameter\Feature;
 
-use JWX\Util\BigInt;
 use JWX\Util\Base64;
+use JWX\Util\BigInt;
 
 
+/**
+ * Trait for parameter having Base64urlUInt value.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-2
+ */
 trait Base64UIntValue
 {
 	/**
-	 * Initialize parameter from base10 number
+	 * Initialize parameter from base10 number.
 	 *
 	 * @param int|string $number
 	 * @return self
@@ -20,7 +25,7 @@ trait Base64UIntValue
 	}
 	
 	/**
-	 * Get value as a number
+	 * Get value as a number.
 	 *
 	 * @return BigInt
 	 */

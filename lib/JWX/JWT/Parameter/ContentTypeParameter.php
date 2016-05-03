@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Content Type parameter
+ * Implements 'Content Type' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.10
  */

@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * PBES2 Count parameter
+ * Implements 'PBES2 Count' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.2
  */

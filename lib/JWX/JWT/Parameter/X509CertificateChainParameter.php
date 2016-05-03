@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * X.509 Certificate Chain parameter
+ * Implements 'X.509 Certificate Chain' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.6
  */
@@ -21,7 +21,7 @@ class X509CertificateChainParameter extends RegisteredJWTParameter
 	
 	public static function fromJSONValue($value) {
 		if (!is_array($value)) {
-			throw new \UnexpectedValueException("Array expected");
+			throw new \UnexpectedValueException("Array expected.");
 		}
 		return new static(...$value);
 	}

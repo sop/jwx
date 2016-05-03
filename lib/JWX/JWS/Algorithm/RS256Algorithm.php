@@ -6,7 +6,9 @@ use JWX\JWA\JWA;
 
 
 /**
- * RSASSA-PKCS1-v1_5 using SHA-256
+ * Implements RSASSA-PKCS1-v1_5 using SHA-256.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-3.3
  */
 class RS256Algorithm extends RSASSAPKCS1Algorithm
 {

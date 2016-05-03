@@ -3,6 +3,11 @@
 namespace JWX\JWK\Parameter;
 
 
+/**
+ * Implements 'Key Operations' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7517#section-4.3
+ */
 class KeyOperationsParameter extends RegisteredJWKParameter
 {
 	const OP_SIGN = "sign";
@@ -24,6 +29,9 @@ class KeyOperationsParameter extends RegisteredJWKParameter
 	}
 	
 	public static function fromJSONValue($value) {
+		if (!is_array($value)) {
+			throw new \UnexpectedValueException("key_ops must be an array.");
+		}
 		return new self(...$value);
 	}
 }

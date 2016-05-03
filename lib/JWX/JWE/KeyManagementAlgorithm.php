@@ -12,7 +12,7 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 interface KeyManagementAlgorithm extends AlgorithmParameterValue
 {
 	/**
-	 * Encrypt key to be inserted into JWE header
+	 * Encrypt key to be inserted into JWE header.
 	 *
 	 * @param string $cek Content encryption key
 	 * @return string Encrypted key
@@ -20,7 +20,7 @@ interface KeyManagementAlgorithm extends AlgorithmParameterValue
 	public function encrypt($cek);
 	
 	/**
-	 * Decrypt CEK from data
+	 * Decrypt CEK from data.
 	 *
 	 * @param string $data Encrypted key
 	 * @return string Content encryption key

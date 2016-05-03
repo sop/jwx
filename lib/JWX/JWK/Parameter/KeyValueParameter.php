@@ -5,6 +5,11 @@ namespace JWX\JWK\Parameter;
 use JWX\Util\Base64;
 
 
+/**
+ * Implements 'Key Value' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-6.4.1
+ */
 class KeyValueParameter extends RegisteredJWKParameter
 {
 	/**
@@ -17,7 +22,7 @@ class KeyValueParameter extends RegisteredJWKParameter
 	}
 	
 	/**
-	 * Initialize from binary key
+	 * Initialize from binary key.
 	 *
 	 * @param string $key
 	 * @return self
@@ -27,7 +32,7 @@ class KeyValueParameter extends RegisteredJWKParameter
 	}
 	
 	/**
-	 * Get key in binary format
+	 * Get key in binary format.
 	 *
 	 * @return string
 	 */

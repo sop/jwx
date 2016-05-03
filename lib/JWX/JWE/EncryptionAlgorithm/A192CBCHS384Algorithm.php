@@ -5,6 +5,11 @@ namespace JWX\JWE\EncryptionAlgorithm;
 use JWX\JWA\JWA;
 
 
+/**
+ * Implements AES with 192-bit key in CBC mode with HMAC SHA-384 authentication.
+ *
+ * @link https://tools.ietf.org/html/rfc7518#section-5.2.4
+ */
 class A192CBCHS384Algorithm extends AESCBCAlgorithm
 {
 	public function keySize() {

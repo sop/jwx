@@ -9,7 +9,7 @@ namespace JWX\JWT\Claim\Feature;
 trait NumericDateClaim
 {
 	/**
-	 * Initialize instance from date/time string
+	 * Initialize instance from date/time string.
 	 *
 	 * @param string $time <code>strtotime</code> compatible time string
 	 * @param string $tz Default timezone
@@ -21,7 +21,7 @@ trait NumericDateClaim
 	}
 	
 	/**
-	 * Get date as a unix timestamp
+	 * Get date as a unix timestamp.
 	 *
 	 * @return int
 	 */
@@ -30,7 +30,7 @@ trait NumericDateClaim
 	}
 	
 	/**
-	 * Get date as a datetime object
+	 * Get date as a datetime object.
 	 *
 	 * @return \DateTimeImmutable
 	 */

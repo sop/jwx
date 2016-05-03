@@ -3,6 +3,11 @@
 namespace JWX\JWK\Parameter;
 
 
+/**
+ * Implements 'Algorithm' parameter.
+ *
+ * @link https://tools.ietf.org/html/rfc7517#section-4.4
+ */
 class AlgorithmParameter extends RegisteredJWKParameter
 {
 	/**

@@ -8,7 +8,7 @@ use JWX\JWT\Claim\Validator\LessOrEqualValidator;
 
 
 /**
- * Implements 'nbf' claim specified in rfc7519 section 4.1.5
+ * Implements 'Not Before' claim.
  *
  * @link https://tools.ietf.org/html/rfc7519#section-4.1.5
  */

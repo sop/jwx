@@ -5,6 +5,15 @@ namespace JWX\JWT;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
+/**
+ * Represents as JOSE header.
+ *
+ * JOSE header consists of one or more Header objects, that are merged together.
+ *
+ * @link https://tools.ietf.org/html/rfc7519#section-5
+ * @link https://tools.ietf.org/html/rfc7515#section-4
+ * @link https://tools.ietf.org/html/rfc7516#section-4
+ */
 class JOSE extends Header
 {
 	/**
@@ -17,7 +26,7 @@ class JOSE extends Header
 		foreach ($headers as $header) {
 			foreach ($header->parameters() as $param) {
 				if (isset($params[$param->name()])) {
-					throw new \UnexpectedValueException("Duplicate parameter");
+					throw new \UnexpectedValueException("Duplicate parameter.");
 				}
 				$params[$param->name()] = $param;
 			}
@@ -26,7 +35,7 @@ class JOSE extends Header
 	}
 	
 	/**
-	 * Whether JOSE is for JWS
+	 * Whether JOSE is for a JWS.
 	 *
 	 * @return bool
 	 */
@@ -36,7 +45,7 @@ class JOSE extends Header
 	}
 	
 	/**
-	 * Whether JOSE is for JWE
+	 * Whether JOSE is for a JWE.
 	 *
 	 * @return bool
 	 */

@@ -5,24 +5,29 @@ namespace JWX\JWK;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
+/**
+ * Represents a JWK set structure.
+ *
+ * @link https://tools.ietf.org/html/rfc7517#section-5
+ */
 class JWKSet implements \Countable, \IteratorAggregate
 {
 	/**
-	 * JWK objects
+	 * JWK objects.
 	 *
 	 * @var JWK[] $_jwks
 	 */
 	protected $_jwks;
 	
 	/**
-	 * Additional members
+	 * Additional members.
 	 *
 	 * @var array $_additional
 	 */
 	protected $_additional;
 	
 	/**
-	 * JWK mappings
+	 * JWK mappings.
 	 *
 	 * @var array
 	 */
@@ -39,7 +44,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Initialize from array representing JSON object
+	 * Initialize from an array representing a JSON object.
 	 *
 	 * @param array $members
 	 * @throws \UnexpectedValueException
@@ -48,7 +53,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	public static function fromArray(array $members) {
 		if (!isset($members["keys"]) || !is_array($members["keys"])) {
 			throw new \UnexpectedValueException(
-				"JWK Set must have 'keys' member");
+				"JWK Set must have a 'keys' member.");
 		}
 		$jwks = array_map(
 			function ($jwkdata) {
@@ -61,7 +66,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Initialize from JSON
+	 * Initialize from a JSON string.
 	 *
 	 * @param string $json
 	 * @throws \UnexpectedValueException
@@ -70,13 +75,13 @@ class JWKSet implements \Countable, \IteratorAggregate
 	public static function fromJSON($json) {
 		$members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
 		if (!is_array($members)) {
-			throw new \UnexpectedValueException("Invalid JSON");
+			throw new \UnexpectedValueException("Invalid JSON.");
 		}
 		return self::fromArray($members);
 	}
 	
 	/**
-	 * Check whether set has JWK with given key ID
+	 * Check whether set has a JWK with given key ID.
 	 *
 	 * @param string $id
 	 * @return bool|JWK False if not found
@@ -88,7 +93,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Get JWK by key ID
+	 * Get a JWK by key ID.
 	 *
 	 * @param string $id
 	 * @throws \LogicException
@@ -97,7 +102,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	public function byKeyID($id) {
 		$jwk = $this->hasKeyID($id);
 		if (!$jwk) {
-			throw new \LogicException("No key ID $id");
+			throw new \LogicException("No key ID $id.");
 		}
 		return $jwk;
 	}
@@ -125,7 +130,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Convert to JSON
+	 * Convert to JSON.
 	 *
 	 * @return string
 	 */
@@ -135,7 +140,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Get number of keys
+	 * Get the number of keys.
 	 *
 	 * @see Countable::count()
 	 */
@@ -144,7 +149,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Get iterator for JWK objects
+	 * Get iterator for JWK objects.
 	 *
 	 * @see IteratorAggregate::getIterator()
 	 * @return JWK[]

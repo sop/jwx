@@ -4,7 +4,7 @@ namespace JWX\JWT\Parameter;
 
 
 /**
- * Type parameter
+ * Implements 'Type' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.9
  */

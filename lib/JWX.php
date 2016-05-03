@@ -4,7 +4,12 @@
 class JWX
 {
 	/**
-	 * Register standalone autoloader
+	 * Register standalone autoloader.
+	 *
+	 * This library is compatible with PSR-4 autoloaders and works seamlessly
+	 * with composer. Standalone autoloader here is provided in case
+	 * one does not use composer or other means to autoload classes from
+	 * this namespace.
 	 */
 	public static function registerAutoloader() {
 		spl_autoload_register(function ($cls) {
