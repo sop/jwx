@@ -2,40 +2,47 @@
 
 namespace JWX\JWK\RSA;
 
+use CryptoUtil\ASN1\AlgorithmIdentifier\Crypto\RSAEncryptionAlgorithmIdentifier;
+use CryptoUtil\ASN1\PrivateKeyInfo;
+use CryptoUtil\ASN1\RSA\RSAPrivateKey;
+use CryptoUtil\PEM\PEM;
 use JWX\JWK\JWK;
+use JWX\JWK\Parameter\ExponentParameter;
+use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
+use JWX\JWK\Parameter\FirstFactorCRTExponentParameter;
+use JWX\JWK\Parameter\FirstPrimeFactorParameter;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\ModulusParameter;
-use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\PrivateExponentParameter;
-use JWX\JWK\Parameter\FirstPrimeFactorParameter;
-use JWX\JWK\Parameter\SecondPrimeFactorParameter;
-use JWX\JWK\Parameter\FirstFactorCRTExponentParameter;
-use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
-use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
-use CryptoUtil\PEM\PEM;
-use CryptoUtil\ASN1\PrivateKeyInfo;
-use CryptoUtil\ASN1\RSA\RSAPrivateKey;
-use CryptoUtil\ASN1\RSA\RSAEncryptionAlgorithmIdentifier;
+use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
+use JWX\JWK\Parameter\SecondPrimeFactorParameter;
 
 
+/**
+ * Class representing RSA private key as a JWK.
+ *
+ * @link https://tools.ietf.org/html/rfc7517#section-4
+ * @link https://tools.ietf.org/html/rfc7518#section-6.3
+ * @link https://tools.ietf.org/html/rfc7518#section-6.3.2
+ */
 class RSAPrivateKeyJWK extends JWK
 {
 	/**
-	 * Parameter names managed by this class
+	 * Parameter names managed by this class.
 	 *
 	 * @var string[]
 	 */
 	private static $_managedParams = array(
-		RegisteredJWKParameter::PARAM_KEY_TYPE, 
-		RegisteredJWKParameter::PARAM_MODULUS, 
-		RegisteredJWKParameter::PARAM_EXPONENT, 
-		RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT, 
-		RegisteredJWKParameter::PARAM_FIRST_PRIME_FACTOR, 
-		RegisteredJWKParameter::PARAM_SECOND_PRIME_FACTOR, 
-		RegisteredJWKParameter::PARAM_FIRST_FACTOR_CRT_EXPONENT, 
-		RegisteredJWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT, 
+		RegisteredJWKParameter::PARAM_KEY_TYPE,
+		RegisteredJWKParameter::PARAM_MODULUS,
+		RegisteredJWKParameter::PARAM_EXPONENT,
+		RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT,
+		RegisteredJWKParameter::PARAM_FIRST_PRIME_FACTOR,
+		RegisteredJWKParameter::PARAM_SECOND_PRIME_FACTOR,
+		RegisteredJWKParameter::PARAM_FIRST_FACTOR_CRT_EXPONENT,
+		RegisteredJWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT,
 		RegisteredJWKParameter::PARAM_FIRST_CRT_COEFFICIENT);
 	
 	/**
@@ -58,7 +65,7 @@ class RSAPrivateKeyJWK extends JWK
 	}
 	
 	/**
-	 * Initialize from PEM
+	 * Initialize from PEM.
 	 *
 	 * @param PEM $pem
 	 * @return self
@@ -78,7 +85,7 @@ class RSAPrivateKeyJWK extends JWK
 	}
 	
 	/**
-	 * Get public key component
+	 * Get public key component.
 	 *
 	 * @return RSAPublicKeyJWK
 	 */
@@ -90,7 +97,7 @@ class RSAPrivateKeyJWK extends JWK
 	}
 	
 	/**
-	 * Convert JWK to PEM
+	 * Convert JWK to PEM.
 	 *
 	 * @return PEM PRIVATE KEY
 	 */
@@ -126,7 +133,7 @@ class RSAPrivateKeyJWK extends JWK
 	}
 	
 	/**
-	 * Get parameter names required for the RSA private key
+	 * Get parameter names required for the RSA private key.
 	 *
 	 * @return string[]
 	 */

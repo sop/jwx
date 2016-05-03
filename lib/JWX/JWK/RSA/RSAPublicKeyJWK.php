@@ -2,28 +2,35 @@
 
 namespace JWX\JWK\RSA;
 
+use CryptoUtil\ASN1\AlgorithmIdentifier\Crypto\RSAEncryptionAlgorithmIdentifier;
+use CryptoUtil\ASN1\PublicKeyInfo;
+use CryptoUtil\ASN1\RSA\RSAPublicKey;
+use CryptoUtil\PEM\PEM;
 use JWX\JWK\JWK;
+use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\ModulusParameter;
-use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
-use CryptoUtil\PEM\PEM;
-use CryptoUtil\ASN1\PublicKeyInfo;
-use CryptoUtil\ASN1\RSA\RSAPublicKey;
-use CryptoUtil\ASN1\RSA\RSAEncryptionAlgorithmIdentifier;
 
 
+/**
+ * Class representing RSA public key as a JWK.
+ *
+ * @link https://tools.ietf.org/html/rfc7517#section-4
+ * @link https://tools.ietf.org/html/rfc7518#section-6.3
+ * @link https://tools.ietf.org/html/rfc7518#section-6.3.1
+ */
 class RSAPublicKeyJWK extends JWK
 {
 	/**
-	 * Parameter names managed by this class
+	 * Parameter names managed by this class.
 	 *
 	 * @var string[]
 	 */
 	private static $_managedParams = array(
-		RegisteredJWKParameter::PARAM_KEY_TYPE, 
-		RegisteredJWKParameter::PARAM_MODULUS, 
+		RegisteredJWKParameter::PARAM_KEY_TYPE,
+		RegisteredJWKParameter::PARAM_MODULUS,
 		RegisteredJWKParameter::PARAM_EXPONENT);
 	
 	/**
@@ -46,7 +53,7 @@ class RSAPublicKeyJWK extends JWK
 	}
 	
 	/**
-	 * Initialize from PEM
+	 * Initialize from PEM.
 	 *
 	 * @param PEM $pem
 	 * @return self
@@ -60,7 +67,7 @@ class RSAPublicKeyJWK extends JWK
 	}
 	
 	/**
-	 * Convert JWK to PEM
+	 * Convert JWK to PEM.
 	 *
 	 * @return PEM PUBLIC KEY
 	 */
@@ -78,7 +85,7 @@ class RSAPublicKeyJWK extends JWK
 	}
 	
 	/**
-	 * Get parameter names required for the RSA public key
+	 * Get parameter names required for the RSA public key.
 	 *
 	 * @return string[]
 	 */
