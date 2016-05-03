@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/sop/jwx.svg?branch=master)](https://travis-ci.org/sop/jwx)
+[![License](https://poser.pugx.org/sop/jwx/license)](https://github.com/sop/jwx/blob/master/LICENSE)
 
 # JWX
 A PHP library for JSON web tokens
