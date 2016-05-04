@@ -2,8 +2,8 @@
 
 namespace JWX\JWE\CompressionAlgorithm;
 
+use JWX\JWA\JWA;
 use JWX\JWE\CompressionAlgorithm;
-use JWX\JWT\Parameter\CompressionAlgorithmParameter;
 
 
 /**
@@ -14,11 +14,13 @@ class CompressionFactory
 	/**
 	 * Mapping from algorithm name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const ALGO_TO_CLS = array(
+	const MAP_ALGO_TO_CLASS = array(
 		/* @formatter:off */
-		CompressionAlgorithmParameter::ALGO_DEFLATE => DeflateAlgorithm::class
+		JWA::ALGO_DEFLATE => DeflateAlgorithm::class
 		/* @formatter:on */
 	);
 	
@@ -30,11 +32,11 @@ class CompressionFactory
 	 * @return CompressionAlgorithm
 	 */
 	public static function algoByName($name) {
-		if (!array_key_exists($name, self::ALGO_TO_CLS)) {
+		if (!array_key_exists($name, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException(
 				"No compression algorithm '$name'.");
 		}
-		$cls = self::ALGO_TO_CLS[$name];
+		$cls = self::MAP_ALGO_TO_CLASS[$name];
 		return new $cls();
 	}
 }

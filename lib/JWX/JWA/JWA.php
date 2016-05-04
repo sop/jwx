@@ -8,6 +8,8 @@ namespace JWX\JWA;
  *
  * @link
  *       http://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms
+ * @link
+ *       http://www.iana.org/assignments/jose/jose.xhtml#web-encryption-compression-algorithms
  */
 abstract class JWA
 {
@@ -190,4 +192,9 @@ abstract class JWA
 	 * AES GCM using 256-bit key.
 	 */
 	const ALGO_A256GCM = "A256GCM";
+	
+	/**
+	 * DEFLATE compression.
+	 */
+	const ALGO_DEFLATE = "DEF";
 }
