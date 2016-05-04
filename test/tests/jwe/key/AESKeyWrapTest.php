@@ -7,6 +7,7 @@ use JWX\JWE\KeyAlgorithm\A256KWAlgorithm;
 
 /**
  * @group jwe
+ * @group key
  */
 class AESKeyWrapTest extends PHPUnit_Framework_TestCase
 {
