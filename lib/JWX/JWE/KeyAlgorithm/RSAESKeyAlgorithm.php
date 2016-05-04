@@ -26,7 +26,7 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 	/**
 	 * Private key.
 	 *
-	 * @var RSAPrivateKeyJWK $_privateKey
+	 * @var RSAPrivateKeyJWK|null $_privateKey
 	 */
 	protected $_privateKey;
 	
@@ -71,8 +71,41 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 		return new static($jwk->publicKey(), $jwk);
 	}
 	
+	/**
+	 * Get public key.
+	 *
+	 * @return RSAPublicKeyJWK
+	 */
+	public function publicKey() {
+		return $this->_publicKey;
+	}
+	
+	/**
+	 * Check whether private key is present.
+	 *
+	 * @return bool
+	 */
+	public function hasPrivateKey() {
+		return isset($this->_privateKey);
+	}
+	
+	/**
+	 * Get private key.
+	 *
+	 * @throws \LogicException
+	 * @return RSAPrivateKeyJWK
+	 */
+	public function privateKey() {
+		if (!$this->hasPrivateKey()) {
+			throw new \LogicException("Private key not set.");
+		}
+		return $this->_privateKey;
+	}
+	
 	public function encrypt($cek) {
-		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->str());
+		$key = openssl_pkey_get_public($this->publicKey()
+			->toPEM()
+			->str());
 		if (false === $key) {
 			throw new \RuntimeException("Failed to load public key.");
 		}
@@ -85,10 +118,10 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 	}
 	
 	public function decrypt($data) {
-		if (!isset($this->_privateKey)) {
-			throw new \LogicException("Private key not set.");
-		}
-		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->str());
+		$key = openssl_pkey_get_private(
+			$this->privateKey()
+				->toPEM()
+				->str());
 		if (!$key) {
 			throw new \RuntimeException("Failed to load private key.");
 		}
