@@ -4,6 +4,7 @@ namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -48,5 +49,9 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 	
 	public function algorithmParamValue() {
 		return JWA::ALGO_DIR;
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }

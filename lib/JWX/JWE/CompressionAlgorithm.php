@@ -2,11 +2,15 @@
 
 namespace JWX\JWE;
 
+use JWX\JWT\HeaderParameters;
+use JWX\JWT\Parameter\CompressionAlgorithmParameterValue;
+
 
 /**
  * Interface for algorithms that may be used to compress and decompress data.
  */
-interface CompressionAlgorithm
+interface CompressionAlgorithm extends CompressionAlgorithmParameterValue, 
+	HeaderParameters
 {
 	/**
 	 * Compress data.

@@ -3,6 +3,7 @@
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWE\ContentEncryptionAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -24,5 +25,9 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
 	
 	public function ivSize() {
 		return 12;
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }

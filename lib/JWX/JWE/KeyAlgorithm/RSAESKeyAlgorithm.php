@@ -5,6 +5,7 @@ namespace JWX\JWE\KeyAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -97,5 +98,9 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 			throw new \RuntimeException("openssl_private_decrypt() failed.");
 		}
 		return $cek;
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }

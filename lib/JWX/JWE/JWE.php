@@ -5,8 +5,6 @@ namespace JWX\JWE;
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
 use JWX\JWT\Header;
 use JWX\JWT\JOSE;
-use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 
@@ -117,15 +115,17 @@ class JWE
 	 * @param string $cek Content encryption key
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
-	 * @param Header|null $header Desired header. Algorithm specific parameters
-	 *        are automatically added.
-	 * @param string|null $iv Initialization vector. Randomly generated if not
-	 *        set.
+	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorithm
+	 * @param Header|null $header Optional desired header. Algorithm specific
+	 *        parameters are automatically added.
+	 * @param string|null $iv Optional initialization vector. Randomly generated
+	 *        if not set.
 	 * @return self
 	 */
 	public static function encrypt($payload, $cek, 
 			KeyManagementAlgorithm $key_algo, 
-			ContentEncryptionAlgorithm $enc_algo, Header $header = null, $iv = null) {
+			ContentEncryptionAlgorithm $enc_algo, 
+			CompressionAlgorithm $zip_algo = null, Header $header = null, $iv = null) {
 		if (!isset($header)) {
 			$header = new Header();
 		}
@@ -136,16 +136,13 @@ class JWE
 		if (strlen($iv) != $enc_algo->ivSize()) {
 			throw new \UnexpectedValueException("Invalid IV size.");
 		}
+		$header = $header->withParameters(...$key_algo->headerParameters())
+			->withParameters(...$enc_algo->headerParameters());
 		// compress
-		if ($header->has(RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)) {
-			$comp_algo_name = $header->get(
-				RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)->value();
-			$compressor = CompressionFactory::algoByName($comp_algo_name);
-			$payload = $compressor->compress($payload);
+		if (isset($zip_algo)) {
+			$payload = $zip_algo->compress($payload);
+			$header = $header->withParameters(...$zip_algo->headerParameters());
 		}
-		$header = $header->withParameters(
-			AlgorithmParameter::fromAlgorithm($key_algo), 
-			EncryptionAlgorithmParameter::fromAlgorithm($enc_algo));
 		$aad = Base64::urlEncode($header->toJSON());
 		list($ciphertext, $auth_tag) = $enc_algo->encrypt($payload, $cek, $iv, 
 			$aad);

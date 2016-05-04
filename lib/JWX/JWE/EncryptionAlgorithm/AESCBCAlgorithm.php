@@ -3,6 +3,7 @@
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWE\ContentEncryptionAlgorithm;
+use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 
 /**
@@ -175,6 +176,10 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	
 	public function ivSize() {
 		return 16;
+	}
+	
+	public function headerParameters() {
+		return array(EncryptionAlgorithmParameter::fromAlgorithm($this));
 	}
 	
 	/**

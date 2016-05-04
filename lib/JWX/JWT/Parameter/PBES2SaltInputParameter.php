@@ -22,12 +22,31 @@ class PBES2SaltInputParameter extends RegisteredJWTParameter
 	}
 	
 	/**
+	 * Initialize from salt input.
+	 *
+	 * @param string $salt
+	 * @return self
+	 */
+	public static function fromSaltInput($salt) {
+		return new self(Base64::urlEncode($salt));
+	}
+	
+	/**
+	 * Get salt input value.
+	 *
+	 * @return string
+	 */
+	public function saltInput() {
+		return Base64::urlDecode($this->_value);
+	}
+	
+	/**
 	 * Get computed salt value.
 	 *
 	 * @param AlgorithmParameter $algo
 	 * @return string
 	 */
 	public function salt(AlgorithmParameter $algo) {
-		return $algo->value() . "\0" . Base64::urlDecode($this->value());
+		return $algo->value() . "\0" . $this->saltInput();
 	}
 }

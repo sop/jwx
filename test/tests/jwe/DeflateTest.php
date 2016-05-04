@@ -1,13 +1,10 @@
 <?php
 
-use JWX\JWA\JWA;
 use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
-use JWX\JWT\Header;
 use JWX\JWT\JWT;
-use JWX\JWT\Parameter\CompressionAlgorithmParameter;
 
 
 /**
@@ -37,11 +34,9 @@ class DeflateTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testEncode() {
-		$header = new Header(
-			new CompressionAlgorithmParameter(JWA::ALGO_DEFLATE));
 		$jwe = JWE::encrypt(self::PAYLOAD, self::CEK_A128, 
 			new DirectCEKAlgorithm(self::CEK_A128), new A128CBCHS256Algorithm(), 
-			$header);
+			new DeflateAlgorithm());
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe->toCompact();
 	}

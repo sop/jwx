@@ -1,10 +1,10 @@
 <?php
 
-use JWX\JWT\Header;
+use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWT\Header;
 use JWX\Util\Base64;
 
 
@@ -84,7 +84,8 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$key_algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
 		$enc_algo = new A128CBCHS256Algorithm();
-		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, $header, $iv);
+		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, null, $header, 
+			$iv);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}

@@ -2,7 +2,9 @@
 
 namespace JWX\JWE\CompressionAlgorithm;
 
+use JWX\JWA\JWA;
 use JWX\JWE\CompressionAlgorithm;
+use JWX\JWT\Parameter\CompressionAlgorithmParameter;
 
 
 /**
@@ -35,5 +37,13 @@ class DeflateAlgorithm implements CompressionAlgorithm
 	
 	public function decompress($data) {
 		return gzinflate($data);
+	}
+	
+	public function compressionParamValue() {
+		return JWA::ALGO_DEFLATE;
+	}
+	
+	public function headerParameters() {
+		return array(CompressionAlgorithmParameter::fromAlgorithm($this));
 	}
 }

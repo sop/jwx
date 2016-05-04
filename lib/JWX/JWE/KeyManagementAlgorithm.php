@@ -2,6 +2,7 @@
 
 namespace JWX\JWE;
 
+use JWX\JWT\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 
@@ -9,7 +10,8 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
  * Interface for algorithms that may be used to derive CEK for
  * content encryption algorithm.
  */
-interface KeyManagementAlgorithm extends AlgorithmParameterValue
+interface KeyManagementAlgorithm extends AlgorithmParameterValue, 
+	HeaderParameters
 {
 	/**
 	 * Encrypt a key to be inserted into JWE header.

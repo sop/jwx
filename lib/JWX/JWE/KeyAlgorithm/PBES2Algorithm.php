@@ -7,6 +7,8 @@ use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\PBES2CountParameter;
+use JWX\JWT\Parameter\PBES2SaltInputParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
@@ -25,11 +27,11 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	protected $_password;
 	
 	/**
-	 * Salt.
+	 * Salt input.
 	 *
 	 * @var string $_salt
 	 */
-	protected $_salt;
+	protected $_saltInput;
 	
 	/**
 	 * Iteration count.
@@ -85,13 +87,26 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	 * Constructor
 	 *
 	 * @param string $password Password
-	 * @param string $salt Computed salt
+	 * @param string $salt Salt input
 	 * @param int $count Iteration count
 	 */
 	public function __construct($password, $salt, $count) {
 		$this->_password = $password;
-		$this->_salt = $salt;
+		$this->_saltInput = $salt;
 		$this->_count = $count;
+	}
+	
+	/**
+	 * Initialize from password with random salt and default iteration count.
+	 *
+	 * @param string $password Password
+	 * @param int $count Optional user defined iteration count
+	 * @param int $salt_bytes Optional user defined salt length
+	 * @return self
+	 */
+	public static function fromPassword($password, $count = 64000, $salt_bytes = 8) {
+		$salt_input = openssl_random_pseudo_bytes($salt_bytes);
+		return new static($password, $salt_input, $count);
 	}
 	
 	/**
@@ -121,10 +136,37 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
 		$cls = self::MAP_ALGO_TO_CLASS[$alg];
-		$salt = $header->get(RegisteredJWTParameter::P_P2S)->salt(
-			new AlgorithmParameter($alg));
+		$salt = $header->get(RegisteredJWTParameter::P_P2S)->saltInput();
 		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
 		return new $cls($password, $salt, $count);
+	}
+	
+	/**
+	 * Get salt input.
+	 *
+	 * @return string
+	 */
+	public function saltInput() {
+		return $this->_saltInput;
+	}
+	
+	/**
+	 * Get computed salt.
+	 *
+	 * @return string
+	 */
+	public function salt() {
+		return PBES2SaltInputParameter::fromSaltInput($this->_saltInput)->salt(
+			AlgorithmParameter::fromAlgorithm($this));
+	}
+	
+	/**
+	 * Get iteration count.
+	 *
+	 * @return int
+	 */
+	public function iterationCount() {
+		return $this->_count;
 	}
 	
 	/**
@@ -135,7 +177,7 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	protected function _derivedKey() {
 		if (!isset($this->_derivedKey)) {
 			$this->_derivedKey = hash_pbkdf2($this->_hashAlgo(), 
-				$this->_password, $this->_salt, $this->_count, 
+				$this->_password, $this->salt(), $this->_count, 
 				$this->_keyLength(), true);
 		}
 		return $this->_derivedKey;
@@ -149,5 +191,11 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	public function decrypt($data) {
 		$kek = $this->_derivedKey();
 		return $this->_kwAlgo()->unwrap($data, $kek);
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this), 
+			PBES2SaltInputParameter::fromSaltInput($this->_saltInput), 
+			new PBES2CountParameter($this->_count));
 	}
 }

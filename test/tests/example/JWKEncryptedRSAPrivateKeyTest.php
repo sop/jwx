@@ -1,11 +1,11 @@
 <?php
 
+use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWT\Header;
-use JWX\Util\Base64;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
-use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\Util\Base64;
 
 
 /**
@@ -197,10 +197,9 @@ EOF;
 		$cek = implode("", array_map("chr", self::$_cekBytes));
 		$password = implode("", array_map("chr", self::$_passphraseBytes));
 		$p2s = $header->get(RegisteredJWTParameter::P_P2S);
-		$alg = $header->get(RegisteredJWTParameter::P_ALG);
-		$salt = $p2s->salt($alg);
 		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
-		$key_algo = new PBES2HS256A128KWAlgorithm($password, $salt, $count);
+		$key_algo = new PBES2HS256A128KWAlgorithm($password, $p2s->saltInput(), 
+			$count);
 		$data = $key_algo->encrypt($cek);
 		$this->assertEquals($expected, $data);
 	}
@@ -220,7 +219,7 @@ EOF;
 	
 	/**
 	 * @depends testAAD
-	 * 
+	 *
 	 * @param string $aad
 	 */
 	public function testEncrypt($aad) {

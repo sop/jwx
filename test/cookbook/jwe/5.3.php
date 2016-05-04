@@ -1,10 +1,10 @@
 <?php
 
-use JWX\JWT\Header;
-use JWX\JWE\JWE;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\Util\Base64;
+use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
+use JWX\JWT\Header;
+use JWX\Util\Base64;
 
 
 class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
@@ -75,7 +75,8 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$password = self::$_testData["input"]["pwd"];
 		$key_algo = PBES2Algorithm::fromHeader($header, $password);
 		$enc_algo = new A128CBCHS256Algorithm();
-		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, $header, $iv);
+		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, null, $header, 
+			$iv);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}

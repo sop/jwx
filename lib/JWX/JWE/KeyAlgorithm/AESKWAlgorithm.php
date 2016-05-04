@@ -4,6 +4,7 @@ namespace JWX\JWE\KeyAlgorithm;
 
 use AESKW\AESKeyWrapAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -42,5 +43,9 @@ abstract class AESKWAlgorithm implements KeyManagementAlgorithm
 	
 	public function decrypt($data) {
 		return $this->_AESKWAlgo()->unwrap($data, $this->_kek);
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }
