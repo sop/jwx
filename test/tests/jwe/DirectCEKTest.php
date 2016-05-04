@@ -1,10 +1,11 @@
 <?php
 
-use JWX\JWE\JWE;
-use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
+use JWX\JWA\JWA;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A192CBCHS384Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A256CBCHS512Algorithm;
+use JWX\JWE\JWE;
+use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 
 
 /**
@@ -17,6 +18,52 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	const CEK_A128 = "123456789 123456789 123456789 12";
 	const CEK_A192 = "123456789 123456789 123456789 123456789 12345678";
 	const CEK_A256 = self::CEK_A128 . self::CEK_A128;
+	
+	public function testCreate() {
+		$algo = new DirectCEKAlgorithm(self::CEK_A128);
+		$this->assertInstanceOf(DirectCEKAlgorithm::class, $algo);
+		return $algo;
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testCEK(DirectCEKAlgorithm $algo) {
+		$this->assertEquals(self::CEK_A128, $algo->cek());
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testAlgoValue(DirectCEKAlgorithm $algo) {
+		$this->assertEquals(JWA::ALGO_DIR, $algo->algorithmParamValue());
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testEncryptCEK(DirectCEKAlgorithm $algo) {
+		$data = $algo->encrypt(self::CEK_A128);
+		$this->assertEquals("", $data);
+		return $data;
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @depends testEncryptCEK
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testDecryptCEK(DirectCEKAlgorithm $algo, $data) {
+		$cek = $algo->decrypt($data);
+		$this->assertEquals(self::CEK_A128, $cek);
+	}
 	
 	/**
 	 *
