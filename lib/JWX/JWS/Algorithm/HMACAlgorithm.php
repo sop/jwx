@@ -26,9 +26,11 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	/**
 	 * Mapping from algorithm name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const ALGO_TO_CLS = array(
+	const MAP_NAME_TO_CLASS = array(
 		/* @formatter:off */
 		JWA::ALGO_HS256 => HS256Algorithm::class, 
 		JWA::ALGO_HS384 => HS384Algorithm::class, 
@@ -83,10 +85,10 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 			}
 			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
 		}
-		if (!array_key_exists($alg, self::ALGO_TO_CLS)) {
+		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		$cls = self::ALGO_TO_CLS[$alg];
+		$cls = self::MAP_NAME_TO_CLASS[$alg];
 		return new $cls($key);
 	}
 	

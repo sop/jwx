@@ -48,9 +48,11 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	/**
 	 * Mapping from algorithm name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const ALGO_TO_CLS = array(
+	const MAP_ALGO_TO_CLASS = array(
 		/* @formatter:off */
 		JWA::ALGO_PBES2_HS256_A128KW => PBES2HS256A128KWAlgorithm::class, 
 		JWA::ALGO_PBES2_HS384_A192KW => PBES2HS384A192KWAlgorithm::class, 
@@ -115,10 +117,10 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 			}
 			$alg = $header->get(RegisteredJWTParameter::P_ALG)->value();
 		}
-		if (!array_key_exists($alg, self::ALGO_TO_CLS)) {
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		$cls = self::ALGO_TO_CLS[$alg];
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
 		$salt = $header->get(RegisteredJWTParameter::P_P2S)->salt(
 			new AlgorithmParameter($alg));
 		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();

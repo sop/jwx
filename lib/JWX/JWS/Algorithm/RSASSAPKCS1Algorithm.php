@@ -34,9 +34,11 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	/**
 	 * Mapping from algorithm name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const ALGO_TO_CLS = array(
+	const MAP_NAME_TO_CLASS = array(
 		/* @formatter:off */
 		JWA::ALGO_RS256 => RS256Algorithm::class,
 		JWA::ALGO_RS384 => RS384Algorithm::class,
@@ -102,11 +104,11 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 			}
 			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
 		}
-		if (!array_key_exists($alg, self::ALGO_TO_CLS)) {
+		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
 			throw new \UnexpectedValueException(
 				"Algorithm '$alg' not supported.");
 		}
-		$cls = self::ALGO_TO_CLS[$alg];
+		$cls = self::MAP_NAME_TO_CLASS[$alg];
 		$params = RSAPrivateKeyJWK::MANAGED_PARAMS;
 		if ($jwk->has(...$params)) {
 			return $cls::fromPrivateKey(RSAPrivateKeyJWK::fromJWK($jwk));

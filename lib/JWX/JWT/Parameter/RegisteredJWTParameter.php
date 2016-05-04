@@ -60,9 +60,11 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	/**
 	 * Mapping from registered JWT parameter name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const NAME_TO_CLS = array(
+	const MAP_NAME_TO_CLASS = array(
 		/* @formatter:off */
 		self::P_ALG => AlgorithmParameter::class,
 		self::P_JKU => JWKSetURLParameter::class,

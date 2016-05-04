@@ -43,8 +43,8 @@ class JWTParameter
 	 * @return self
 	 */
 	public static function fromNameAndValue($name, $value) {
-		if (array_key_exists($name, RegisteredJWTParameter::NAME_TO_CLS)) {
-			$cls = RegisteredJWTParameter::NAME_TO_CLS[$name];
+		if (array_key_exists($name, RegisteredJWTParameter::MAP_NAME_TO_CLASS)) {
+			$cls = RegisteredJWTParameter::MAP_NAME_TO_CLASS[$name];
 			return $cls::fromJSONValue($value);
 		}
 		return new self($name, $value);

@@ -51,9 +51,11 @@ abstract class RegisteredClaim extends Claim
 	/**
 	 * Mapping from registered claim name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const NAME_TO_CLS = array(
+	const MAP_NAME_TO_CLASS = array(
 		/* @formatter:off */
 		self::NAME_ISSUER => IssuerClaim::class,
 		self::NAME_SUBJECT => SubjectClaim::class,

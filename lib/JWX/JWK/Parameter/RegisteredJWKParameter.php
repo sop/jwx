@@ -63,9 +63,11 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	/**
 	 * Mapping from registered JWK parameter name to class name.
 	 *
+	 * @internal
+	 *
 	 * @var array
 	 */
-	const NAME_TO_CLS = array(
+	const MAP_NAME_TO_CLASS = array(
 		/* @formatter:off */
 		self::P_KTY => KeyTypeParameter::class,
 		self::P_USE => PublicKeyUseParameter::class,

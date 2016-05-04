@@ -45,8 +45,8 @@ class JWKParameter
 	 * @return self
 	 */
 	public static function fromNameAndValue($name, $value) {
-		if (array_key_exists($name, RegisteredJWKParameter::NAME_TO_CLS)) {
-			$cls = RegisteredJWKParameter::NAME_TO_CLS[$name];
+		if (array_key_exists($name, RegisteredJWKParameter::MAP_NAME_TO_CLASS)) {
+			$cls = RegisteredJWKParameter::MAP_NAME_TO_CLASS[$name];
 			return $cls::fromJSONValue($value);
 		}
 		return new self($name, $value);

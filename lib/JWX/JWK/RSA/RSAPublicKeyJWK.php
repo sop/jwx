@@ -26,6 +26,8 @@ class RSAPublicKeyJWK extends JWK
 	/**
 	 * Parameter names managed by this class.
 	 *
+	 * @internal
+	 *
 	 * @var string[]
 	 */
 	const MANAGED_PARAMS = array(

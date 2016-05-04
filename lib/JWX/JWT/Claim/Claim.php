@@ -56,8 +56,8 @@ class Claim
 	 * @return Claim
 	 */
 	public static function fromNameAndValue($name, $value) {
-		if (array_key_exists($name, RegisteredClaim::NAME_TO_CLS)) {
-			$cls = RegisteredClaim::NAME_TO_CLS[$name];
+		if (array_key_exists($name, RegisteredClaim::MAP_NAME_TO_CLASS)) {
+			$cls = RegisteredClaim::MAP_NAME_TO_CLASS[$name];
 			return $cls::fromJSONValue($value);
 		}
 		return new self($name, $value);
