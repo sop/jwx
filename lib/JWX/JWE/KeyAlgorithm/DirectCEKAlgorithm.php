@@ -16,17 +16,26 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 	/**
 	 * Content encryption key.
 	 *
-	 * @var string $_key
+	 * @var string $_cek
 	 */
-	protected $_key;
+	protected $_cek;
 	
 	/**
 	 * Constructor
 	 *
 	 * @param string $key Content encryption key
 	 */
-	public function __construct($key) {
-		$this->_key = $key;
+	public function __construct($cek) {
+		$this->_cek = $cek;
+	}
+	
+	/**
+	 * Get content encryption key.
+	 *
+	 * @return string
+	 */
+	public function cek() {
+		return $this->_cek;
 	}
 	
 	public function encrypt($cek) {
@@ -34,7 +43,7 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 	}
 	
 	public function decrypt($data) {
-		return $this->_key;
+		return $this->_cek;
 	}
 	
 	public function algorithmParamValue() {
