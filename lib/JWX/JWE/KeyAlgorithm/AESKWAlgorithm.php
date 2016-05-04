@@ -22,7 +22,16 @@ abstract class AESKWAlgorithm implements KeyManagementAlgorithm
 	protected $_kek;
 	
 	/**
-	 * Get key wrapping algorithm.
+	 * Key wrapping algorithm.
+	 *
+	 * Lazily initialized.
+	 *
+	 * @var AESKeyWrapAlgorithm|null $_kw
+	 */
+	protected $_kw;
+	
+	/**
+	 * Get key wrapping algorithm instance.
 	 *
 	 * @return AESKeyWrapAlgorithm
 	 */
@@ -37,12 +46,24 @@ abstract class AESKWAlgorithm implements KeyManagementAlgorithm
 		$this->_kek = $kek;
 	}
 	
+	/**
+	 * Get key wrapping algorithm.
+	 *
+	 * @return AESKeyWrapAlgorithm
+	 */
+	protected function _kw() {
+		if (!isset($this->_kw)) {
+			$this->_kw = $this->_AESKWAlgo();
+		}
+		return $this->_kw;
+	}
+	
 	public function encrypt($cek) {
-		return $this->_AESKWAlgo()->wrap($cek, $this->_kek);
+		return $this->_kw()->wrap($cek, $this->_kek);
 	}
 	
 	public function decrypt($data) {
-		return $this->_AESKWAlgo()->unwrap($data, $this->_kek);
+		return $this->_kw()->unwrap($data, $this->_kek);
 	}
 	
 	public function headerParameters() {
