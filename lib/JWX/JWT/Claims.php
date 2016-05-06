@@ -10,7 +10,7 @@ use JWX\JWT\Claim\Claim;
  *
  * @link https://tools.ietf.org/html/rfc7519#section-4
  */
-class Claims implements \IteratorAggregate
+class Claims implements \Countable, \IteratorAggregate
 {
 	/**
 	 * Claims.
@@ -65,9 +65,19 @@ class Claims implements \IteratorAggregate
 	}
 	
 	/**
+	 * Get all claims.
+	 *
+	 * @return Claim[]
+	 */
+	public function all() {
+		return $this->_claims;
+	}
+	
+	/**
 	 * Check whether claim is present.
 	 *
 	 * @param string $name Claim name
+	 * @return true
 	 */
 	public function has($name) {
 		return isset($this->_claims[$name]);
@@ -113,6 +123,16 @@ class Claims implements \IteratorAggregate
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Get the number of claims.
+	 *
+	 * @see Countable::count()
+	 * @return int
+	 */
+	public function count() {
+		return count($this->_claims);
 	}
 	
 	/**
