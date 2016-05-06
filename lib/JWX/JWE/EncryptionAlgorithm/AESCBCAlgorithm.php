@@ -3,6 +3,7 @@
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWE\ContentEncryptionAlgorithm;
+use JWX\JWE\Exception\AuthenticationException;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 
@@ -152,7 +153,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		$ciphertext = openssl_encrypt($plaintext, $this->_getCipherMethod(), 
 			$this->_encKey($key), OPENSSL_RAW_DATA, $iv);
 		if (false === $ciphertext) {
-			throw new \RuntimeException("openssl_encrypt failed.");
+			throw new \RuntimeException("openssl_encrypt() failed.");
 		}
 		$auth_data = $aad . $iv . $ciphertext . $this->_aadLen($aad);
 		$auth_tag = $this->_computeAuthTag($auth_data, $key);
@@ -164,12 +165,12 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		$this->_validateIV($iv);
 		$auth_data = $aad . $iv . $ciphertext . $this->_aadLen($aad);
 		if ($this->_computeAuthTag($auth_data, $key) != $auth_tag) {
-			throw new \RuntimeException("Message authentication failed.");
+			throw new AuthenticationException("Message authentication failed.");
 		}
 		$plaintext = openssl_decrypt($ciphertext, $this->_getCipherMethod(), 
 			$this->_encKey($key), OPENSSL_RAW_DATA, $iv);
 		if (false === $plaintext) {
-			throw new \RuntimeException("openssl_decrypt failed.");
+			throw new \RuntimeException("openssl_decrypt() failed.");
 		}
 		return $plaintext;
 	}
@@ -188,6 +189,10 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	 * @return string
 	 */
 	public function generateRandomCEK() {
-		return openssl_random_pseudo_bytes($this->keySize());
+		$ret = openssl_random_pseudo_bytes($this->keySize());
+		if (false === $ret) {
+			throw new \RuntimeException("openssl_random_pseudo_bytes() failed.");
+		}
+		return $ret;
 	}
 }
