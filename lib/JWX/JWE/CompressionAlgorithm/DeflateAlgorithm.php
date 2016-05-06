@@ -28,15 +28,36 @@ class DeflateAlgorithm implements CompressionAlgorithm
 	 * @param int $level Compression level 0..9
 	 */
 	public function __construct($level = -1) {
+		if ($level < -1 || $level > 9) {
+			throw new \DomainException("Compression level must be -1..9.");
+		}
 		$this->_compressionLevel = (int) $level;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWE\CompressionAlgorithm::compress()
+	 * @throws \RuntimeException
+	 */
 	public function compress($data) {
-		return gzdeflate($data, $this->_compressionLevel);
+		$ret = gzdeflate($data, $this->_compressionLevel);
+		if (false === $ret) {
+			throw new \RuntimeException("gzdeflate() failed.");
+		}
+		return $ret;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWE\CompressionAlgorithm::decompress()
+	 * @throws \RuntimeException
+	 */
 	public function decompress($data) {
-		return gzinflate($data);
+		$ret = gzinflate($data);
+		if (false === $ret) {
+			throw new \RuntimeException("gzinflate() failed.");
+		}
+		return $ret;
 	}
 	
 	public function compressionParamValue() {
