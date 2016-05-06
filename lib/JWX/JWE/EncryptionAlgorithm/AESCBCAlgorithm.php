@@ -15,13 +15,6 @@ use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 {
 	/**
-	 * Get content encryption key size.
-	 *
-	 * @return int
-	 */
-	abstract public function keySize();
-	
-	/**
 	 * Get cipher method name that is recognized by OpenSSL.
 	 *
 	 * @return string
