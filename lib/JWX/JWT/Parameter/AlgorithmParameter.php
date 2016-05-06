@@ -21,7 +21,7 @@ class AlgorithmParameter extends RegisteredJWTParameter
 	}
 	
 	/**
-	 * Initialize from AlgorithmParameterValue
+	 * Initialize from AlgorithmParameterValue.
 	 *
 	 * @param AlgorithmParameterValue $value
 	 * @return self

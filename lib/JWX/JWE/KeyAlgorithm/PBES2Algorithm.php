@@ -156,7 +156,7 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	 * @return string
 	 */
 	public function salt() {
-		return PBES2SaltInputParameter::fromSaltInput($this->_saltInput)->salt(
+		return PBES2SaltInputParameter::fromString($this->_saltInput)->salt(
 			AlgorithmParameter::fromAlgorithm($this));
 	}
 	
@@ -195,7 +195,7 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 	
 	public function headerParameters() {
 		return array(AlgorithmParameter::fromAlgorithm($this), 
-			PBES2SaltInputParameter::fromSaltInput($this->_saltInput), 
+			PBES2SaltInputParameter::fromString($this->_saltInput), 
 			new PBES2CountParameter($this->_count));
 	}
 }

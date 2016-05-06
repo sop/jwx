@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\JWT\Parameter\Feature\Base64URLValue;
+
 
 /**
  * Implements 'X.509 Certificate SHA-1 Thumbprint' parameter.
@@ -10,12 +12,15 @@ namespace JWX\JWT\Parameter;
  */
 class X509CertificateSHA1ThumbprintParameter extends RegisteredJWTParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
 	 * @param string $thumbprint Base64url encoded SHA-1 hash
 	 */
 	public function __construct($thumbprint) {
+		$this->_validateEncoding($thumbprint);
 		parent::__construct(self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT, 
 			(string) $thumbprint);
 	}

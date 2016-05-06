@@ -2,6 +2,7 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\JWT\Parameter\Feature\Base64URLValue;
 use JWX\Util\Base64;
 
 
@@ -12,6 +13,8 @@ use JWX\Util\Base64;
  */
 class PBES2SaltInputParameter extends RegisteredJWTParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
@@ -19,16 +22,6 @@ class PBES2SaltInputParameter extends RegisteredJWTParameter
 	 */
 	public function __construct($salt) {
 		parent::__construct(self::PARAM_PBES2_SALT_INPUT, (string) $salt);
-	}
-	
-	/**
-	 * Initialize from salt input.
-	 *
-	 * @param string $salt
-	 * @return self
-	 */
-	public static function fromSaltInput($salt) {
-		return new self(Base64::urlEncode($salt));
 	}
 	
 	/**

@@ -21,7 +21,7 @@ class CriticalParameter extends RegisteredJWTParameter
 	
 	public static function fromJSONValue($value) {
 		if (!is_array($value)) {
-			throw new \UnexpectedValueException("Array expected.");
+			throw new \UnexpectedValueException("crit must be an array.");
 		}
 		return new static(...$value);
 	}
@@ -47,5 +47,14 @@ class CriticalParameter extends RegisteredJWTParameter
 	 */
 	public function has($name) {
 		return false !== array_search($name, $this->_value);
+	}
+	
+	/**
+	 * Get critical header parameter names.
+	 *
+	 * @return string[]
+	 */
+	public function names() {
+		return $this->_value;
 	}
 }

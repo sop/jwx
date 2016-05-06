@@ -23,8 +23,17 @@ class JSONWebKeyParameter extends RegisteredJWTParameter
 	
 	public static function fromJSONValue($value) {
 		if (!is_array($value)) {
-			throw new \UnexpectedValueException("Array expected.");
+			throw new \UnexpectedValueException("jwk must be an array.");
 		}
 		return new static(JWK::fromArray($value));
+	}
+	
+	/**
+	 * Get value as a JWK.
+	 *
+	 * @return JWK
+	 */
+	public function jwk() {
+		return JWK::fromArray($this->_value);
 	}
 }

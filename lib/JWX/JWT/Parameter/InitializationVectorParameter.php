@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\JWT\Parameter\Feature\Base64URLValue;
+
 
 /**
  * Implements 'Initialization Vector' parameter.
@@ -10,12 +12,15 @@ namespace JWX\JWT\Parameter;
  */
 class InitializationVectorParameter extends RegisteredJWTParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
 	 * @param string $iv Base64url encoded initialization vector
 	 */
 	public function __construct($iv) {
+		$this->_validateEncoding($iv);
 		parent::__construct(self::PARAM_INITIALIZATION_VECTOR, (string) $iv);
 	}
 }

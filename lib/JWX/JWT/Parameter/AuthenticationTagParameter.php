@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\JWT\Parameter\Feature\Base64URLValue;
+
 
 /**
  * Implements 'Authentication Tag' parameter.
@@ -10,12 +12,15 @@ namespace JWX\JWT\Parameter;
  */
 class AuthenticationTagParameter extends RegisteredJWTParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
 	 * @param string $tag Base64url encoded authentication tag
 	 */
 	public function __construct($tag) {
+		$this->_validateEncoding($tag);
 		parent::__construct(self::PARAM_AUTHENTICATION_TAG, (string) $tag);
 	}
 }
