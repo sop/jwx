@@ -112,22 +112,30 @@ class JWE
 	 * Initialize by encrypting the given payload.
 	 *
 	 * @param string $payload Payload
-	 * @param string $cek Content encryption key
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
 	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorithm
 	 * @param Header|null $header Optional desired header. Algorithm specific
 	 *        parameters are automatically added.
+	 * @param string|null $cek Optional content encryption key. Randomly
+	 *        generated if not set.
 	 * @param string|null $iv Optional initialization vector. Randomly generated
 	 *        if not set.
 	 * @return self
 	 */
-	public static function encrypt($payload, $cek, 
-			KeyManagementAlgorithm $key_algo, 
+	public static function encrypt($payload, KeyManagementAlgorithm $key_algo, 
 			ContentEncryptionAlgorithm $enc_algo, 
-			CompressionAlgorithm $zip_algo = null, Header $header = null, $iv = null) {
+			CompressionAlgorithm $zip_algo = null, Header $header = null, $cek = null, 
+			$iv = null) {
 		if (!isset($header)) {
 			$header = new Header();
+		}
+		// generate random CEK
+		if (!isset($cek)) {
+			$cek = $key_algo->cekForEncryption($enc_algo->keySize());
+		}
+		if (strlen($cek) !== $enc_algo->keySize()) {
+			throw new \UnexpectedValueException("Invalid key size.");
 		}
 		// generate random IV
 		if (!isset($iv)) {
@@ -136,6 +144,7 @@ class JWE
 		if (strlen($iv) != $enc_algo->ivSize()) {
 			throw new \UnexpectedValueException("Invalid IV size.");
 		}
+		// add key and encryption algorithm parameters to header
 		$header = $header->withParameters(...$key_algo->headerParameters())
 			->withParameters(...$enc_algo->headerParameters());
 		// compress
