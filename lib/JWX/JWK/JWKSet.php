@@ -81,26 +81,35 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
-	 * Check whether set has a JWK with given key ID.
+	 * Get JWK by key ID.
 	 *
 	 * @param string $id
-	 * @return bool|JWK False if not found
+	 * @return JWK|null Null if not found
 	 */
-	public function hasKeyID($id) {
+	protected function _getByKeyID($id) {
 		$map = $this->_getMapping(RegisteredJWKParameter::PARAM_KEY_ID);
-		// return object 
-		return isset($map[$id]) ? $map[$id] : false;
+		return isset($map[$id]) ? $map[$id] : null;
 	}
 	
 	/**
-	 * Get a JWK by key ID.
+	 * Check whether set has a JWK with a given key ID.
+	 *
+	 * @param string $id
+	 * @return bool
+	 */
+	public function hasKeyID($id) {
+		return $this->_getByKeyID($id) !== null;
+	}
+	
+	/**
+	 * Get a JWK by a key ID.
 	 *
 	 * @param string $id
 	 * @throws \LogicException
 	 * @return JWK
 	 */
 	public function byKeyID($id) {
-		$jwk = $this->hasKeyID($id);
+		$jwk = $this->_getByKeyID($id);
 		if (!$jwk) {
 			throw new \LogicException("No key ID $id.");
 		}
@@ -135,7 +144,8 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 * @return string
 	 */
 	public function toJSON() {
-		$data = array("keys" => $this->_jwks);
+		$data = $this->_additional;
+		$data["keys"] = $this->_jwks;
 		return json_encode((object) $data, JSON_UNESCAPED_SLASHES);
 	}
 	
