@@ -10,7 +10,7 @@ use JWX\JWK\Parameter\JWKParameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4
  */
-class JWK implements \Countable
+class JWK implements \Countable, \IteratorAggregate
 {
 	/**
 	 * Parameters.
@@ -159,5 +159,15 @@ class JWK implements \Countable
 	 */
 	public function count() {
 		return count($this->_parameters);
+	}
+	
+	/**
+	 * Get iterator for the parameters.
+	 *
+	 * @see IteratorAggregate::getIterator()
+	 * @return \ArrayIterator
+	 */
+	public function getIterator() {
+		return new \ArrayIterator($this->_parameters);
 	}
 }
