@@ -2,6 +2,7 @@
 
 namespace JWX\JWT;
 
+use JWX\JWE\CompressionAlgorithm;
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyManagementAlgorithm;
@@ -91,20 +92,18 @@ class JWT
 	 * Convert claims set to an encrypted JWE token.
 	 *
 	 * @param Claims $claims Claims set
-	 * @param string $cek Content encryption key
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
+	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorith
 	 * @param Header|null $header Optional header
 	 * @return string
 	 */
-	public static function encryptedFromClaims(Claims $claims, $cek, 
+	public static function encryptedFromClaims(Claims $claims, 
 			KeyManagementAlgorithm $key_algo, 
-			ContentEncryptionAlgorithm $enc_algo, Header $header = null) {
+			ContentEncryptionAlgorithm $enc_algo, 
+			CompressionAlgorithm $zip_algo = null, Header $header = null) {
 		$payload = $claims->toJSON();
-		if (!isset($header)) {
-			$header = new Header();
-		}
-		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, $header);
+		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, $zip_algo, $header);
 		return new self($jwe->toCompact());
 	}
 	
