@@ -8,7 +8,7 @@ use JWX\JWT\Parameter\JWTParameter;
 /**
  * Represents a header used in JWS and JWE.
  */
-class Header implements \Countable
+class Header implements \Countable, \IteratorAggregate
 {
 	/**
 	 * Parameters.
@@ -132,8 +132,19 @@ class Header implements \Countable
 	 * Get the number of parameters.
 	 *
 	 * @see Countable::count()
+	 * @return int
 	 */
 	public function count() {
 		return count($this->_parameters);
+	}
+	
+	/**
+	 * Get iterator for the parameters.
+	 *
+	 * @see IteratorAggregate::getIterator()
+	 * @return \ArrayIterator
+	 */
+	public function getIterator() {
+		return new \ArrayIterator($this->_parameters);
 	}
 }
