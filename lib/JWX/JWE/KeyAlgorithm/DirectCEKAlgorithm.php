@@ -44,6 +44,17 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 	}
 	
 	public function decrypt($data) {
+		if ($data !== "") {
+			throw new \UnexpectedValueException(
+				"Encrypted key must be an empty octet sequence.");
+		}
+		return $this->_cek;
+	}
+	
+	public function cekForEncryption($length) {
+		if (strlen($this->_cek) != $length) {
+			throw new \RuntimeException("Invalid key length.");
+		}
 		return $this->_cek;
 	}
 	

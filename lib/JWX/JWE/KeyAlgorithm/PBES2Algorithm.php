@@ -4,6 +4,7 @@ namespace JWX\JWE\KeyAlgorithm;
 
 use AESKW\AESKeyWrapAlgorithm;
 use JWX\JWA\JWA;
+use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
@@ -19,6 +20,8 @@ use JWX\JWT\Parameter\RegisteredJWTParameter;
  */
 abstract class PBES2Algorithm implements KeyManagementAlgorithm
 {
+	use RandomCEK;
+	
 	/**
 	 * Password.
 	 *

@@ -28,4 +28,14 @@ interface KeyManagementAlgorithm extends AlgorithmParameterValue,
 	 * @return string Content encryption key
 	 */
 	public function decrypt($data);
+	
+	/**
+	 * Get content encryption key for the encryption.
+	 *
+	 * Returned key may be random depending on the key management algorithm.
+	 *
+	 * @param int $length Required key size in bytes
+	 * @return string
+	 */
+	public function cekForEncryption($length);
 }

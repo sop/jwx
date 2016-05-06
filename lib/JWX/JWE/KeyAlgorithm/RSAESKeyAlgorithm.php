@@ -2,6 +2,7 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
+use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
@@ -16,6 +17,8 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  */
 abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 {
+	use RandomCEK;
+	
 	/**
 	 * Public key.
 	 *
@@ -103,9 +106,10 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 	}
 	
 	public function encrypt($cek) {
-		$key = openssl_pkey_get_public($this->publicKey()
-			->toPEM()
-			->str());
+		$key = openssl_pkey_get_public(
+			$this->publicKey()
+				->toPEM()
+				->str());
 		if (false === $key) {
 			throw new \RuntimeException("Failed to load public key.");
 		}

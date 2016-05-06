@@ -3,6 +3,7 @@
 namespace JWX\JWE\KeyAlgorithm;
 
 use AESKW\AESKeyWrapAlgorithm;
+use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
@@ -14,6 +15,8 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  */
 abstract class AESKWAlgorithm implements KeyManagementAlgorithm
 {
+	use RandomCEK;
+	
 	/**
 	 * Key encryption key.
 	 *
