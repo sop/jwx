@@ -20,6 +20,7 @@ class ExponentParameter extends RegisteredJWKParameter
 	 * @param string $e Exponent in base64urlUInt encoding
 	 */
 	public function __construct($e) {
+		$this->_validateEncoding($e);
 		parent::__construct(self::PARAM_EXPONENT, $e);
 	}
 }

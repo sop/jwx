@@ -20,6 +20,7 @@ class SecondFactorCRTExponentParameter extends RegisteredJWKParameter
 	 * @param string $dq Second factor CRT exponent in base64urlUInt encoding
 	 */
 	public function __construct($dq) {
+		$this->_validateEncoding($dq);
 		parent::__construct(self::PARAM_SECOND_FACTOR_CRT_EXPONENT, $dq);
 	}
 }

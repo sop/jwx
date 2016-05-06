@@ -20,6 +20,7 @@ class FirstFactorCRTExponentParameter extends RegisteredJWKParameter
 	 * @param string $dp First factor CRT exponent in base64urlUInt encoding
 	 */
 	public function __construct($dp) {
+		$this->_validateEncoding($dp);
 		parent::__construct(self::PARAM_FIRST_FACTOR_CRT_EXPONENT, $dp);
 	}
 }

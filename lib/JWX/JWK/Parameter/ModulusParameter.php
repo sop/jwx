@@ -20,6 +20,7 @@ class ModulusParameter extends RegisteredJWKParameter
 	 * @param string $n Modulus in base64urlUInt encoding
 	 */
 	public function __construct($n) {
+		$this->_validateEncoding($n);
 		parent::__construct(self::PARAM_MODULUS, $n);
 	}
 }

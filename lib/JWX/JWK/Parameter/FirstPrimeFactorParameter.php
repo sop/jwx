@@ -20,6 +20,7 @@ class FirstPrimeFactorParameter extends RegisteredJWKParameter
 	 * @param string $p First prime factor in base64urlUInt encoding
 	 */
 	public function __construct($p) {
+		$this->_validateEncoding($p);
 		parent::__construct(self::PARAM_FIRST_PRIME_FACTOR, $p);
 	}
 }

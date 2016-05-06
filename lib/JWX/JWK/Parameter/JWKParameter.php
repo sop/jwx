@@ -36,7 +36,7 @@ class JWKParameter
 	}
 	
 	/**
-	 * Initialize from name and value.
+	 * Initialize from a name and a value.
 	 *
 	 * Returns a parameter specific object if one is implemented.
 	 *

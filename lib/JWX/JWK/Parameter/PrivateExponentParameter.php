@@ -20,6 +20,7 @@ class PrivateExponentParameter extends RegisteredJWKParameter
 	 * @param string $d Private exponent in base64urlUInt encoding
 	 */
 	public function __construct($d) {
+		$this->_validateEncoding($d);
 		parent::__construct(self::PARAM_PRIVATE_EXPONENT, $d);
 	}
 }

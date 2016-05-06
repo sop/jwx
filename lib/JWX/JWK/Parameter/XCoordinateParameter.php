@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\JWK\Parameter\Feature\Base64URLValue;
+
 
 /**
  * Implements 'X Coordinate' parameter.
@@ -10,12 +12,15 @@ namespace JWX\JWK\Parameter;
  */
 class XCoordinateParameter extends RegisteredJWKParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
 	 * @param string $coord X coordinate in base64url encoding
 	 */
 	public function __construct($coord) {
+		$this->_validateEncoding($coord);
 		parent::__construct(self::PARAM_X_COORDINATE, $coord);
 	}
 }

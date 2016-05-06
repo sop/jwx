@@ -13,6 +13,8 @@ use JWX\Util\BigInt;
  */
 trait Base64UIntValue
 {
+	use Base64URLValue;
+	
 	/**
 	 * Initialize parameter from base10 number.
 	 *
@@ -21,7 +23,7 @@ trait Base64UIntValue
 	 */
 	public static function fromNumber($number) {
 		$data = BigInt::fromBase10($number)->base256();
-		return new static(Base64::urlEncode($data));
+		return self::fromString($data);
 	}
 	
 	/**

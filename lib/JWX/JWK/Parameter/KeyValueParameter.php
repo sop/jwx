@@ -2,6 +2,7 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\JWK\Parameter\Feature\Base64URLValue;
 use JWX\Util\Base64;
 
 
@@ -12,23 +13,16 @@ use JWX\Util\Base64;
  */
 class KeyValueParameter extends RegisteredJWKParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
 	 * @param string $key Base64url encoded key
 	 */
 	public function __construct($key) {
+		$this->_validateEncoding($key);
 		parent::__construct(self::PARAM_KEY_VALUE, $key);
-	}
-	
-	/**
-	 * Initialize from binary key.
-	 *
-	 * @param string $key
-	 * @return self
-	 */
-	public static function fromKey($key) {
-		return new self(Base64::urlEncode($key));
 	}
 	
 	/**

@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\JWK\Parameter\Feature\Base64URLValue;
+
 
 /**
  * Implements 'ECC Private Key' parameter.
@@ -10,12 +12,15 @@ namespace JWX\JWK\Parameter;
  */
 class ECCPrivateKeyParameter extends RegisteredJWKParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *
 	 * @param string $key Private key in base64url encoding
 	 */
 	public function __construct($key) {
+		$this->_validateEncoding($key);
 		parent::__construct(self::PARAM_ECC_PRIVATE_KEY, $key);
 	}
 }

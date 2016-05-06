@@ -20,6 +20,7 @@ class FirstCRTCoefficientParameter extends RegisteredJWKParameter
 	 * @param string $qi First CRT coefficient in base64urlUInt encoding
 	 */
 	public function __construct($qi) {
+		$this->_validateEncoding($qi);
 		parent::__construct(self::PARAM_FIRST_CRT_COEFFICIENT, $qi);
 	}
 }
