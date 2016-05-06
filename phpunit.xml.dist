@@ -8,8 +8,11 @@
 	convertWarningsToExceptions="true"
 	bootstrap="test/bootstrap.php">
 	<testsuites>
-		<testsuite name="Default">
-			<directory>test/tests</directory>
+		<testsuite name="Unit">
+			<directory>test/unit</directory>
+		</testsuite>
+		<testsuite name="Integration">
+			<directory>test/integration</directory>
 		</testsuite>
 		<testsuite name="JOSE Cookbook">
 			<directory suffix=".php">test/cookbook</directory>

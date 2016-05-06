@@ -1,14 +1,13 @@
 <?php
 
-use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\HS256Algorithm;
+use JWX\JWS\JWS;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\B64PayloadParameter;
 
 
 /**
  * @group jws
- * @todo move to integration tests
  */
 class B64Test extends PHPUnit_Framework_TestCase
 {
