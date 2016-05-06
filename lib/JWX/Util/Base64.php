@@ -16,7 +16,7 @@ class Base64
 	 * @return string
 	 */
 	public static function urlEncode($data) {
-		return strtr(rtrim(base64_encode($data), "="), "+/", "-_");
+		return strtr(rtrim(self::encode($data), "="), "+/", "-_");
 	}
 	
 	/**
@@ -41,11 +41,7 @@ class Base64
 		default:
 			throw new \UnexpectedValueException("Malformed base64url encoding.");
 		}
-		$data = base64_decode($data, true);
-		if ($data === false) {
-			throw new \UnexpectedValueException("Malformed base64 encoding.");
-		}
-		return $data;
+		return self::decode($data);
 	}
 	
 	/**
@@ -56,6 +52,49 @@ class Base64
 	 * @return bool
 	 */
 	public static function isValidURLEncoding($data) {
-		return preg_match('#[A-Za-z0-9\-_]*#', $data) == 1;
+		return preg_match('#^[A-Za-z0-9\-_]*$#', $data) == 1;
+	}
+	
+	/**
+	 * Encode a string in base64.
+	 *
+	 * @link https://tools.ietf.org/html/rfc4648#section-4
+	 * @param string $data
+	 * @throws \RuntimeException
+	 * @return string
+	 */
+	public static function encode($data) {
+		$ret = base64_encode($data);
+		if (false === $ret) {
+			throw new \RuntimeException("base64_encode() failed.");
+		}
+		return $ret;
+	}
+	
+	/**
+	 * Decode a string from base64 encoding.
+	 *
+	 * @link https://tools.ietf.org/html/rfc4648#section-4
+	 * @param string $data
+	 * @throws \RuntimeException
+	 * @return string
+	 */
+	public static function decode($data) {
+		$ret = base64_decode($data, true);
+		if (false === $ret) {
+			throw new \RuntimeException("base64_decode() failed.");
+		}
+		return $ret;
+	}
+	
+	/**
+	 * Check whether string is validly base64 encoded.
+	 *
+	 * @link https://tools.ietf.org/html/rfc4648#section-4
+	 * @param string $data
+	 * @return bool
+	 */
+	public static function isValid($data) {
+		return preg_match('#^[A-Za-z0-9+/]*={0,2}$#', $data) == 1;
 	}
 }
