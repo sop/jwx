@@ -1,6 +1,6 @@
 <?php
 
-namespace JWX\JWK\Parameter\Feature;
+namespace JWX\JWT\Parameter\Feature;
 
 use JWX\Util\Base64;
 

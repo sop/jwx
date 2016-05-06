@@ -2,7 +2,7 @@
 
 namespace JWX\JWK\Parameter;
 
-use JWX\JWK\Parameter\Feature\Base64URLValue;
+use JWX\JWT\Parameter\Feature\Base64URLValue;
 
 
 /**

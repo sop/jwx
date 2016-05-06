@@ -2,6 +2,7 @@
 
 namespace JWX\JWK\Parameter\Feature;
 
+use JWX\JWT\Parameter\Feature\Base64URLValue;
 use JWX\Util\Base64;
 use JWX\Util\BigInt;
 
