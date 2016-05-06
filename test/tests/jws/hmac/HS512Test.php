@@ -1,8 +1,8 @@
 <?php
 
 use JWX\JWA\JWA;
-use JWX\JWS\Algorithm\NoneAlgorithm;
-use JWX\JWS\JWS;
+use JWX\JWS\Algorithm\HMACAlgorithm;
+use JWX\JWS\Algorithm\HS512Algorithm;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
 
@@ -10,13 +10,15 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 /**
  * @group jws
  */
-class NoneSignatureTest extends PHPUnit_Framework_TestCase
+class HS512Test extends PHPUnit_Framework_TestCase
 {
+	const KEY = "12345678";
+	
 	const DATA = "CONTENT";
 	
 	public function testCreate() {
-		$algo = new NoneAlgorithm();
-		$this->assertInstanceOf(SignatureAlgorithm::class, $algo);
+		$algo = new HS512Algorithm(self::KEY);
+		$this->assertInstanceOf(HMACAlgorithm::class, $algo);
 		return $algo;
 	}
 	
@@ -26,7 +28,7 @@ class NoneSignatureTest extends PHPUnit_Framework_TestCase
 	 * @param AlgorithmParameterValue $algo
 	 */
 	public function testAlgoParamValue(AlgorithmParameterValue $algo) {
-		$this->assertEquals(JWA::ALGO_NONE, $algo->algorithmParamValue());
+		$this->assertEquals(JWA::ALGO_HS512, $algo->algorithmParamValue());
 	}
 	
 	/**
@@ -36,7 +38,7 @@ class NoneSignatureTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(SignatureAlgorithm $algo) {
 		$sig = $algo->computeSignature(self::DATA);
-		$this->assertEquals("", $sig);
+		$this->assertEquals(64, strlen($sig));
 		return $sig;
 	}
 	

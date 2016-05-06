@@ -8,6 +8,7 @@ use JWX\JWT\Parameter\B64PayloadParameter;
 
 /**
  * @group jws
+ * @todo move to integration tests
  */
 class B64Test extends PHPUnit_Framework_TestCase
 {

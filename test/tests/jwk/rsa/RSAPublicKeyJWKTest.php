@@ -9,9 +9,18 @@ use JWX\JWK\RSA\RSAPublicKeyJWK;
  */
 class RSAPublicKeyJWKTest extends PHPUnit_Framework_TestCase
 {
+	private static $_pubPEM;
+	
+	public static function setUpBeforeClass() {
+		self::$_pubPEM = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+	}
+	
+	public static function tearDownAfterClass() {
+		self::$_pubPEM = null;
+	}
+	
 	public function testFromPEM() {
-		$pem = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
-		$jwk = RSAPublicKeyJWK::fromPEM($pem);
+		$jwk = RSAPublicKeyJWK::fromPEM(self::$_pubPEM);
 		$this->assertInstanceOf(RSAPublicKeyJWK::class, $jwk);
 		return $jwk;
 	}
@@ -33,7 +42,6 @@ class RSAPublicKeyJWKTest extends PHPUnit_Framework_TestCase
 	 * @param PEM $pem
 	 */
 	public function testRecoded(PEM $pem) {
-		$ref = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
-		$this->assertEquals($ref, $pem);
+		$this->assertEquals(self::$_pubPEM, $pem);
 	}
 }

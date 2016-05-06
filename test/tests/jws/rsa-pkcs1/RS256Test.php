@@ -1,8 +1,10 @@
 <?php
 
+use CryptoUtil\PEM\PEM;
 use JWX\JWA\JWA;
-use JWX\JWS\Algorithm\NoneAlgorithm;
-use JWX\JWS\JWS;
+use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWS\Algorithm\RS256Algorithm;
+use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
 
@@ -10,13 +12,24 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 /**
  * @group jws
  */
-class NoneSignatureTest extends PHPUnit_Framework_TestCase
+class RS256Test extends PHPUnit_Framework_TestCase
 {
+	private static $_privKey;
+	
 	const DATA = "CONTENT";
 	
+	public static function setUpBeforeClass() {
+		self::$_privKey = RSAPrivateKeyJWK::fromPEM(
+			PEM::fromFile(TEST_ASSETS_DIR . "/rsa/private_key.pem"));
+	}
+	
+	public static function tearDownAfterClass() {
+		self::$_privKey = null;
+	}
+	
 	public function testCreate() {
-		$algo = new NoneAlgorithm();
-		$this->assertInstanceOf(SignatureAlgorithm::class, $algo);
+		$algo = RS256Algorithm::fromPrivateKey(self::$_privKey);
+		$this->assertInstanceOf(RSASSAPKCS1Algorithm::class, $algo);
 		return $algo;
 	}
 	
@@ -26,7 +39,7 @@ class NoneSignatureTest extends PHPUnit_Framework_TestCase
 	 * @param AlgorithmParameterValue $algo
 	 */
 	public function testAlgoParamValue(AlgorithmParameterValue $algo) {
-		$this->assertEquals(JWA::ALGO_NONE, $algo->algorithmParamValue());
+		$this->assertEquals(JWA::ALGO_RS256, $algo->algorithmParamValue());
 	}
 	
 	/**
@@ -36,7 +49,7 @@ class NoneSignatureTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(SignatureAlgorithm $algo) {
 		$sig = $algo->computeSignature(self::DATA);
-		$this->assertEquals("", $sig);
+		$this->assertTrue(is_string($sig));
 		return $sig;
 	}
 	
