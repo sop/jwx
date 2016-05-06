@@ -75,7 +75,7 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$password = self::$_testData["input"]["pwd"];
 		$key_algo = PBES2Algorithm::fromHeader($header, $password);
 		$enc_algo = new A128CBCHS256Algorithm();
-		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, null, $header, 
+		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 
 			$iv);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;

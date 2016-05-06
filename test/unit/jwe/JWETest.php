@@ -32,8 +32,7 @@ class JWETest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testEncrypt() {
-		$jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo->cek(), 
-			self::$_keyAlgo, self::$_encAlgo);
+		$jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}
@@ -119,8 +118,8 @@ class JWETest extends PHPUnit_Framework_TestCase
 		$zip_algo = new DeflateAlgorithm();
 		$header = new Header(new JWTParameter("test", "value"));
 		static $iv = "0123456789abcdef";
-		$jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo->cek(), 
-			self::$_keyAlgo, self::$_encAlgo, $zip_algo, $header, $iv);
+		$jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, 
+			$zip_algo, $header, self::CEK, $iv);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}

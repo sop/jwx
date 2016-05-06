@@ -63,7 +63,7 @@ class DeflateTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testEncrypt(CompressionAlgorithm $algo) {
 		$key_algo = new DirectCEKAlgorithm(self::CEK_A128);
-		$jwe = JWE::encrypt(self::PAYLOAD, $key_algo->cek(), $key_algo, 
+		$jwe = JWE::encrypt(self::PAYLOAD, $key_algo, 
 			new A128CBCHS256Algorithm(), $algo);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe->toCompact();

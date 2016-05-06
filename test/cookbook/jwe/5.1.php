@@ -84,7 +84,7 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$key_algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
 		$enc_algo = new A128CBCHS256Algorithm();
-		$jwe = JWE::encrypt($payload, $cek, $key_algo, $enc_algo, null, $header, 
+		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 
 			$iv);
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
