@@ -35,6 +35,16 @@ class JOSE extends Header
 	}
 	
 	/**
+	 * Get self merged with another Header.
+	 *
+	 * @param Header $header
+	 * @return self
+	 */
+	public function withHeader(Header $header) {
+		return new self($this, $header);
+	}
+	
+	/**
 	 * Whether JOSE is for a JWS.
 	 *
 	 * @return bool
