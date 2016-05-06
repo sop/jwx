@@ -1,10 +1,10 @@
 <?php
 
-use JWX\JWT\Header;
-use JWX\JWS\JWS;
-use JWX\JWS\Algorithm\HMACAlgorithm;
 use JWX\JWK\JWK;
-use JWX\JWK\SymmetricKeyJWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
+use JWX\JWS\Algorithm\HMACAlgorithm;
+use JWX\JWS\JWS;
+use JWX\JWT\Header;
 use JWX\Util\Base64;
 
 

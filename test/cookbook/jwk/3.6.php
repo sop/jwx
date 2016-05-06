@@ -1,6 +1,6 @@
 <?php
 
-use JWX\JWK\SymmetricKeyJWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 
 
 class CookbookSymmetricEncKeyTest extends PHPUnit_Framework_TestCase
