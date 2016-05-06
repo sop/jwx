@@ -11,6 +11,7 @@ class Base64
 	/**
 	 * Encode a string using base64url variant.
 	 *
+	 * @link https://en.wikipedia.org/wiki/Base64#URL_applications
 	 * @param string $data
 	 * @return string
 	 */
@@ -21,6 +22,7 @@ class Base64
 	/**
 	 * Decode a string using base64url variant.
 	 *
+	 * @link https://en.wikipedia.org/wiki/Base64#URL_applications
 	 * @param string $data
 	 * @throws \UnexpectedValueException
 	 * @return string
@@ -44,5 +46,16 @@ class Base64
 			throw new \UnexpectedValueException("Malformed base64 encoding.");
 		}
 		return $data;
+	}
+	
+	/**
+	 * Check whether string is validly base64url encoded.
+	 *
+	 * @link https://en.wikipedia.org/wiki/Base64#URL_applications
+	 * @param string $data
+	 * @return bool
+	 */
+	public static function isValidURLEncoding($data) {
+		return preg_match('#[A-Za-z0-9\-_]*#', $data) == 1;
 	}
 }
