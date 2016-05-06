@@ -1,11 +1,12 @@
 <?php
 
 use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\NotBeforeClaim;
+use JWX\JWT\Claim\RegisteredClaim;
 
 
 /**
+ * @group jwt
  * @group claim
  */
 class NotBeforeClaimTest extends PHPUnit_Framework_TestCase
@@ -14,6 +15,16 @@ class NotBeforeClaimTest extends PHPUnit_Framework_TestCase
 	
 	public function testCreate() {
 		$claim = new NotBeforeClaim(self::VALUE);
+		$this->assertInstanceOf(NotBeforeClaim::class, $claim);
+		return $claim;
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Claim $claim
+	 */
+	public function testClaimName(Claim $claim) {
 		$this->assertEquals(RegisteredClaim::NAME_NOT_BEFORE, $claim->name());
 	}
 	
@@ -26,12 +37,12 @@ class NotBeforeClaimTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function validateProvider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[self::VALUE, true],
 			[self::VALUE + 1, true],
 			[self::VALUE - 1, false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

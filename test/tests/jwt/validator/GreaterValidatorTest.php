@@ -4,6 +4,7 @@ use JWX\JWT\Claim\Validator\GreaterValidator;
 
 
 /**
+ * @group jwt
  * @group validator
  */
 class GreaterValidatorTest extends PHPUnit_Framework_TestCase
@@ -26,8 +27,8 @@ class GreaterValidatorTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function provider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[   1,    0,  true],
 			[   0,    0, false],
 			[  -1,    0, false],
@@ -37,7 +38,7 @@ class GreaterValidatorTest extends PHPUnit_Framework_TestCase
 			[ "0",  "0", false],
 			["-1",  "0", false],
 			["-1", "-2",  true]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

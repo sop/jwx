@@ -1,12 +1,13 @@
 <?php
 
 use JWX\JWT\Header;
-use JWX\JWT\Parameter\TypeParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\ContentTypeParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\TypeParameter;
 
 
 /**
+ * @group jwt
  * @group header
  */
 class HeaderTest extends PHPUnit_Framework_TestCase
@@ -16,7 +17,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 * @return Header
 	 */
 	public function testCreate() {
-		$header = new Header(new TypeParameter("test"));
+		$header = Header::fromArray(array("alg" => "none", "typ" => "test"));
 		$this->assertInstanceOf(Header::class, $header);
 		return $header;
 	}
@@ -32,7 +33,25 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 * @param Header $header
 	 */
 	public function testHas(Header $header) {
-		$this->assertTrue($header->has(RegisteredJWTParameter::PARAM_TYPE));
+		$this->assertTrue($header->has("typ"));
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Header $header
+	 */
+	public function testHasMany(Header $header) {
+		$this->assertTrue($header->has("typ", "alg"));
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Header $header
+	 */
+	public function testHasNot(Header $header) {
+		$this->assertFalse($header->has("typ", "nope"));
 	}
 	
 	/**
@@ -60,9 +79,40 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param Header $header
 	 */
+	public function testParameters(Header $header) {
+		$this->assertTrue(is_array($header->parameters()));
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Header $header
+	 */
+	public function testCount(Header $header) {
+		$this->assertCount(2, $header);
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Header $header
+	 */
+	public function testIterator(Header $header) {
+		$values = array();
+		foreach ($header as $param) {
+			$values[] = $param;
+		}
+		$this->assertCount(2, $values);
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Header $header
+	 */
 	public function testAdd(Header $header) {
 		$header = $header->withParameters(new ContentTypeParameter("test"));
-		$this->assertCount(2, $header);
+		$this->assertCount(3, $header);
 	}
 	
 	/**
@@ -85,7 +135,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToJSON(Header $header) {
 		$json = $header->toJSON();
-		$this->assertEquals('{"typ":"test"}', $json);
+		$this->assertTrue(is_string($json));
 		return $json;
 	}
 	
@@ -111,4 +161,5 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	public function testRecode(Header $ref, Header $recoded) {
 		$this->assertEquals($ref, $recoded);
 	}
+
 }

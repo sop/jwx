@@ -4,6 +4,7 @@ use JWX\JWT\Claim\Validator\ContainsValidator;
 
 
 /**
+ * @group jwt
  * @group validator
  */
 class ContainsValidatorTest extends PHPUnit_Framework_TestCase
@@ -26,8 +27,8 @@ class ContainsValidatorTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function provider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[["a"], "a", true],
 			[["a", "b", "c"], "b", true],
 			[["a", "b", "c"], "d", false],
@@ -35,7 +36,7 @@ class ContainsValidatorTest extends PHPUnit_Framework_TestCase
 			["a", "a", true],
 			["a", "A", false],
 			[[], "", false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

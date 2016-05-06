@@ -4,6 +4,7 @@ use JWX\JWT\Claim\Validator\LessValidator;
 
 
 /**
+ * @group jwt
  * @group validator
  */
 class LessValidatorTest extends PHPUnit_Framework_TestCase
@@ -26,8 +27,8 @@ class LessValidatorTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function provider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[   1,    0, false],
 			[   0,    0, false],
 			[  -1,    0,  true],
@@ -37,7 +38,7 @@ class LessValidatorTest extends PHPUnit_Framework_TestCase
 			[ "0",  "0", false],
 			["-1",  "0",  true],
 			["-1", "-2", false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

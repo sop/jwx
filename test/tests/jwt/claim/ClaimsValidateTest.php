@@ -14,7 +14,9 @@ use JWX\JWT\ValidationContext;
 
 
 /**
+ * @group jwt
  * @group claim
+ * @todo move to integration tests
  */
 class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 {

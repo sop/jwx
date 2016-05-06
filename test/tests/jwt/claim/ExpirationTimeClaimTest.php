@@ -1,11 +1,12 @@
 <?php
 
 use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\ExpirationTimeClaim;
+use JWX\JWT\Claim\RegisteredClaim;
 
 
 /**
+ * @group jwt
  * @group claim
  */
 class ExpirationTimeClaimTest extends PHPUnit_Framework_TestCase
@@ -14,6 +15,16 @@ class ExpirationTimeClaimTest extends PHPUnit_Framework_TestCase
 	
 	public function testCreate() {
 		$claim = new ExpirationTimeClaim(self::VALUE);
+		$this->assertInstanceOf(ExpirationTimeClaim::class, $claim);
+		return $claim;
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Claim $claim
+	 */
+	public function testClaimName(Claim $claim) {
 		$this->assertEquals(RegisteredClaim::NAME_EXPIRATION_TIME, 
 			$claim->name());
 	}
@@ -27,12 +38,12 @@ class ExpirationTimeClaimTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function validateProvider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[self::VALUE - 1, true],
 			[self::VALUE, false],
 			[self::VALUE + 1, false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

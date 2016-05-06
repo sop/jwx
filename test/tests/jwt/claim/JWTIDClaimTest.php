@@ -1,11 +1,12 @@
 <?php
 
 use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\JWTIDClaim;
+use JWX\JWT\Claim\RegisteredClaim;
 
 
 /**
+ * @group jwt
  * @group claim
  */
 class JWTIDTest extends PHPUnit_Framework_TestCase
@@ -14,6 +15,16 @@ class JWTIDTest extends PHPUnit_Framework_TestCase
 	
 	public function testCreate() {
 		$claim = new JWTIDClaim(self::VALUE);
+		$this->assertInstanceOf(JWTIDClaim::class, $claim);
+		return $claim;
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Claim $claim
+	 */
+	public function testClaimName(Claim $claim) {
 		$this->assertEquals(RegisteredClaim::NAME_JWT_ID, $claim->name());
 	}
 	
@@ -26,11 +37,11 @@ class JWTIDTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function validateProvider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[self::VALUE, true],
 			["nope", false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

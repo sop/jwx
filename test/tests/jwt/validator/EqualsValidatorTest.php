@@ -4,6 +4,7 @@ use JWX\JWT\Claim\Validator\EqualsValidator;
 
 
 /**
+ * @group jwt
  * @group validator
  */
 class EqualsValidatorTest extends PHPUnit_Framework_TestCase
@@ -26,8 +27,8 @@ class EqualsValidatorTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function provider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[  0,   0,  true],
 			[  1,   1,  true],
 			[ -1,  -1,  true],
@@ -35,7 +36,7 @@ class EqualsValidatorTest extends PHPUnit_Framework_TestCase
 			["a", "a",  true],
 			["a", "b", false],
 			["a", "A", false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

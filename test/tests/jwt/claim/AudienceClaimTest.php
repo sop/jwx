@@ -1,11 +1,12 @@
 <?php
 
+use JWX\JWT\Claim\AudienceClaim;
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\RegisteredClaim;
-use JWX\JWT\Claim\AudienceClaim;
 
 
 /**
+ * @group jwt
  * @group claim
  */
 class AudienceClaimTest extends PHPUnit_Framework_TestCase
@@ -15,6 +16,16 @@ class AudienceClaimTest extends PHPUnit_Framework_TestCase
 	
 	public function testCreate() {
 		$claim = new AudienceClaim(self::VALUE_SINGLE);
+		$this->assertInstanceOf(AudienceClaim::class, $claim);
+		return $claim;
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Claim $claim
+	 */
+	public function testClaimName(Claim $claim) {
 		$this->assertEquals(RegisteredClaim::NAME_AUDIENCE, $claim->name());
 	}
 	
@@ -27,13 +38,13 @@ class AudienceClaimTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function validateProvider() {
-		// @formatter:off
 		return array(
+			/* @formatter:off */
 			[self::VALUE_SINGLE, self::VALUE_SINGLE, true],
 			[self::VALUE_SINGLE, "nope", false],
 			[self::VALUE_MANY, self::VALUE_MANY[1], true],
 			[self::VALUE_MANY, "nope", false]
+			/* @formatter:on */
 		);
-		// @formatter:on
 	}
 }

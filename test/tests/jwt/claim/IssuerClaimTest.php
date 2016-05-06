@@ -6,6 +6,7 @@ use JWX\JWT\Claim\RegisteredClaim;
 
 
 /**
+ * @group jwt
  * @group claim
  */
 class IssuerClaimTest extends PHPUnit_Framework_TestCase
@@ -14,6 +15,16 @@ class IssuerClaimTest extends PHPUnit_Framework_TestCase
 	
 	public function testCreate() {
 		$claim = new IssuerClaim(self::VALUE);
+		$this->assertInstanceOf(IssuerClaim::class, $claim);
+		return $claim;
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param Claim $claim
+	 */
+	public function testClaimName(Claim $claim) {
 		$this->assertEquals(RegisteredClaim::NAME_ISSUER, $claim->name());
 	}
 	
