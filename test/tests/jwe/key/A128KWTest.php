@@ -51,4 +51,22 @@ class A128KWTest extends PHPUnit_Framework_TestCase
 		$cek = $algo->decrypt($data);
 		$this->assertEquals(self::CEK_128, $cek);
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testInvalidKEKLength() {
+		$algo = new A128KWAlgorithm(self::KEY_128 . "x");
+		$algo->encrypt(self::CEK_128);
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException UnexpectedValueException
+	 *
+	 * @param AESKWAlgorithm $algo
+	 */
+	public function testInvalidCEKLength(AESKWAlgorithm $algo) {
+		$algo->encrypt(self::CEK_128 . "x");
+	}
 }

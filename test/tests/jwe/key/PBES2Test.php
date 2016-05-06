@@ -1,9 +1,14 @@
 <?php
 
+use JWX\JWA\JWA;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\PBES2CountParameter;
+use JWX\JWT\Parameter\PBES2SaltInputParameter;
 
 
 /**
@@ -63,6 +68,15 @@ class PBES2Test extends PHPUnit_Framework_TestCase
 	
 	public function testFromPassword() {
 		$algo = PBES2HS256A128KWAlgorithm::fromPassword(self::PASSWORD);
+		$this->assertInstanceOf(PBES2Algorithm::class, $algo);
+	}
+	
+	public function testFromHeader() {
+		$header = new Header(
+			new AlgorithmParameter(JWA::ALGO_PBES2_HS256_A128KW), 
+			new PBES2SaltInputParameter(self::SALT), 
+			new PBES2CountParameter(self::COUNT));
+		$algo = PBES2Algorithm::fromHeader($header, self::PASSWORD);
 		$this->assertInstanceOf(PBES2Algorithm::class, $algo);
 	}
 }
