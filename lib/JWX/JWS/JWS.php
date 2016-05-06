@@ -4,7 +4,6 @@ namespace JWX\JWS;
 
 use JWX\JWT\Header;
 use JWX\JWT\JOSE;
-use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
@@ -96,8 +95,7 @@ class JWS
 		if (!isset($header)) {
 			$header = new Header();
 		}
-		$header = $header->withParameters(
-			AlgorithmParameter::fromAlgorithm($algo));
+		$header = $header->withParameters(...$algo->headerParameters());
 		// ensure that if b64 parameter is used, it's marked critical
 		if ($header->has(RegisteredJWTParameter::P_B64)) {
 			if (!$header->has(RegisteredJWTParameter::P_CRIT)) {
@@ -157,8 +155,10 @@ class JWS
 	 * @return string
 	 */
 	protected function _encodedPayload() {
-		$b64 = $this->_protectedHeader->has(RegisteredJWTParameter::P_B64) ? $this->_protectedHeader->get(
-			RegisteredJWTParameter::P_B64)->value() : true;
+		$b64 = true;
+		if ($this->_protectedHeader->has(RegisteredJWTParameter::P_B64)) {
+			$b64 = $this->_protectedHeader->get(RegisteredJWTParameter::P_B64)->value();
+		}
 		return $b64 ? Base64::urlEncode($this->_payload) : $this->_payload;
 	}
 	

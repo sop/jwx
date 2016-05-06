@@ -8,6 +8,7 @@ use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -134,7 +135,7 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 		}
 		$result = openssl_sign($data, $signature, $key, $this->_mdMethod());
 		if (!$result) {
-			throw new \RuntimeException("openssl_sign failed.");
+			throw new \RuntimeException("openssl_sign() failed.");
 		}
 		return $signature;
 	}
@@ -146,8 +147,12 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 		}
 		$result = openssl_verify($data, $signature, $key, $this->_mdMethod());
 		if ($result == -1) {
-			throw new \RuntimeException("openssl_verify failed.");
+			throw new \RuntimeException("openssl_verify() failed.");
 		}
 		return $result == 1;
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }

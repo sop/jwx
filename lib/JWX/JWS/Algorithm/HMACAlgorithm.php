@@ -4,9 +4,10 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -65,18 +66,7 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	 * @return self
 	 */
 	public static function fromJWK(JWK $jwk, $alg = null) {
-		static $params = array(RegisteredJWKParameter::PARAM_KEY_TYPE, 
-			RegisteredJWKParameter::PARAM_KEY_VALUE);
-		// check that all the parameters are present
-		if (!$jwk->has(...$params)) {
-			throw new \UnexpectedValueException("Missing parameters.");
-		}
-		// check that key type is correct
-		$kty = $jwk->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value();
-		if ($kty != KeyTypeParameter::TYPE_OCT) {
-			throw new \UnexpectedValueException("Invalid key type.");
-		}
-		$key = $jwk->get(RegisteredJWKParameter::PARAM_KEY_VALUE)->key();
+		$jwk = SymmetricKeyJWK::fromJWK($jwk);
 		// if algorithm is not explicitly given, consult JWK
 		if (!isset($alg)) {
 			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
@@ -89,7 +79,7 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
 		$cls = self::MAP_NAME_TO_CLASS[$alg];
-		return new $cls($key);
+		return new $cls($jwk->key());
 	}
 	
 	public function computeSignature($data) {
@@ -102,5 +92,9 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	
 	public function validateSignature($data, $signature) {
 		return $this->computeSignature($data) === $signature;
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }

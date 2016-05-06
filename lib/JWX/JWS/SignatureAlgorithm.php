@@ -2,13 +2,14 @@
 
 namespace JWX\JWS;
 
+use JWX\JWT\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 
 /**
  * Interface for algorithms usable for signing and validating JWS's.
  */
-interface SignatureAlgorithm extends AlgorithmParameterValue
+interface SignatureAlgorithm extends AlgorithmParameterValue, HeaderParameters
 {
 	/**
 	 * Compute signature.

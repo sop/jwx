@@ -4,6 +4,7 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -24,5 +25,9 @@ class NoneAlgorithm implements SignatureAlgorithm
 	
 	public function validateSignature($data, $signature) {
 		return $signature === "";
+	}
+	
+	public function headerParameters() {
+		return array(AlgorithmParameter::fromAlgorithm($this));
 	}
 }
