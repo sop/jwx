@@ -9,7 +9,7 @@ namespace JWX\JWE\KeyAlgorithm\Feature;
 trait RandomCEK
 {
 	public function cekForEncryption($length) {
-		$ret = openssl_random_pseudo_bytes($length, true);
+		$ret = openssl_random_pseudo_bytes($length);
 		if (false === $ret) {
 			throw new \RuntimeException("openssl_random_pseudo_bytes() failed.");
 		}
