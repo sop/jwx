@@ -134,7 +134,7 @@ class JWE
 		if (!isset($cek)) {
 			$cek = $key_algo->cekForEncryption($enc_algo->keySize());
 		}
-		if (strlen($cek) !== $enc_algo->keySize()) {
+		if (strlen($cek) != $enc_algo->keySize()) {
 			throw new \UnexpectedValueException("Invalid key size.");
 		}
 		// generate random IV

@@ -71,7 +71,7 @@ class JWT
 	}
 	
 	/**
-	 * Convert claims set to a signed JWS.
+	 * Convert claims set to a signed JWS token.
 	 *
 	 * @param Claims $claims Claims set
 	 * @param SignatureAlgorithm $algo Signature algorithm
@@ -94,7 +94,7 @@ class JWT
 	 * @param Claims $claims Claims set
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
-	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorith
+	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorithm
 	 * @param Header|null $header Optional header
 	 * @return string
 	 */
