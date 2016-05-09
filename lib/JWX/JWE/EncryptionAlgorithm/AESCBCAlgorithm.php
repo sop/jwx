@@ -175,17 +175,4 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 	public function headerParameters() {
 		return array(EncryptionAlgorithmParameter::fromAlgorithm($this));
 	}
-	
-	/**
-	 * Generate random content encryption key.
-	 *
-	 * @return string
-	 */
-	public function generateRandomCEK() {
-		$ret = openssl_random_pseudo_bytes($this->keySize());
-		if (false === $ret) {
-			throw new \RuntimeException("openssl_random_pseudo_bytes() failed.");
-		}
-		return $ret;
-	}
 }

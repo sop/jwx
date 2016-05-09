@@ -32,16 +32,6 @@ class AESCBCEncryptionTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @depends testCreate
 	 *
-	 * @param AESCBCAlgorithm $algo
-	 */
-	public function testRandomCEK(AESCBCAlgorithm $algo) {
-		$cek = $algo->generateRandomCEK();
-		$this->assertEquals(32, strlen($cek));
-	}
-	
-	/**
-	 * @depends testCreate
-	 *
 	 * @param ContentEncryptionAlgorithm $algo
 	 */
 	public function testHeaderParams(ContentEncryptionAlgorithm $algo) {
