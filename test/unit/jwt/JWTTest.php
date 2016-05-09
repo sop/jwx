@@ -1,6 +1,7 @@
 <?php
 
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
@@ -87,5 +88,37 @@ class JWTTest extends PHPUnit_Framework_TestCase
 		$enc_algo = new A128CBCHS256Algorithm();
 		$jwt = JWT::encryptedFromClaims(self::$_claims, $key_algo, $enc_algo);
 		$this->assertInstanceOf(JWT::class, $jwt);
+		return $jwt;
+	}
+	
+	/**
+	 * @depends testEncryptedFromClaims
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testIsJWE(JWT $jwt) {
+		$this->assertTrue($jwt->isJWE());
+	}
+	
+	/**
+	 * @depends testEncryptedFromClaims
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testGetJWE(JWT $jwt) {
+		$this->assertInstanceOf(JWE::class, $jwt->JWE());
+	}
+	
+	/**
+	 * @depends testEncryptedFromClaims
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testClaimsFromJWE(JWT $jwt) {
+		$key_algo = new DirectCEKAlgorithm(self::KEY_128);
+		$enc_algo = new A128CBCHS256Algorithm();
+		$claims = $jwt->claimsFromJWE($key_algo, $enc_algo, 
+			new ValidationContext());
+		$this->assertEquals(self::$_claims, $claims);
 	}
 }
