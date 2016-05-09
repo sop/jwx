@@ -88,6 +88,7 @@ class JWS
 	 * @param SignatureAlgorithm $algo Signature algorithm
 	 * @param Header|null $header Desired header. Algorithm specific
 	 *        parameters are added automatically.
+	 * @throws \RuntimeException If signature computation fails
 	 * @return self
 	 */
 	public static function sign($payload, SignatureAlgorithm $algo, 
@@ -166,7 +167,9 @@ class JWS
 	 * Validate signature.
 	 *
 	 * @param SignatureAlgorithm $algo
-	 * @throws \UnexpectedValueException
+	 * @throws \UnexpectedValueException If using different signature algorithm
+	 *         then specified by the header
+	 * @throws \RuntimeException If signature computation fails
 	 * @return bool True if signature is valid
 	 */
 	public function validate(SignatureAlgorithm $algo) {

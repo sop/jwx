@@ -121,6 +121,7 @@ class JWE
 	 *        generated if not set.
 	 * @param string|null $iv Optional initialization vector. Randomly generated
 	 *        if not set.
+	 * @throws \RuntimeException If encrypt fails
 	 * @return self
 	 */
 	public static function encrypt($payload, KeyManagementAlgorithm $key_algo, 
@@ -164,6 +165,7 @@ class JWE
 	 *
 	 * @param KeyManagementAlgorithm $key_algo
 	 * @param ContentEncryptionAlgorithm $enc_algo
+	 * @throws \RuntimeException If decrypt fails
 	 * @return string Plaintext payload
 	 */
 	public function decrypt(KeyManagementAlgorithm $key_algo, 

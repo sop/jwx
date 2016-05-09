@@ -24,6 +24,7 @@ use JWX\Util\Base64;
  */
 class JWT
 {
+	// JWT type enumerations
 	const TYPE_JWS = 0;
 	const TYPE_JWE = 1;
 	
@@ -76,14 +77,12 @@ class JWT
 	 * @param Claims $claims Claims set
 	 * @param SignatureAlgorithm $algo Signature algorithm
 	 * @param Header|null $header Optional header
+	 * @throws \RuntimeException For generic errors
 	 * @return self
 	 */
 	public static function signedFromClaims(Claims $claims, 
 			SignatureAlgorithm $algo, Header $header = null) {
 		$payload = $claims->toJSON();
-		if (!isset($header)) {
-			$header = new Header();
-		}
 		$jws = JWS::sign($payload, $algo, $header);
 		return new self($jws->toCompact());
 	}
@@ -96,7 +95,8 @@ class JWT
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
 	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorithm
 	 * @param Header|null $header Optional header
-	 * @return string
+	 * @throws \RuntimeException For generic errors
+	 * @return self
 	 */
 	public static function encryptedFromClaims(Claims $claims, 
 			KeyManagementAlgorithm $key_algo, 
@@ -166,7 +166,8 @@ class JWT
 	 *
 	 * @param SignatureAlgorithm $algo Signature algorithm
 	 * @param ValidationContext $ctx Validation context
-	 * @throws ValidationException
+	 * @throws ValidationException If validation fails
+	 * @throws \RuntimeException For generic errors
 	 * @return Claims
 	 */
 	public function claimsFromJWS(SignatureAlgorithm $algo, 
@@ -186,6 +187,8 @@ class JWT
 	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
 	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
 	 * @param ValidationContext $ctx Validation context
+	 * @throws ValidationException If validation fails
+	 * @throws \RuntimeException For generic errors
 	 * @return Claims
 	 */
 	public function claimsFromJWE(KeyManagementAlgorithm $key_algo, 
