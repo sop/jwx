@@ -40,9 +40,11 @@ class DeflateAlgorithm implements CompressionAlgorithm
 	 * @throws \RuntimeException
 	 */
 	public function compress($data) {
-		$ret = gzdeflate($data, $this->_compressionLevel);
+		$ret = @gzdeflate($data, $this->_compressionLevel);
 		if (false === $ret) {
-			throw new \RuntimeException("gzdeflate() failed.");
+			$err = error_get_last();
+			$msg = isset($err) ? $err["message"] : "gzdeflate() failed.";
+			throw new \RuntimeException($msg);
 		}
 		return $ret;
 	}
@@ -53,9 +55,11 @@ class DeflateAlgorithm implements CompressionAlgorithm
 	 * @throws \RuntimeException
 	 */
 	public function decompress($data) {
-		$ret = gzinflate($data);
+		$ret = @gzinflate($data);
 		if (false === $ret) {
-			throw new \RuntimeException("gzinflate() failed.");
+			$err = error_get_last();
+			$msg = isset($err) ? $err["message"] : "gzinflate() failed.";
+			throw new \RuntimeException($msg);
 		}
 		return $ret;
 	}
