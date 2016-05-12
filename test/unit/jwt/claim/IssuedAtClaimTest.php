@@ -45,7 +45,9 @@ class IssuedAtClaimTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testDateTime(IssuedAtClaim $claim) {
 		$dt = new DateTimeImmutable(self::TIME, new DateTimeZone("UTC"));
-		$this->assertEquals($dt, $claim->dateTime());
+		$this->assertEquals($dt->getTimestamp(), 
+			$claim->dateTime()
+				->getTimestamp());
 	}
 	
 	/**
