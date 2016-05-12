@@ -111,12 +111,16 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 				->toPEM()
 				->str());
 		if (false === $key) {
-			throw new \RuntimeException("Failed to load public key.");
+			throw new \RuntimeException(
+				"openssl_pkey_get_public() failed: " .
+					 $this->_getLastOpenSSLError());
 		}
 		$result = openssl_public_encrypt($cek, $crypted, $key, 
 			$this->_paddingScheme());
 		if (!$result) {
-			throw new \RuntimeException("openssl_public_encrypt() failed.");
+			throw new \RuntimeException(
+				"openssl_public_encrypt() failed: " .
+					 $this->_getLastOpenSSLError());
 		}
 		return $crypted;
 	}
@@ -127,14 +131,31 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 				->toPEM()
 				->str());
 		if (!$key) {
-			throw new \RuntimeException("Failed to load private key.");
+			throw new \RuntimeException(
+				"openssl_pkey_get_private() failed: " .
+					 $this->_getLastOpenSSLError());
 		}
 		$result = openssl_private_decrypt($data, $cek, $key, 
 			$this->_paddingScheme());
 		if (!$result) {
-			throw new \RuntimeException("openssl_private_decrypt() failed.");
+			throw new \RuntimeException(
+				"openssl_private_decrypt() failed: " .
+					 $this->_getLastOpenSSLError());
 		}
 		return $cek;
+	}
+	
+	/**
+	 * Get last OpenSSL error message.
+	 *
+	 * @return string|null
+	 */
+	protected function _getLastOpenSSLError() {
+		$msg = null;
+		while (false !== ($err = openssl_error_string())) {
+			$msg = $err;
+		}
+		return $msg;
 	}
 	
 	public function headerParameters() {
