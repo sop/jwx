@@ -53,7 +53,7 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 	
 	public function cekForEncryption($length) {
 		if (strlen($this->_cek) != $length) {
-			throw new \RuntimeException("Invalid key length.");
+			throw new \UnexpectedValueException("Invalid key length.");
 		}
 		return $this->_cek;
 	}
