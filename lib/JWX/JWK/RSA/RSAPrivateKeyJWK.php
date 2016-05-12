@@ -70,13 +70,12 @@ class RSAPrivateKeyJWK extends JWK
 	}
 	
 	/**
-	 * Initialize from PEM.
+	 * Initialize from RSAPrivateKey.
 	 *
-	 * @param PEM $pem
+	 * @param RSAPrivateKey $pk
 	 * @return self
 	 */
-	public static function fromPEM(PEM $pem) {
-		$pk = RSAPrivateKey::fromPEM($pem);
+	public static function fromRSAPrivateKey(RSAPrivateKey $pk) {
 		$n = ModulusParameter::fromNumber($pk->modulus());
 		$e = ExponentParameter::fromNumber($pk->publicExponent());
 		$d = PrivateExponentParameter::fromNumber($pk->privateExponent());
@@ -87,6 +86,16 @@ class RSAPrivateKeyJWK extends JWK
 		$qi = FirstCRTCoefficientParameter::fromNumber($pk->coefficient());
 		$key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_RSA);
 		return new self($key_type, $n, $e, $d, $p, $q, $dp, $dq, $qi);
+	}
+	
+	/**
+	 * Initialize from PEM.
+	 *
+	 * @param PEM $pem
+	 * @return self
+	 */
+	public static function fromPEM(PEM $pem) {
+		return self::fromRSAPrivateKey(RSAPrivateKey::fromPEM($pem));
 	}
 	
 	/**
