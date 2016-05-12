@@ -21,6 +21,9 @@ class OtherPrimesInfoParameter extends RegisteredJWKParameter
 	}
 	
 	public static function fromJSONValue($value) {
+		if (!is_array($value)) {
+			throw new \UnexpectedValueException("oth must be an array.");
+		}
 		return new self(...$value);
 	}
 }
