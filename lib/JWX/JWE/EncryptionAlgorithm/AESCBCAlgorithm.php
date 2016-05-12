@@ -146,7 +146,8 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		$ciphertext = openssl_encrypt($plaintext, $this->_getCipherMethod(), 
 			$this->_encKey($key), OPENSSL_RAW_DATA, $iv);
 		if (false === $ciphertext) {
-			throw new \RuntimeException("openssl_encrypt() failed.");
+			throw new \RuntimeException(
+				"openssl_encrypt() failed: " . $this->_getLastOpenSSLError());
 		}
 		$auth_data = $aad . $iv . $ciphertext . $this->_aadLen($aad);
 		$auth_tag = $this->_computeAuthTag($auth_data, $key);
@@ -163,9 +164,23 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 		$plaintext = openssl_decrypt($ciphertext, $this->_getCipherMethod(), 
 			$this->_encKey($key), OPENSSL_RAW_DATA, $iv);
 		if (false === $plaintext) {
-			throw new \RuntimeException("openssl_decrypt() failed.");
+			throw new \RuntimeException(
+				"openssl_decrypt() failed: " . $this->_getLastOpenSSLError());
 		}
 		return $plaintext;
+	}
+	
+	/**
+	 * Get last OpenSSL error message.
+	 *
+	 * @return string|null
+	 */
+	protected function _getLastOpenSSLError() {
+		$msg = null;
+		while (false !== ($err = openssl_error_string())) {
+			$msg = $err;
+		}
+		return $msg;
 	}
 	
 	public function ivSize() {
