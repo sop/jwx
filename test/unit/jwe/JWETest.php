@@ -105,6 +105,16 @@ class JWETest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
+	 * @depends testEncrypt
+	 *
+	 * @param JWE $jwe
+	 */
+	public function testToString(JWE $jwe) {
+		$token = strval($jwe);
+		$this->assertTrue(is_string($token));
+	}
+	
+	/**
 	 * @depends testToCompact
 	 *
 	 * @param string $data
@@ -112,6 +122,13 @@ class JWETest extends PHPUnit_Framework_TestCase
 	public function testFromCompact($data) {
 		$jwe = JWE::fromCompact($data);
 		$this->assertInstanceOf(JWE::class, $jwe);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromPartsFail() {
+		JWE::fromParts(array());
 	}
 	
 	public function testEncryptWithAll() {
@@ -144,5 +161,21 @@ class JWETest extends PHPUnit_Framework_TestCase
 			$jwe->header()
 				->get("test")
 				->value());
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testEncryptInvalidKeySize() {
+		JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, 
+			null, "nope");
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testEncryptInvalidIVSize() {
+		JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, 
+			null, null, "nope");
 	}
 }

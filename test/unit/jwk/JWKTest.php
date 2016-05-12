@@ -77,6 +77,16 @@ class JWKTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param JWK $jwk
 	 */
+	public function testGetParameters(JWK $jwk) {
+		$params = $jwk->parameters();
+		$this->assertContainsOnlyInstancesOf(JWKParameter::class, $params);
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWK $jwk
+	 */
 	public function testCount(JWK $jwk) {
 		$this->assertCount(2, $jwk);
 	}
@@ -91,7 +101,7 @@ class JWKTest extends PHPUnit_Framework_TestCase
 		foreach ($jwk as $param) {
 			$values[] = $param;
 		}
-		$this->assertCount(2, $values);
+		$this->assertContainsOnlyInstancesOf(JWKParameter::class, $values);
 	}
 	
 	/**
@@ -105,6 +115,11 @@ class JWKTest extends PHPUnit_Framework_TestCase
 		return $json;
 	}
 	
+	public function testToEmptyJSON() {
+		$jwk = new JWK();
+		$this->assertEquals("", $jwk->toJSON());
+	}
+	
 	/**
 	 * @depends testToJSON
 	 *
@@ -113,5 +128,12 @@ class JWKTest extends PHPUnit_Framework_TestCase
 	public function testFromJSON($json) {
 		$jwk = JWK::fromJSON($json);
 		$this->assertInstanceOf(JWK::class, $jwk);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testInvalidJSON() {
+		JWK::fromJSON("null");
 	}
 }

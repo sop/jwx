@@ -72,4 +72,41 @@ class AESCBCEncryptionTest extends PHPUnit_Framework_TestCase
 		$algo->decrypt($ciphertext, self::KEY_128, self::IV, "", 
 			strrev($auth_tag));
 	}
+	
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testUnsupportedCipher() {
+		$algo = new AESCBCEncryptionTest_UnsupportedCipher();
+		$algo->encrypt("test", self::KEY_128, self::IV, "");
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param AESCBCAlgorithm $algo
+	 */
+	public function testDecryptFail(AESCBCAlgorithm $algo) {
+		static $ciphertext = "\0";
+		static $aad = "";
+		$cls = new ReflectionClass($algo);
+		$mtd_computeAuthTag = $cls->getMethod("_computeAuthTag");
+		$mtd_computeAuthTag->setAccessible(true);
+		$mtd_aadLen = $cls->getMethod("_aadLen");
+		$mtd_aadLen->setAccessible(true);
+		$auth_data = $aad . self::IV . $ciphertext .
+			 $mtd_aadLen->invoke($algo, $aad);
+		$auth_tag = $mtd_computeAuthTag->invoke($algo, $auth_data, 
+			self::KEY_128);
+		$algo->decrypt($ciphertext, self::KEY_128, self::IV, $aad, $auth_tag);
+	}
+}
+
+
+class AESCBCEncryptionTest_UnsupportedCipher extends A128CBCHS256Algorithm
+{
+	protected function _cipherMethod() {
+		return "nope";
+	}
 }

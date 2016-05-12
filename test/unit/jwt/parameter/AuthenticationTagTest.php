@@ -26,4 +26,11 @@ class AuthenticationTagParameterTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(RegisteredJWTParameter::PARAM_AUTHENTICATION_TAG, 
 			$param->name());
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateFail() {
+		new AuthenticationTagParameter("\0");
+	}
 }

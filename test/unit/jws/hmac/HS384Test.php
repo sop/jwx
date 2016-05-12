@@ -9,6 +9,7 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 /**
  * @group jws
+ * @group hmac
  */
 class HS384Test extends PHPUnit_Framework_TestCase
 {

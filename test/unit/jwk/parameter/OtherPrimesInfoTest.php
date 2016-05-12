@@ -26,4 +26,21 @@ class OtherPrimesInfoParameterTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(RegisteredJWKParameter::PARAM_OTHER_PRIMES_INFO, 
 			$param->name());
 	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWKParameter $param
+	 */
+	public function testFromJSONValue(JWKParameter $param) {
+		$param = OtherPrimesInfoParameter::fromJSONValue($param->value());
+		$this->assertInstanceOf(OtherPrimesInfoParameter::class, $param);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJSONValueFail() {
+		OtherPrimesInfoParameter::fromJSONValue(null);
+	}
 }

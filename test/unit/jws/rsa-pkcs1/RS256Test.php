@@ -11,6 +11,7 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 /**
  * @group jws
+ * @group rsassa
  */
 class RS256Test extends PHPUnit_Framework_TestCase
 {

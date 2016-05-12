@@ -11,6 +11,7 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 /**
  * @group jws
+ * @group rsassa
  */
 class RS384Test extends PHPUnit_Framework_TestCase
 {

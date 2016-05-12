@@ -80,4 +80,21 @@ class DeflateTest extends PHPUnit_Framework_TestCase
 		$payload = $jwt->JWE()->decrypt($key_algo, new A128CBCHS256Algorithm());
 		$this->assertEquals(self::PAYLOAD, $payload);
 	}
+	
+	/**
+	 * @expectedException DomainException
+	 */
+	public function testCreateInvalidLevel() {
+		new DeflateAlgorithm(10);
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param CompressionAlgorithm $algo
+	 */
+	public function testDecompressFail(CompressionAlgorithm $algo) {
+		$algo->decompress("\0");
+	}
 }

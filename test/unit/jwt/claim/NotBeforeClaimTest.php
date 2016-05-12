@@ -45,4 +45,9 @@ class NotBeforeClaimTest extends PHPUnit_Framework_TestCase
 			/* @formatter:on */
 		);
 	}
+	
+	public function testNow() {
+		$claim = NotBeforeClaim::now();
+		$this->assertInstanceOf(NotBeforeClaim::class, $claim);
+	}
 }

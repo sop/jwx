@@ -1,5 +1,6 @@
 <?php
 
+use JWX\JWA\JWA;
 use JWX\JWT\Header;
 use JWX\JWT\JOSE;
 use JWX\JWT\Parameter\ContentTypeParameter;
@@ -56,5 +57,18 @@ class JOSETest extends PHPUnit_Framework_TestCase
 	 */
 	public function testDuplicateFail(JOSE $jose) {
 		$jose->withHeader(new Header(new TypeParameter("dup")));
+	}
+	
+	public function testIsJWS() {
+		$jose = new JOSE(Header::fromArray(array("alg" => JWA::ALGO_HS256)));
+		$this->assertTrue($jose->isJWS());
+		$this->assertFalse($jose->isJWE());
+	}
+	
+	public function testIsJWE() {
+		$jose = new JOSE(
+			Header::fromArray(array("enc" => JWA::ALGO_A128CBC_HS256)));
+		$this->assertTrue($jose->isJWE());
+		$this->assertFalse($jose->isJWS());
 	}
 }

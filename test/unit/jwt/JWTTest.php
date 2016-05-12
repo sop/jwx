@@ -3,6 +3,7 @@
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
+use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
 use JWX\JWT\Claim\SubjectClaim;
@@ -10,6 +11,7 @@ use JWX\JWT\Claims;
 use JWX\JWT\JOSE;
 use JWX\JWT\JWT;
 use JWX\JWT\ValidationContext;
+use JWX\Util\Base64;
 
 
 /**
@@ -55,6 +57,16 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	
 	/**
 	 * @depends testCreateJWS
+	 * @expectedException LogicException
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testGetJWEFail(JWT $jwt) {
+		$jwt->JWE();
+	}
+	
+	/**
+	 * @depends testCreateJWS
 	 *
 	 * @param JWT $jwt
 	 */
@@ -77,10 +89,31 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param JWT $jwt
 	 */
+	public function testToString(JWT $jwt) {
+		$token = strval($jwt);
+		$this->assertTrue(is_string($token));
+	}
+	
+	/**
+	 * @depends testCreateJWS
+	 *
+	 * @param JWT $jwt
+	 */
 	public function testClaimsFromJWS(JWT $jwt) {
 		$claims = $jwt->claimsFromJWS(new NoneAlgorithm(), 
 			new ValidationContext());
 		$this->assertEquals(self::$_claims, $claims);
+	}
+	
+	/**
+	 * @expectedException JWX\JWT\Exception\ValidationException
+	 */
+	public function testClaimsFromJWSFail() {
+		$jwt = JWT::signedFromClaims(self::$_claims, new HS256Algorithm("key"));
+		$parts = explode(".", $jwt->token());
+		$parts[2] = Base64::urlEncode("\0");
+		$jwt = new JWT(implode(".", $parts));
+		$jwt->claimsFromJWS(new HS256Algorithm("yek"), new ValidationContext());
 	}
 	
 	public function testEncryptedFromClaims() {
@@ -111,6 +144,16 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	
 	/**
 	 * @depends testEncryptedFromClaims
+	 * @expectedException LogicException
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testGetJWSFail(JWT $jwt) {
+		$jwt->JWS();
+	}
+	
+	/**
+	 * @depends testEncryptedFromClaims
 	 *
 	 * @param JWT $jwt
 	 */
@@ -120,5 +163,17 @@ class JWTTest extends PHPUnit_Framework_TestCase
 		$claims = $jwt->claimsFromJWE($key_algo, $enc_algo, 
 			new ValidationContext());
 		$this->assertEquals(self::$_claims, $claims);
+	}
+	
+	public function testUnsecuredFromClaims() {
+		$jwt = JWT::unsecuredFromClaims(self::$_claims);
+		$this->assertInstanceOf(JWT::class, $jwt);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testInvalidJWT() {
+		new JWT("");
 	}
 }

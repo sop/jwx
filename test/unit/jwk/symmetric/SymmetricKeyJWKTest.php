@@ -26,4 +26,23 @@ class SymmetricKeyJWKTest extends PHPUnit_Framework_TestCase
 	public function testKey(SymmetricKeyJWK $jwk) {
 		$this->assertEquals(self::KEY, $jwk->key());
 	}
+	
+	public function testFromKey() {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY);
+		$this->assertInstanceOf(SymmetricKeyJWK::class, $jwk);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateMissingParameter() {
+		new SymmetricKeyJWK();
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testInvalidKeyType() {
+		SymmetricKeyJWK::fromArray(array("kty" => "nope", "k" => ""));
+	}
 }

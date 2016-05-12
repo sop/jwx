@@ -7,6 +7,7 @@ use JWX\JWK\RSA\RSAPublicKeyJWK;
 
 /**
  * @group jwk
+ * @group rsa
  */
 class RSAPrivateKeyJWKTest extends PHPUnit_Framework_TestCase
 {
@@ -69,5 +70,21 @@ class RSAPrivateKeyJWKTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testPublicKeyEquals(RSAPublicKeyJWK $jwk) {
 		$this->assertEquals(self::$_pubPEM, $jwk->toPEM());
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateMissingParameter() {
+		new RSAPrivateKeyJWK();
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateInvalidKeyType() {
+		$params = array_fill_keys(RSAPrivateKeyJWK::MANAGED_PARAMS, "");
+		$params["kty"] = "nope";
+		RSAPrivateKeyJWK::fromArray($params);
 	}
 }

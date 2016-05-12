@@ -1,11 +1,14 @@
 <?php
 
+use CryptoUtil\ASN1\RSA\RSAPrivateKey;
+use CryptoUtil\ASN1\RSA\RSAPublicKey;
 use CryptoUtil\PEM\PEM;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\RSAESKeyAlgorithm;
 use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWK\RSA\RSAPublicKeyJWK;
 
 
 /**
@@ -70,5 +73,40 @@ class RSAESKeyTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testPrivateKey(RSAESKeyAlgorithm $algo) {
 		$this->assertEquals(self::$_privateKey, $algo->privateKey());
+	}
+	
+	public function testCreateFromPublicKey() {
+		$algo = RSAESPKCS1Algorithm::fromPublicKey(self::$_publicKey);
+		$this->assertInstanceOf(RSAESKeyAlgorithm::class, $algo);
+		return $algo;
+	}
+	
+	/**
+	 * @depends testCreateFromPublicKey
+	 * @expectedException LogicException
+	 *
+	 * @param RSAESKeyAlgorithm $algo
+	 */
+	public function testPrivateKeyNotSet(RSAESKeyAlgorithm $algo) {
+		$algo->privateKey();
+	}
+	
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testEncryptFail() {
+		$jwk = RSAPublicKeyJWK::fromPEM((new RSAPublicKey(0, 0))->toPEM());
+		$algo = RSAESPKCS1Algorithm::fromPublicKey($jwk);
+		$algo->encrypt("x");
+	}
+	
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testDecryptFail() {
+		$jwk = RSAPrivateKeyJWK::fromRSAPrivateKey(
+			new RSAPrivateKey(0, 0, 0, 0, 0, 0, 0, 0));
+		$algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
+		$algo->decrypt("x");
 	}
 }

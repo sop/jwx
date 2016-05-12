@@ -47,4 +47,11 @@ class JSONWebKeyParameterTest extends PHPUnit_Framework_TestCase
 		$jwk = $param->jwk();
 		$this->assertInstanceOf(JWK::class, $jwk);
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJSONFail() {
+		JSONWebKeyParameter::fromJSONValue(null);
+	}
 }

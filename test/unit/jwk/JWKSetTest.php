@@ -46,6 +46,16 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	
 	/**
 	 * @depends testCreate
+	 * @expectedException LogicException
+	 *
+	 * @param JWKSet $jwkset
+	 */
+	public function testByKeyIDFails(JWKSet $jwkset) {
+		$jwkset->byKeyID("key3");
+	}
+	
+	/**
+	 * @depends testCreate
 	 *
 	 * @param JWKSet $jwkset
 	 */
@@ -85,5 +95,19 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 			$values[] = $jwk;
 		}
 		$this->assertCount(2, $values);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testNoKeysParam() {
+		JWKSet::fromArray(array());
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testInvalidJSON() {
+		JWKSet::fromJSON("null");
 	}
 }

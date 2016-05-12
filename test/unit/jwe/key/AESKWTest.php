@@ -28,4 +28,24 @@ class AESKWTest extends PHPUnit_Framework_TestCase
 		$params = $algo->headerParameters();
 		$this->assertCount(1, $params);
 	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param KeyManagementAlgorithm $algo
+	 */
+	public function testCEKForEncryption(KeyManagementAlgorithm $algo) {
+		$cek = $algo->cekForEncryption(16);
+		$this->assertEquals(16, strlen($cek));
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param KeyManagementAlgorithm $algo
+	 */
+	public function testCEKForEncryptionFail(KeyManagementAlgorithm $algo) {
+		$algo->cekForEncryption(0);
+	}
 }

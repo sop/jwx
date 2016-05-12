@@ -44,6 +44,13 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJSONFail() {
+		Claims::fromJSON("null");
+	}
+	
+	/**
 	 * @depends testCreate
 	 * @depends testFromJSON
 	 *
@@ -122,5 +129,15 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 	public function testWithClaims(Claims $claims) {
 		$claims = $claims->withClaims(new Claim("name", "value"));
 		$this->assertCount(4, $claims);
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @return string
+	 */
+	public function testToString(Claims $claims) {
+		$str = strval($claims);
+		$this->assertTrue(is_string($str));
 	}
 }

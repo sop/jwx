@@ -15,4 +15,11 @@ class CompressionFactoryTest extends PHPUnit_Framework_TestCase
 		$algo = CompressionFactory::algoByName(JWA::ALGO_DEFLATE);
 		$this->assertInstanceOf(CompressionAlgorithm::class, $algo);
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testUnsupportedAlgo() {
+		CompressionFactory::algoByName("nope");
+	}
 }

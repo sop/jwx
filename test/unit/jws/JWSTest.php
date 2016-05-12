@@ -129,4 +129,21 @@ class JWSTest extends PHPUnit_Framework_TestCase
 		$jws = JWS::fromCompact($data);
 		$this->assertInstanceOf(JWS::class, $jws);
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromPartsFail() {
+		JWS::fromParts(array());
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWS $jws
+	 */
+	public function testToString(JWS $jws) {
+		$data = (string) $jws;
+		$this->assertTrue(is_string($data));
+	}
 }

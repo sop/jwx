@@ -6,6 +6,7 @@ use JWX\JWK\RSA\RSAPublicKeyJWK;
 
 /**
  * @group jwk
+ * @group rsa
  */
 class RSAPublicKeyJWKTest extends PHPUnit_Framework_TestCase
 {
@@ -43,5 +44,21 @@ class RSAPublicKeyJWKTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testRecoded(PEM $pem) {
 		$this->assertEquals(self::$_pubPEM, $pem);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateMissingParameter() {
+		new RSAPublicKeyJWK();
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateInvalidKeyType() {
+		$params = array_fill_keys(RSAPublicKeyJWK::MANAGED_PARAMS, "");
+		$params["kty"] = "nope";
+		RSAPublicKeyJWK::fromArray($params);
 	}
 }

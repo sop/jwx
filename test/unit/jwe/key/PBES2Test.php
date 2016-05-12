@@ -79,4 +79,30 @@ class PBES2Test extends PHPUnit_Framework_TestCase
 		$algo = PBES2Algorithm::fromHeader($header, self::PASSWORD);
 		$this->assertInstanceOf(PBES2Algorithm::class, $algo);
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromHeaderMissingParam() {
+		PBES2Algorithm::fromHeader(new Header(), self::PASSWORD);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromHeaderNoAlgo() {
+		$header = new Header(new PBES2SaltInputParameter(self::SALT), 
+			new PBES2CountParameter(self::COUNT));
+		PBES2Algorithm::fromHeader($header, self::PASSWORD);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromHeaderUnsupportedAlgo() {
+		$header = new Header(new AlgorithmParameter("nope"), 
+			new PBES2SaltInputParameter(self::SALT), 
+			new PBES2CountParameter(self::COUNT));
+		PBES2Algorithm::fromHeader($header, self::PASSWORD);
+	}
 }

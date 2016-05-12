@@ -139,6 +139,11 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 		return $json;
 	}
 	
+	public function testToJSONEmpty() {
+		$header = new Header();
+		$this->assertEquals("", $header->toJSON());
+	}
+	
 	/**
 	 * @depends testToJSON
 	 *
@@ -161,5 +166,11 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	public function testRecode(Header $ref, Header $recoded) {
 		$this->assertEquals($ref, $recoded);
 	}
-
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJSONFail() {
+		Header::fromJSON("null");
+	}
 }

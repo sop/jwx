@@ -6,6 +6,7 @@ use JWX\JWT\ValidationContext;
 
 /**
  * @group jwt
+ * @group validator
  */
 class ValidationContextTest extends PHPUnit_Framework_TestCase
 {
@@ -34,6 +35,17 @@ class ValidationContextTest extends PHPUnit_Framework_TestCase
 	public function testWithoutRefTime(ValidationContext $ctx) {
 		$ctx = $ctx->withReferenceTime(null);
 		$this->assertFalse($ctx->hasReferenceTime());
+		return $ctx;
+	}
+	
+	/**
+	 * @depends testWithoutRefTime
+	 * @expectedException LogicException
+	 *
+	 * @param ValidationContext $ctx
+	 */
+	public function testRefTimeNotSet(ValidationContext $ctx) {
+		$ctx->referenceTime();
 	}
 	
 	/**
@@ -103,5 +115,15 @@ class ValidationContextTest extends PHPUnit_Framework_TestCase
 		$ctx = $ctx->withID($value);
 		$this->assertEquals($value, 
 			$ctx->constraint(RegisteredClaim::NAME_JWT_ID));
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException LogicException
+	 *
+	 * @param ValidationContext $ctx
+	 */
+	public function testConstaintNotSet(ValidationContext $ctx) {
+		$ctx->constraint("nope");
 	}
 }

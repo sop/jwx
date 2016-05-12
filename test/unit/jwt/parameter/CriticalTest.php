@@ -41,8 +41,33 @@ class CriticalParameterTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param CriticalParameter $param
 	 */
+	public function testHas(CriticalParameter $param) {
+		$this->assertTrue($param->has("typ"));
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param CriticalParameter $param
+	 */
+	public function testHasNot(CriticalParameter $param) {
+		$this->assertFalse($param->has("nope"));
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param CriticalParameter $param
+	 */
 	public function testWithName(CriticalParameter $param) {
 		$param = $param->withParamName("test");
 		$this->assertCount(3, $param->names());
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromInvalidJSON() {
+		CriticalParameter::fromJSONValue(null);
 	}
 }

@@ -3,6 +3,7 @@
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\X509CertificateChainParameter;
+use JWX\Util\Base64;
 
 
 /**
@@ -12,7 +13,8 @@ use JWX\JWT\Parameter\X509CertificateChainParameter;
 class X509CertificateChainParameterTest extends PHPUnit_Framework_TestCase
 {
 	public function testCreate() {
-		$param = new X509CertificateChainParameter();
+		$cert = Base64::encode("certdata");
+		$param = new X509CertificateChainParameter($cert);
 		$this->assertInstanceOf(X509CertificateChainParameter::class, $param);
 		return $param;
 	}
@@ -35,5 +37,20 @@ class X509CertificateChainParameterTest extends PHPUnit_Framework_TestCase
 	public function testFromJSONValue(JWTParameter $param) {
 		$param = X509CertificateChainParameter::fromJSONValue($param->value());
 		$this->assertInstanceOf(X509CertificateChainParameter::class, $param);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testCreateFail() {
+		$cert = "\0";
+		new X509CertificateChainParameter($cert);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJSONFail() {
+		X509CertificateChainParameter::fromJSONValue(null);
 	}
 }

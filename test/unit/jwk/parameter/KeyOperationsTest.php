@@ -37,4 +37,11 @@ class KeyOperationsParameterTest extends PHPUnit_Framework_TestCase
 		$param = KeyOperationsParameter::fromJSONValue($param->value());
 		$this->assertInstanceOf(KeyOperationsParameter::class, $param);
 	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJSONValueFail() {
+		KeyOperationsParameter::fromJSONValue(null);
+	}
 }

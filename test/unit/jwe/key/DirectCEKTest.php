@@ -69,4 +69,34 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 		$cek = $algo->decrypt($data);
 		$this->assertEquals(self::KEY_128, $cek);
 	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException UnexpectedValueException
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testDecryptFail(DirectCEKAlgorithm $algo) {
+		$algo->decrypt("x");
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testCEKForEncryption(DirectCEKAlgorithm $algo) {
+		$cek = $algo->cekForEncryption(strlen(self::KEY_128));
+		$this->assertEquals(self::KEY_128, $cek);
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException UnexpectedValueException
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testCEKForEncryptionFail(DirectCEKAlgorithm $algo) {
+		$algo->cekForEncryption(1);
+	}
 }

@@ -21,10 +21,10 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 {
 	const REF_TIME = 1460293103;
 	
-	private $_claims;
+	private static $_claims;
 	
 	public function setUp() {
-		$this->_claims = new Claims(new IssuerClaim("issuer"), 
+		self::$_claims = new Claims(new IssuerClaim("issuer"), 
 			new SubjectClaim("subject"), new AudienceClaim("test"), 
 			new ExpirationTimeClaim(self::REF_TIME + 60), 
 			new NotBeforeClaim(self::REF_TIME), 
@@ -32,21 +32,21 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function tearDown() {
-		$this->_claims = null;
+		self::$_claims = null;
 	}
 	
 	public function testValidateTime() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(self::REF_TIME);
 		$this->assertInstanceOf(ValidationContext::class, 
-			$ctx->validate($this->_claims));
+			$ctx->validate(self::$_claims));
 	}
 	
 	public function testValidateLeeway() {
 		$ctx = (new ValidationContext())->withLeeway(10);
 		$ctx = $ctx->withReferenceTime(self::REF_TIME + 69);
 		$this->assertInstanceOf(ValidationContext::class, 
-			$ctx->validate($this->_claims));
+			$ctx->validate(self::$_claims));
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateLeewayFails() {
 		$ctx = (new ValidationContext())->withLeeway(10);
 		$ctx = $ctx->withReferenceTime(self::REF_TIME + 70);
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateExpired() {
 		$ctx = (new ValidationContext())->withLeeway(0);
 		$ctx = $ctx->withReferenceTime(self::REF_TIME + 60);
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	/**
@@ -73,14 +73,14 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateNotBeforeFails() {
 		$ctx = (new ValidationContext())->withLeeway(0);
 		$ctx = $ctx->withReferenceTime(self::REF_TIME - 1);
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	public function testValidateIssuer() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withIssuer("issuer");
 		$this->assertInstanceOf(ValidationContext::class, 
-			$ctx->validate($this->_claims));
+			$ctx->validate(self::$_claims));
 	}
 	
 	/**
@@ -89,14 +89,14 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateIssuerFails() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withIssuer("nope");
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	public function testValidateSubject() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withSubject("subject");
 		$this->assertInstanceOf(ValidationContext::class, 
-			$ctx->validate($this->_claims));
+			$ctx->validate(self::$_claims));
 	}
 	
 	/**
@@ -105,14 +105,14 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateSubjectFails() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withSubject("nope");
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	public function testValidateAudience() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withAudience("test");
 		$this->assertInstanceOf(ValidationContext::class, 
-			$ctx->validate($this->_claims));
+			$ctx->validate(self::$_claims));
 	}
 	
 	/**
@@ -121,14 +121,14 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateAudienceFails() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withAudience("nope");
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	public function testValidateID() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withID("id");
 		$this->assertInstanceOf(ValidationContext::class, 
-			$ctx->validate($this->_claims));
+			$ctx->validate(self::$_claims));
 	}
 	
 	/**
@@ -137,7 +137,7 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 	public function testValidateIDFails() {
 		$ctx = new ValidationContext();
 		$ctx = $ctx->withReferenceTime(null)->withID("nope");
-		$ctx->validate($this->_claims);
+		$ctx->validate(self::$_claims);
 	}
 	
 	public function testCustomClaim() {
@@ -154,5 +154,17 @@ class ClaimsValidateTest extends PHPUnit_Framework_TestCase
 		$claims = new Claims(new Claim("test", 0, new LessValidator()));
 		$ctx = new ValidationContext(array("test" => 0));
 		$ctx->validate($claims);
+	}
+	
+	public function testClaimsIsValid() {
+		$ctx = new ValidationContext();
+		$ctx = $ctx->withReferenceTime(self::REF_TIME);
+		$this->assertTrue(self::$_claims->isValid($ctx));
+	}
+	
+	public function testClaimsIsNotValid() {
+		$ctx = new ValidationContext();
+		$ctx = $ctx->withReferenceTime(self::REF_TIME)->withIssuer("nope");
+		$this->assertFalse(self::$_claims->isValid($ctx));
 	}
 }
