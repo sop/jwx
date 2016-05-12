@@ -5,6 +5,7 @@ namespace JWX\JWK\Symmetric;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
+use JWX\JWK\Parameter\KeyValueParameter;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\Util\Base64;
 
@@ -47,6 +48,19 @@ class SymmetricKeyJWK extends JWK
 			 KeyTypeParameter::TYPE_OCT) {
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
+	}
+	
+	/**
+	 * Initialize from a key string.
+	 *
+	 * @param string $key Symmetric key
+	 * @param JWKParameter... $params Optional additional parameters
+	 * @return self
+	 */
+	public static function fromKey($key, JWKParameter ...$params) {
+		$params[] = new KeyTypeParameter(KeyTypeParameter::TYPE_OCT);
+		$params[] = new KeyValueParameter($key);
+		return new self(...$params);
 	}
 	
 	/**
