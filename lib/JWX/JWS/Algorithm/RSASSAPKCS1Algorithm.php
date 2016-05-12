@@ -92,7 +92,10 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	/**
 	 * Initialize from a JWK.
 	 *
+	 * If algorithm is not specified, look from JWK.
+	 *
 	 * @param JWK $jwk
+	 * @param string|null $alg Optional algorithm name
 	 * @throws \UnexpectedValueException
 	 * @return self
 	 */
@@ -131,11 +134,14 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 		}
 		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->str());
 		if (!$key) {
-			throw new \RuntimeException("Failed to load private key.");
+			throw new \RuntimeException(
+				"openssl_pkey_get_private() failed: " .
+					 $this->_getLastOpenSSLError());
 		}
-		$result = openssl_sign($data, $signature, $key, $this->_mdMethod());
+		$result = @openssl_sign($data, $signature, $key, $this->_mdMethod());
 		if (!$result) {
-			throw new \RuntimeException("openssl_sign() failed.");
+			throw new \RuntimeException(
+				"openssl_sign() failed: " . $this->_getLastOpenSSLError());
 		}
 		return $signature;
 	}
@@ -143,13 +149,29 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	public function validateSignature($data, $signature) {
 		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->str());
 		if (!$key) {
-			throw new \RuntimeException("Failed to load public key.");
+			throw new \RuntimeException(
+				"openssl_pkey_get_public() failed: " .
+					 $this->_getLastOpenSSLError());
 		}
-		$result = openssl_verify($data, $signature, $key, $this->_mdMethod());
-		if ($result == -1) {
-			throw new \RuntimeException("openssl_verify() failed.");
+		$result = @openssl_verify($data, $signature, $key, $this->_mdMethod());
+		if (false === $result || -1 == $result) {
+			throw new \RuntimeException(
+				"openssl_verify() failed: " . $this->_getLastOpenSSLError());
 		}
 		return $result == 1;
+	}
+	
+	/**
+	 * Get last OpenSSL error message.
+	 *
+	 * @return string|null
+	 */
+	protected function _getLastOpenSSLError() {
+		$msg = null;
+		while (false !== ($err = openssl_error_string())) {
+			$msg = $err;
+		}
+		return $msg;
 	}
 	
 	public function headerParameters() {
