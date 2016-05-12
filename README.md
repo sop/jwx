@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/sop/jwx.svg?branch=master)](https://travis-ci.org/sop/jwx)
+[![Coverage Status](https://coveralls.io/repos/github/sop/jwx/badge.svg?branch=master)](https://coveralls.io/github/sop/jwx?branch=master)
 [![License](https://poser.pugx.org/sop/jwx/license)](https://github.com/sop/jwx/blob/master/LICENSE)
 
 # JWX
