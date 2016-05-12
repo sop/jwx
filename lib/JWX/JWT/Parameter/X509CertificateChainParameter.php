@@ -19,7 +19,7 @@ class X509CertificateChainParameter extends RegisteredJWTParameter
 	 */
 	public function __construct(...$certs) {
 		foreach ($certs as $cert) {
-			if (Base64::isValid($cert)) {
+			if (!Base64::isValid($cert)) {
 				throw new \UnexpectedValueException(
 					"Certificate must be base64 encoded.");
 			}
