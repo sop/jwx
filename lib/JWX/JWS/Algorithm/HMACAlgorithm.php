@@ -61,7 +61,7 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	 * If algorithm is not specified, look from JWK.
 	 *
 	 * @param JWK $jwk
-	 * @param string|null $alg Algorithm name
+	 * @param string|null $alg Optional algorithm name
 	 * @throws \UnexpectedValueException
 	 * @return self
 	 */
@@ -83,9 +83,11 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	}
 	
 	public function computeSignature($data) {
-		$result = hash_hmac($this->_hashAlgo(), $data, $this->_key, true);
+		$result = @hash_hmac($this->_hashAlgo(), $data, $this->_key, true);
 		if (false === $result) {
-			throw new \RuntimeException("hash_hmac failed.");
+			$err = error_get_last();
+			$msg = isset($err) ? $err["message"] : "hash_hmac() failed.";
+			throw new \RuntimeException($msg);
 		}
 		return $result;
 	}
