@@ -58,17 +58,26 @@ class RSAPublicKeyJWK extends JWK
 	}
 	
 	/**
+	 * Initialize from RSAPublicKey.
+	 *
+	 * @param RSAPublicKey $pk
+	 * @return self
+	 */
+	public static function fromRSAPublicKey(RSAPublicKey $pk) {
+		$n = ModulusParameter::fromNumber($pk->modulus());
+		$e = ExponentParameter::fromNumber($pk->publicExponent());
+		$key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_RSA);
+		return new self($key_type, $n, $e);
+	}
+	
+	/**
 	 * Initialize from PEM.
 	 *
 	 * @param PEM $pem
 	 * @return self
 	 */
 	public static function fromPEM(PEM $pem) {
-		$pk = RSAPublicKey::fromPEM($pem);
-		$n = ModulusParameter::fromNumber($pk->modulus());
-		$e = ExponentParameter::fromNumber($pk->publicExponent());
-		$key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_RSA);
-		return new self($key_type, $n, $e);
+		return self::fromRSAPublicKey(RSAPublicKey::fromPEM($pem));
 	}
 	
 	/**
