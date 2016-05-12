@@ -42,6 +42,7 @@ class UUIDv4
 	 * @param string $uuid UUIDv4 in canonical hexadecimal format
 	 */
 	public function __construct($uuid) {
+		// @todo Check that UUID is version 4
 		$this->_uuid = $uuid;
 	}
 	
