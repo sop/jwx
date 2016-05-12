@@ -60,13 +60,13 @@ class Base64
 	 *
 	 * @link https://tools.ietf.org/html/rfc4648#section-4
 	 * @param string $data
-	 * @throws \RuntimeException
+	 * @throws \UnexpectedValueException If encoding fails
 	 * @return string
 	 */
 	public static function encode($data) {
 		$ret = base64_encode($data);
 		if (false === $ret) {
-			throw new \RuntimeException("base64_encode() failed.");
+			throw new \UnexpectedValueException("base64_encode() failed.");
 		}
 		return $ret;
 	}
@@ -76,13 +76,13 @@ class Base64
 	 *
 	 * @link https://tools.ietf.org/html/rfc4648#section-4
 	 * @param string $data
-	 * @throws \RuntimeException
+	 * @throws \UnexpectedValueException If decoding fails
 	 * @return string
 	 */
 	public static function decode($data) {
 		$ret = base64_decode($data, true);
 		if (false === $ret) {
-			throw new \RuntimeException("base64_decode() failed.");
+			throw new \UnexpectedValueException("base64_decode() failed.");
 		}
 		return $ret;
 	}
