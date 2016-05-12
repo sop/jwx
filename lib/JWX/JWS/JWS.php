@@ -102,7 +102,7 @@ class JWS
 			if (!$header->has(RegisteredJWTParameter::P_CRIT)) {
 				$crit = new CriticalParameter(RegisteredJWTParameter::P_B64);
 			} else {
-				$crit = $header->get(RegisteredJWTParameter::P_CRIT)->with(
+				$crit = $header->get(RegisteredJWTParameter::P_CRIT)->withParamName(
 					RegisteredJWTParameter::P_B64);
 			}
 			$header = $header->withParameters($crit);
