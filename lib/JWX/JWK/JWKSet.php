@@ -81,6 +81,15 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
+	 * Get all JWK's in a set.
+	 *
+	 * @return JWK[]
+	 */
+	public function keys() {
+		return $this->_jwks;
+	}
+	
+	/**
 	 * Get JWK by key ID.
 	 *
 	 * @param string $id
@@ -162,7 +171,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 * Get iterator for JWK objects.
 	 *
 	 * @see IteratorAggregate::getIterator()
-	 * @return JWK[]
+	 * @return \ArrayIterator
 	 */
 	public function getIterator() {
 		return new \ArrayIterator($this->_jwks);
