@@ -2,6 +2,7 @@
 
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\ContentTypeParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
 
@@ -80,7 +81,8 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 * @param Header $header
 	 */
 	public function testParameters(Header $header) {
-		$this->assertTrue(is_array($header->parameters()));
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, 
+			$header->parameters());
 	}
 	
 	/**
@@ -102,7 +104,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 		foreach ($header as $param) {
 			$values[] = $param;
 		}
-		$this->assertCount(2, $values);
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $values);
 	}
 	
 	/**
@@ -135,7 +137,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToJSON(Header $header) {
 		$json = $header->toJSON();
-		$this->assertTrue(is_string($json));
+		$this->assertJson($json);
 		return $json;
 	}
 	

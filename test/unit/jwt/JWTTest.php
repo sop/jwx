@@ -81,7 +81,7 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 * @param JWT $jwt
 	 */
 	public function testToken(JWT $jwt) {
-		$this->assertTrue(is_string($jwt->token()));
+		$this->assertInternalType("string", $jwt->token());
 	}
 	
 	/**
@@ -91,7 +91,7 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToString(JWT $jwt) {
 		$token = strval($jwt);
-		$this->assertTrue(is_string($token));
+		$this->assertInternalType("string", $token);
 	}
 	
 	/**

@@ -3,6 +3,7 @@
 use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
 use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -26,7 +27,7 @@ class AESKWTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testHeaderParameters(KeyManagementAlgorithm $algo) {
 		$params = $algo->headerParameters();
-		$this->assertCount(1, $params);
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 	
 	/**

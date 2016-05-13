@@ -1,9 +1,9 @@
 <?php
 
-use JWX\Util\Base64;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWS\Algorithm\HS256Algorithm;
+use JWX\Util\Base64;
 
 
 /**
@@ -55,7 +55,7 @@ EOF;
 	public function testKey() {
 		$jwk = JWK::fromJSON(self::$_jwk);
 		$key = $jwk->get(RegisteredJWKParameter::PARAM_KEY_VALUE)->key();
-		$this->assertTrue(is_string($key));
+		$this->assertInternalType("string", $key);
 		return $key;
 	}
 	

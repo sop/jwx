@@ -72,7 +72,7 @@ class JWETest extends PHPUnit_Framework_TestCase
 	 * @param JWE $jwe
 	 */
 	public function testIV(JWE $jwe) {
-		$this->assertTrue(is_string($jwe->initializationVector()));
+		$this->assertInternalType("string", $jwe->initializationVector());
 	}
 	
 	/**
@@ -81,7 +81,7 @@ class JWETest extends PHPUnit_Framework_TestCase
 	 * @param JWE $jwe
 	 */
 	public function testCiphertext(JWE $jwe) {
-		$this->assertTrue(is_string($jwe->ciphertext()));
+		$this->assertInternalType("string", $jwe->ciphertext());
 	}
 	
 	/**
@@ -90,7 +90,7 @@ class JWETest extends PHPUnit_Framework_TestCase
 	 * @param JWE $jwe
 	 */
 	public function testAuthTag(JWE $jwe) {
-		$this->assertTrue(is_string($jwe->authenticationTag()));
+		$this->assertInternalType("string", $jwe->authenticationTag());
 	}
 	
 	/**
@@ -100,7 +100,7 @@ class JWETest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToCompact(JWE $jwe) {
 		$data = $jwe->toCompact();
-		$this->assertTrue(is_string($data));
+		$this->assertInternalType("string", $data);
 		return $data;
 	}
 	
@@ -111,7 +111,7 @@ class JWETest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToString(JWE $jwe) {
 		$token = strval($jwe);
-		$this->assertTrue(is_string($token));
+		$this->assertInternalType("string", $token);
 	}
 	
 	/**

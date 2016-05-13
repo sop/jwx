@@ -50,7 +50,7 @@ class RS256Test extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(SignatureAlgorithm $algo) {
 		$sig = $algo->computeSignature(self::DATA);
-		$this->assertTrue(is_string($sig));
+		$this->assertInternalType("string", $sig);
 		return $sig;
 	}
 	

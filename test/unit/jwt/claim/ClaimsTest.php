@@ -28,7 +28,7 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToJSON(Claims $claims) {
 		$json = $claims->toJSON();
-		$this->assertTrue(is_string($json));
+		$this->assertJson($json);
 		return $json;
 	}
 	
@@ -96,7 +96,7 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 	 * @return string
 	 */
 	public function testGetClaims(Claims $claims) {
-		$this->assertTrue(is_array($claims->all()));
+		$this->assertContainsOnlyInstancesOf(Claim::class, $claims->all());
 	}
 	
 	/**
@@ -118,7 +118,7 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 		foreach ($claims as $claim) {
 			$values[] = $claim;
 		}
-		$this->assertCount(3, $values);
+		$this->assertContainsOnlyInstancesOf(Claim::class, $values);
 	}
 	
 	/**
@@ -138,6 +138,6 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToString(Claims $claims) {
 		$str = strval($claims);
-		$this->assertTrue(is_string($str));
+		$this->assertJson($str);
 	}
 }

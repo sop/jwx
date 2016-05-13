@@ -111,7 +111,7 @@ class JWKTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToJSON(JWK $jwk) {
 		$json = $jwk->toJSON();
-		$this->assertTrue(is_string($json));
+		$this->assertJson($json);
 		return $json;
 	}
 	

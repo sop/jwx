@@ -9,6 +9,7 @@ use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -45,7 +46,7 @@ class RSAESKeyTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testHeaderParameters(KeyManagementAlgorithm $algo) {
 		$params = $algo->headerParameters();
-		$this->assertCount(1, $params);
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 	
 	/**

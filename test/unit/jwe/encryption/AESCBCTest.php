@@ -3,6 +3,7 @@
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\EncryptionAlgorithm\AESCBCAlgorithm;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -36,7 +37,7 @@ class AESCBCEncryptionTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testHeaderParams(ContentEncryptionAlgorithm $algo) {
 		$params = $algo->headerParameters();
-		$this->assertCount(1, $params);
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 	
 	/**

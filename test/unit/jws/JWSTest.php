@@ -85,7 +85,7 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	 * @param JWS $jws
 	 */
 	public function testSignature(JWS $jws) {
-		$this->assertTrue(is_string($jws->signature()));
+		$this->assertInternalType("string", $jws->signature());
 	}
 	
 	/**
@@ -95,7 +95,7 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToCompact(JWS $jws) {
 		$data = $jws->toCompact();
-		$this->assertTrue(is_string($data));
+		$this->assertInternalType("string", $data);
 		return $data;
 	}
 	
@@ -116,7 +116,7 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToCompactDetached(JWS $jws) {
 		$data = $jws->toCompactDetached();
-		$this->assertTrue(is_string($data));
+		$this->assertInternalType("string", $data);
 		return $data;
 	}
 	
@@ -143,7 +143,7 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	 * @param JWS $jws
 	 */
 	public function testToString(JWS $jws) {
-		$data = (string) $jws;
-		$this->assertTrue(is_string($data));
+		$data = strval($jws);
+		$this->assertInternalType("string", $data);
 	}
 }

@@ -61,7 +61,7 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testToJSON(JWKSet $jwkset) {
 		$json = $jwkset->toJSON();
-		$this->assertTrue(is_string($json));
+		$this->assertJson($json);
 		return $json;
 	}
 	
@@ -73,6 +73,16 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	public function testFromJSON($json) {
 		$jwkset = JWKSet::fromJSON($json);
 		$this->assertInstanceOf(JWKSet::class, $jwkset);
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWKSet $jwkset
+	 */
+	public function testKeys(JWKSet $jwkset) {
+		$keys = $jwkset->keys();
+		$this->assertContainsOnlyInstancesOf(JWK::class, $keys);
 	}
 	
 	/**
@@ -94,7 +104,7 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 		foreach ($jwkset as $jwk) {
 			$values[] = $jwk;
 		}
-		$this->assertCount(2, $values);
+		$this->assertContainsOnlyInstancesOf(JWK::class, $values);
 	}
 	
 	/**

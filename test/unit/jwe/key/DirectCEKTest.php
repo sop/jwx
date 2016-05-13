@@ -4,6 +4,7 @@ use JWX\JWA\JWA;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -45,7 +46,7 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testHeaderParameters(KeyManagementAlgorithm $algo) {
 		$params = $algo->headerParameters();
-		$this->assertCount(1, $params);
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 	
 	/**

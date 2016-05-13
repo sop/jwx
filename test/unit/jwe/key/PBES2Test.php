@@ -7,6 +7,7 @@ use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
 
@@ -44,7 +45,7 @@ class PBES2Test extends PHPUnit_Framework_TestCase
 	 */
 	public function testSalt(PBES2Algorithm $algo) {
 		$salt = $algo->salt();
-		$this->assertTrue(is_string($salt));
+		$this->assertInternalType("string", $salt);
 	}
 	
 	/**
@@ -63,7 +64,7 @@ class PBES2Test extends PHPUnit_Framework_TestCase
 	 */
 	public function testHeaderParameters(KeyManagementAlgorithm $algo) {
 		$params = $algo->headerParameters();
-		$this->assertCount(3, $params);
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 	
 	public function testFromPassword() {

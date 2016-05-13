@@ -13,7 +13,7 @@ class Base64Test extends PHPUnit_Framework_TestCase
 	
 	public function testEncode() {
 		$data = Base64::encode(self::DATA);
-		$this->assertTrue(is_string($data));
+		$this->assertInternalType("string", $data);
 		return $data;
 	}
 	
@@ -42,7 +42,7 @@ class Base64Test extends PHPUnit_Framework_TestCase
 	
 	public function testURLEncode() {
 		$data = Base64::urlEncode(self::DATA);
-		$this->assertTrue(is_string($data));
+		$this->assertInternalType("string", $data);
 		return $data;
 	}
 	

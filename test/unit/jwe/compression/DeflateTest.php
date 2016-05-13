@@ -40,7 +40,7 @@ class DeflateTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testCompress(CompressionAlgorithm $algo) {
 		$data = $algo->compress(self::PAYLOAD);
-		$this->assertTrue(is_string($data));
+		$this->assertInternalType("string", $data);
 		return $data;
 	}
 	
