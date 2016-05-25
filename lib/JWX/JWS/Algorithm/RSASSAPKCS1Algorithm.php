@@ -132,7 +132,7 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 		if (!isset($this->_privateKey)) {
 			throw new \LogicException("Private key not set.");
 		}
-		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->str());
+		$key = openssl_pkey_get_private($this->_privateKey->toPEM()->string());
 		if (!$key) {
 			throw new \RuntimeException(
 				"openssl_pkey_get_private() failed: " .
@@ -147,7 +147,7 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	}
 	
 	public function validateSignature($data, $signature) {
-		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->str());
+		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->string());
 		if (!$key) {
 			throw new \RuntimeException(
 				"openssl_pkey_get_public() failed: " .

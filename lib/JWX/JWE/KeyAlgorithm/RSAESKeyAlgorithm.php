@@ -109,7 +109,7 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 		$key = openssl_pkey_get_public(
 			$this->publicKey()
 				->toPEM()
-				->str());
+				->string());
 		if (false === $key) {
 			throw new \RuntimeException(
 				"openssl_pkey_get_public() failed: " .
@@ -129,7 +129,7 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 		$key = openssl_pkey_get_private(
 			$this->privateKey()
 				->toPEM()
-				->str());
+				->string());
 		if (!$key) {
 			throw new \RuntimeException(
 				"openssl_pkey_get_private() failed: " .
