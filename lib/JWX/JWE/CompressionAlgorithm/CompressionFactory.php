@@ -9,7 +9,7 @@ use JWX\JWE\CompressionAlgorithm;
 /**
  * Factory class to construct compression algorithm instances.
  */
-class CompressionFactory
+abstract class CompressionFactory
 {
 	/**
 	 * Mapping from algorithm name to class name.
