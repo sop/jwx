@@ -28,12 +28,13 @@ Also implements unencoded payload option
     * HMAC with SHA-256, SHA-384 and SHA-512
     * RSASSA-PKCS1-v1_5 with SHA-256, SHA-384 and SHA-512
 * Content encryption
-    * AES-CBC with 128, 192 and 256 bit key sizes
+    * AES-CBC with 128, 192 and 256-bit key sizes
+    * AES-GCM with 128, 192 and 256-bit key sizes
 * Key management
     * Shared symmetric key (direct)
     * RSAES-PKCS1-v1_5
     * RSAES OAEP
-    * AES Key Wrap with 128, 192 and 256 bit key sizes
+    * AES Key Wrap with 128, 192 and 256-bit key sizes
     * Password-based encryption (PBES2 with AES Key Wrap)
 * Compression
     * DEFLATE
