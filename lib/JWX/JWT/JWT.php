@@ -13,6 +13,8 @@ use JWX\JWT\Claims;
 use JWX\JWT\Exception\ValidationException;
 use JWX\JWT\Header;
 use JWX\JWT\JOSE;
+use JWX\JWT\Parameter\ContentTypeParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 
 
@@ -50,9 +52,9 @@ class JWT
 	 */
 	public function __construct($token) {
 		$this->_parts = explode(".", $token);
-		if (count($this->_parts) == 3) {
+		if (3 == count($this->_parts)) {
 			$this->_type = self::TYPE_JWS;
-		} else if (count($this->_parts) == 5) {
+		} else if (5 == count($this->_parts)) {
 			$this->_type = self::TYPE_JWE;
 		} else {
 			throw new \UnexpectedValueException("Not a JWT token.");
@@ -64,6 +66,7 @@ class JWT
 	 *
 	 * @param Claims $claims Claims set
 	 * @param Header|null $header Optional header
+	 * @throws \RuntimeException For generic errors
 	 * @return self
 	 */
 	public static function unsecuredFromClaims(Claims $claims, 
@@ -152,6 +155,23 @@ class JWT
 	}
 	
 	/**
+	 * Check whether JWT contains another nested JWT.
+	 *
+	 * @return bool
+	 */
+	public function isNested() {
+		$header = $this->header();
+		if (!$header->has(RegisteredJWTParameter::P_CTY)) {
+			return false;
+		}
+		$cty = $header->get(RegisteredJWTParameter::P_CTY)->value();
+		if ($cty != ContentTypeParameter::TYPE_JWT) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * Get JWT header.
 	 *
 	 * @return JOSE
@@ -159,6 +179,15 @@ class JWT
 	public function header() {
 		$header = Header::fromJSON(Base64::urlDecode($this->_parts[0]));
 		return new JOSE($header);
+	}
+	
+	/**
+	 * Get JWT as a string.
+	 *
+	 * @return string
+	 */
+	public function token() {
+		return implode(".", $this->_parts);
 	}
 	
 	/**
@@ -193,19 +222,50 @@ class JWT
 	 */
 	public function claimsFromJWE(KeyManagementAlgorithm $key_algo, 
 			ContentEncryptionAlgorithm $enc_algo, ValidationContext $ctx) {
-		$jwe = $this->JWE();
-		$claims = Claims::fromJSON($jwe->decrypt($key_algo, $enc_algo));
+		$claims = Claims::fromJSON($this->JWE()->decrypt($key_algo, $enc_algo));
 		$ctx->validate($claims);
 		return $claims;
 	}
 	
 	/**
-	 * Get JWT as a string.
+	 * Encrypt JWT producing a nested JWT.
 	 *
-	 * @return string
+	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
+	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
+	 * @param CompressionAlgorithm|null $zip_algo Optional compression algorithm
+	 * @param Header|null $header Optional header
+	 * @throws \RuntimeException For generic errors
+	 * @return self
 	 */
-	public function token() {
-		return implode(".", $this->_parts);
+	public function encryptNested(KeyManagementAlgorithm $key_algo, 
+			ContentEncryptionAlgorithm $enc_algo, 
+			CompressionAlgorithm $zip_algo = null, Header $header = null) {
+		if (!isset($header)) {
+			$header = new Header();
+		}
+		// add JWT content type parameter
+		$header = $header->withParameters(
+			new ContentTypeParameter(ContentTypeParameter::TYPE_JWT));
+		$payload = $this->token();
+		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, $zip_algo, $header);
+		return new self($jwe->toCompact());
+	}
+	
+	/**
+	 * Get nested JWT from an encrypted JWT.
+	 *
+	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
+	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
+	 * @throws \RuntimeException For generic errors
+	 * @return self
+	 */
+	public function nestedFromJWE(KeyManagementAlgorithm $key_algo, 
+			ContentEncryptionAlgorithm $enc_algo) {
+		if (!$this->isNested()) {
+			throw new \UnexpectedValueException("Not a nested JWT token.");
+		}
+		$jwt = new JWT($this->JWE()->decrypt($key_algo, $enc_algo));
+		return $jwt;
 	}
 	
 	/**
