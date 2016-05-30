@@ -35,7 +35,8 @@ Also implements unencoded payload option
     * RSAES-PKCS1-v1_5
     * RSAES OAEP
     * AES Key Wrap with 128, 192 and 256-bit key sizes
-    * Password-based encryption (PBES2 with AES Key Wrap)
+    * AES-GCM key encryption with 128, 192 and 256-bit key sizes
+    * Password-based key encryption (PBES2 with AES Key Wrap)
 * Compression
     * DEFLATE
 
@@ -46,7 +47,9 @@ This library is available on
     composer require sop/jwx
 
 ## Usage
-`Claims` class holds `Claim` objects that represent the claims. The claims shall be encoded into a JWT which may further be signed or encrypted, producing a JWS or a JWE respectively.
+`Claims` class holds `Claim` objects that represent the claims.
+The claims shall be encoded into a JWT which may further be
+signed or encrypted, producing a JWS or a JWE respectively.
 
 JWS and JWE may also be used to carry arbitrary payload, not just JSON claims.
 
