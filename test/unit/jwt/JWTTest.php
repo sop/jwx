@@ -8,8 +8,11 @@ use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
 use JWX\JWT\Claim\SubjectClaim;
 use JWX\JWT\Claims;
+use JWX\JWT\Header;
 use JWX\JWT\JOSE;
 use JWX\JWT\JWT;
+use JWX\JWT\Parameter\ContentTypeParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\ValidationContext;
 use JWX\Util\Base64;
 
@@ -175,5 +178,73 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testInvalidJWT() {
 		new JWT("");
+	}
+	
+	/**
+	 * @depends testCreateJWS
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testEncryptNested(JWT $jwt) {
+		$key_algo = new DirectCEKAlgorithm(self::KEY_128);
+		$enc_algo = new A128CBCHS256Algorithm();
+		$nested = $jwt->encryptNested($key_algo, $enc_algo);
+		$this->assertInstanceOf(JWT::class, $nested);
+		return $nested;
+	}
+	
+	/**
+	 * @depends testEncryptNested
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testNestedHeader(JWT $jwt) {
+		$cty = $jwt->header()
+			->get(RegisteredJWTParameter::P_CTY)
+			->value();
+		$this->assertEquals(ContentTypeParameter::TYPE_JWT, $cty);
+	}
+	
+	/**
+	 * @depends testEncryptNested
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testIsNested(JWT $jwt) {
+		$this->assertTrue($jwt->isNested());
+	}
+	
+	/**
+	 * @depends testEncryptNested
+	 *
+	 * @param JWT $jwt
+	 */
+	public function testNestedFromJWE(JWT $jwt) {
+		$key_algo = new DirectCEKAlgorithm(self::KEY_128);
+		$enc_algo = new A128CBCHS256Algorithm();
+		$nested = $jwt->nestedFromJWE($key_algo, $enc_algo);
+		$this->assertInstanceOf(JWT::class, $nested);
+		return $nested;
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testNestedFromJWEFail() {
+		$key_algo = new DirectCEKAlgorithm(self::KEY_128);
+		$enc_algo = new A128CBCHS256Algorithm();
+		JWT::unsecuredFromClaims(new Claims())->nestedFromJWE($key_algo, 
+			$enc_algo);
+	}
+	
+	public function testIsNestedNoContentType() {
+		$jwt = JWT::unsecuredFromClaims(new Claims());
+		$this->assertFalse($jwt->isNested());
+	}
+	
+	public function testIsNestedInvalidContentType() {
+		$jwt = JWT::unsecuredFromClaims(new Claims(), 
+			new Header(new ContentTypeParameter("example")));
+		$this->assertFalse($jwt->isNested());
 	}
 }
