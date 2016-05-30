@@ -7,6 +7,9 @@ use GCM\GCM;
 use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\JWK;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\AuthenticationTagParameter;
@@ -90,6 +93,32 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 		}
 		$this->_kek = $kek;
 		$this->_iv = $iv;
+	}
+	
+	/**
+	 * Initialize from JWK.
+	 *
+	 * If algorithm isn't specified, consult the JWK.
+	 *
+	 * @param JWK $jwk
+	 * @param string $iv Initialization vector
+	 * @param string|null $alg Optional explicitly specified algorithm
+	 * @throws \UnexpectedValueException If parameters are missing
+	 * @return self
+	 */
+	public static function fromJWK(JWK $jwk, $iv, $alg = null) {
+		$jwk = SymmetricKeyJWK::fromJWK($jwk);
+		if (!isset($alg)) {
+			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
+				throw new \UnexpectedValueException("No algorithm parameter.");
+			}
+			$alg = $jwk->get(RegisteredJWKParameter::P_ALG)->value();
+		}
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
+		}
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
+		return new $cls($jwk->key(), $iv);
 	}
 	
 	protected function _encryptKey($key, Header &$header) {
