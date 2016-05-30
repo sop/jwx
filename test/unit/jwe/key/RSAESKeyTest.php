@@ -110,4 +110,48 @@ class RSAESKeyTest extends PHPUnit_Framework_TestCase
 		$algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
 		$algo->decrypt("x");
 	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param RSAESKeyAlgorithm $algo
+	 */
+	public function testPubKeyFail(RSAESKeyAlgorithm $algo) {
+		$obj = new ReflectionClass($algo);
+		$prop = $obj->getProperty("_publicKey");
+		$prop->setAccessible(true);
+		$prop->setValue($algo, new RSAESKeyTest_KeyMockup());
+		$algo->encrypt("test");
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param RSAESKeyAlgorithm $algo
+	 */
+	public function testPrivKeyFail(RSAESKeyAlgorithm $algo) {
+		$obj = new ReflectionClass($algo);
+		$prop = $obj->getProperty("_privateKey");
+		$prop->setAccessible(true);
+		$prop->setValue($algo, new RSAESKeyTest_KeyMockup());
+		$algo->decrypt("test");
+	}
+}
+
+
+class RSAESKeyTest_KeyMockup
+{
+	public function toPEM() {
+		return new RSAESKeyTest_PEMMockup();
+	}
+}
+
+
+class RSAESKeyTest_PEMMockup
+{
+	public function string() {
+		return "";
+	}
 }

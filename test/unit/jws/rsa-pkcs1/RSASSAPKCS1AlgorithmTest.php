@@ -95,6 +95,34 @@ class RSASSAPKCS1AlgorithmTest extends PHPUnit_Framework_TestCase
 			self::$_privKey);
 		$algo->validateSignature("data", "");
 	}
+	
+	/**
+	 * @depends testFromPrivateKeyJWK
+	 * @expectedException RuntimeException
+	 *
+	 * @param RSASSAPKCS1Algorithm $algo
+	 */
+	public function testComputeInvalidKey(RSASSAPKCS1Algorithm $algo) {
+		$obj = new ReflectionClass($algo);
+		$prop = $obj->getProperty("_privateKey");
+		$prop->setAccessible(true);
+		$prop->setValue($algo, new RSASSAPKCS1AlgorithmTest_KeyMockup());
+		$algo->computeSignature("test");
+	}
+	
+	/**
+	 * @depends testFromPrivateKeyJWK
+	 * @expectedException RuntimeException
+	 *
+	 * @param RSASSAPKCS1Algorithm $algo
+	 */
+	public function testValidateInvalidKey(RSASSAPKCS1Algorithm $algo) {
+		$obj = new ReflectionClass($algo);
+		$prop = $obj->getProperty("_publicKey");
+		$prop->setAccessible(true);
+		$prop->setValue($algo, new RSASSAPKCS1AlgorithmTest_KeyMockup());
+		$algo->validateSignature("test", "");
+	}
 }
 
 
@@ -106,5 +134,21 @@ class RSASSAPKCS1AlgorithmTest_InvalidMethod extends RSASSAPKCS1Algorithm
 	
 	public function algorithmParamValue() {
 		return $this->_mdMethod();
+	}
+}
+
+
+class RSASSAPKCS1AlgorithmTest_KeyMockup
+{
+	public function toPEM() {
+		return new RSAESKeyTest_PEMMockup();
+	}
+}
+
+
+class RSASSAPKCS1AlgorithmTest_PEMMockup
+{
+	public function string() {
+		return "";
 	}
 }

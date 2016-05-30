@@ -1,6 +1,6 @@
 <?php
 
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWT\Header;
@@ -55,7 +55,7 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$aad = Base64::urlEncode($header->toJSON());
-		$algo = new A128CBCHS256Algorithm();
+		$algo = EncryptionFactory::algoByName(self::$_testData["input"]["enc"]);
 		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, $cek, $iv, 
 			$aad);
 		$this->assertEquals(
@@ -74,7 +74,8 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$password = self::$_testData["input"]["pwd"];
 		$key_algo = PBES2Algorithm::fromHeader($header, $password);
-		$enc_algo = new A128CBCHS256Algorithm();
+		$enc_algo = EncryptionFactory::algoByName(
+			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 
 			$iv);
 		$this->assertInstanceOf(JWE::class, $jwe);

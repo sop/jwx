@@ -2,20 +2,21 @@
 
 use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
 use JWX\JWE\JWE;
-use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
-use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
+use JWX\JWK\JWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header;
 use JWX\Util\Base64;
 
 
-class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
+class CookbookAESKWWithAESGCMTest extends PHPUnit_Framework_TestCase
 {
 	private static $_testData;
 	
 	public static function setUpBeforeClass() {
 		$json = file_get_contents(
 			COOKBOOK_DIR .
-				 "/jwe/5_1.key_encryption_using_rsa_v15_and_aes-hmac-sha2.json");
+				 "/jwe/5_8.key_wrap_using_aes-keywrap_with_aes-gcm.json");
 		self::$_testData = json_decode($json, true);
 	}
 	
@@ -23,26 +24,23 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		self::$_testData = null;
 	}
 	
-	public function testPrivateKey() {
-		$jwk = RSAPrivateKeyJWK::fromArray(self::$_testData["input"]["key"]);
-		$this->assertInstanceOf(RSAPrivateKeyJWK::class, $jwk);
+	public function testCreateJWK() {
+		$jwk = SymmetricKeyJWK::fromArray(self::$_testData["input"]["key"]);
+		$this->assertInstanceOf(SymmetricKeyJWK::class, $jwk);
 		return $jwk;
 	}
 	
 	/**
-	 * @depends testPrivateKey
+	 * @depends testCreateJWK
 	 *
-	 * Encryption result cannot be verified since RSAES uses random salt.
-	 *
-	 * @param RSAPrivateKeyJWK $jwk
+	 * @param SymmetricKeyJWK $jwk
 	 */
-	public function testEncryptedKey(RSAPrivateKeyJWK $jwk) {
+	public function testEncryptKey(SymmetricKeyJWK $jwk) {
+		$algo = AESKWAlgorithm::fromJWK($jwk);
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
-		$algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
-		$ciphertext = $algo->encrypt($cek);
-		// test that decrypt succeeds
-		$result = $algo->decrypt($ciphertext);
-		$this->assertEquals($cek, $result);
+		$enc_key = $algo->encrypt($cek);
+		$this->assertEquals(self::$_testData["encrypting_key"]["encrypted_key"], 
+			Base64::urlEncode($enc_key));
 	}
 	
 	public function testHeader() {
@@ -55,15 +53,16 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
+	 * @depends testCreateJWK
 	 * @depends testHeader
-	 *
-	 * @param Header $header
 	 */
-	public function testContentEncryption(Header $header) {
+	public function testContentEncryption(SymmetricKeyJWK $jwk, Header $header) {
 		$plaintext = self::$_testData["input"]["plaintext"];
-		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$aad = Base64::urlEncode($header->toJSON());
+		$cek = AESKWAlgorithm::fromJWK($jwk)->decrypt(
+			Base64::urlDecode(
+				self::$_testData["encrypting_key"]["encrypted_key"]));
 		$algo = EncryptionFactory::algoByName(self::$_testData["input"]["enc"]);
 		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, $cek, $iv, 
 			$aad);
@@ -75,19 +74,21 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @depends testPrivateKey
+	 * @depends testCreateJWK
 	 * @depends testHeader
 	 */
-	public function testCreateJWE(RSAPrivateKeyJWK $jwk, Header $header) {
+	public function testCreateJWE(SymmetricKeyJWK $jwk, Header $header) {
 		$payload = self::$_testData["input"]["plaintext"];
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
-		$key_algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
+		$key_algo = AESKWAlgorithm::fromJWK($jwk);
 		$enc_algo = EncryptionFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 
 			$iv);
 		$this->assertInstanceOf(JWE::class, $jwe);
+		$this->assertEquals(self::$_testData["output"]["compact"], 
+			$jwe->toCompact());
 		return $jwe;
 	}
 }

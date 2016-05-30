@@ -2,20 +2,20 @@
 
 use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
 use JWX\JWE\JWE;
-use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
+use JWX\JWE\KeyAlgorithm\RSAOAEPAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWT\Header;
 use JWX\Util\Base64;
 
 
-class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
+class CookbookKeyEncRSAOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
 {
 	private static $_testData;
 	
 	public static function setUpBeforeClass() {
 		$json = file_get_contents(
 			COOKBOOK_DIR .
-				 "/jwe/5_1.key_encryption_using_rsa_v15_and_aes-hmac-sha2.json");
+				 "/jwe/5_2.key_encryption_using_rsa-oaep_with_aes-gcm.json");
 		self::$_testData = json_decode($json, true);
 	}
 	
@@ -38,7 +38,7 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 	 */
 	public function testEncryptedKey(RSAPrivateKeyJWK $jwk) {
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
-		$algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
+		$algo = RSAOAEPAlgorithm::fromPrivateKey($jwk);
 		$ciphertext = $algo->encrypt($cek);
 		// test that decrypt succeeds
 		$result = $algo->decrypt($ciphertext);
@@ -82,7 +82,7 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
 		$payload = self::$_testData["input"]["plaintext"];
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
-		$key_algo = RSAESPKCS1Algorithm::fromPrivateKey($jwk);
+		$key_algo = RSAOAEPAlgorithm::fromPrivateKey($jwk);
 		$enc_algo = EncryptionFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 

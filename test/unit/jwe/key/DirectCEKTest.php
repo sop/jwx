@@ -73,6 +73,16 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	
 	/**
 	 * @depends testCreate
+	 * @expectedException LogicException
+	 *
+	 * @param DirectCEKAlgorithm $algo
+	 */
+	public function testEncryptFail(DirectCEKAlgorithm $algo) {
+		$algo->encrypt("fail");
+	}
+	
+	/**
+	 * @depends testCreate
 	 * @expectedException UnexpectedValueException
 	 *
 	 * @param DirectCEKAlgorithm $algo

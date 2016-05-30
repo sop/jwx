@@ -97,4 +97,18 @@ class DeflateTest extends PHPUnit_Framework_TestCase
 	public function testDecompressFail(CompressionAlgorithm $algo) {
 		$algo->decompress("\0");
 	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param CompressionAlgorithm $algo
+	 */
+	public function testCompressFail(CompressionAlgorithm $algo) {
+		$obj = new ReflectionClass($algo);
+		$prop = $obj->getProperty("_compressionLevel");
+		$prop->setAccessible(true);
+		$prop->setValue($algo, 10);
+		$algo->compress("test");
+	}
 }

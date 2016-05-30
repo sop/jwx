@@ -1,12 +1,12 @@
 <?php
 
+use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
+use JWX\JWK\JWK;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWT\Header;
 use JWX\JWT\JOSE;
 use JWX\Util\Base64;
-use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
-use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 
 
 /**

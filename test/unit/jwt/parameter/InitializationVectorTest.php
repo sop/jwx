@@ -11,8 +11,10 @@ use JWX\JWT\Parameter\RegisteredJWTParameter;
  */
 class InitializationVectorParameterTest extends PHPUnit_Framework_TestCase
 {
+	const IV = "abcdef";
+	
 	public function testCreate() {
-		$param = InitializationVectorParameter::fromString("abcdef");
+		$param = InitializationVectorParameter::fromString(self::IV);
 		$this->assertInstanceOf(InitializationVectorParameter::class, $param);
 		return $param;
 	}
@@ -25,5 +27,14 @@ class InitializationVectorParameterTest extends PHPUnit_Framework_TestCase
 	public function testParamName(JWTParameter $param) {
 		$this->assertEquals(RegisteredJWTParameter::PARAM_INITIALIZATION_VECTOR, 
 			$param->name());
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param InitializationVectorParameter $param
+	 */
+	public function testIV(InitializationVectorParameter $param) {
+		$this->assertEquals(self::IV, $param->initializationVector());
 	}
 }
