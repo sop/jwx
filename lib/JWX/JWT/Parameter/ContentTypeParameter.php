@@ -11,6 +11,13 @@ namespace JWX\JWT\Parameter;
 class ContentTypeParameter extends RegisteredJWTParameter
 {
 	/**
+	 * Content type for the nested JWT.
+	 *
+	 * @var string
+	 */
+	const TYPE_JWT = "JWT";
+	
+	/**
 	 * Constructor
 	 *
 	 * @param string $type
