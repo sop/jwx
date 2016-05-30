@@ -76,7 +76,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
 	 *
 	 * @param JWK $jwk
 	 * @param string|null $alg Optional explicitly specified algorithm
-	 * @throws \UnexpectedValueException
+	 * @throws \UnexpectedValueException If parameters are missing
 	 * @return self
 	 */
 	public static function fromJWK(JWK $jwk, $alg = null) {
