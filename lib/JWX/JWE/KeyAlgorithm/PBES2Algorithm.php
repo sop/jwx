@@ -18,7 +18,7 @@ use JWX\JWT\Parameter\RegisteredJWTParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.8
  */
-abstract class PBES2Algorithm implements KeyManagementAlgorithm
+abstract class PBES2Algorithm extends KeyManagementAlgorithm
 {
 	use RandomCEK;
 	
@@ -186,14 +186,12 @@ abstract class PBES2Algorithm implements KeyManagementAlgorithm
 		return $this->_derivedKey;
 	}
 	
-	public function encrypt($cek) {
-		$kek = $this->_derivedKey();
-		return $this->_kwAlgo()->wrap($cek, $kek);
+	protected function _encryptKey($key, Header &$header) {
+		return $this->_kwAlgo()->wrap($key, $this->_derivedKey());
 	}
 	
-	public function decrypt($data) {
-		$kek = $this->_derivedKey();
-		return $this->_kwAlgo()->unwrap($data, $kek);
+	protected function _decryptKey($ciphertext, Header $header) {
+		return $this->_kwAlgo()->unwrap($ciphertext, $this->_derivedKey());
 	}
 	
 	public function headerParameters() {

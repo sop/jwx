@@ -4,6 +4,9 @@ namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\JWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
+use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
@@ -12,7 +15,7 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.5
  */
-class DirectCEKAlgorithm implements KeyManagementAlgorithm
+class DirectCEKAlgorithm extends KeyManagementAlgorithm
 {
 	/**
 	 * Content encryption key.
@@ -31,6 +34,16 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 	}
 	
 	/**
+	 * Initialize from JWK.
+	 *
+	 * @param JWK $jwk
+	 */
+	public static function fromJWK(JWK $jwk) {
+		$jwk = SymmetricKeyJWK::fromJWK($jwk);
+		return new self($jwk->key());
+	}
+	
+	/**
 	 * Get content encryption key.
 	 *
 	 * @return string
@@ -39,12 +52,15 @@ class DirectCEKAlgorithm implements KeyManagementAlgorithm
 		return $this->_cek;
 	}
 	
-	public function encrypt($cek) {
+	protected function _encryptKey($key, Header &$header) {
+		if ($key != $this->_cek) {
+			throw new \LogicException("Content encryption key doesn't match.");
+		}
 		return "";
 	}
 	
-	public function decrypt($data) {
-		if ($data !== "") {
+	protected function _decryptKey($ciphertext, Header $header) {
+		if ($ciphertext !== "") {
 			throw new \UnexpectedValueException(
 				"Encrypted key must be an empty octet sequence.");
 		}

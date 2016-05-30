@@ -145,9 +145,11 @@ class JWE
 		if (strlen($iv) != $enc_algo->ivSize()) {
 			throw new \UnexpectedValueException("Invalid IV size.");
 		}
-		// add key and encryption algorithm parameters to header
+		// add key and encryption algorithm parameters to the header
 		$header = $header->withParameters(...$key_algo->headerParameters())
 			->withParameters(...$enc_algo->headerParameters());
+		// encrypt the content encryption key
+		$encrypted_key = $key_algo->encrypt($cek, $header);
 		// compress
 		if (isset($zip_algo)) {
 			$payload = $zip_algo->compress($payload);
@@ -156,8 +158,7 @@ class JWE
 		$aad = Base64::urlEncode($header->toJSON());
 		list($ciphertext, $auth_tag) = $enc_algo->encrypt($payload, $cek, $iv, 
 			$aad);
-		return new self($header, $key_algo->encrypt($cek), $iv, $ciphertext, 
-			$auth_tag);
+		return new self($header, $encrypted_key, $iv, $ciphertext, $auth_tag);
 	}
 	
 	/**

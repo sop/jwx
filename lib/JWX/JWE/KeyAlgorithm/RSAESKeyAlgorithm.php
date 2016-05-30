@@ -6,6 +6,7 @@ use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWT\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
@@ -15,7 +16,7 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  * @link https://tools.ietf.org/html/rfc7518#section-4.2
  * @link https://tools.ietf.org/html/rfc7518#section-4.3
  */
-abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
+abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 {
 	use RandomCEK;
 	
@@ -105,17 +106,17 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 		return $this->_privateKey;
 	}
 	
-	public function encrypt($cek) {
-		$key = openssl_pkey_get_public(
+	protected function _encryptKey($key, Header &$header) {
+		$pubkey = openssl_pkey_get_public(
 			$this->publicKey()
 				->toPEM()
 				->string());
-		if (false === $key) {
+		if (false === $pubkey) {
 			throw new \RuntimeException(
 				"openssl_pkey_get_public() failed: " .
 					 $this->_getLastOpenSSLError());
 		}
-		$result = openssl_public_encrypt($cek, $crypted, $key, 
+		$result = openssl_public_encrypt($key, $crypted, $pubkey, 
 			$this->_paddingScheme());
 		if (!$result) {
 			throw new \RuntimeException(
@@ -125,17 +126,17 @@ abstract class RSAESKeyAlgorithm implements KeyManagementAlgorithm
 		return $crypted;
 	}
 	
-	public function decrypt($data) {
-		$key = openssl_pkey_get_private(
+	protected function _decryptKey($ciphertext, Header $header) {
+		$privkey = openssl_pkey_get_private(
 			$this->privateKey()
 				->toPEM()
 				->string());
-		if (!$key) {
+		if (!$privkey) {
 			throw new \RuntimeException(
 				"openssl_pkey_get_private() failed: " .
 					 $this->_getLastOpenSSLError());
 		}
-		$result = openssl_private_decrypt($data, $cek, $key, 
+		$result = openssl_private_decrypt($ciphertext, $cek, $privkey, 
 			$this->_paddingScheme());
 		if (!$result) {
 			throw new \RuntimeException(
