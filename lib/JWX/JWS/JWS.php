@@ -31,6 +31,13 @@ class JWS
 	protected $_payload;
 	
 	/**
+	 * Input value for the signature computation.
+	 *
+	 * @var string $_signatureInput
+	 */
+	protected $_signatureInput;
+	
+	/**
 	 * Signature.
 	 *
 	 * @var string $_signature
@@ -45,9 +52,10 @@ class JWS
 	 * @param string $signature JWS Signature
 	 */
 	protected function __construct(Header $protected_header, $payload, 
-			$signature) {
+			$signature_input, $signature) {
 		$this->_protectedHeader = $protected_header;
 		$this->_payload = $payload;
+		$this->_signatureInput = $signature_input;
 		$this->_signature = $signature;
 	}
 	
@@ -77,8 +85,9 @@ class JWS
 		$b64 = $header->has(RegisteredJWTParameter::P_B64) ? $header->get(
 			RegisteredJWTParameter::P_B64)->value() : true;
 		$payload = $b64 ? Base64::urlDecode($parts[1]) : $parts[1];
+		$signature_input = $parts[0] . "." . $parts[1];
 		$signature = Base64::urlDecode($parts[2]);
-		return new self($header, $payload, $signature);
+		return new self($header, $payload, $signature_input, $signature);
 	}
 	
 	/**
@@ -107,9 +116,9 @@ class JWS
 			}
 			$header = $header->withParameters($crit);
 		}
-		$signature_input = self::_getSignatureInput($payload, $header);
+		$signature_input = self::_generateSignatureInput($payload, $header);
 		$signature = $algo->computeSignature($signature_input);
-		return new self($header, $payload, $signature);
+		return new self($header, $payload, $signature_input, $signature);
 	}
 	
 	/**
@@ -176,9 +185,8 @@ class JWS
 		if ($algo->algorithmParamValue() != $this->algorithmName()) {
 			throw new \UnexpectedValueException("Invalid signature algorithm.");
 		}
-		$data = self::_getSignatureInput($this->_payload, 
-			$this->_protectedHeader);
-		return $algo->validateSignature($data, $this->_signature);
+		return $algo->validateSignature($this->_signatureInput, 
+			$this->_signature);
 	}
 	
 	/**
@@ -203,13 +211,13 @@ class JWS
 	}
 	
 	/**
-	 * Get input for the signature algorithm.
+	 * Generate input for the signature computation.
 	 *
 	 * @param string $payload Payload
 	 * @param Header $header Protected header
 	 * @return string
 	 */
-	protected static function _getSignatureInput($payload, Header $header) {
+	protected static function _generateSignatureInput($payload, Header $header) {
 		$b64 = $header->has(RegisteredJWTParameter::P_B64) ? $header->get(
 			RegisteredJWTParameter::P_B64)->value() : true;
 		$data = Base64::urlEncode($header->toJSON()) . ".";
