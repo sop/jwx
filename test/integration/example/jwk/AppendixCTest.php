@@ -1,6 +1,8 @@
 <?php
 
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\JWE;
+use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWT\Header;
@@ -9,7 +11,7 @@ use JWX\Util\Base64;
 
 
 /**
- * Test case for rfc7517 appendix C.
+ * Test case for RFC 7517 appendix C.
  * Example Encrypted RSA Private Key
  *
  * @group example
@@ -133,13 +135,19 @@ EOF;
 		56, 240, 65, 208, 82, 112, 161, 131, 36, 55, 202, 236, 185, 172, 129, 23, 
 		153, 194, 195, 48, 253, 182];
 	
+	private static $_cek;
+	
 	private static $_passphraseBytes = [84, 104, 117, 115, 32, 102, 114, 
 		111, 109, 32, 109, 121, 32, 108, 105, 112, 115, 44, 32, 98, 121, 32, 121, 
 		111, 117, 114, 115, 44, 32, 109, 121, 32, 115, 105, 110, 32, 105, 115, 
 		32, 112, 117, 114, 103, 101, 100, 46];
 	
+	private static $_passphrase;
+	
 	private static $_ivBytes = [97, 239, 99, 214, 171, 54, 216, 57, 145, 72, 
 		7, 93, 34, 31, 149, 156];
+	
+	private static $_iv;
 	
 	private static $_aadBytes = [123, 34, 97, 108, 103, 34, 58, 34, 80, 66, 
 		69, 83, 50, 45, 72, 83, 50, 53, 54, 43, 65, 49, 50, 56, 75, 87, 34, 44, 
@@ -148,6 +156,19 @@ EOF;
 		50, 99, 34, 58, 52, 48, 57, 54, 44, 34, 101, 110, 99, 34, 58, 34, 65, 49, 
 		50, 56, 67, 66, 67, 45, 72, 83, 50, 53, 54, 34, 44, 34, 99, 116, 121, 34, 
 		58, 34, 106, 119, 107, 43, 106, 115, 111, 110, 34, 125];
+	
+	public static function setUpBeforeClass() {
+		self::$_cek = implode("", array_map("chr", self::$_cekBytes));
+		self::$_passphrase = implode("", 
+			array_map("chr", self::$_passphraseBytes));
+		self::$_iv = implode("", array_map("chr", self::$_ivBytes));
+	}
+	
+	public static function tearDownAfterClass() {
+		self::$_cek = null;
+		self::$_passphrase = null;
+		self::$_iv = null;
+	}
 	
 	public function testJWK() {
 		$json = implode("", array_map("chr", self::$_jwkBytes));
@@ -194,14 +215,13 @@ EOF;
 			249, 52, 117, 184, 140, 81, 246, 158, 161, 177, 20, 33, 245, 57, 59, 
 			4];
 		$expected = implode("", array_map("chr", $expectedBytes));
-		$cek = implode("", array_map("chr", self::$_cekBytes));
-		$password = implode("", array_map("chr", self::$_passphraseBytes));
 		$p2s = $header->get(RegisteredJWTParameter::P_P2S);
 		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
-		$key_algo = new PBES2HS256A128KWAlgorithm($password, $p2s->saltInput(), 
-			$count);
-		$data = $key_algo->encrypt($cek);
+		$key_algo = new PBES2HS256A128KWAlgorithm(self::$_passphrase, 
+			$p2s->saltInput(), $count);
+		$data = $key_algo->encrypt(self::$_cek);
 		$this->assertEquals($expected, $data);
+		return $data;
 	}
 	
 	/**
@@ -340,12 +360,31 @@ EOF;
 			array_map("chr", $expectedCiphertextBytes));
 		$expectedAuthTag = implode("", array_map("chr", $expectedAuthTagBytes));
 		$plaintext = implode("", array_map("chr", self::$_jwkBytes));
-		$cek = implode("", array_map("chr", self::$_cekBytes));
-		$iv = implode("", array_map("chr", self::$_ivBytes));
 		$algo = new A128CBCHS256Algorithm();
-		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, $cek, $iv, 
-			$aad);
+		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, self::$_cek, 
+			self::$_iv, $aad);
 		$this->assertEquals($expectedCiphertext, $ciphertext);
 		$this->assertEquals($expectedAuthTag, $auth_tag);
+		return [$ciphertext, $auth_tag];
+	}
+	
+	/**
+	 * @depends testEncrypt
+	 * @depends testEncryptKey
+	 * @depends testHeader
+	 */
+	public function testDecrypt($data, $enc_key, Header $header) {
+		$header_b64 = Base64::urlEncode(self::$_headerJSON);
+		$enc_key_b64 = Base64::urlEncode($enc_key);
+		$iv = Base64::urlEncode(self::$_iv);
+		$ciphertext = Base64::urlEncode($data[0]);
+		$tag = Base64::urlEncode($data[1]);
+		$token = "$header_b64.$enc_key_b64.$iv.$ciphertext.$tag";
+		$jwe = JWE::fromCompact($token);
+		$key_algo = PBES2Algorithm::fromHeader($header, self::$_passphrase);
+		$enc_algo = new A128CBCHS256Algorithm();
+		$plaintext = $jwe->decrypt($key_algo, $enc_algo);
+		$expected = implode("", array_map("chr", self::$_jwkBytes));
+		$this->assertEquals($expected, $plaintext);
 	}
 }

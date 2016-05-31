@@ -2,19 +2,19 @@
 
 use JWX\JWK\JWK;
 use JWX\JWK\JWKSet;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
-use JWX\JWK\Parameter\KeyTypeParameter;
+use JWX\JWK\Parameter\AlgorithmParameter;
 use JWX\JWK\Parameter\CurveParameter;
+use JWX\JWK\Parameter\ExponentParameter;
+use JWX\JWK\Parameter\KeyTypeParameter;
+use JWX\JWK\Parameter\ModulusParameter;
+use JWX\JWK\Parameter\PublicKeyUseParameter;
+use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
-use JWX\JWK\Parameter\PublicKeyUseParameter;
-use JWX\JWK\Parameter\AlgorithmParameter;
-use JWX\JWK\Parameter\ModulusParameter;
-use JWX\JWK\Parameter\ExponentParameter;
 
 
 /**
- * Test case for rfc7517 appendix A.1.
+ * Test case for RFC 7517 appendix A.1.
  * Example Public Keys
  *
  * @group example
