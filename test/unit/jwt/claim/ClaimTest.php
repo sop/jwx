@@ -20,4 +20,9 @@ class ClaimTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($claim->validate("value"));
 		$this->assertFalse($claim->validate("nope"));
 	}
+	
+	public function testCustomClaimFromNameAndValue() {
+		$claim = Claim::fromNameAndValue("test", "value");
+		$this->assertInstanceOf(Claim::class, $claim);
+	}
 }
