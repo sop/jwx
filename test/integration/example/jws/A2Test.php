@@ -1,15 +1,14 @@
 <?php
 
-use JWX\JWT\Header;
-use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWS\Algorithm\RS256Algorithm;
-use JWX\JWA\JWA;
+use JWX\JWS\JWS;
+use JWX\JWT\Header;
 use JWX\Util\Base64;
 
 
 /**
- * Test case for rfc7515 appendix A.2.
+ * Test case for RFC 7515 appendix A.2.
  * Example JWS Using RSASSA-PKCS1-v1_5 SHA-256
  *
  * @group example
@@ -18,21 +17,20 @@ use JWX\Util\Base64;
  */
 class JWSUsingRS256Test extends PHPUnit_Framework_TestCase
 {
-	private static $_claims = /* @formatter:off */
-		'{"iss":"joe",' . "\r\n" .
-		' "exp":1300819380,' . "\r\n" .
-		' "http://example.com/is_root":true}'; /* @formatter:on */
+	private static $_headerBytes = [123, 34, 97, 108, 103, 34, 58, 34, 82, 
+		83, 50, 53, 54, 34, 125];
+	
+	private static $_headerJSON;
+	
+	private static $_payloadBytes = [123, 34, 105, 115, 115, 34, 58, 34, 
+		106, 111, 101, 34, 44, 13, 10, 32, 34, 101, 120, 112, 34, 58, 49, 51, 48, 
+		48, 56, 49, 57, 51, 56, 48, 44, 13, 10, 32, 34, 104, 116, 116, 112, 58, 
+		47, 47, 101, 120, 97, 109, 112, 108, 101, 46, 99, 111, 109, 47, 105, 115, 
+		95, 114, 111, 111, 116, 34, 58, 116, 114, 117, 101, 125];
+	
+	private static $_payloadJSON;
 	
 	private static $_jwk;
-	
-	private static $_payloadBytes = [101, 121, 74, 104, 98, 71, 99, 105, 79, 
-		105, 74, 83, 85, 122, 73, 49, 78, 105, 74, 57, 46, 101, 121, 74, 112, 99, 
-		51, 77, 105, 79, 105, 74, 113, 98, 50, 85, 105, 76, 65, 48, 75, 73, 67, 
-		74, 108, 101, 72, 65, 105, 79, 106, 69, 122, 77, 68, 65, 52, 77, 84, 107, 
-		122, 79, 68, 65, 115, 68, 81, 111, 103, 73, 109, 104, 48, 100, 72, 65, 
-		54, 76, 121, 57, 108, 101, 71, 70, 116, 99, 71, 120, 108, 76, 109, 78, 
-		118, 98, 83, 57, 112, 99, 49, 57, 121, 98, 50, 57, 48, 73, 106, 112, 48, 
-		99, 110, 86, 108, 102, 81];
 	
 	private static $_signatureBytes = [112, 46, 33, 137, 67, 232, 143, 209, 
 		30, 181, 216, 45, 191, 120, 69, 243, 65, 6, 174, 27, 129, 255, 247, 115, 
@@ -53,54 +51,62 @@ class JWSUsingRS256Test extends PHPUnit_Framework_TestCase
 		223, 200, 163, 42, 70, 149, 67, 208, 25, 238, 251, 71];
 	
 	public static function setUpBeforeClass() {
+		self::$_headerJSON = implode("", array_map("chr", self::$_headerBytes));
+		self::$_payloadJSON = implode("", 
+			array_map("chr", self::$_payloadBytes));
 		self::$_jwk = RSAPrivateKeyJWK::fromJSON(
 			file_get_contents(TEST_ASSETS_DIR . "/example/rfc7515-a2-jwk.json"));
 	}
 	
-	public function testEncodeHeader() {
-		static $expected = "eyJhbGciOiJSUzI1NiJ9";
-		$header = new Header(new AlgorithmParameter(JWA::ALGO_RS256));
-		$json = $header->toJSON();
-		$data = Base64::urlEncode($json);
-		$this->assertEquals($expected, $data);
-		return $data;
+	public static function tearDownAfterClass() {
+		self::$_headerJSON = null;
+		self::$_payloadJSON = null;
+		self::$_jwk = null;
 	}
 	
-	/**
-	 * @depends testEncodeHeader
-	 *
-	 * @param string $header
-	 */
-	public function testEncodePayload($header) {
-		$data = Base64::urlEncode(self::$_claims);
-		$payload = "$header.$data";
-		$expected = implode("", array_map("chr", self::$_payloadBytes));
+	public function testHeader() {
+		static $expected = "eyJhbGciOiJSUzI1NiJ9";
+		$header = Base64::urlEncode(self::$_headerJSON);
+		$this->assertEquals($expected, $header);
+		return $header;
+	}
+	
+	public function testPayload() {
+		static $expected_data = <<<EOF
+eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
+cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
+EOF;
+		$expected = str_replace(["\r", "\n"], "", $expected_data);
+		$payload = Base64::urlEncode(self::$_payloadJSON);
 		$this->assertEquals($expected, $payload);
 		return $payload;
 	}
 	
 	/**
-	 * @depends testEncodePayload
+	 * @depends testHeader
+	 * @depends testPayload
 	 *
+	 * @param string $header
 	 * @param string $payload
+	 * @return unknown
 	 */
-	public function testSign($payload) {
+	public function testSign($header, $payload) {
 		$algo = RS256Algorithm::fromPrivateKey(self::$_jwk);
-		$signature = $algo->computeSignature($payload);
+		$input = "$header.$payload";
+		$signature = $algo->computeSignature($input);
 		$expected = implode("", array_map("chr", self::$_signatureBytes));
 		$this->assertEquals($expected, $signature);
-		return $signature;
+		return "$input." . Base64::urlEncode($signature);
 	}
 	
 	/**
-	 * @depends testEncodePayload
 	 * @depends testSign
 	 *
-	 * @param string $payload
-	 * @param string $signature
+	 * @param string $token
 	 */
-	public function testValidate($payload, $signature) {
+	public function testValidate($token) {
+		$jws = JWS::fromCompact($token);
 		$algo = RS256Algorithm::fromPublicKey(self::$_jwk->publicKey());
-		$this->assertTrue($algo->validateSignature($payload, $signature));
+		$this->assertTrue($jws->validate($algo));
 	}
 }

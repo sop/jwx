@@ -1,13 +1,14 @@
 <?php
 
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\Algorithm\HS256Algorithm;
+use JWX\JWS\JWS;
 use JWX\Util\Base64;
 
 
 /**
- * Test case for rfc7515 appendix A.1.
+ * Test case for RFC 7515 appendix A.1.
  * Example JWS Using HMAC SHA-256
  *
  * @group example
@@ -20,11 +21,15 @@ class JWSUsingHS256Test extends PHPUnit_Framework_TestCase
 		87, 84, 34, 44, 13, 10, 32, 34, 97, 108, 103, 34, 58, 34, 72, 83, 50, 53, 
 		54, 34, 125];
 	
+	private static $_headerJSON;
+	
 	private static $_payloadBytes = [123, 34, 105, 115, 115, 34, 58, 34, 
 		106, 111, 101, 34, 44, 13, 10, 32, 34, 101, 120, 112, 34, 58, 49, 51, 48, 
 		48, 56, 49, 57, 51, 56, 48, 44, 13, 10, 32, 34, 104, 116, 116, 112, 58, 
 		47, 47, 101, 120, 97, 109, 112, 108, 101, 46, 99, 111, 109, 47, 105, 115, 
 		95, 114, 111, 111, 116, 34, 58, 116, 114, 117, 101, 125];
+	
+	private static $_payloadJSON;
 	
 	private static $_jwk = <<<EOF
 {"kty":"oct",
@@ -32,10 +37,20 @@ class JWSUsingHS256Test extends PHPUnit_Framework_TestCase
 }
 EOF;
 	
+	public static function setUpBeforeClass() {
+		self::$_headerJSON = implode("", array_map("chr", self::$_headerBytes));
+		self::$_payloadJSON = implode("", 
+			array_map("chr", self::$_payloadBytes));
+	}
+	
+	public static function tearDownAfterClass() {
+		self::$_headerJSON = null;
+		self::$_payloadJSON = null;
+	}
+	
 	public function testHeader() {
 		static $expected = "eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9";
-		$json = implode("", array_map("chr", self::$_headerBytes));
-		$header = Base64::urlEncode($json);
+		$header = Base64::urlEncode(self::$_headerJSON);
 		$this->assertEquals($expected, $header);
 		return $header;
 	}
@@ -46,17 +61,15 @@ eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFt
 cGxlLmNvbS9pc19yb290Ijp0cnVlfQ
 EOF;
 		$expected = str_replace(["\r", "\n"], "", $expected_data);
-		$json = implode("", array_map("chr", self::$_payloadBytes));
-		$payload = Base64::urlEncode($json);
+		$payload = Base64::urlEncode(self::$_payloadJSON);
 		$this->assertEquals($expected, $payload);
 		return $payload;
 	}
 	
 	public function testKey() {
-		$jwk = JWK::fromJSON(self::$_jwk);
-		$key = $jwk->get(RegisteredJWKParameter::PARAM_KEY_VALUE)->key();
-		$this->assertInternalType("string", $key);
-		return $key;
+		$jwk = SymmetricKeyJWK::fromJSON(self::$_jwk);
+		$this->assertInstanceOf(SymmetricKeyJWK::class, $jwk);
+		return $jwk->key();
 	}
 	
 	/**
@@ -72,7 +85,20 @@ EOF;
 		static $expected = "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk";
 		$algo = new HS256Algorithm($key);
 		$data = "$header.$payload";
-		$signature = $algo->computeSignature($data);
-		$this->assertEquals($expected, Base64::urlEncode($signature));
+		$signature = Base64::urlEncode($algo->computeSignature($data));
+		$this->assertEquals($expected, $signature);
+		return "$data.$signature";
+	}
+	
+	/**
+	 * @depends testSign
+	 * @depends testKey
+	 *
+	 * @param string $signature
+	 * @param string $key
+	 */
+	public function testValidate($token, $key) {
+		$jws = JWS::fromCompact($token);
+		$this->assertTrue($jws->validate(new HS256Algorithm($key)));
 	}
 }
