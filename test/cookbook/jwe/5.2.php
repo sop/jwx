@@ -2,7 +2,7 @@
 
 use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
 use JWX\JWE\JWE;
-use JWX\JWE\KeyAlgorithm\RSAOAEPAlgorithm;
+use JWX\JWE\KeyAlgorithm\RSAESOAEPAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWT\Header;
 use JWX\Util\Base64;
@@ -38,7 +38,7 @@ class CookbookKeyEncRSAOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testEncryptedKey(RSAPrivateKeyJWK $jwk) {
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
-		$algo = RSAOAEPAlgorithm::fromPrivateKey($jwk);
+		$algo = RSAESOAEPAlgorithm::fromPrivateKey($jwk);
 		$ciphertext = $algo->encrypt($cek);
 		// test that decrypt succeeds
 		$result = $algo->decrypt($ciphertext);
@@ -82,7 +82,7 @@ class CookbookKeyEncRSAOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
 		$payload = self::$_testData["input"]["plaintext"];
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
-		$key_algo = RSAOAEPAlgorithm::fromPrivateKey($jwk);
+		$key_algo = RSAESOAEPAlgorithm::fromPrivateKey($jwk);
 		$enc_algo = EncryptionFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 

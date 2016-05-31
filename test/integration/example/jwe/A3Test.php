@@ -1,16 +1,18 @@
 <?php
 
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header;
 use JWX\JWT\JOSE;
 use JWX\Util\Base64;
 
 
 /**
- * Test case for rfc7516 appendix A.3.
+ * Test case for RFC 7516 appendix A.3.
  * Example JWE Using AES Key Wrap and AES_128_CBC_HMAC_SHA_256
  *
  * @group example
@@ -43,7 +45,7 @@ class JWEUsingA128KWAndA128CBCTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testJWKKey() {
-		$jwk = JWK::fromJSON(self::$_jwkJSON);
+		$jwk = SymmetricKeyJWK::fromJSON(self::$_jwkJSON);
 		$key = $jwk->get(RegisteredJWKParameter::P_K)->key();
 		$this->assertEquals(16, strlen($key));
 		return $key;
@@ -59,9 +61,8 @@ class JWEUsingA128KWAndA128CBCTest extends PHPUnit_Framework_TestCase
 		$cek = implode("", array_map("chr", self::$_cekBytes));
 		$algo = new A128KWAlgorithm($kek);
 		$data = $algo->encrypt($cek);
-		$enc_key = Base64::urlEncode($data);
-		$this->assertEquals($expected, $enc_key);
-		return $enc_key;
+		$this->assertEquals($expected, Base64::urlEncode($data));
+		return $data;
 	}
 	
 	/**
@@ -100,5 +101,26 @@ class JWEUsingA128KWAndA128CBCTest extends PHPUnit_Framework_TestCase
 		list($data, $auth_tag) = $algo->encrypt($plaintext, $key, $iv, $aad);
 		$this->assertEquals($expectedCiphertext, $data);
 		$this->assertEquals($expectedAuthTag, $auth_tag);
+		return [$data, $auth_tag];
+	}
+	
+	/**
+	 * @depends testEncryptContent
+	 * @depends testEncryptCEK
+	 * @depends testJWKKey
+	 */
+	public function testDecrypt($data, $enc_key, $kek) {
+		$header = Base64::urlEncode(self::$_headerJSON);
+		$enc_key_b64 = Base64::urlEncode($enc_key);
+		$iv = Base64::urlEncode(implode("", array_map("chr", self::$_ivBytes)));
+		$ciphertext = Base64::urlEncode($data[0]);
+		$tag = Base64::urlEncode($data[1]);
+		$token = "$header.$enc_key_b64.$iv.$ciphertext.$tag";
+		$jwe = JWE::fromCompact($token);
+		$key_algo = new A128KWAlgorithm($kek);
+		$enc_algo = new A128CBCHS256Algorithm();
+		$plaintext = $jwe->decrypt($key_algo, $enc_algo);
+		$expected = implode("", array_map("chr", self::$_plaintextBytes));
+		$this->assertEquals($expected, $plaintext);
 	}
 }

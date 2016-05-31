@@ -4,7 +4,7 @@ use CryptoUtil\PEM\PEM;
 use JWX\JWA\JWA;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\RSAESKeyAlgorithm;
-use JWX\JWE\KeyAlgorithm\RSAOAEPAlgorithm;
+use JWX\JWE\KeyAlgorithm\RSAESOAEPAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 
@@ -33,7 +33,7 @@ class RSAOAEPKeyTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testCreate() {
-		$algo = RSAOAEPAlgorithm::fromPrivateKey(self::$_privateKey);
+		$algo = RSAESOAEPAlgorithm::fromPrivateKey(self::$_privateKey);
 		$this->assertInstanceOf(RSAESKeyAlgorithm::class, $algo);
 		return $algo;
 	}
