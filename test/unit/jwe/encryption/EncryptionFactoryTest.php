@@ -3,6 +3,8 @@
 use JWX\JWA\JWA;
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 
 /**
@@ -21,5 +23,18 @@ class EncryptionFactoryTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testAlgoByNameFail() {
 		EncryptionFactory::algoByName("nope");
+	}
+	
+	public function testAlgoByHeader() {
+		$header = new Header(new EncryptionAlgorithmParameter(JWA::ALGO_A128GCM));
+		$algo = EncryptionFactory::algoByHeader($header);
+		$this->assertInstanceOf(ContentEncryptionAlgorithm::class, $algo);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testAlgoByHeaderFail() {
+		EncryptionFactory::algoByHeader(new Header());
 	}
 }

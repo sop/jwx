@@ -3,12 +3,15 @@
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWA\JWA;
+use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A128GCMAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A192CBCHS384Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A192GCMAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A256CBCHS512Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A256GCMAlgorithm;
+use JWX\JWT\Header;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -48,5 +51,21 @@ abstract class EncryptionFactory
 		}
 		$cls = self::MAP_ALGO_TO_CLASS[$name];
 		return new $cls();
+	}
+	
+	/**
+	 * Get content encryption algorithm as specified in header.
+	 *
+	 * @param Header $header
+	 * @throws \UnexpectedValueException
+	 * @return ContentEncryptionAlgorithm
+	 */
+	public static function algoByHeader(Header $header) {
+		if (!$header->has(RegisteredJWTParameter::P_ENC)) {
+			throw new \UnexpectedValueException(
+				"No encryption algorithm parameter.");
+		}
+		return self::algoByName(
+			$header->get(RegisteredJWTParameter::P_ENC)->value());
 	}
 }
