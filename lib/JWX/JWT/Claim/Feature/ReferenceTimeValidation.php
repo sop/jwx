@@ -11,6 +11,14 @@ use JWX\JWT\ValidationContext;
 trait ReferenceTimeValidation
 {
 	/**
+	 * Validate the claim against given constraint.
+	 *
+	 * @param mixed $constraint
+	 * @return bool
+	 */
+	abstract public function validate($constraint);
+	
+	/**
 	 * Override default Claim validation.
 	 *
 	 * Uses reference time of the validation context as a constraint.

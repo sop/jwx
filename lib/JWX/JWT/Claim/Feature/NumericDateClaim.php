@@ -9,6 +9,13 @@ namespace JWX\JWT\Claim\Feature;
 trait NumericDateClaim
 {
 	/**
+	 * Get the parameter value.
+	 *
+	 * @return string
+	 */
+	abstract public function value();
+	
+	/**
 	 * Initialize instance from date/time string.
 	 *
 	 * @param string $time <code>strtotime</code> compatible time string
@@ -33,7 +40,7 @@ trait NumericDateClaim
 	 * @return int
 	 */
 	public function timestamp() {
-		return (int) $this->_value;
+		return (int) $this->value();
 	}
 	
 	/**
@@ -44,7 +51,7 @@ trait NumericDateClaim
 	 * @return \DateTimeImmutable
 	 */
 	public function dateTime($tz = "UTC") {
-		$dt = \DateTimeImmutable::createFromFormat("!U", $this->_value, 
+		$dt = \DateTimeImmutable::createFromFormat("!U", $this->value(), 
 			self::_createTimeZone($tz));
 		if (false === $dt) {
 			throw new \RuntimeException(

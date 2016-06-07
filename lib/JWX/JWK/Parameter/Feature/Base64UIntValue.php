@@ -17,6 +17,13 @@ trait Base64UIntValue
 	use Base64URLValue;
 	
 	/**
+	 * Get the parameter value.
+	 *
+	 * @return string
+	 */
+	abstract public function value();
+	
+	/**
 	 * Initialize parameter from base10 number.
 	 *
 	 * @param int|string $number
@@ -33,6 +40,6 @@ trait Base64UIntValue
 	 * @return BigInt
 	 */
 	public function number() {
-		return BigInt::fromBase256(Base64::urlDecode($this->_value));
+		return BigInt::fromBase256(Base64::urlDecode($this->value()));
 	}
 }
