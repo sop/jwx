@@ -92,6 +92,18 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	);
 	
 	/**
+	 * Constructor.
+	 *
+	 * Defined here for type strictness. Parameters are passed to the
+	 * superclass.
+	 *
+	 * @param mixed ...$args
+	 */
+	public function __construct(...$args) {
+		parent::__construct(...$args);
+	}
+	
+	/**
 	 * Initialize concrete JWK parameter instance from a JSON value.
 	 *
 	 * @param mixed $value
