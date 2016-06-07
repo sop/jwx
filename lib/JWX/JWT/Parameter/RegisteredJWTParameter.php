@@ -96,7 +96,7 @@ abstract class RegisteredJWTParameter extends JWTParameter
 	 * @param mixed ...$args
 	 */
 	public function __construct(...$args) {
-		parent::__construct(...$args);
+		parent::__construct((string) $args[0], $args[1]);
 	}
 	
 	/**

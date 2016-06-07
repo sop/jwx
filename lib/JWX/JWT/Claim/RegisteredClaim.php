@@ -76,7 +76,8 @@ abstract class RegisteredClaim extends Claim
 	 * @param mixed ...$args
 	 */
 	public function __construct(...$args) {
-		parent::__construct(...$args);
+		parent::__construct((string) $args[0], $args[1], 
+			isset($args[2]) ? $args[2] : null);
 	}
 	
 	/**
