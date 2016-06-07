@@ -84,8 +84,8 @@ class Claim
 	/**
 	 * Validate the claim against given constraint.
 	 *
-	 * @param mixed $constraint True if claim is valid
-	 * @return bool
+	 * @param mixed $constraint Constraint value
+	 * @return bool True if the claim is valid
 	 */
 	public function validate($constraint) {
 		if (isset($this->_validator)) {
