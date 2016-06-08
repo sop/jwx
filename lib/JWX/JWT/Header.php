@@ -3,12 +3,14 @@
 namespace JWX\JWT;
 
 use JWX\JWT\Parameter\JWTParameter;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
  * Represents a header used in JWS and JWE.
  */
-class Header implements \Countable, \IteratorAggregate
+class Header implements 
+	\Countable, \IteratorAggregate
 {
 	/**
 	 * Parameters.
@@ -110,6 +112,25 @@ class Header implements \Countable, \IteratorAggregate
 			throw new \LogicException("Parameter $name doesn't exists.");
 		}
 		return $this->_parameters[$name];
+	}
+	
+	/**
+	 * Get a parameter and check that it's an instance of the expected type.
+	 *
+	 * @param string $name Parameter name
+	 * @throws \RuntimeException
+	 * @return JWTParameter
+	 */
+	public function getTyped($name) {
+		$param = $this->get($name);
+		if (array_key_exists($name, RegisteredJWTParameter::MAP_NAME_TO_CLASS)) {
+			$cls = RegisteredJWTParameter::MAP_NAME_TO_CLASS[$name];
+			if (!$param instanceof $cls) {
+				throw new \RuntimeException(
+					"$cls expected, got " . get_class($param));
+			}
+		}
+		return $param;
 	}
 	
 	/**
