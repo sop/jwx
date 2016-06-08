@@ -50,12 +50,7 @@ abstract class KeyManagementAlgorithm implements
 		if (!isset($header)) {
 			$header = new Header();
 		}
-		$ciphertext = $this->_encryptKey($cek, $header);
-		// sanity check that header wasn't unset via reference
-		if (!$header instanceof Header) {
-			throw new \RuntimeException("Broken key algorithm.");
-		}
-		return $ciphertext;
+		return $this->_encryptKey($cek, $header);
 	}
 	
 	/**

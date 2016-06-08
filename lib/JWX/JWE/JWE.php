@@ -176,6 +176,10 @@ class JWE
 			->withParameters(...$enc_algo->headerParameters());
 		// encrypt the content encryption key
 		$encrypted_key = $key_algo->encrypt($cek, $header);
+		// sanity check that header wasn't unset via reference
+		if (!$header instanceof Header) {
+			throw new \RuntimeException("Broken key algorithm.");
+		}
 		// additional authenticated data
 		$aad = Base64::urlEncode($header->toJSON());
 		// encrypt
