@@ -26,7 +26,7 @@ use JWX\JWT\Parameter\X509URLParameter;
 
 /**
  * Trait for Header to provide parameter accessor methods for typed return
- * types.
+ * values.
  */
 trait TypedHeader
 {
