@@ -10,7 +10,8 @@ use JWX\JWK\Parameter\JWKParameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4
  */
-class JWK implements \Countable, \IteratorAggregate
+class JWK implements 
+	\Countable, \IteratorAggregate
 {
 	/**
 	 * Parameters.
@@ -65,10 +66,10 @@ class JWK implements \Countable, \IteratorAggregate
 	 *
 	 * Allows casting to subclass by late static binding.
 	 *
-	 * @param self $jwk
+	 * @param JWK $jwk
 	 * @return self
 	 */
-	public static function fromJWK(self $jwk) {
+	public static function fromJWK(JWK $jwk) {
 		return new static(...array_values($jwk->_parameters));
 	}
 	
