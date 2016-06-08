@@ -11,16 +11,16 @@ class BigInt
 	/**
 	 * Number.
 	 *
-	 * @var \GMP $_num
+	 * @var resource|\GMP $_num
 	 */
 	protected $_num;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param \GMP $num GMP number
+	 * @param resource|\GMP $num GMP number
 	 */
-	protected function __construct(\GMP $num) {
+	protected function __construct($num) {
 		$this->_num = $num;
 	}
 	
@@ -76,6 +76,10 @@ class BigInt
 		return gmp_export($this->_num, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
 	}
 	
+	/**
+	 *
+	 * @return string
+	 */
 	public function __toString() {
 		return $this->base10();
 	}
