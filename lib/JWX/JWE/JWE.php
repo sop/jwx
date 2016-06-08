@@ -127,6 +127,7 @@ class JWE
 			ContentEncryptionAlgorithm $enc_algo, 
 			CompressionAlgorithm $zip_algo = null, Header $header = null, $cek = null, 
 			$iv = null) {
+		// if header was not given, initialize empty
 		if (!isset($header)) {
 			$header = new Header();
 		}
@@ -134,13 +135,39 @@ class JWE
 		if (!isset($cek)) {
 			$cek = $key_algo->cekForEncryption($enc_algo->keySize());
 		}
-		if (strlen($cek) != $enc_algo->keySize()) {
-			throw new \UnexpectedValueException("Invalid key size.");
-		}
 		// generate random IV
 		if (!isset($iv)) {
 			$iv = openssl_random_pseudo_bytes($enc_algo->ivSize());
 		}
+		// compress
+		if (isset($zip_algo)) {
+			$payload = $zip_algo->compress($payload);
+			$header = $header->withParameters(...$zip_algo->headerParameters());
+		}
+		return self::_encryptContent($payload, $cek, $iv, $key_algo, $enc_algo, 
+			$header);
+	}
+	
+	/**
+	 * Encrypt content with explicit parameters.
+	 *
+	 * @param string $plaintext Plaintext content to encrypt
+	 * @param string $cek Content encryption key
+	 * @param string $iv Initialization vector
+	 * @param KeyManagementAlgorithm $key_algo Key management algorithm
+	 * @param ContentEncryptionAlgorithm $enc_algo Content encryption algorithm
+	 * @param Header $header Header
+	 * @throws \UnexpectedValueException
+	 * @return self
+	 */
+	private static function _encryptContent($plaintext, $cek, $iv, 
+			KeyManagementAlgorithm $key_algo, 
+			ContentEncryptionAlgorithm $enc_algo, Header $header) {
+		// check that content encryption key has correct size
+		if (strlen($cek) != $enc_algo->keySize()) {
+			throw new \UnexpectedValueException("Invalid key size.");
+		}
+		// check that initialization vector has correct size
 		if (strlen($iv) != $enc_algo->ivSize()) {
 			throw new \UnexpectedValueException("Invalid IV size.");
 		}
@@ -149,13 +176,10 @@ class JWE
 			->withParameters(...$enc_algo->headerParameters());
 		// encrypt the content encryption key
 		$encrypted_key = $key_algo->encrypt($cek, $header);
-		// compress
-		if (isset($zip_algo)) {
-			$payload = $zip_algo->compress($payload);
-			$header = $header->withParameters(...$zip_algo->headerParameters());
-		}
+		// additional authenticated data
 		$aad = Base64::urlEncode($header->toJSON());
-		list($ciphertext, $auth_tag) = $enc_algo->encrypt($payload, $cek, $iv, 
+		// encrypt
+		list($ciphertext, $auth_tag) = $enc_algo->encrypt($plaintext, $cek, $iv, 
 			$aad);
 		return new self($header, $encrypted_key, $iv, $ciphertext, $auth_tag);
 	}
