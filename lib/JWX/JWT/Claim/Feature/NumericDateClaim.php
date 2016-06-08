@@ -9,6 +9,13 @@ namespace JWX\JWT\Claim\Feature;
 trait NumericDateClaim
 {
 	/**
+	 * Constructor.
+	 *
+	 * @param int $timestamp Unix timestamp
+	 */
+	abstract public function __construct($timestamp);
+	
+	/**
 	 * Get the parameter value.
 	 *
 	 * @return string
