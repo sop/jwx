@@ -54,7 +54,7 @@ class SymmetricKeyJWK extends JWK
 	 * Initialize from a key string.
 	 *
 	 * @param string $key Symmetric key
-	 * @param JWKParameter... $params Optional additional parameters
+	 * @param JWKParameter ...$params Optional additional parameters
 	 * @return self
 	 */
 	public static function fromKey($key, JWKParameter ...$params) {

@@ -47,8 +47,9 @@ class JWS
 	/**
 	 * Constructor
 	 *
-	 * @param Header $header JWS Protected Header
+	 * @param Header $protected_header JWS Protected Header
 	 * @param string $payload JWS Payload
+	 * @param string $signature_input Input value for the signature computation
 	 * @param string $signature JWS Signature
 	 */
 	protected function __construct(Header $protected_header, $payload, 

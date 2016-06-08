@@ -13,7 +13,7 @@ class CompressionAlgorithmParameter extends RegisteredJWTParameter
 	/**
 	 * Constructor
 	 *
-	 * @param string $type
+	 * @param string $algo
 	 */
 	public function __construct($algo) {
 		parent::__construct(self::PARAM_COMPRESSION_ALGORITHM, (string) $algo);

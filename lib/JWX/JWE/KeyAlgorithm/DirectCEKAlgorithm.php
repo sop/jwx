@@ -27,7 +27,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
 	/**
 	 * Constructor
 	 *
-	 * @param string $key Content encryption key
+	 * @param string $cek Content encryption key
 	 */
 	public function __construct($cek) {
 		$this->_cek = $cek;
