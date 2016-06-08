@@ -14,7 +14,6 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\AuthenticationTagParameter;
 use JWX\JWT\Parameter\InitializationVectorParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -131,11 +130,11 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	protected function _decryptKey($ciphertext, Header $header) {
-		if (!$header->has(RegisteredJWTParameter::P_TAG)) {
+		if (!$header->hasAuthenticationTag()) {
 			throw new \RuntimeException(
 				"Header doesn't contain authentication tag.");
 		}
-		$auth_tag = $header->getTyped(RegisteredJWTParameter::P_TAG)->authenticationTag();
+		$auth_tag = $header->authenticationTag()->authenticationTag();
 		$cek = $this->_getGCM()->decrypt($ciphertext, $auth_tag, "", 
 			$this->_kek, $this->_iv);
 		return $cek;
