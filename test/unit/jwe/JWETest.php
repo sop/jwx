@@ -4,6 +4,7 @@ use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
+use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\JWTParameter;
@@ -177,5 +178,38 @@ class JWETest extends PHPUnit_Framework_TestCase
 	public function testEncryptInvalidIVSize() {
 		JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, 
 			null, null, "nope");
+	}
+	
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testKeyEncryptUnsetsHeader() {
+		$key_algo = new JWETest_EvilKeyAlgo();
+		JWE::encrypt(self::PAYLOAD, $key_algo, self::$_encAlgo);
+	}
+}
+
+
+class JWETest_EvilKeyAlgo extends KeyManagementAlgorithm
+{
+	protected function _encryptKey($key, Header &$header) {
+		$header = null;
+		return $key;
+	}
+	
+	protected function _decryptKey($ciphertext, Header $header) {
+		return $ciphertext;
+	}
+	
+	public function cekForEncryption($length) {
+		return str_repeat("\0", $length);
+	}
+	
+	public function algorithmParamValue() {
+		return "test";
+	}
+	
+	public function headerParameters() {
+		return array();
 	}
 }
