@@ -11,8 +11,11 @@ use JWX\JWK\Parameter\JWKParameter;
  * @link https://tools.ietf.org/html/rfc7517#section-4
  */
 class JWK implements 
-	\Countable, \IteratorAggregate
+	\Countable, 
+	\IteratorAggregate
 {
+	use TypedJWK;
+	
 	/**
 	 * Parameters.
 	 *
@@ -102,7 +105,7 @@ class JWK implements
 	 * Returns false if any of the given parameters is not set.
 	 *
 	 * @param string ...$names Parameter names
-	 * @return boolean
+	 * @return bool
 	 */
 	public function has(...$names) {
 		foreach ($names as $name) {
