@@ -14,7 +14,6 @@ use JWX\JWT\Exception\ValidationException;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\ContentTypeParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 
 
@@ -161,10 +160,10 @@ class JWT
 	 */
 	public function isNested() {
 		$header = $this->header();
-		if (!$header->has(RegisteredJWTParameter::P_CTY)) {
+		if (!$header->hasContentType()) {
 			return false;
 		}
-		$cty = $header->get(RegisteredJWTParameter::P_CTY)->value();
+		$cty = $header->contentType()->value();
 		if ($cty != ContentTypeParameter::TYPE_JWT) {
 			return false;
 		}

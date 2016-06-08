@@ -130,17 +130,17 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 			throw new \UnexpectedValueException("Missing header parameters.");
 		}
 		if (!isset($alg)) {
-			if (!$header->has(RegisteredJWTParameter::P_ALG)) {
+			if (!$header->hasAlgorithm()) {
 				throw new \UnexpectedValueException("No algorithm parameter.");
 			}
-			$alg = $header->get(RegisteredJWTParameter::P_ALG)->value();
+			$alg = $header->algorithm()->value();
 		}
 		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
 		$cls = self::MAP_ALGO_TO_CLASS[$alg];
-		$salt = $header->get(RegisteredJWTParameter::P_P2S)->saltInput();
-		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
+		$salt = $header->PBES2SaltInput()->saltInput();
+		$count = $header->PBES2Count()->value();
 		return new $cls($password, $salt, $count);
 	}
 	

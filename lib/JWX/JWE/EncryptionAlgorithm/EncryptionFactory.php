@@ -11,7 +11,6 @@ use JWX\JWE\EncryptionAlgorithm\A192GCMAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A256CBCHS512Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A256GCMAlgorithm;
 use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -61,11 +60,10 @@ abstract class EncryptionFactory
 	 * @return ContentEncryptionAlgorithm
 	 */
 	public static function algoByHeader(Header $header) {
-		if (!$header->has(RegisteredJWTParameter::P_ENC)) {
+		if (!$header->hasEncryptionAlgorithm()) {
 			throw new \UnexpectedValueException(
 				"No encryption algorithm parameter.");
 		}
-		return self::algoByName(
-			$header->get(RegisteredJWTParameter::P_ENC)->value());
+		return self::algoByName($header->encryptionAlgorithm()->value());
 	}
 }

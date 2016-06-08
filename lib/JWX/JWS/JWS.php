@@ -82,8 +82,7 @@ class JWS
 				"Invalid JWS compact serialization.");
 		}
 		$header = Header::fromJSON(Base64::urlDecode($parts[0]));
-		$b64 = $header->has(RegisteredJWTParameter::P_B64) ? $header->get(
-			RegisteredJWTParameter::P_B64)->value() : true;
+		$b64 = $header->hasB64Payload() ? $header->B64Payload()->value() : true;
 		$payload = $b64 ? Base64::urlDecode($parts[1]) : $parts[1];
 		$signature_input = $parts[0] . "." . $parts[1];
 		$signature = Base64::urlDecode($parts[2]);
@@ -107,11 +106,11 @@ class JWS
 		}
 		$header = $header->withParameters(...$algo->headerParameters());
 		// ensure that if b64 parameter is used, it's marked critical
-		if ($header->has(RegisteredJWTParameter::P_B64)) {
-			if (!$header->has(RegisteredJWTParameter::P_CRIT)) {
+		if ($header->hasB64Payload()) {
+			if (!$header->hasCritical()) {
 				$crit = new CriticalParameter(RegisteredJWTParameter::P_B64);
 			} else {
-				$crit = $header->get(RegisteredJWTParameter::P_CRIT)->withParamName(
+				$crit = $header->critical()->withParamName(
 					RegisteredJWTParameter::P_B64);
 			}
 			$header = $header->withParameters($crit);
@@ -137,7 +136,7 @@ class JWS
 	 */
 	public function algorithmName() {
 		return $this->header()
-			->get(RegisteredJWTParameter::PARAM_ALGORITHM)
+			->algorithm()
 			->value();
 	}
 	
@@ -166,8 +165,8 @@ class JWS
 	 */
 	protected function _encodedPayload() {
 		$b64 = true;
-		if ($this->_protectedHeader->has(RegisteredJWTParameter::P_B64)) {
-			$b64 = $this->_protectedHeader->get(RegisteredJWTParameter::P_B64)->value();
+		if ($this->_protectedHeader->hasB64Payload()) {
+			$b64 = $this->_protectedHeader->B64Payload()->value();
 		}
 		return $b64 ? Base64::urlEncode($this->_payload) : $this->_payload;
 	}
@@ -218,8 +217,7 @@ class JWS
 	 * @return string
 	 */
 	protected static function _generateSignatureInput($payload, Header $header) {
-		$b64 = $header->has(RegisteredJWTParameter::P_B64) ? $header->get(
-			RegisteredJWTParameter::P_B64)->value() : true;
+		$b64 = $header->hasB64Payload() ? $header->B64Payload()->value() : true;
 		$data = Base64::urlEncode($header->toJSON()) . ".";
 		$data .= $b64 ? Base64::urlEncode($payload) : $payload;
 		return $data;

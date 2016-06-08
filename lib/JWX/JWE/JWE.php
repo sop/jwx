@@ -5,7 +5,6 @@ namespace JWX\JWE;
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 
 
@@ -176,10 +175,8 @@ class JWE
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
 			$aad, $this->_authenticationTag);
 		// decompress
-		if ($this->_protectedHeader->has(
-			RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)) {
-			$comp_algo_name = $this->_protectedHeader->get(
-				RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM)->value();
+		if ($this->_protectedHeader->hasCompressionAlgorithm()) {
+			$comp_algo_name = $this->_protectedHeader->compressionAlgorithm()->value();
 			$decompressor = CompressionFactory::algoByName($comp_algo_name);
 			$payload = $decompressor->decompress($payload);
 		}
