@@ -10,9 +10,7 @@ use JWX\JWK\Parameter\JWKParameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4
  */
-class JWK implements 
-	\Countable, 
-	\IteratorAggregate
+class JWK implements \Countable, \IteratorAggregate
 {
 	use TypedJWK;
 	

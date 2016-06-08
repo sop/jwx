@@ -11,7 +11,8 @@ use JWX\JWT\Parameter\AlgorithmParameterValue;
  * Base class for algorithms used for CEK management for the content encryption
  * algorithms.
  */
-abstract class KeyManagementAlgorithm implements AlgorithmParameterValue, 
+abstract class KeyManagementAlgorithm implements 
+	AlgorithmParameterValue, 
 	HeaderParameters
 {
 	/**

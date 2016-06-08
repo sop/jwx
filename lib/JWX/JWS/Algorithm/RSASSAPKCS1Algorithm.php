@@ -15,8 +15,7 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-3.3
  */
-abstract class RSASSAPKCS1Algorithm implements 
-	SignatureAlgorithm
+abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 {
 	/**
 	 * Public key.

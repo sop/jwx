@@ -8,9 +8,7 @@ use JWX\JWT\Parameter\JWTParameter;
 /**
  * Represents a header used in JWS and JWE.
  */
-class Header implements 
-	\Countable, 
-	\IteratorAggregate
+class Header implements \Countable, \IteratorAggregate
 {
 	use TypedHeader;
 	

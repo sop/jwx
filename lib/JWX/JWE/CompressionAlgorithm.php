@@ -9,7 +9,8 @@ use JWX\JWT\Parameter\CompressionAlgorithmParameterValue;
 /**
  * Interface for algorithms that may be used to compress and decompress data.
  */
-interface CompressionAlgorithm extends CompressionAlgorithmParameterValue, 
+interface CompressionAlgorithm extends 
+	CompressionAlgorithmParameterValue, 
 	HeaderParameters
 {
 	/**

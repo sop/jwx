@@ -9,7 +9,8 @@ use JWX\JWT\Parameter\EncryptionAlgorithmParameterValue;
 /**
  * Interface for algorithms that may be used to encrypt and decrypt JWE payload.
  */
-interface ContentEncryptionAlgorithm extends EncryptionAlgorithmParameterValue, 
+interface ContentEncryptionAlgorithm extends 
+	EncryptionAlgorithmParameterValue, 
 	HeaderParameters
 {
 	/**

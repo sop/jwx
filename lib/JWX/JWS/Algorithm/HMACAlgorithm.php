@@ -14,8 +14,7 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-3.2
  */
-abstract class HMACAlgorithm implements 
-	SignatureAlgorithm
+abstract class HMACAlgorithm implements SignatureAlgorithm
 {
 	/**
 	 * Shared secret key.
