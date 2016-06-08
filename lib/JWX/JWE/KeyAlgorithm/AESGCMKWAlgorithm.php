@@ -8,7 +8,6 @@ use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
@@ -108,10 +107,10 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 	public static function fromJWK(JWK $jwk, $iv, $alg = null) {
 		$jwk = SymmetricKeyJWK::fromJWK($jwk);
 		if (!isset($alg)) {
-			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
+			if (!$jwk->hasAlgorithmParameter()) {
 				throw new \UnexpectedValueException("No algorithm parameter.");
 			}
-			$alg = $jwk->get(RegisteredJWKParameter::P_ALG)->value();
+			$alg = $jwk->algorithmParameter()->value();
 		}
 		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");

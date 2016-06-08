@@ -44,8 +44,7 @@ class SymmetricKeyJWK extends JWK
 				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
-		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
-			 KeyTypeParameter::TYPE_OCT) {
+		if ($this->keyTypeParameter()->value() != KeyTypeParameter::TYPE_OCT) {
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}
@@ -69,7 +68,6 @@ class SymmetricKeyJWK extends JWK
 	 * @return string
 	 */
 	public function key() {
-		$value = $this->get(RegisteredJWKParameter::PARAM_KEY_VALUE)->value();
-		return Base64::urlDecode($value);
+		return Base64::urlDecode($this->keyValueParameter()->value());
 	}
 }

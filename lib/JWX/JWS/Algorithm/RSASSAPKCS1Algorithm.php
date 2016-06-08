@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
@@ -16,7 +15,8 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-3.3
  */
-abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
+abstract class RSASSAPKCS1Algorithm implements 
+	SignatureAlgorithm
 {
 	/**
 	 * Public key.
@@ -102,11 +102,11 @@ abstract class RSASSAPKCS1Algorithm implements SignatureAlgorithm
 	public static function fromJWK(JWK $jwk, $alg = null) {
 		// if algorithm is not explicitly given, consult JWK
 		if (!isset($alg)) {
-			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
+			if (!$jwk->hasAlgorithmParameter()) {
 				throw new \UnexpectedValueException(
 					"Missing algorithm parameter.");
 			}
-			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
+			$alg = $jwk->algorithmParameter()->value();
 		}
 		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
 			throw new \UnexpectedValueException(

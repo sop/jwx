@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
@@ -15,7 +14,8 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-3.2
  */
-abstract class HMACAlgorithm implements SignatureAlgorithm
+abstract class HMACAlgorithm implements 
+	SignatureAlgorithm
 {
 	/**
 	 * Shared secret key.
@@ -69,11 +69,11 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 		$jwk = SymmetricKeyJWK::fromJWK($jwk);
 		// if algorithm is not explicitly given, consult JWK
 		if (!isset($alg)) {
-			if (!$jwk->has(RegisteredJWKParameter::P_ALG)) {
+			if (!$jwk->hasAlgorithmParameter()) {
 				throw new \UnexpectedValueException(
 					"Missing algorithm parameter.");
 			}
-			$alg = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM)->value();
+			$alg = $jwk->algorithmParameter()->value();
 		}
 		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");

@@ -43,8 +43,7 @@ class ECPublicKeyJWK extends JWK
 				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
-		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
-			 KeyTypeParameter::TYPE_EC) {
+		if ($this->keyTypeParameter()->value() != KeyTypeParameter::TYPE_EC) {
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}

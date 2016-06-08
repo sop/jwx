@@ -51,8 +51,7 @@ class RSAPublicKeyJWK extends JWK
 				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
-		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
-			 KeyTypeParameter::TYPE_RSA) {
+		if ($this->keyTypeParameter()->value() != KeyTypeParameter::TYPE_RSA) {
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}
@@ -86,10 +85,10 @@ class RSAPublicKeyJWK extends JWK
 	 * @return PEM PUBLIC KEY
 	 */
 	public function toPEM() {
-		$n = $this->get(RegisteredJWKParameter::P_N)
+		$n = $this->modulusParameter()
 			->number()
 			->base10();
-		$e = $this->get(RegisteredJWKParameter::P_E)
+		$e = $this->exponentParameter()
 			->number()
 			->base10();
 		$pk = new RSAPublicKey($n, $e);

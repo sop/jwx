@@ -63,8 +63,7 @@ class RSAPrivateKeyJWK extends JWK
 				throw new \UnexpectedValueException("Missing '$name' parameter.");
 			}
 		}
-		if ($this->get(RegisteredJWKParameter::PARAM_KEY_TYPE)->value() !=
-			 KeyTypeParameter::TYPE_RSA) {
+		if ($this->keyTypeParameter()->value() != KeyTypeParameter::TYPE_RSA) {
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
 	}
@@ -104,9 +103,9 @@ class RSAPrivateKeyJWK extends JWK
 	 * @return RSAPublicKeyJWK
 	 */
 	public function publicKey() {
-		$kty = $this->get(RegisteredJWKParameter::PARAM_KEY_TYPE);
-		$n = $this->get(RegisteredJWKParameter::PARAM_MODULUS);
-		$e = $this->get(RegisteredJWKParameter::PARAM_EXPONENT);
+		$kty = $this->keyTypeParameter();
+		$n = $this->modulusParameter();
+		$e = $this->exponentParameter();
 		return new RSAPublicKeyJWK($kty, $n, $e);
 	}
 	
@@ -116,28 +115,28 @@ class RSAPrivateKeyJWK extends JWK
 	 * @return PEM PRIVATE KEY
 	 */
 	public function toPEM() {
-		$n = $this->get(RegisteredJWKParameter::P_N)
+		$n = $this->modulusParameter()
 			->number()
 			->base10();
-		$e = $this->get(RegisteredJWKParameter::P_E)
+		$e = $this->exponentParameter()
 			->number()
 			->base10();
-		$d = $this->get(RegisteredJWKParameter::P_RSA_D)
+		$d = $this->privateExponentParameter()
 			->number()
 			->base10();
-		$p = $this->get(RegisteredJWKParameter::P_P)
+		$p = $this->firstPrimeFactorParameter()
 			->number()
 			->base10();
-		$q = $this->get(RegisteredJWKParameter::P_Q)
+		$q = $this->secondPrimeFactorParameter()
 			->number()
 			->base10();
-		$dp = $this->get(RegisteredJWKParameter::P_DP)
+		$dp = $this->firstFactorCRTExponentParameter()
 			->number()
 			->base10();
-		$dq = $this->get(RegisteredJWKParameter::P_DQ)
+		$dq = $this->secondFactorCRTExponentParameter()
 			->number()
 			->base10();
-		$qi = $this->get(RegisteredJWKParameter::P_QI)
+		$qi = $this->firstCRTCoefficientParameter()
 			->number()
 			->base10();
 		$pk = new RSAPrivateKey($n, $e, $d, $p, $q, $dp, $dq, $qi);
