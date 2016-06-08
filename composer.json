@@ -21,7 +21,7 @@
 	"require": {
 		"php": ">=5.6.3",
 		"ext-openssl": "*",
-		"sop/crypto-util": "^1.4.0",
+		"sop/crypto-util": "^1.5.0",
 		"sop/aes-kw": "^1.0.0",
 		"sop/gcm": "^0.2.0"
 	},
