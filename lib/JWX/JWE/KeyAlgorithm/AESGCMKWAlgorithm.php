@@ -135,7 +135,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 			throw new \RuntimeException(
 				"Header doesn't contain authentication tag.");
 		}
-		$auth_tag = $header->get(RegisteredJWTParameter::P_TAG)->authenticationTag();
+		$auth_tag = $header->getTyped(RegisteredJWTParameter::P_TAG)->authenticationTag();
 		$cek = $this->_getGCM()->decrypt($ciphertext, $auth_tag, "", 
 			$this->_kek, $this->_iv);
 		return $cek;
