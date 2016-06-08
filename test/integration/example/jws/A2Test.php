@@ -3,7 +3,7 @@
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWS\Algorithm\RS256Algorithm;
 use JWX\JWS\JWS;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
 
 

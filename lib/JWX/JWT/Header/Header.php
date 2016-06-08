@@ -1,6 +1,6 @@
 <?php
 
-namespace JWX\JWT;
+namespace JWX\JWT\Header;
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
@@ -10,7 +10,8 @@ use JWX\JWT\Parameter\RegisteredJWTParameter;
  * Represents a header used in JWS and JWE.
  */
 class Header implements 
-	\Countable, \IteratorAggregate
+	\Countable, 
+	\IteratorAggregate
 {
 	/**
 	 * Parameters.

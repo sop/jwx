@@ -2,7 +2,7 @@
 
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 

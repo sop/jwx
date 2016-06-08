@@ -5,7 +5,7 @@ use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;

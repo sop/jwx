@@ -4,8 +4,8 @@ use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
-use JWX\JWT\Header;
-use JWX\JWT\JOSE;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\JWTParameter;
 
 

@@ -4,7 +4,7 @@ use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
 
 

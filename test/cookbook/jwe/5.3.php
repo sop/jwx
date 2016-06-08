@@ -3,7 +3,7 @@
 use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
 
 

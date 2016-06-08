@@ -3,8 +3,8 @@
 namespace JWX\JWE;
 
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
-use JWX\JWT\Header;
-use JWX\JWT\JOSE;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 

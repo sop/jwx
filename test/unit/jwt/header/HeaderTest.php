@@ -1,6 +1,6 @@
 <?php
 
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\ContentTypeParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;

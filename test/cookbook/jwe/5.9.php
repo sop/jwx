@@ -6,7 +6,7 @@ use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
 
 

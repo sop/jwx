@@ -10,7 +10,7 @@ use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\AuthenticationTagParameter;
 use JWX\JWT\Parameter\InitializationVectorParameter;

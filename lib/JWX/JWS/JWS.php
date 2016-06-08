@@ -2,8 +2,8 @@
 
 namespace JWX\JWS;
 
-use JWX\JWT\Header;
-use JWX\JWT\JOSE;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;

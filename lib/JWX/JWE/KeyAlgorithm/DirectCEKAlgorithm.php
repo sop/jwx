@@ -6,7 +6,7 @@ use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 

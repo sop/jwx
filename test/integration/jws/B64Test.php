@@ -2,7 +2,7 @@
 
 use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWS\JWS;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\B64PayloadParameter;
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;

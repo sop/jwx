@@ -4,7 +4,7 @@ use JWX\JWA\JWA;
 use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
-use JWX\JWT\JOSE;
+use JWX\JWT\Header\JOSE;
 
 
 /**

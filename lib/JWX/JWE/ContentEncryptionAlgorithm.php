@@ -2,7 +2,7 @@
 
 namespace JWX\JWE;
 
-use JWX\JWT\HeaderParameters;
+use JWX\JWT\Header\HeaderParameters;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameterValue;
 
 

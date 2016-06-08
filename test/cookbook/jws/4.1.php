@@ -1,6 +1,6 @@
 <?php
 
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWK\JWK;

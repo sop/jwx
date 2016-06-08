@@ -1,8 +1,8 @@
 <?php
 
 use JWX\JWA\JWA;
-use JWX\JWT\Header;
-use JWX\JWT\JOSE;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\ContentTypeParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\TypeParameter;

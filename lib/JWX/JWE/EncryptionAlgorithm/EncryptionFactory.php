@@ -10,7 +10,7 @@ use JWX\JWE\EncryptionAlgorithm\A192CBCHS384Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A192GCMAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A256CBCHS512Algorithm;
 use JWX\JWE\EncryptionAlgorithm\A256GCMAlgorithm;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 

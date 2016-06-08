@@ -3,7 +3,7 @@
 use JWX\JWA\JWA;
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 

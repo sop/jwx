@@ -6,8 +6,8 @@ use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header;
-use JWX\JWT\JOSE;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Header\JOSE;
 use JWX\Util\Base64;
 
 

@@ -6,7 +6,7 @@ use AESKW\AESKeyWrapAlgorithm;
 use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;

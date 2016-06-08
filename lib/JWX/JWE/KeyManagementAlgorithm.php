@@ -2,8 +2,8 @@
 
 namespace JWX\JWE;
 
-use JWX\JWT\Header;
-use JWX\JWT\HeaderParameters;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Header\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
 
 

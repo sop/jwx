@@ -6,7 +6,7 @@ use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
-use JWX\JWT\Header;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
