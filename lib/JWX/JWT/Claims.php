@@ -114,7 +114,7 @@ class Claims implements \Countable, \IteratorAggregate
 	 * Check whether a claims set is valid in the given context.
 	 *
 	 * @param ValidationContext $ctx
-	 * @return boolean
+	 * @return bool
 	 */
 	public function isValid(ValidationContext $ctx) {
 		try {

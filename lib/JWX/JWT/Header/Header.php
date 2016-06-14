@@ -89,7 +89,7 @@ class Header implements \Countable, \IteratorAggregate
 	 * Returns false if any of the given parameters is not set.
 	 *
 	 * @param string ...$names Parameter names
-	 * @return boolean
+	 * @return bool
 	 */
 	public function has(...$names) {
 		foreach ($names as $name) {

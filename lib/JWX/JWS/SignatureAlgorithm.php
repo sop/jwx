@@ -24,7 +24,7 @@ interface SignatureAlgorithm extends AlgorithmParameterValue, HeaderParameters
 	 *
 	 * @param string $data Data to validate
 	 * @param string $signature Signature to compare
-	 * @return boolean
+	 * @return bool
 	 */
 	public function validateSignature($data, $signature);
 }
