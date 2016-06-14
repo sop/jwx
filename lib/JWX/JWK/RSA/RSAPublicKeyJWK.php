@@ -6,6 +6,7 @@ use CryptoUtil\ASN1\AlgorithmIdentifier\Crypto\RSAEncryptionAlgorithmIdentifier;
 use CryptoUtil\ASN1\PublicKeyInfo;
 use CryptoUtil\ASN1\RSA\RSAPublicKey;
 use CryptoUtil\PEM\PEM;
+use JWX\JWK\Feature\AsymmetricPublicKey;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\JWKParameter;
@@ -21,7 +22,7 @@ use JWX\JWK\Parameter\RegisteredJWKParameter;
  * @link https://tools.ietf.org/html/rfc7518#section-6.3
  * @link https://tools.ietf.org/html/rfc7518#section-6.3.1
  */
-class RSAPublicKeyJWK extends JWK
+class RSAPublicKeyJWK extends JWK implements AsymmetricPublicKey
 {
 	/**
 	 * Parameter names managed by this class.
