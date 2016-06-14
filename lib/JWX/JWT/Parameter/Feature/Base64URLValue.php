@@ -11,6 +11,13 @@ use JWX\Util\Base64;
 trait Base64URLValue
 {
 	/**
+	 * Constructor
+	 *
+	 * @param mixed ...$args
+	 */
+	abstract public function __construct(...$args);
+	
+	/**
 	 * Initialize from native value.
 	 *
 	 * Value shall be encoded using Base64url encoding.
