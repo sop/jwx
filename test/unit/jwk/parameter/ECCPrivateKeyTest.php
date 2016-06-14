@@ -26,4 +26,13 @@ class ECCPrivateKeyParameterTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(RegisteredJWKParameter::PARAM_ECC_PRIVATE_KEY, 
 			$param->name());
 	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param ECCPrivateKeyParameter $param
+	 */
+	public function testPrivateKeyOctets(ECCPrivateKeyParameter $param) {
+		$this->assertEquals("0123456789abcdef", $param->privateKeyOctets());
+	}
 }

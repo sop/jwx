@@ -26,4 +26,13 @@ class XCoordinateParameterTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(RegisteredJWKParameter::PARAM_X_COORDINATE, 
 			$param->name());
 	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param XCoordinateParameter $param
+	 */
+	public function testCoordinateOctets(XCoordinateParameter $param) {
+		$this->assertEquals("\xff\x88", $param->coordinateOctets());
+	}
 }
