@@ -66,7 +66,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 		$this->_publicKey = $pub_key;
 		$this->_privateKey = $priv_key;
 		$key_size = $pub_key->curveParameter()->keySizeBits();
-		$this->_signatureSize = ceil($key_size / 8) * 2;
+		$this->_signatureSize = intval(ceil($key_size / 8) * 2);
 	}
 	
 	/**
@@ -133,7 +133,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 		// OpenSSL returns ECDSA signature as a DER encoded ECDSA-Sig-Value
 		$der = parent::computeSignature($data);
 		$sig = ECDSASigValue::fromDER($der);
-		$mlen = floor($this->_signatureSize / 2);
+		$mlen = intval(floor($this->_signatureSize / 2));
 		$signature = ECConversion::numberToOctets($sig->r(), $mlen) .
 			 ECConversion::numberToOctets($sig->s(), $mlen);
 		return $signature;
@@ -149,7 +149,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 			throw new \UnexpectedValueException("Invalid signature length.");
 		}
 		list($r_octets, $s_octets) = str_split($signature, 
-			floor($this->_signatureSize / 2));
+			intval(floor($this->_signatureSize / 2)));
 		// convert signature to DER sequence for OpenSSL
 		$r = ECConversion::octetsToNumber($r_octets);
 		$s = ECConversion::octetsToNumber($s_octets);
