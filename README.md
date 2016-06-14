@@ -16,7 +16,7 @@ Also implements unencoded payload option
 
 ## Features
 * Signing and signature validation (JWS)
-    * HMAC and RSA
+    * HMAC, RSA and EC
 * Encryption and decryption with compression and integrity protection (JWE)
     * AES
 * Claims validation
@@ -28,6 +28,7 @@ Also implements unencoded payload option
 * Signature
     * HMAC with SHA-256, SHA-384 and SHA-512
     * RSASSA-PKCS1-v1_5 with SHA-256, SHA-384 and SHA-512
+    * ECDSA with P-256, P-384 and P-521 curves
 * Content encryption
     * AES-CBC with 128, 192 and 256-bit key sizes
     * AES-GCM with 128, 192 and 256-bit key sizes
