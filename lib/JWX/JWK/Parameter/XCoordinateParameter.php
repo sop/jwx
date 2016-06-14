@@ -2,18 +2,14 @@
 
 namespace JWX\JWK\Parameter;
 
-use JWX\JWT\Parameter\Feature\Base64URLValue;
-
 
 /**
  * Implements 'X Coordinate' parameter.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-6.2.1.2
  */
-class XCoordinateParameter extends RegisteredJWKParameter
+class XCoordinateParameter extends CoordinateParameter
 {
-	use Base64URLValue;
-	
 	/**
 	 * Constructor
 	 *
