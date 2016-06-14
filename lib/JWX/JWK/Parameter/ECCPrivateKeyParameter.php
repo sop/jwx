@@ -3,6 +3,7 @@
 namespace JWX\JWK\Parameter;
 
 use JWX\JWT\Parameter\Feature\Base64URLValue;
+use JWX\Util\Base64;
 
 
 /**
@@ -22,5 +23,14 @@ class ECCPrivateKeyParameter extends RegisteredJWKParameter
 	public function __construct($key) {
 		$this->_validateEncoding($key);
 		parent::__construct(self::PARAM_ECC_PRIVATE_KEY, $key);
+	}
+	
+	/**
+	 * Get the EC private key in octet string representation.
+	 *
+	 * @return string
+	 */
+	public function privateKeyOctets() {
+		return Base64::urlDecode($this->_value);
 	}
 }
