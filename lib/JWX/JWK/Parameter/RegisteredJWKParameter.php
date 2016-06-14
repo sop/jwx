@@ -63,6 +63,9 @@ abstract class RegisteredJWKParameter extends JWKParameter
 	/**
 	 * Mapping from registered JWK parameter name to class name.
 	 *
+	 * Note that ECC private key and RSA private key cannot be mapped since
+	 * they share the same parameter name 'd'.
+	 *
 	 * @internal
 	 *
 	 * @var array
@@ -77,10 +80,8 @@ abstract class RegisteredJWKParameter extends JWKParameter
 		self::P_CRV => CurveParameter::class,
 		self::P_X => XCoordinateParameter::class,
 		self::P_Y => YCoordinateParameter::class,
-		self::P_ECC_D => ECCPrivateKeyParameter::class,
 		self::P_N => ModulusParameter::class,
 		self::P_E => ExponentParameter::class,
-		self::P_RSA_D => PrivateExponentParameter::class,
 		self::P_P => FirstPrimeFactorParameter::class,
 		self::P_Q => SecondPrimeFactorParameter::class,
 		self::P_DP => FirstFactorCRTExponentParameter::class,
