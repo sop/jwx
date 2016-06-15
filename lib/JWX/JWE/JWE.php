@@ -3,6 +3,9 @@
 namespace JWX\JWE;
 
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
+use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
+use JWX\JWE\KeyAlgorithm\KeyAlgorithmFactory;
+use JWX\JWK\JWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\Util\Base64;
@@ -209,6 +212,23 @@ class JWE
 			$payload = $decompressor->decompress($payload);
 		}
 		return $payload;
+	}
+	
+	/**
+	 * Decrypt content using given JWK.
+	 *
+	 * Key management and content encryption algorithms are determined from the
+	 * header.
+	 *
+	 * @param JWK $jwk JSON Web Key
+	 * @return string Plaintext payload
+	 */
+	public function decryptWithJWK(JWK $jwk) {
+		$header = $this->header();
+		$key_algo_factory = new KeyAlgorithmFactory($header);
+		$key_algo = $key_algo_factory->algoByKey($jwk);
+		$enc_algo = EncryptionAlgorithmFactory::algoByHeader($header);
+		return $this->decrypt($key_algo, $enc_algo);
 	}
 	
 	/**
