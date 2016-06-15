@@ -34,7 +34,7 @@ class JWTParameter
 	}
 	
 	/**
-	 * Initialize from name and value.
+	 * Initialize from a name and a value.
 	 *
 	 * Returns parameter specific object if one is implemented.
 	 *
@@ -51,7 +51,7 @@ class JWTParameter
 	}
 	
 	/**
-	 * Get parameter name.
+	 * Get the parameter name.
 	 *
 	 * @return string
 	 */
@@ -60,7 +60,7 @@ class JWTParameter
 	}
 	
 	/**
-	 * Get parameter value.
+	 * Get the parameter value.
 	 *
 	 * @return mixed
 	 */
