@@ -1,6 +1,6 @@
 <?php
 
-use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
+use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWK\JWK;
@@ -46,8 +46,9 @@ class CookbookDirectEncWithAESGCMTest extends PHPUnit_Framework_TestCase
 		$plaintext = self::$_testData["input"]["plaintext"];
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$aad = Base64::urlEncode($header->toJSON());
-		$cek = DirectCEKAlgorithm::fromJWK($jwk)->cek();
-		$algo = EncryptionFactory::algoByName(self::$_testData["input"]["enc"]);
+		$cek = DirectCEKAlgorithm::fromJWK($jwk, $header)->cek();
+		$algo = EncryptionAlgorithmFactory::algoByName(
+			self::$_testData["input"]["enc"]);
 		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, $cek, $iv, 
 			$aad);
 		$this->assertEquals(
@@ -64,8 +65,8 @@ class CookbookDirectEncWithAESGCMTest extends PHPUnit_Framework_TestCase
 	public function testCreateJWE(SymmetricKeyJWK $jwk, Header $header) {
 		$payload = self::$_testData["input"]["plaintext"];
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
-		$key_algo = DirectCEKAlgorithm::fromJWK($jwk);
-		$enc_algo = EncryptionFactory::algoByName(
+		$key_algo = DirectCEKAlgorithm::fromJWK($jwk, $header);
+		$enc_algo = EncryptionAlgorithmFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, null, 
 			$iv);

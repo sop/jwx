@@ -1,7 +1,7 @@
 <?php
 
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
-use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
+use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
 use JWX\JWK\JWK;
@@ -36,7 +36,7 @@ class CookbookCompressedContentTest extends PHPUnit_Framework_TestCase
 	 * @param SymmetricKeyJWK $jwk
 	 */
 	public function testEncryptKey(SymmetricKeyJWK $jwk) {
-		$algo = AESKWAlgorithm::fromJWK($jwk);
+		$algo = AESKWAlgorithm::fromJWK($jwk, new Header());
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$enc_key = $algo->encrypt($cek);
 		$this->assertEquals(self::$_testData["encrypting_key"]["encrypted_key"], 
@@ -69,10 +69,11 @@ class CookbookCompressedContentTest extends PHPUnit_Framework_TestCase
 			Header $header) {
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$aad = Base64::urlEncode($header->toJSON());
-		$cek = AESKWAlgorithm::fromJWK($jwk)->decrypt(
+		$cek = AESKWAlgorithm::fromJWK($jwk, $header)->decrypt(
 			Base64::urlDecode(
 				self::$_testData["encrypting_key"]["encrypted_key"]));
-		$algo = EncryptionFactory::algoByName(self::$_testData["input"]["enc"]);
+		$algo = EncryptionAlgorithmFactory::algoByName(
+			self::$_testData["input"]["enc"]);
 		list($ciphertext, $auth_tag) = $algo->encrypt($content, $cek, $iv, $aad);
 		$this->assertEquals(
 			self::$_testData["encrypting_content"]["ciphertext"], 
@@ -89,8 +90,8 @@ class CookbookCompressedContentTest extends PHPUnit_Framework_TestCase
 		$payload = self::$_testData["input"]["plaintext"];
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
-		$key_algo = AESKWAlgorithm::fromJWK($jwk);
-		$enc_algo = EncryptionFactory::algoByName(
+		$key_algo = AESKWAlgorithm::fromJWK($jwk, $header);
+		$enc_algo = EncryptionAlgorithmFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$zip_algo = CompressionFactory::algoByName(
 			self::$_testData["input"]["zip"]);

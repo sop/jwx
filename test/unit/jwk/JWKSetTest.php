@@ -39,8 +39,8 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param JWKSet $jwkset
 	 */
-	public function testByKeyID(JWKSet $jwkset) {
-		$jwk = $jwkset->byKeyID("key1");
+	public function testKeyByID(JWKSet $jwkset) {
+		$jwk = $jwkset->keyByID("key1");
 		$this->assertInstanceOf(JWK::class, $jwk);
 	}
 	
@@ -50,8 +50,8 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param JWKSet $jwkset
 	 */
-	public function testByKeyIDFails(JWKSet $jwkset) {
-		$jwkset->byKeyID("key3");
+	public function testKeyByIDFails(JWKSet $jwkset) {
+		$jwkset->keyByID("key3");
 	}
 	
 	/**

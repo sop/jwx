@@ -5,6 +5,7 @@ use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWK\JWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
@@ -381,7 +382,8 @@ EOF;
 		$tag = Base64::urlEncode($data[1]);
 		$token = "$header_b64.$enc_key_b64.$iv.$ciphertext.$tag";
 		$jwe = JWE::fromCompact($token);
-		$key_algo = PBES2Algorithm::fromHeader($header, self::$_passphrase);
+		$key_algo = PBES2Algorithm::fromJWK(
+			SymmetricKeyJWK::fromKey(self::$_passphrase), $header);
 		$enc_algo = new A128CBCHS256Algorithm();
 		$plaintext = $jwe->decrypt($key_algo, $enc_algo);
 		$expected = implode("", array_map("chr", self::$_jwkBytes));

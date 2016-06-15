@@ -4,9 +4,10 @@ use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\A128GCMKWAlgorithm;
 use JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\AlgorithmParameter;
-use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\KeyValueParameter;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\InitializationVectorParameter;
 use JWX\JWT\Parameter\JWTParameter;
 
 
@@ -41,22 +42,39 @@ class AESGCMKWTest extends PHPUnit_Framework_TestCase
 		$algo->decrypt("");
 	}
 	
+	public function testFromJWK() {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_A128GCMKW), 
+			InitializationVectorParameter::fromString(self::IV));
+		$algo = AESGCMKWAlgorithm::fromJWK($jwk, $header);
+		$this->assertInstanceOf(A128GCMKWAlgorithm::class, $algo);
+	}
+	
 	/**
 	 * @expectedException UnexpectedValueException
 	 */
 	public function testFromJWKNoAlgo() {
-		$jwk = new JWK(new KeyTypeParameter(KeyTypeParameter::TYPE_OCT), 
-			KeyValueParameter::fromString(self::KEY_128));
-		AESGCMKWAlgorithm::fromJWK($jwk, self::IV);
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
+		$header = new Header(InitializationVectorParameter::fromString(self::IV));
+		AESGCMKWAlgorithm::fromJWK($jwk, $header);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJWKNoIV() {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_A128GCMKW));
+		AESGCMKWAlgorithm::fromJWK($jwk, $header);
 	}
 	
 	/**
 	 * @expectedException UnexpectedValueException
 	 */
 	public function testFromJWKUnsupportedAlgo() {
-		$jwk = new JWK(new AlgorithmParameter(JWA::ALGO_NONE), 
-			new KeyTypeParameter(KeyTypeParameter::TYPE_OCT), 
-			KeyValueParameter::fromString(self::KEY_128));
-		AESGCMKWAlgorithm::fromJWK($jwk, self::IV);
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
+		$header = new Header(InitializationVectorParameter::fromString(self::IV), 
+			new AlgorithmParameter(JWA::ALGO_NONE));
+		AESGCMKWAlgorithm::fromJWK($jwk, $header);
 	}
 }

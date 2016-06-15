@@ -8,6 +8,7 @@ use JWX\JWK\JWK;
 use JWX\JWK\Parameter\AlgorithmParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\KeyValueParameter;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\JWTParameter;
 
 
@@ -59,7 +60,8 @@ class AESKWTest extends PHPUnit_Framework_TestCase
 		$jwk = new JWK(new AlgorithmParameter(JWA::ALGO_A128KW), 
 			new KeyTypeParameter(KeyTypeParameter::TYPE_OCT), 
 			KeyValueParameter::fromString(self::KEY_128));
-		$algo = AESKWAlgorithm::fromJWK($jwk);
+		$header = new Header();
+		$algo = AESKWAlgorithm::fromJWK($jwk, $header);
 		$this->assertInstanceOf(AESKWAlgorithm::class, $algo);
 	}
 	
@@ -69,7 +71,8 @@ class AESKWTest extends PHPUnit_Framework_TestCase
 	public function testFromJWKNoAlgo() {
 		$jwk = new JWK(new KeyTypeParameter(KeyTypeParameter::TYPE_OCT), 
 			KeyValueParameter::fromString(self::KEY_128));
-		AESKWAlgorithm::fromJWK($jwk);
+		$header = new Header();
+		AESKWAlgorithm::fromJWK($jwk, $header);
 	}
 	
 	/**
@@ -79,6 +82,7 @@ class AESKWTest extends PHPUnit_Framework_TestCase
 		$jwk = new JWK(new AlgorithmParameter(JWA::ALGO_NONE), 
 			new KeyTypeParameter(KeyTypeParameter::TYPE_OCT), 
 			KeyValueParameter::fromString(self::KEY_128));
-		AESKWAlgorithm::fromJWK($jwk);
+		$header = new Header();
+		AESKWAlgorithm::fromJWK($jwk, $header);
 	}
 }

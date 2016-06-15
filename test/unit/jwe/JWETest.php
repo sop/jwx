@@ -5,6 +5,7 @@ use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\JWTParameter;
@@ -45,6 +46,17 @@ class JWETest extends PHPUnit_Framework_TestCase
 	 */
 	public function testDecrypt(JWE $jwe) {
 		$payload = $jwe->decrypt(self::$_keyAlgo, self::$_encAlgo);
+		$this->assertEquals(self::PAYLOAD, $payload);
+	}
+	
+	/**
+	 * @depends testEncrypt
+	 *
+	 * @param JWE $jwe
+	 */
+	public function testDecryptWithJWK(JWE $jwe) {
+		$jwk = SymmetricKeyJWK::fromKey(self::CEK);
+		$payload = $jwe->decryptWithJWK($jwk);
 		$this->assertEquals(self::PAYLOAD, $payload);
 	}
 	

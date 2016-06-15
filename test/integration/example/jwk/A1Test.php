@@ -50,7 +50,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return JWK
 	 */
 	public function testKey1(JWKSet $jwkset) {
-		$jwk = $jwkset->byKeyID("1");
+		$jwk = $jwkset->keyByID("1");
 		$this->assertInstanceOf(JWK::class, $jwk);
 		return $jwk;
 	}
@@ -62,7 +62,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return JWK
 	 */
 	public function testKey2(JWKSet $jwkset) {
-		$jwk = $jwkset->byKeyID("2011-04-29");
+		$jwk = $jwkset->keyByID("2011-04-29");
 		$this->assertInstanceOf(JWK::class, $jwk);
 		return $jwk;
 	}

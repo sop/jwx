@@ -3,12 +3,15 @@
 use CryptoUtil\ASN1\RSA\RSAPrivateKey;
 use CryptoUtil\ASN1\RSA\RSAPublicKey;
 use CryptoUtil\PEM\PEM;
+use JWX\JWA\JWA;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\RSAESKeyAlgorithm;
 use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
 
 
@@ -137,6 +140,26 @@ class RSAESKeyTest extends PHPUnit_Framework_TestCase
 		$prop->setAccessible(true);
 		$prop->setValue($algo, new RSAESKeyTest_KeyMockup());
 		$algo->decrypt("test");
+	}
+	
+	public function testFromJWKPriv() {
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_RSA1_5));
+		$algo = RSAESKeyAlgorithm::fromJWK(self::$_privateKey, $header);
+		$this->assertInstanceOf(RSAESPKCS1Algorithm::class, $algo);
+	}
+	
+	public function testFromJWKPub() {
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_RSA1_5));
+		$algo = RSAESKeyAlgorithm::fromJWK(self::$_publicKey, $header);
+		$this->assertInstanceOf(RSAESPKCS1Algorithm::class, $algo);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJWKUnsupportedAlgo() {
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_NONE));
+		RSAESKeyAlgorithm::fromJWK(self::$_publicKey, $header);
 	}
 }
 

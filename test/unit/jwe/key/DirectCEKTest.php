@@ -4,6 +4,9 @@ use JWX\JWA\JWA;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
 
 
@@ -109,5 +112,21 @@ class DirectCEKTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testCEKForEncryptionFail(DirectCEKAlgorithm $algo) {
 		$algo->cekForEncryption(1);
+	}
+	
+	public function testFromJWK() {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_DIR));
+		$algo = DirectCEKAlgorithm::fromJWK($jwk, $header);
+		$this->assertInstanceOf(DirectCEKAlgorithm::class, $algo);
+	}
+	
+	/**
+	 * @expectedException UnexpectedValueException
+	 */
+	public function testFromJWKInvalidAlgo() {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_A128KW));
+		DirectCEKAlgorithm::fromJWK($jwk, $header);
 	}
 }

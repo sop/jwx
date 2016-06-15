@@ -1,6 +1,6 @@
 <?php
 
-use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
+use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\RSAESOAEPAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
@@ -64,7 +64,8 @@ class CookbookKeyEncRSAOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$aad = Base64::urlEncode($header->toJSON());
-		$algo = EncryptionFactory::algoByName(self::$_testData["input"]["enc"]);
+		$algo = EncryptionAlgorithmFactory::algoByName(
+			self::$_testData["input"]["enc"]);
 		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, $cek, $iv, 
 			$aad);
 		$this->assertEquals(
@@ -83,7 +84,7 @@ class CookbookKeyEncRSAOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$key_algo = RSAESOAEPAlgorithm::fromPrivateKey($jwk);
-		$enc_algo = EncryptionFactory::algoByName(
+		$enc_algo = EncryptionAlgorithmFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 
 			$iv);

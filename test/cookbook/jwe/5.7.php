@@ -1,11 +1,12 @@
 <?php
 
-use JWX\JWE\EncryptionAlgorithm\EncryptionFactory;
+use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
+use JWX\JWT\Parameter\InitializationVectorParameter;
 use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\Util\Base64;
 
@@ -38,7 +39,8 @@ class CookbookAESGCMKWWithAESCBCTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testEncryptKey(SymmetricKeyJWK $jwk) {
 		$iv = Base64::urlDecode(self::$_testData["encrypting_key"]["iv"]);
-		$algo = AESGCMKWAlgorithm::fromJWK($jwk, $iv);
+		$header = new Header(InitializationVectorParameter::fromString($iv));
+		$algo = AESGCMKWAlgorithm::fromJWK($jwk, $header);
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$enc_key = $algo->encrypt($cek, $header);
 		$this->assertEquals(self::$_testData["encrypting_key"]["encrypted_key"], 
@@ -62,15 +64,15 @@ class CookbookAESGCMKWWithAESCBCTest extends PHPUnit_Framework_TestCase
 	 * @depends testHeader
 	 */
 	public function testContentEncryption(SymmetricKeyJWK $jwk, Header $header) {
-		$algo_iv = Base64::urlDecode(self::$_testData["encrypting_key"]["iv"]);
-		$key_algo = AESGCMKWAlgorithm::fromJWK($jwk, $algo_iv);
+		$key_algo = AESGCMKWAlgorithm::fromJWK($jwk, $header);
 		$plaintext = self::$_testData["input"]["plaintext"];
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
 		$aad = Base64::urlEncode($header->toJSON());
 		$cek = $key_algo->decrypt(
 			Base64::urlDecode(
 				self::$_testData["encrypting_key"]["encrypted_key"]), $header);
-		$algo = EncryptionFactory::algoByName(self::$_testData["input"]["enc"]);
+		$algo = EncryptionAlgorithmFactory::algoByName(
+			self::$_testData["input"]["enc"]);
 		list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, $cek, $iv, 
 			$aad);
 		$this->assertEquals(
@@ -88,9 +90,8 @@ class CookbookAESGCMKWWithAESCBCTest extends PHPUnit_Framework_TestCase
 		$payload = self::$_testData["input"]["plaintext"];
 		$cek = Base64::urlDecode(self::$_testData["generated"]["cek"]);
 		$iv = Base64::urlDecode(self::$_testData["generated"]["iv"]);
-		$algo_iv = Base64::urlDecode(self::$_testData["encrypting_key"]["iv"]);
-		$key_algo = AESGCMKWAlgorithm::fromJWK($jwk, $algo_iv);
-		$enc_algo = EncryptionFactory::algoByName(
+		$key_algo = AESGCMKWAlgorithm::fromJWK($jwk, $header);
+		$enc_algo = EncryptionAlgorithmFactory::algoByName(
 			self::$_testData["input"]["enc"]);
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, null, $header, $cek, 
 			$iv);
