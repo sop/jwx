@@ -16,7 +16,7 @@ use JWX\JWT\Header\Header;
 /**
  * Factory class to construct content encryption algorithm instances.
  */
-abstract class EncryptionFactory
+abstract class EncryptionAlgorithmFactory
 {
 	/**
 	 * Mapping from algorithm name to class name.
@@ -37,10 +37,10 @@ abstract class EncryptionFactory
 	);
 	
 	/**
-	 * Get content encryption algorithm by algorithm name.
+	 * Get the content encryption algorithm by algorithm name.
 	 *
 	 * @param string $name Algorithm name
-	 * @throws \UnexpectedValueException If algorithm name is invalid
+	 * @throws \UnexpectedValueException If algorithm is not supported.
 	 * @return ContentEncryptionAlgorithm
 	 */
 	public static function algoByName($name) {
@@ -53,10 +53,11 @@ abstract class EncryptionFactory
 	}
 	
 	/**
-	 * Get content encryption algorithm as specified in header.
+	 * Get the content encryption algorithm as specified in the given header.
 	 *
-	 * @param Header $header
-	 * @throws \UnexpectedValueException
+	 * @param Header $header Header
+	 * @throws \UnexpectedValueException If content encryption algorithm
+	 *         parameter is not present or algorithm is not supported.
 	 * @return ContentEncryptionAlgorithm
 	 */
 	public static function algoByHeader(Header $header) {
