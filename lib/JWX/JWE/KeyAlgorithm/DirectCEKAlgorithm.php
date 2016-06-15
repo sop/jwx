@@ -34,12 +34,18 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Initialize from JWK.
 	 *
 	 * @param JWK $jwk
+	 * @param Header $header
+	 * @throws \UnexpectedValueException
+	 * @return self
 	 */
-	public static function fromJWK(JWK $jwk) {
+	public static function fromJWK(JWK $jwk, Header $header) {
 		$jwk = SymmetricKeyJWK::fromJWK($jwk);
+		$alg = JWA::deriveAlgorithmName($header);
+		if ($alg != JWA::ALGO_DIR) {
+			throw new \UnexpectedValueException("Invalid algorithm '$alg'.");
+		}
 		return new self($jwk->key());
 	}
 	

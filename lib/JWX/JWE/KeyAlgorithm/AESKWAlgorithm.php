@@ -69,23 +69,15 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Initialize from JWK.
-	 *
-	 * If algorithm isn't specified, consult the JWK.
 	 *
 	 * @param JWK $jwk
-	 * @param string|null $alg Optional explicitly specified algorithm
-	 * @throws \UnexpectedValueException If parameters are missing
-	 * @return self
+	 * @param Header $header
+	 * @throws \UnexpectedValueException
+	 * @return AESKWAlgorithm
 	 */
-	public static function fromJWK(JWK $jwk, $alg = null) {
+	public static function fromJWK(JWK $jwk, Header $header) {
 		$jwk = SymmetricKeyJWK::fromJWK($jwk);
-		if (!isset($alg)) {
-			if (!$jwk->hasAlgorithmParameter()) {
-				throw new \UnexpectedValueException("No algorithm parameter.");
-			}
-			$alg = $jwk->algorithmParameter()->value();
-		}
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
 		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}

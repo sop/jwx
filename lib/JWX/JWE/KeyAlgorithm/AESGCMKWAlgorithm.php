@@ -94,24 +94,19 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Initialize from JWK.
-	 *
-	 * If algorithm isn't specified, consult the JWK.
 	 *
 	 * @param JWK $jwk
-	 * @param string $iv Initialization vector
-	 * @param string|null $alg Optional explicitly specified algorithm
-	 * @throws \UnexpectedValueException If parameters are missing
-	 * @return self
+	 * @param Header $header
+	 * @throws \UnexpectedValueException
+	 * @return AESGCMKWAlgorithm
 	 */
-	public static function fromJWK(JWK $jwk, $iv, $alg = null) {
+	public static function fromJWK(JWK $jwk, Header $header) {
 		$jwk = SymmetricKeyJWK::fromJWK($jwk);
-		if (!isset($alg)) {
-			if (!$jwk->hasAlgorithmParameter()) {
-				throw new \UnexpectedValueException("No algorithm parameter.");
-			}
-			$alg = $jwk->algorithmParameter()->value();
+		if (!$header->hasInitializationVector()) {
+			throw new \UnexpectedValueException("No initialization vector.");
 		}
+		$iv = $header->initializationVector()->initializationVector();
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
 		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}

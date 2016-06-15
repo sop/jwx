@@ -6,11 +6,12 @@ use AESKW\AESKeyWrapAlgorithm;
 use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\JWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -90,17 +91,42 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 	 * Constructor
 	 *
 	 * @param string $password Password
-	 * @param string $salt Salt input
+	 * @param string $salt_input Salt input
 	 * @param int $count Iteration count
 	 */
-	public function __construct($password, $salt, $count) {
+	public function __construct($password, $salt_input, $count) {
 		$this->_password = $password;
-		$this->_saltInput = $salt;
+		$this->_saltInput = $salt_input;
 		$this->_count = $count;
 	}
 	
 	/**
-	 * Initialize from password with random salt and default iteration count.
+	 *
+	 * @param JWK $jwk
+	 * @param Header $header
+	 * @throws \UnexpectedValueException
+	 * @return PBES2Algorithm
+	 */
+	public static function fromJWK(JWK $jwk, Header $header) {
+		$jwk = SymmetricKeyJWK::fromJWK($jwk);
+		if (!$header->hasPBES2SaltInput()) {
+			throw new \UnexpectedValueException("No salt input.");
+		}
+		$salt_input = $header->PBES2SaltInput()->saltInput();
+		if (!$header->hasPBES2Count()) {
+			throw new \UnexpectedValueException("No iteration count.");
+		}
+		$count = $header->PBES2Count()->value();
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
+		}
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
+		return new $cls($jwk->key(), $salt_input, $count);
+	}
+	
+	/**
+	 * Initialize from a password with random salt and default iteration count.
 	 *
 	 * @param string $password Password
 	 * @param int $count Optional user defined iteration count
@@ -110,38 +136,6 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 	public static function fromPassword($password, $count = 64000, $salt_bytes = 8) {
 		$salt_input = openssl_random_pseudo_bytes($salt_bytes);
 		return new static($password, $salt_input, $count);
-	}
-	
-	/**
-	 * Initialize from header.
-	 *
-	 * If algorithm is not explicitly specified, use one from header.
-	 *
-	 * @param Header $header Header
-	 * @param string $password Password
-	 * @param string|null $alg Algorithm
-	 * @throws \UnexpectedValueException
-	 * @return self
-	 */
-	public static function fromHeader(Header $header, $password, $alg = null) {
-		$params = array(RegisteredJWTParameter::PARAM_PBES2_SALT_INPUT, 
-			RegisteredJWTParameter::PARAM_PBES2_COUNT);
-		if (!$header->has(...$params)) {
-			throw new \UnexpectedValueException("Missing header parameters.");
-		}
-		if (!isset($alg)) {
-			if (!$header->hasAlgorithm()) {
-				throw new \UnexpectedValueException("No algorithm parameter.");
-			}
-			$alg = $header->algorithm()->value();
-		}
-		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
-			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
-		}
-		$cls = self::MAP_ALGO_TO_CLASS[$alg];
-		$salt = $header->PBES2SaltInput()->saltInput();
-		$count = $header->PBES2Count()->value();
-		return new $cls($password, $salt, $count);
 	}
 	
 	/**

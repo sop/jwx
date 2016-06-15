@@ -2,8 +2,10 @@
 
 namespace JWX\JWE\KeyAlgorithm;
 
+use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\JWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWT\Header\Header;
@@ -35,19 +37,33 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 	protected $_privateKey;
 	
 	/**
-	 * Get padding scheme.
+	 * Mapping from algorithm name to class name.
+	 *
+	 * @internal
+	 *
+	 * @var array
+	 */
+	const MAP_ALGO_TO_CLASS = array(
+		/* @formatter:off */
+		JWA::ALGO_RSA1_5 => RSAESPKCS1Algorithm::class,
+		JWA::ALGO_RSA_OAEP => RSAESOAEPAlgorithm::class
+		/* @formatter:on */
+	);
+	
+	/**
+	 * Get the padding scheme.
 	 *
 	 * @return int
 	 */
 	abstract protected function _paddingScheme();
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
-	 * Use <b>fromPublicKey</b> and <b>fromPrivateKey</b> instead!
+	 * Use <code>fromPublicKey</code> or <code>fromPrivateKey</code> instead!
 	 *
-	 * @param RSAPublicKeyJWK $pub_key
-	 * @param RSAPrivateKeyJWK $priv_key
+	 * @param RSAPublicKeyJWK $pub_key RSA public key
+	 * @param RSAPrivateKeyJWK $priv_key Optional RSA private key
 	 */
 	protected function __construct(RSAPublicKeyJWK $pub_key, 
 			RSAPrivateKeyJWK $priv_key = null) {
@@ -56,7 +72,26 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Initialize from public key.
+	 *
+	 * @param JWK $jwk
+	 * @param Header $header
+	 * @throws \UnexpectedValueException
+	 * @return RSAESKeyAlgorithm
+	 */
+	public static function fromJWK(JWK $jwk, Header $header) {
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
+		}
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
+		if ($jwk->has(...RSAPrivateKeyJWK::MANAGED_PARAMS)) {
+			return $cls::fromPrivateKey(RSAPrivateKeyJWK::fromJWK($jwk));
+		}
+		return $cls::fromPublicKey(RSAPublicKeyJWK::fromJWK($jwk));
+	}
+	
+	/**
+	 * Initialize from a public key.
 	 *
 	 * @param RSAPublicKeyJWK $jwk
 	 * @return self
@@ -66,7 +101,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Initialize from private key.
+	 * Initialize from a private key.
 	 *
 	 * @param RSAPrivateKeyJWK $jwk
 	 * @return self
@@ -76,7 +111,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Get public key.
+	 * Get the public key.
 	 *
 	 * @return RSAPublicKeyJWK
 	 */
@@ -85,7 +120,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Check whether private key is present.
+	 * Check whether the private key is present.
 	 *
 	 * @return bool
 	 */
@@ -94,7 +129,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 	}
 	
 	/**
-	 * Get private key.
+	 * Get the private key.
 	 *
 	 * @throws \LogicException
 	 * @return RSAPrivateKeyJWK
