@@ -58,7 +58,7 @@ class SymmetricKeyJWK extends JWK
 	 */
 	public static function fromKey($key, JWKParameter ...$params) {
 		$params[] = new KeyTypeParameter(KeyTypeParameter::TYPE_OCT);
-		$params[] = new KeyValueParameter($key);
+		$params[] = KeyValueParameter::fromString($key);
 		return new self(...$params);
 	}
 	
