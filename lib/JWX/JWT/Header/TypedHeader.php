@@ -42,6 +42,7 @@ trait TypedHeader
 	 * Get a parameter.
 	 *
 	 * @param string $name Parameter name
+	 * @throws \LogicException If the parameter is not present
 	 * @return JWTParameter
 	 */
 	abstract public function get($name);
