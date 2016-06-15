@@ -95,7 +95,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 * @param string $id
 	 * @return JWK|null Null if not found
 	 */
-	protected function _getByKeyID($id) {
+	protected function _getKeyByID($id) {
 		$map = $this->_getMapping(RegisteredJWKParameter::PARAM_KEY_ID);
 		return isset($map[$id]) ? $map[$id] : null;
 	}
@@ -107,7 +107,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 * @return bool
 	 */
 	public function hasKeyID($id) {
-		return $this->_getByKeyID($id) !== null;
+		return $this->_getKeyByID($id) !== null;
 	}
 	
 	/**
@@ -117,8 +117,8 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 * @throws \LogicException
 	 * @return JWK
 	 */
-	public function byKeyID($id) {
-		$jwk = $this->_getByKeyID($id);
+	public function keyByID($id) {
+		$jwk = $this->_getKeyByID($id);
 		if (!$jwk) {
 			throw new \LogicException("No key ID $id.");
 		}
