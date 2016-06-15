@@ -2,6 +2,9 @@
 
 namespace JWX\JWA;
 
+use JWX\JWK\JWK;
+use JWX\JWT\Header\Header;
+
 
 /**
  * Container for the algorithm name contants.
@@ -197,4 +200,34 @@ abstract class JWA
 	 * DEFLATE compression.
 	 */
 	const ALGO_DEFLATE = "DEF";
+	
+	/**
+	 * Derive algorithm name from the header and optionally from the given JWK.
+	 *
+	 * @param Header $header Header
+	 * @param JWK $jwk Optional JWK
+	 * @throws \UnexpectedValueException If algorithm parameter is not present
+	 *         or header and JWK algorithms differ.
+	 * @return string Algorithm name
+	 */
+	public static function deriveAlgorithmName(Header $header, JWK $jwk = null) {
+		if ($header->hasAlgorithm()) {
+			$alg = $header->algorithm()->value();
+		}
+		// if JWK is set, and has an algorithm parameter
+		if (isset($jwk) && $jwk->hasAlgorithmParameter()) {
+			$jwk_alg = $jwk->algorithmParameter()->value();
+			// check that algorithms match
+			if (isset($alg) && $alg != $jwk_alg) {
+				throw new \UnexpectedValueException(
+					"JWK algorithm '$jwk_alg' doesn't match" .
+						 " the header's algorithm '$alg'.");
+			}
+			$alg = $jwk_alg;
+		}
+		if (!isset($alg)) {
+			throw new \UnexpectedValueException("No algorithm parameter.");
+		}
+		return $alg;
+	}
 }
