@@ -67,6 +67,10 @@ directory.
     https://github.com/sop/jwx/blob/master/examples/jwe-create.php)
 * [Consume an encrypted JWT](
     https://github.com/sop/jwx/blob/master/examples/jwe-consume.php)
+* [Encrypt arbitrary data](
+    https://github.com/sop/jwx/blob/master/examples/arbitrary-encrypt.php)
+* [Decrypt arbitrary data](
+    https://github.com/sop/jwx/blob/master/examples/arbitrary-decrypt.php)
 
 ## License
 This project is licensed under the MIT License.
