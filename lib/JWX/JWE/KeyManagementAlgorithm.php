@@ -2,6 +2,7 @@
 
 namespace JWX\JWE;
 
+use JWX\JWK\JWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
@@ -78,4 +79,16 @@ abstract class KeyManagementAlgorithm implements
 	 * @return string
 	 */
 	abstract public function cekForEncryption($length);
+	
+	/**
+	 * Initialize key management algorithm from a JWK and a header.
+	 *
+	 * @param JWK $jwk
+	 * @param Header $header
+	 * @return KeyManagementAlgorithm
+	 */
+	public static function fromJWK(JWK $jwk, Header $header) {
+		throw new \BadMethodCallException(
+			__FUNCTION__ . " must be implemented in derived class.");
+	}
 }
