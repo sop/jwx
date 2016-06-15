@@ -10,8 +10,19 @@ namespace JWX\JWK\Parameter;
  */
 class KeyTypeParameter extends RegisteredJWKParameter
 {
+	/**
+	 * Octet sequence key type.
+	 */
 	const TYPE_OCT = "oct";
+	
+	/**
+	 * RSA key type.
+	 */
 	const TYPE_RSA = "RSA";
+	
+	/**
+	 * Elliptic curve key type.
+	 */
 	const TYPE_EC = "EC";
 	
 	/**
