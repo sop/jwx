@@ -2,6 +2,8 @@
 
 namespace JWX\JWT;
 
+use JWX\JWK\JWK;
+use JWX\JWK\JWKSet;
 use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Exception\ValidationException;
 
@@ -33,14 +35,35 @@ class ValidationContext
 	protected $_constraints;
 	
 	/**
+	 * Set of JSON Web Keys usable for the validation.
+	 *
+	 * @var JWKSet $_keys
+	 */
+	protected $_keys;
+	
+	/**
 	 * Constructor
 	 *
 	 * @param array $constraints Array of constraints keyed by claim name
+	 * @param JWKSet $keys Optional set of JSON Web Keys used for signature
+	 *        validation and/or decryption.
 	 */
-	public function __construct(array $constraints = array()) {
+	public function __construct(array $constraints = [], JWKSet $keys = null) {
 		$this->_refTime = time();
 		$this->_leeway = 60;
 		$this->_constraints = $constraints;
+		$this->_keys = $keys ? $keys : new JWKSet();
+	}
+	
+	/**
+	 * Initialize with a single JSON Web Key.
+	 *
+	 * @param JWK $key JSON Web Key
+	 * @param array $constraints Optional constraints
+	 * @return self
+	 */
+	public static function fromKey(JWK $key, array $constraints = []) {
+		return new self($constraints, new JWKSet($key));
 	}
 	
 	/**
@@ -173,6 +196,15 @@ class ValidationContext
 			throw new \LogicException("Constraint $name not set.");
 		}
 		return $this->_constraints[$name];
+	}
+	
+	/**
+	 * Get the set of JSON Web Keys defined in this context.
+	 *
+	 * @return JWKSet
+	 */
+	public function keys() {
+		return $this->_keys;
 	}
 	
 	/**
