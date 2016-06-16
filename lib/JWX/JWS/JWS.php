@@ -2,6 +2,7 @@
 
 namespace JWX\JWS;
 
+use JWX\JWK\JWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\CriticalParameter;
@@ -187,6 +188,19 @@ class JWS
 		}
 		return $algo->validateSignature($this->_signatureInput, 
 			$this->_signature);
+	}
+	
+	/**
+	 * Validate signature using given JWK.
+	 *
+	 * Signature algorithm is determined from the header.
+	 *
+	 * @param JWK $jwk JSON Web Key
+	 * @return bool True if signature is valid
+	 */
+	public function validateWithJWK(JWK $jwk) {
+		$algo = SignatureAlgorithm::fromJWK($jwk, $this->header());
+		return $this->validate($algo);
 	}
 	
 	/**
