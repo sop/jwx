@@ -3,6 +3,7 @@
 namespace JWX\JWK;
 
 use JWX\JWK\Parameter\JWKParameter;
+use JWX\JWK\Parameter\KeyIDParameter;
 
 
 /**
@@ -95,6 +96,16 @@ class JWK implements \Countable, \IteratorAggregate
 	 */
 	public function parameters() {
 		return $this->_parameters;
+	}
+	
+	/**
+	 * Get self with given key ID added to parameters.
+	 *
+	 * @param string $id Key ID as a string
+	 * @return self
+	 */
+	public function withKeyID($id) {
+		return $this->withParameters(new KeyIDParameter($id));
 	}
 	
 	/**
