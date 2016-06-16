@@ -1,10 +1,15 @@
 <?php
 
 use JWX\JWA\JWA;
+use JWX\JWK\JWKSet;
+use JWX\JWK\Parameter\KeyIDParameter as JWKID;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
+use JWX\JWT\Parameter\KeyIDParameter as JWTID;
 
 
 /**
@@ -13,6 +18,9 @@ use JWX\JWT\Header\JOSE;
 class JWSTest extends PHPUnit_Framework_TestCase
 {
 	const KEY = "12345678";
+	
+	const KEY_ID = "id";
+	
 	const PAYLOAD = "PAYLOAD";
 	
 	private static $_signAlgo;
@@ -26,7 +34,8 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testCreate() {
-		$jws = JWS::sign(self::PAYLOAD, self::$_signAlgo);
+		$jws = JWS::sign(self::PAYLOAD, self::$_signAlgo, 
+			new Header(new JWTID(self::KEY_ID)));
 		$this->assertInstanceOf(JWS::class, $jws);
 		return $jws;
 	}
@@ -48,6 +57,27 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testValidateInvalidAlgo(JWS $jws) {
 		$jws->validate(new NoneAlgorithm());
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWS $jws
+	 */
+	public function testValidateWithJWK(JWS $jws) {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY);
+		$this->assertTrue($jws->validateWithJWK($jwk));
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWS $jws
+	 */
+	public function testValidateWithJWKSet(JWS $jws) {
+		$jwk = SymmetricKeyJWK::fromKey(self::KEY)->withParameters(
+			new JWKID(self::KEY_ID));
+		$this->assertTrue($jws->validateWithJWKSet(new JWKSet($jwk)));
 	}
 	
 	/**

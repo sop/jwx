@@ -5,10 +5,13 @@ use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
+use JWX\JWK\JWKSet;
+use JWX\JWK\Parameter\KeyIDParameter as JWKID;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\JWTParameter;
+use JWX\JWT\Parameter\KeyIDParameter as JWTID;
 
 
 /**
@@ -17,6 +20,9 @@ use JWX\JWT\Parameter\JWTParameter;
 class JWETest extends PHPUnit_Framework_TestCase
 {
 	const PAYLOAD = "PAYLOAD";
+	
+	const KEY_ID = "id";
+	
 	const CEK = "123456789 123456789 123456789 12";
 	
 	private static $_keyAlgo;
@@ -34,7 +40,8 @@ class JWETest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testEncrypt() {
-		$jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo);
+		$jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, 
+			null, new Header(new JWTID(self::KEY_ID)));
 		$this->assertInstanceOf(JWE::class, $jwe);
 		return $jwe;
 	}
@@ -57,6 +64,18 @@ class JWETest extends PHPUnit_Framework_TestCase
 	public function testDecryptWithJWK(JWE $jwe) {
 		$jwk = SymmetricKeyJWK::fromKey(self::CEK);
 		$payload = $jwe->decryptWithJWK($jwk);
+		$this->assertEquals(self::PAYLOAD, $payload);
+	}
+	
+	/**
+	 * @depends testEncrypt
+	 *
+	 * @param JWE $jwe
+	 */
+	public function testDecryptWithJWKSet(JWE $jwe) {
+		$jwk = SymmetricKeyJWK::fromKey(self::CEK)->withParameters(
+			new JWKID(self::KEY_ID));
+		$payload = $jwe->decryptWithJWKSet(new JWKSet($jwk));
 		$this->assertEquals(self::PAYLOAD, $payload);
 	}
 	
