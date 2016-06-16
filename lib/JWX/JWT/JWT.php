@@ -240,6 +240,21 @@ class JWT
 	}
 	
 	/**
+	 * Check whether JWT is unsecured, that is, it's neither integrity protected
+	 * nor encrypted.
+	 *
+	 * @return bool
+	 */
+	public function isUnsecured() {
+		// encrypted JWT shall be considered secure
+		if ($this->isJWE()) {
+			return false;
+		}
+		// check whether JWS is unsecured
+		return $this->JWS()->isUnsecured();
+	}
+	
+	/**
 	 * Get JWT header.
 	 *
 	 * @return JOSE
@@ -272,17 +287,15 @@ class JWT
 	 * @return Claims
 	 */
 	public function claims(ValidationContext $ctx) {
-		$keys = $ctx->keys();
 		// check signature or decrypt depending on the JWT type.
 		if ($this->isJWS()) {
-			$payload = self::_validatedPayloadFromJWS($this->JWS(), $keys);
+			$payload = self::_validatedPayloadFromJWS($this->JWS(), $ctx);
 		} else {
-			$payload = self::_validatedPayloadFromJWE($this->JWE(), $keys);
+			$payload = self::_validatedPayloadFromJWE($this->JWE(), $ctx);
 		}
 		// if JWT contains a nested token
 		if ($this->isNested()) {
-			$jwt = new JWT($payload);
-			return $jwt->claims($ctx);
+			return $this->_claimsFromNestedPayload($payload, $ctx);
 		}
 		// decode claims and validate
 		$claims = Claims::fromJSON($payload);
@@ -291,14 +304,67 @@ class JWT
 	}
 	
 	/**
+	 * Get claims from a nested payload.
+	 *
+	 * @param string $payload JWT payload
+	 * @param ValidationContext $ctx Validation context
+	 * @return Claims
+	 */
+	private function _claimsFromNestedPayload($payload, ValidationContext $ctx) {
+		$jwt = new JWT($payload);
+		// if this token secured, allow nested tokens to be unsecured.
+		if (!$this->isUnsecured()) {
+			$ctx = $ctx->withUnsecuredAllowed(true);
+		}
+		return $jwt->claims($ctx);
+	}
+	
+	/**
 	 * Get payload from JWS.
 	 *
 	 * @param JWS $jws JWS
-	 * @param JWKSet $keys Set of keys usable for signature validation
+	 * @param ValidationContext $ctx Validation context
 	 * @throws ValidationException If signature validation fails
 	 * @return string
 	 */
-	private static function _validatedPayloadFromJWS(JWS $jws, JWKSet $keys) {
+	private static function _validatedPayloadFromJWS(JWS $jws, 
+			ValidationContext $ctx) {
+		if ($jws->isUnsecured()) {
+			return self::_validatedPayloadFromUnsecuredJWS($jws, $ctx);
+		}
+		return self::_validatedPayloadFromSignedJWS($jws, $ctx->keys());
+	
+	}
+	
+	/**
+	 * Get validated payload from an unsecured JWS.
+	 *
+	 * @param JWS $jws
+	 * @param ValidationContext $ctx
+	 * @throws ValidationException
+	 * @return string
+	 */
+	private static function _validatedPayloadFromUnsecuredJWS(JWS $jws, 
+			ValidationContext $ctx) {
+		if (!$ctx->isUnsecuredAllowed()) {
+			throw new ValidationException("Unsecured JWS not allowed.");
+		}
+		if (!$jws->validate(new NoneAlgorithm())) {
+			throw new ValidationException("Malformed unsecured token.");
+		}
+		return $jws->payload();
+	}
+	
+	/**
+	 * Get validated payload from a signed JWS.
+	 *
+	 * @param JWS $jws
+	 * @param JWKSet $keys
+	 * @throws ValidationException
+	 * @return string
+	 */
+	private static function _validatedPayloadFromSignedJWS(JWS $jws, 
+			JWKSet $keys) {
 		try {
 			if (1 == count($keys)) {
 				$valid = $jws->validateWithJWK($keys->first());
@@ -315,15 +381,17 @@ class JWT
 	}
 	
 	/**
-	 * Get payload from JWE.
+	 * Get validated payload from an encrypted JWE.
 	 *
 	 * @param JWE $jwe JWE
-	 * @param JWKSet $keys Set of keys usable for decryption
+	 * @param ValidationContext $ctx Validation context
 	 * @throws ValidationException If decryption fails
 	 * @return string
 	 */
-	private static function _validatedPayloadFromJWE(JWE $jwe, JWKSet $keys) {
+	private static function _validatedPayloadFromJWE(JWE $jwe, 
+			ValidationContext $ctx) {
 		try {
+			$keys = $ctx->keys();
 			if (1 == count($keys)) {
 				return $jwe->decryptWithJWK($keys->first());
 			}
