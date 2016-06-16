@@ -11,7 +11,7 @@ use JWX\JWS\SignatureAlgorithm;
  * Base class for algorithms employing asymmetric signature computation
  * using OpenSSL extension.
  */
-abstract class OpenSSLSignatureAlgorithm implements SignatureAlgorithm
+abstract class OpenSSLSignatureAlgorithm extends SignatureAlgorithm
 {
 	/**
 	 * Public key.
@@ -34,6 +34,13 @@ abstract class OpenSSLSignatureAlgorithm implements SignatureAlgorithm
 	 */
 	abstract protected function _mdMethod();
 	
+	/**
+	 *
+	 * @see \JWX\JWS\SignatureAlgorithm::computeSignature()
+	 * @throws \LogicException If private key was not provided
+	 * @throws \RuntimeException For generic errors
+	 * @return string
+	 */
 	public function computeSignature($data) {
 		/**
 		 * NOTE: OpenSSL uses PKCS #1 v1.5 padding by default, so no explicit
@@ -56,6 +63,12 @@ abstract class OpenSSLSignatureAlgorithm implements SignatureAlgorithm
 		return $signature;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWS\SignatureAlgorithm::validateSignature()
+	 * @throws \RuntimeException For generic errors
+	 * @return bool
+	 */
 	public function validateSignature($data, $signature) {
 		$key = openssl_pkey_get_public($this->_publicKey->toPEM()->string());
 		if (!$key) {

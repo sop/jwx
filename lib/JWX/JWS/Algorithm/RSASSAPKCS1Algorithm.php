@@ -6,6 +6,7 @@ use JWX\JWA\JWA;
 use JWX\JWK\JWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
@@ -23,7 +24,7 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
 	 *
 	 * @var array
 	 */
-	const MAP_NAME_TO_CLASS = array(
+	const MAP_ALGO_TO_CLASS = array(
 		/* @formatter:off */
 		JWA::ALGO_RS256 => RS256Algorithm::class,
 		JWA::ALGO_RS384 => RS384Algorithm::class,
@@ -64,38 +65,22 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
 	}
 	
 	/**
-	 * Initialize from a JWK.
-	 *
-	 * If algorithm is not specified, look from JWK.
 	 *
 	 * @param JWK $jwk
-	 * @param string|null $alg Optional algorithm name
+	 * @param Header $header
 	 * @throws \UnexpectedValueException
-	 * @return self
+	 * @return RSASSAPKCS1Algorithm
 	 */
-	public static function fromJWK(JWK $jwk, $alg = null) {
-		// if algorithm is not explicitly given, consult JWK
-		if (!isset($alg)) {
-			if (!$jwk->hasAlgorithmParameter()) {
-				throw new \UnexpectedValueException(
-					"Missing algorithm parameter.");
-			}
-			$alg = $jwk->algorithmParameter()->value();
+	public static function fromJWK(JWK $jwk, Header $header) {
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
-			throw new \UnexpectedValueException(
-				"Algorithm '$alg' not supported.");
-		}
-		$cls = self::MAP_NAME_TO_CLASS[$alg];
-		$params = RSAPrivateKeyJWK::MANAGED_PARAMS;
-		if ($jwk->has(...$params)) {
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
+		if ($jwk->has(...RSAPrivateKeyJWK::MANAGED_PARAMS)) {
 			return $cls::fromPrivateKey(RSAPrivateKeyJWK::fromJWK($jwk));
 		}
-		$params = RSAPublicKeyJWK::MANAGED_PARAMS;
-		if ($jwk->has(...$params)) {
-			return $cls::fromPublicKey(RSAPublicKeyJWK::fromJWK($jwk));
-		}
-		throw new \UnexpectedValueException("Not an RSA key.");
+		return $cls::fromPublicKey(RSAPublicKeyJWK::fromJWK($jwk));
 	}
 	
 	public function headerParameters() {

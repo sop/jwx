@@ -9,6 +9,7 @@ use JWX\JWK\EC\ECPrivateKeyJWK;
 use JWX\JWK\EC\ECPublicKeyJWK;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\CurveParameter;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
 
@@ -27,7 +28,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 	 *
 	 * @var array
 	 */
-	const MAP_NAME_TO_CLASS = array(
+	const MAP_ALGO_TO_CLASS = array(
 		/* @formatter:off */
 		JWA::ALGO_ES256 => ES256Algorithm::class,
 		JWA::ALGO_ES384 => ES384Algorithm::class,
@@ -89,39 +90,16 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 		return new static($jwk->publicKey(), $jwk);
 	}
 	
-	/**
-	 * Initialize from a JWK.
-	 *
-	 * If algorithm is not specified, look from JWK.
-	 *
-	 * @param JWK $jwk
-	 * @param string|null $alg Optional algorithm name
-	 * @throws \UnexpectedValueException
-	 * @return self
-	 */
-	public static function fromJWK(JWK $jwk, $alg = null) {
-		// if algorithm is not explicitly given, consult JWK
-		if (!isset($alg)) {
-			if (!$jwk->hasAlgorithmParameter()) {
-				throw new \UnexpectedValueException(
-					"Missing algorithm parameter.");
-			}
-			$alg = $jwk->algorithmParameter()->value();
+	public static function fromJWK(JWK $jwk, Header $header) {
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
+			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
-			throw new \UnexpectedValueException(
-				"Algorithm '$alg' not supported.");
-		}
-		$cls = self::MAP_NAME_TO_CLASS[$alg];
-		$params = ECPrivateKeyJWK::MANAGED_PARAMS;
-		if ($jwk->has(...$params)) {
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
+		if ($jwk->has(...ECPrivateKeyJWK::MANAGED_PARAMS)) {
 			return $cls::fromPrivateKey(ECPrivateKeyJWK::fromJWK($jwk));
 		}
-		$params = ECPublicKeyJWK::MANAGED_PARAMS;
-		if ($jwk->has(...$params)) {
-			return $cls::fromPublicKey(ECPublicKeyJWK::fromJWK($jwk));
-		}
-		throw new \UnexpectedValueException("Not an EC key.");
+		return $cls::fromPublicKey(ECPublicKeyJWK::fromJWK($jwk));
 	}
 	
 	/**

@@ -6,6 +6,7 @@ use JWX\JWA\JWA;
 use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
+use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 
 
@@ -14,7 +15,7 @@ use JWX\JWT\Parameter\AlgorithmParameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-3.2
  */
-abstract class HMACAlgorithm implements SignatureAlgorithm
+abstract class HMACAlgorithm extends SignatureAlgorithm
 {
 	/**
 	 * Shared secret key.
@@ -30,7 +31,7 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	 *
 	 * @var array
 	 */
-	const MAP_NAME_TO_CLASS = array(
+	const MAP_ALGO_TO_CLASS = array(
 		/* @formatter:off */
 		JWA::ALGO_HS256 => HS256Algorithm::class, 
 		JWA::ALGO_HS384 => HS384Algorithm::class, 
@@ -55,29 +56,19 @@ abstract class HMACAlgorithm implements SignatureAlgorithm
 	}
 	
 	/**
-	 * Initialize from a JWK.
-	 *
-	 * If algorithm is not specified, look from JWK.
 	 *
 	 * @param JWK $jwk
-	 * @param string|null $alg Optional algorithm name
+	 * @param Header $header
 	 * @throws \UnexpectedValueException
-	 * @return self
+	 * @return HMACAlgorithm
 	 */
-	public static function fromJWK(JWK $jwk, $alg = null) {
+	public static function fromJWK(JWK $jwk, Header $header) {
 		$jwk = SymmetricKeyJWK::fromJWK($jwk);
-		// if algorithm is not explicitly given, consult JWK
-		if (!isset($alg)) {
-			if (!$jwk->hasAlgorithmParameter()) {
-				throw new \UnexpectedValueException(
-					"Missing algorithm parameter.");
-			}
-			$alg = $jwk->algorithmParameter()->value();
-		}
-		if (!array_key_exists($alg, self::MAP_NAME_TO_CLASS)) {
+		$alg = JWA::deriveAlgorithmName($header, $jwk);
+		if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
 			throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
 		}
-		$cls = self::MAP_NAME_TO_CLASS[$alg];
+		$cls = self::MAP_ALGO_TO_CLASS[$alg];
 		return new $cls($jwk->key());
 	}
 	
