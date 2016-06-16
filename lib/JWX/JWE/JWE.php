@@ -193,7 +193,7 @@ class JWE
 	}
 	
 	/**
-	 * Decrypt content.
+	 * Decrypt the content using explicit algorithms.
 	 *
 	 * @param KeyManagementAlgorithm $key_algo
 	 * @param ContentEncryptionAlgorithm $enc_algo
@@ -202,15 +202,27 @@ class JWE
 	 */
 	public function decrypt(KeyManagementAlgorithm $key_algo, 
 			ContentEncryptionAlgorithm $enc_algo) {
+		// check that key management algorithm matches
+		if ($key_algo->algorithmParamValue() != $this->algorithmName()) {
+			throw new \UnexpectedValueException(
+				"Invalid key management algorithm.");
+		}
+		// check that encryption algorithm matches
+		if ($enc_algo->encryptionAlgorithmParamValue() !=
+			 $this->encryptionAlgorithmName()) {
+			throw new \UnexpectedValueException("Invalid encryption algorithm.");
+		}
+		// decrypt content encryption key
 		$cek = $key_algo->decrypt($this->_encryptedKey);
+		// decrypt payload
 		$aad = Base64::urlEncode($this->_protectedHeader->toJSON());
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
 			$aad, $this->_authenticationTag);
+		$header = $this->header();
 		// decompress
-		if ($this->_protectedHeader->hasCompressionAlgorithm()) {
-			$comp_algo_name = $this->_protectedHeader->compressionAlgorithm()->value();
-			$decompressor = CompressionFactory::algoByName($comp_algo_name);
-			$payload = $decompressor->decompress($payload);
+		if ($header->hasCompressionAlgorithm()) {
+			$payload = CompressionFactory::algoByHeader($header)->decompress(
+				$payload);
 		}
 		return $payload;
 	}
@@ -254,6 +266,28 @@ class JWE
 	 */
 	public function header() {
 		return new JOSE($this->_protectedHeader);
+	}
+	
+	/**
+	 * Get the name of the key management algorithm.
+	 *
+	 * @return string
+	 */
+	public function algorithmName() {
+		return $this->header()
+			->algorithm()
+			->value();
+	}
+	
+	/**
+	 * Get the name of the encryption algorithm.
+	 *
+	 * @return string
+	 */
+	public function encryptionAlgorithmName() {
+		return $this->header()
+			->encryptionAlgorithm()
+			->value();
 	}
 	
 	/**
