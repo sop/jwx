@@ -9,7 +9,10 @@ use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
+use JWX\JWT\Parameter\B64PayloadParameter;
+use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\KeyIDParameter as JWTID;
+use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -175,5 +178,28 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	public function testToString(JWS $jws) {
 		$data = strval($jws);
 		$this->assertInternalType("string", $data);
+	}
+	
+	public function testSignWithB64Param() {
+		$header = new Header(new B64PayloadParameter(true));
+		$jws = JWS::sign(self::PAYLOAD, self::$_signAlgo, $header);
+		$this->assertInstanceOf(JWS::class, $jws);
+		return $jws;
+	}
+	
+	public function testSignWithB64ParamAsCritical() {
+		$header = new Header(new B64PayloadParameter(true), 
+			new CriticalParameter(RegisteredJWTParameter::P_CRIT));
+		$jws = JWS::sign(self::PAYLOAD, self::$_signAlgo, $header);
+		$this->assertInstanceOf(JWS::class, $jws);
+	}
+	
+	/**
+	 * @depends testSignWithB64Param
+	 *
+	 * @param JWS $jws
+	 */
+	public function testToCompactWithB64Param(JWS $jws) {
+		$this->assertInternalType("string", $jws->toCompact());
 	}
 }

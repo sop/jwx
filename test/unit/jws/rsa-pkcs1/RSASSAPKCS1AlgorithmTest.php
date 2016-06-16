@@ -7,6 +7,7 @@ use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -112,6 +113,16 @@ class RSASSAPKCS1AlgorithmTest extends PHPUnit_Framework_TestCase
 		$prop->setAccessible(true);
 		$prop->setValue($algo, new RSASSAPKCS1AlgorithmTest_KeyMockup());
 		$algo->validateSignature("test", "");
+	}
+	
+	/**
+	 * @depends testFromPublicKeyJWK
+	 *
+	 * @param RSASSAPKCS1Algorithm $algo
+	 */
+	public function testHeaderParameters(RSASSAPKCS1Algorithm $algo) {
+		$params = $algo->headerParameters();
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 }
 

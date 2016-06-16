@@ -5,7 +5,6 @@ use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWT\Claim\IssuedAtClaim;
 use JWX\JWT\Claims;
 use JWX\JWT\JWT;
-use JWX\JWT\ValidationContext;
 
 
 /**
@@ -37,16 +36,5 @@ class JWTEncryptTest extends PHPUnit_Framework_TestCase
 			self::$_encAlgo);
 		$this->assertInstanceOf(JWT::class, $jwt);
 		return $jwt;
-	}
-	
-	/**
-	 * @depends testCreate
-	 *
-	 * @param JWT $jwt
-	 */
-	public function testDecrypt(JWT $jwt) {
-		$ctx = new ValidationContext();
-		$claims = $jwt->claimsFromJWE(self::$_keyAlgo, self::$_encAlgo, $ctx);
-		$this->assertEquals(self::$_claims, $claims);
 	}
 }

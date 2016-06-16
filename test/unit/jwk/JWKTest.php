@@ -87,6 +87,16 @@ class JWKTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param JWK $jwk
 	 */
+	public function testWithKeyID(JWK $jwk) {
+		$jwk = $jwk->withKeyID("test");
+		$this->assertEquals("test", $jwk->get("kid")->value());
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWK $jwk
+	 */
 	public function testCount(JWK $jwk) {
 		$this->assertCount(2, $jwk);
 	}

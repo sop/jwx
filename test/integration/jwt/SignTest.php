@@ -4,7 +4,6 @@ use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWT\Claim\IssuedAtClaim;
 use JWX\JWT\Claims;
 use JWX\JWT\JWT;
-use JWX\JWT\ValidationContext;
 
 
 /**
@@ -31,16 +30,5 @@ class JWTSigningTest extends PHPUnit_Framework_TestCase
 		$jwt = JWT::signedFromClaims(self::$_claims, self::$_signatureAlgo);
 		$this->assertInstanceOf(JWT::class, $jwt);
 		return $jwt;
-	}
-	
-	/**
-	 * @depends testCreate
-	 *
-	 * @param JWT $jwt
-	 */
-	public function testDecrypt(JWT $jwt) {
-		$ctx = new ValidationContext();
-		$claims = $jwt->claimsFromJWS(self::$_signatureAlgo, $ctx);
-		$this->assertEquals(self::$_claims, $claims);
 	}
 }

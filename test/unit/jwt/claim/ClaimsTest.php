@@ -6,6 +6,7 @@ use JWX\JWT\Claim\IssuerClaim;
 use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\SubjectClaim;
 use JWX\JWT\Claims;
+use JWX\JWT\ValidationContext;
 
 
 /**
@@ -139,5 +140,21 @@ class ClaimsTest extends PHPUnit_Framework_TestCase
 	public function testToString(Claims $claims) {
 		$str = strval($claims);
 		$this->assertJson($str);
+	}
+	
+	/**
+	 * @depends testCreate
+	 */
+	public function testIsValid(Claims $claims) {
+		$ctx = new ValidationContext(["iss" => "issuer"]);
+		$this->assertTrue($claims->isValid($ctx));
+	}
+	
+	/**
+	 * @depends testCreate
+	 */
+	public function testIsNotValid(Claims $claims) {
+		$ctx = new ValidationContext(["iss" => "fail"]);
+		$this->assertFalse($claims->isValid($ctx));
 	}
 }

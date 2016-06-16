@@ -53,11 +53,10 @@ class A128KWTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException UnexpectedValueException
+	 * @expectedException LengthException
 	 */
 	public function testInvalidKEKLength() {
-		$algo = new A128KWAlgorithm(self::KEY_128 . "x");
-		$algo->encrypt(self::CEK_128);
+		new A128KWAlgorithm(self::KEY_128 . "x");
 	}
 	
 	/**

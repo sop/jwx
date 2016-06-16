@@ -64,6 +64,11 @@ class CriticalParameterTest extends PHPUnit_Framework_TestCase
 		$this->assertCount(3, $param->names());
 	}
 	
+	public function testFromJSON() {
+		$param = CriticalParameter::fromJSONValue(["test"]);
+		$this->assertInstanceOf(CriticalParameter::class, $param);
+	}
+	
 	/**
 	 * @expectedException UnexpectedValueException
 	 */

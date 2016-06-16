@@ -18,7 +18,7 @@ use JWX\JWT\Parameter\JWTParameter;
  */
 class AESKWTest extends PHPUnit_Framework_TestCase
 {
-	const KEY_128 = "123456789 123456789 123456789 12";
+	const KEY_128 = "123456789 123456";
 	
 	public function testCreate() {
 		$algo = new A128KWAlgorithm(self::KEY_128);

@@ -59,6 +59,45 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @param JWKSet $jwkset
 	 */
+	public function testWithKeys(JWKSet $jwkset) {
+		$set = $jwkset->withKeys(JWK::fromArray(["kid" => "key3"]));
+		$this->assertInstanceOf(JWKSet::class, $set);
+		return $set;
+	}
+	
+	/**
+	 * @depends testWithKeys
+	 *
+	 * @param JWKSet $jwkset
+	 */
+	public function testHasAdded(JWKSet $jwkset) {
+		$jwk = $jwkset->keyByID("key3");
+		$this->assertInstanceOf(JWK::class, $jwk);
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWKSet $jwkset
+	 */
+	public function testFirst(JWKSet $jwkset) {
+		$jwk = $jwkset->first();
+		$this->assertInstanceOf(JWK::class, $jwk);
+	}
+	
+	/**
+	 * @expectedException LogicException
+	 */
+	public function testFirstFail() {
+		$set = new JWKSet();
+		$set->first();
+	}
+	
+	/**
+	 * @depends testCreate
+	 *
+	 * @param JWKSet $jwkset
+	 */
 	public function testToJSON(JWKSet $jwkset) {
 		$json = $jwkset->toJSON();
 		$this->assertJson($json);

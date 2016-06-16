@@ -2,7 +2,9 @@
 
 use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use JWX\JWE\EncryptionAlgorithm\A128GCMAlgorithm;
 use JWX\JWE\JWE;
+use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\JWKSet;
@@ -54,6 +56,27 @@ class JWETest extends PHPUnit_Framework_TestCase
 	public function testDecrypt(JWE $jwe) {
 		$payload = $jwe->decrypt(self::$_keyAlgo, self::$_encAlgo);
 		$this->assertEquals(self::PAYLOAD, $payload);
+	}
+	
+	/**
+	 * @depends testEncrypt
+	 * @expectedException UnexpectedValueException
+	 *
+	 * @param JWE $jwe
+	 */
+	public function testDecryptInvalidAlgo(JWE $jwe) {
+		$jwe->decrypt(new A128KWAlgorithm(str_repeat("\0", 16)), 
+			self::$_encAlgo);
+	}
+	
+	/**
+	 * @depends testEncrypt
+	 * @expectedException UnexpectedValueException
+	 *
+	 * @param JWE $jwe
+	 */
+	public function testDecryptInvalidEncAlgo(JWE $jwe) {
+		$jwe->decrypt(self::$_keyAlgo, new A128GCMAlgorithm());
 	}
 	
 	/**

@@ -6,6 +6,7 @@ use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -19,5 +20,27 @@ class KeyManagementAlgorithmTest extends PHPUnit_Framework_TestCase
 		$header = new Header(new AlgorithmParameter(JWA::ALGO_DIR));
 		$algo = KeyManagementAlgorithm::fromJWK($jwk, $header);
 		$this->assertInstanceOf(KeyManagementAlgorithm::class, $algo);
+		return $algo;
+	}
+	
+	/**
+	 * @depends testFromJWK
+	 *
+	 * @param KeyManagementAlgorithm $algo
+	 */
+	public function testWithKeyID(KeyManagementAlgorithm $algo) {
+		$algo = $algo->withKeyID("test");
+		$this->assertInstanceOf(KeyManagementAlgorithm::class, $algo);
+		return $algo;
+	}
+	
+	/**
+	 * @depends testWithKeyID
+	 *
+	 * @param KeyManagementAlgorithm $algo
+	 */
+	public function testHeaderParameters(KeyManagementAlgorithm $algo) {
+		$params = $algo->headerParameters();
+		$this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
 	}
 }

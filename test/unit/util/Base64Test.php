@@ -82,4 +82,11 @@ class Base64Test extends PHPUnit_Framework_TestCase
 	public function testDecodeFail() {
 		Base64::decode("#");
 	}
+	
+	/**
+	 * @expectedException RuntimeException
+	 */
+	public function testEncodeFail() {
+		Base64::encode(new stdClass());
+	}
 }
