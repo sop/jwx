@@ -4,7 +4,6 @@ namespace JWX\JWE;
 
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
 use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
-use JWX\JWE\KeyAlgorithm\KeyAlgorithmFactory;
 use JWX\JWK\JWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
@@ -225,8 +224,7 @@ class JWE
 	 */
 	public function decryptWithJWK(JWK $jwk) {
 		$header = $this->header();
-		$key_algo_factory = new KeyAlgorithmFactory($header);
-		$key_algo = $key_algo_factory->algoByKey($jwk);
+		$key_algo = KeyManagementAlgorithm::fromJWK($jwk, $header);
 		$enc_algo = EncryptionAlgorithmFactory::algoByHeader($header);
 		return $this->decrypt($key_algo, $enc_algo);
 	}
