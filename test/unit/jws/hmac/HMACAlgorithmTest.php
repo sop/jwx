@@ -7,6 +7,7 @@ use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\KeyValueParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\Algorithm\HMACAlgorithm;
+use JWX\JWT\Header\Header;
 
 
 /**
@@ -19,13 +20,7 @@ class HMACAlgorithmTest extends PHPUnit_Framework_TestCase
 		$jwk = new JWK(new AlgorithmParameter(JWA::ALGO_HS256), 
 			new KeyTypeParameter(KeyTypeParameter::TYPE_OCT), 
 			new KeyValueParameter("key"));
-		$algo = HMACAlgorithm::fromJWK($jwk);
-		$this->assertInstanceOf(HMACAlgorithm::class, $algo);
-	}
-	
-	public function testFromJWKExplicitAlgo() {
-		$jwk = SymmetricKeyJWK::fromKey("key");
-		$algo = HMACAlgorithm::fromJWK($jwk, JWA::ALGO_HS256);
+		$algo = HMACAlgorithm::fromJWK($jwk, new Header());
 		$this->assertInstanceOf(HMACAlgorithm::class, $algo);
 	}
 	
@@ -33,16 +28,9 @@ class HMACAlgorithmTest extends PHPUnit_Framework_TestCase
 	 * @expectedException UnexpectedValueException
 	 */
 	public function testFromJWKUnsupportedAlgo() {
-		$jwk = SymmetricKeyJWK::fromKey("key");
-		HMACAlgorithm::fromJWK($jwk, "nope");
-	}
-	
-	/**
-	 * @expectedException UnexpectedValueException
-	 */
-	public function testFromJWKMissingAlgo() {
-		$jwk = SymmetricKeyJWK::fromKey("key");
-		HMACAlgorithm::fromJWK($jwk);
+		$jwk = SymmetricKeyJWK::fromKey("key")->withParameters(
+			new AlgorithmParameter("nope"));
+		HMACAlgorithm::fromJWK($jwk, new Header());
 	}
 	
 	/**

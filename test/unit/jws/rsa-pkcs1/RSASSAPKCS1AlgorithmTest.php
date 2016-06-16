@@ -3,9 +3,10 @@
 use CryptoUtil\PEM\PEM;
 use JWX\JWA\JWA;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\AlgorithmParameter;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
+use JWX\JWT\Header\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -26,38 +27,26 @@ class RSASSAPKCS1AlgorithmTest extends PHPUnit_Framework_TestCase
 	}
 	
 	public function testFromPrivateKeyJWK() {
-		$jwk = self::$_privKey->withParameters(
-			new AlgorithmParameter(JWA::ALGO_RS256));
-		$algo = RSASSAPKCS1Algorithm::fromJWK($jwk);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_RS256));
+		$algo = RSASSAPKCS1Algorithm::fromJWK(self::$_privKey, $header);
 		$this->assertInstanceOf(RSASSAPKCS1Algorithm::class, $algo);
 		return $algo;
 	}
 	
 	public function testFromPublicKeyJWK() {
-		$jwk = self::$_privKey->publicKey()->withParameters(
-			new AlgorithmParameter(JWA::ALGO_RS256));
-		$algo = RSASSAPKCS1Algorithm::fromJWK($jwk);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_RS256));
+		$algo = RSASSAPKCS1Algorithm::fromJWK(self::$_privKey->publicKey(), 
+			$header);
 		$this->assertInstanceOf(RSASSAPKCS1Algorithm::class, $algo);
 		return $algo;
-	}
-	
-	public function testFromJWKExplicitAlgo() {
-		$algo = RSASSAPKCS1Algorithm::fromJWK(self::$_privKey, JWA::ALGO_RS256);
-		$this->assertInstanceOf(RSASSAPKCS1Algorithm::class, $algo);
-	}
-	
-	/**
-	 * @expectedException UnexpectedValueException
-	 */
-	public function testFromJWKMissingAlgo() {
-		RSASSAPKCS1Algorithm::fromJWK(self::$_privKey);
 	}
 	
 	/**
 	 * @expectedException UnexpectedValueException
 	 */
 	public function testFromJWKInvalidAlgo() {
-		RSASSAPKCS1Algorithm::fromJWK(self::$_privKey, "nope");
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_ES256));
+		RSASSAPKCS1Algorithm::fromJWK(self::$_privKey, $header);
 	}
 	
 	/**
@@ -65,7 +54,8 @@ class RSASSAPKCS1AlgorithmTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testFromJWKInvalidKey() {
 		$jwk = new JWK();
-		RSASSAPKCS1Algorithm::fromJWK($jwk, JWA::ALGO_RS256);
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_RS256));
+		RSASSAPKCS1Algorithm::fromJWK($jwk, $header);
 	}
 	
 	/**

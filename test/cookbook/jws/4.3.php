@@ -46,7 +46,7 @@ class CookbookECDSASignatureTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(ECPrivateKeyJWK $jwk, Header $header) {
 		$payload = self::$_testData["input"]["payload"];
-		$algo = ECDSAAlgorithm::fromJWK($jwk, self::$_testData["input"]["alg"]);
+		$algo = ECDSAAlgorithm::fromJWK($jwk, $header);
 		$jws = JWS::sign($payload, $algo, $header);
 		$expected_sig = Base64::urlDecode(self::$_testData["signing"]["sig"]);
 		// signature contains random data, so bytewise equality cannot be asserted
@@ -62,7 +62,6 @@ class CookbookECDSASignatureTest extends PHPUnit_Framework_TestCase
 	 * @param ECPrivateKeyJWK $jwk
 	 */
 	public function testValidate(JWS $jws, ECPrivateKeyJWK $jwk) {
-		$algo = ECDSAAlgorithm::fromJWK($jwk, self::$_testData["input"]["alg"]);
-		$this->assertTrue($jws->validate($algo));
+		$this->assertTrue($jws->validateWithJWK($jwk));
 	}
 }

@@ -1,8 +1,11 @@
 <?php
 
+use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWK\JWK;
+use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
+use JWX\JWT\Parameter\AlgorithmParameter;
 
 
 /**
@@ -11,10 +14,10 @@ use JWX\JWT\Header\Header;
  */
 class KeyManagementAlgorithmTest extends PHPUnit_Framework_TestCase
 {
-	/**
-	 * @expectedException BadMethodCallException
-	 */
-	public function testFromJWKFail() {
-		KeyManagementAlgorithm::fromJWK(new JWK(), new Header());
+	public function testFromJWK() {
+		$jwk = SymmetricKeyJWK::fromKey("test");
+		$header = new Header(new AlgorithmParameter(JWA::ALGO_DIR));
+		$algo = KeyManagementAlgorithm::fromJWK($jwk, $header);
+		$this->assertInstanceOf(KeyManagementAlgorithm::class, $algo);
 	}
 }

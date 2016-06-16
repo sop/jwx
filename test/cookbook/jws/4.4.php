@@ -45,7 +45,7 @@ class CookbookHMACSHA2IntegrityProtectionTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testSign(SymmetricKeyJWK $jwk, Header $header) {
 		$payload = self::$_testData["input"]["payload"];
-		$algo = HMACAlgorithm::fromJWK($jwk);
+		$algo = HMACAlgorithm::fromJWK($jwk, $header);
 		$jws = JWS::sign($payload, $algo, $header);
 		$this->assertEquals(self::$_testData["signing"]["sig"], 
 			Base64::urlEncode($jws->signature()));
