@@ -4,7 +4,9 @@ namespace JWX\JWE;
 
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
 use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
+use JWX\JWE\KeyAlgorithm\KeyAlgorithmFactory;
 use JWX\JWK\JWK;
+use JWX\JWK\JWKSet;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\Util\Base64;
@@ -225,6 +227,22 @@ class JWE
 	public function decryptWithJWK(JWK $jwk) {
 		$header = $this->header();
 		$key_algo = KeyManagementAlgorithm::fromJWK($jwk, $header);
+		$enc_algo = EncryptionAlgorithmFactory::algoByHeader($header);
+		return $this->decrypt($key_algo, $enc_algo);
+	}
+	
+	/**
+	 * Decrypt content using a key from the given JWK set.
+	 *
+	 * Correct key shall be sought by the key ID indicated by the header.
+	 *
+	 * @param JWKSet $set Set of JSON Web Keys
+	 * @return string Plaintext payload
+	 */
+	public function decryptWithJWKSet(JWKSet $set) {
+		$header = $this->header();
+		$factory = new KeyAlgorithmFactory($header);
+		$key_algo = $factory->algoByKeys($set);
 		$enc_algo = EncryptionAlgorithmFactory::algoByHeader($header);
 		return $this->decrypt($key_algo, $enc_algo);
 	}
