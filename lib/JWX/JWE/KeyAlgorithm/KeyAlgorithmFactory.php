@@ -85,7 +85,7 @@ class KeyAlgorithmFactory
 	}
 	
 	/**
-	 * Get algorithm implementation class name by algorithm name.
+	 * Get the algorithm implementation class name by an algorithm name.
 	 *
 	 * @param string $alg Algorithm name
 	 * @throws \UnexpectedValueException
