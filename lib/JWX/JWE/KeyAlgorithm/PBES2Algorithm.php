@@ -10,6 +10,7 @@ use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
 
@@ -188,9 +189,15 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 		return $this->_kwAlgo()->unwrap($ciphertext, $this->_derivedKey());
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
+	 * @return JWTParameter[]
+	 */
 	public function headerParameters() {
-		return array(AlgorithmParameter::fromAlgorithm($this), 
-			PBES2SaltInputParameter::fromString($this->_saltInput), 
-			new PBES2CountParameter($this->_count));
+		return array_merge(parent::headerParameters(), 
+			array(AlgorithmParameter::fromAlgorithm($this), 
+				PBES2SaltInputParameter::fromString($this->_saltInput), 
+				new PBES2CountParameter($this->_count)));
 	}
 }

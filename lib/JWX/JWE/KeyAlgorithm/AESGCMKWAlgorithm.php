@@ -13,6 +13,7 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\AuthenticationTagParameter;
 use JWX\JWT\Parameter\InitializationVectorParameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -134,8 +135,14 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 		return $cek;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
+	 * @return JWTParameter[]
+	 */
 	public function headerParameters() {
-		return array(AlgorithmParameter::fromAlgorithm($this), 
-			InitializationVectorParameter::fromString($this->_iv));
+		return array_merge(parent::headerParameters(), 
+			array(AlgorithmParameter::fromAlgorithm($this), 
+				InitializationVectorParameter::fromString($this->_iv)));
 	}
 }

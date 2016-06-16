@@ -7,6 +7,8 @@ use JWX\JWK\JWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use JWX\JWT\Parameter\JWTParameter;
+use JWX\JWT\Parameter\KeyIDParameter;
 
 
 /**
@@ -17,6 +19,16 @@ abstract class KeyManagementAlgorithm implements
 	AlgorithmParameterValue, 
 	HeaderParameters
 {
+	/**
+	 * ID of the key used by the algorithm.
+	 *
+	 * If set, KeyID parameter shall be automatically inserted into JWE's
+	 * header.
+	 *
+	 * @var string|null $_keyID
+	 */
+	protected $_keyID;
+	
 	/**
 	 * Encrypt a key.
 	 *
@@ -91,5 +103,30 @@ abstract class KeyManagementAlgorithm implements
 	public static function fromJWK(JWK $jwk, Header $header) {
 		$factory = new KeyAlgorithmFactory($header);
 		return $factory->algoByKey($jwk);
+	}
+	
+	/**
+	 * Get self with key ID.
+	 *
+	 * @param string|null $id Key ID or null to remove
+	 * @return self
+	 */
+	public function withKeyID($id) {
+		$obj = clone $this;
+		$obj->_keyID = $id;
+		return $obj;
+	}
+	
+	/**
+	 *
+	 * @see \JWX\JWT\Header\HeaderParameters::headerParameters()
+	 * @return JWTParameter[]
+	 */
+	public function headerParameters() {
+		$params = array();
+		if (isset($this->_keyID)) {
+			$params[] = new KeyIDParameter($this->_keyID);
+		}
+		return $params;
 	}
 }

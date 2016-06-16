@@ -10,6 +10,7 @@ use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -194,7 +195,13 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 		return $msg;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
+	 * @return JWTParameter[]
+	 */
 	public function headerParameters() {
-		return array(AlgorithmParameter::fromAlgorithm($this));
+		return array_merge(parent::headerParameters(), 
+			array(AlgorithmParameter::fromAlgorithm($this)));
 	}
 }
