@@ -44,6 +44,13 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
+	 * Reset internal cache variables on clone.
+	 */
+	public function __clone() {
+		$this->_mappings = array();
+	}
+	
+	/**
 	 * Initialize from an array representing a JSON object.
 	 *
 	 * @param array $members
@@ -81,12 +88,37 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
+	 * Get self with keys added.
+	 *
+	 * @param JWK ...$keys JWK objects
+	 * @return self
+	 */
+	public function withKeys(JWK ...$keys) {
+		$obj = clone $this;
+		$obj->_jwks = array_merge($obj->_jwks, $keys);
+		return $obj;
+	}
+	
+	/**
 	 * Get all JWK's in a set.
 	 *
 	 * @return JWK[]
 	 */
 	public function keys() {
 		return $this->_jwks;
+	}
+	
+	/**
+	 * Get the first JWK in the set.
+	 *
+	 * @throws \LogicException
+	 * @return JWK
+	 */
+	public function first() {
+		if (!count($this->_jwks)) {
+			throw new \LogicException("No keys.");
+		}
+		return $this->_jwks[0];
 	}
 	
 	/**
