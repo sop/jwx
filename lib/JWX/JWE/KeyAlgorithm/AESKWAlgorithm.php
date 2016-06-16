@@ -54,6 +54,13 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
 	);
 	
 	/**
+	 * Get the size of the key encryption key in bytes.
+	 *
+	 * @return int
+	 */
+	abstract protected function _kekSize();
+	
+	/**
 	 * Get key wrapping algorithm instance.
 	 *
 	 * @return AESKeyWrapAlgorithm
@@ -66,6 +73,10 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
 	 * @param string $kek Key encryption key
 	 */
 	public function __construct($kek) {
+		if (strlen($kek) != $this->_kekSize()) {
+			throw new \LengthException(
+				"Key encryption key must be " . $this->_kekSize() . " bytes.");
+		}
 		$this->_kek = $kek;
 	}
 	

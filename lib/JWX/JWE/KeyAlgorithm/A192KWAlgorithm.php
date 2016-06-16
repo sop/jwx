@@ -13,6 +13,10 @@ use JWX\JWA\JWA;
  */
 class A192KWAlgorithm extends AESKWAlgorithm
 {
+	protected function _kekSize() {
+		return 24;
+	}
+	
 	protected function _AESKWAlgo() {
 		return new AESKW192();
 	}
