@@ -7,6 +7,7 @@ use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\KeyIDParameter;
 
 
