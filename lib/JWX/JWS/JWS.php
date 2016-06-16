@@ -176,7 +176,7 @@ class JWS
 	}
 	
 	/**
-	 * Validate signature.
+	 * Validate the signature using explicit algorithm.
 	 *
 	 * @param SignatureAlgorithm $algo
 	 * @throws \UnexpectedValueException If using different signature algorithm
