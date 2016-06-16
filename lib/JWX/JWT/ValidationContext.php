@@ -42,17 +42,27 @@ class ValidationContext
 	protected $_keys;
 	
 	/**
+	 * Whether to allow unsecured JWT's, that is, claims without integrity
+	 * protection nor encryption.
+	 *
+	 * @var bool $_allowUnsecured
+	 */
+	protected $_allowUnsecured;
+	
+	/**
 	 * Constructor
 	 *
-	 * @param array $constraints Array of constraints keyed by claim name
+	 * @param array $constraints Optional array of constraints keyed by claim
+	 *        names
 	 * @param JWKSet $keys Optional set of JSON Web Keys used for signature
 	 *        validation and/or decryption.
 	 */
-	public function __construct(array $constraints = [], JWKSet $keys = null) {
+	public function __construct(array $constraints = null, JWKSet $keys = null) {
 		$this->_refTime = time();
 		$this->_leeway = 60;
-		$this->_constraints = $constraints;
+		$this->_constraints = $constraints ? $constraints : [];
 		$this->_keys = $keys ? $keys : new JWKSet();
+		$this->_allowUnsecured = false;
 	}
 	
 	/**
@@ -205,6 +215,27 @@ class ValidationContext
 	 */
 	public function keys() {
 		return $this->_keys;
+	}
+	
+	/**
+	 * Get self with 'allow unsecured' flag set.
+	 *
+	 * @param bool $allow Whether to allow unsecured JWT's
+	 * @return self
+	 */
+	public function withUnsecuredAllowed($allow) {
+		$obj = clone $this;
+		$obj->_allowUnsecured = (bool) $allow;
+		return $obj;
+	}
+	
+	/**
+	 * Check whether unsecured JWT's are allowed.
+	 *
+	 * @return bool
+	 */
+	public function isUnsecuredAllowed() {
+		return $this->_allowUnsecured;
 	}
 	
 	/**
