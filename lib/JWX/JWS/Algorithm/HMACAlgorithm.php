@@ -8,6 +8,7 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -86,7 +87,13 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
 		return $this->computeSignature($data) === $signature;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
+	 * @return JWTParameter[]
+	 */
 	public function headerParameters() {
-		return array(AlgorithmParameter::fromAlgorithm($this));
+		return array_merge(parent::headerParameters(), 
+			array(AlgorithmParameter::fromAlgorithm($this)));
 	}
 }

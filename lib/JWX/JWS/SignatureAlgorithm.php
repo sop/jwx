@@ -7,6 +7,7 @@ use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\HeaderParameters;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use JWX\JWT\Parameter\KeyIDParameter;
 
 
 /**
@@ -16,6 +17,16 @@ abstract class SignatureAlgorithm implements
 	AlgorithmParameterValue, 
 	HeaderParameters
 {
+	/**
+	 * ID of the key used by the algorithm.
+	 *
+	 * If set, KeyID parameter shall be automatically inserted into JWS's
+	 * header.
+	 *
+	 * @var string|null $_keyID
+	 */
+	protected $_keyID;
+	
 	/**
 	 * Compute signature.
 	 *
@@ -43,5 +54,30 @@ abstract class SignatureAlgorithm implements
 	public static function fromJWK(JWK $jwk, Header $header) {
 		$factory = new SignatureAlgorithmFactory($header);
 		return $factory->algoByKey($jwk);
+	}
+	
+	/**
+	 * Get self with key ID.
+	 *
+	 * @param string|null $id Key ID or null to remove
+	 * @return self
+	 */
+	public function withKeyID($id) {
+		$obj = clone $this;
+		$obj->_keyID = $id;
+		return $obj;
+	}
+	
+	/**
+	 *
+	 * @see \JWX\JWT\Header\HeaderParameters::headerParameters()
+	 * @return JWTParameter[]
+	 */
+	public function headerParameters() {
+		$params = array();
+		if (isset($this->_keyID)) {
+			$params[] = new KeyIDParameter($this->_keyID);
+		}
+		return $params;
 	}
 }

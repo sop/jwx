@@ -137,10 +137,11 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 	
 	/**
 	 *
-	 * @see \JWX\JWT\Header\HeaderParameters::headerParameters()
+	 * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
 	 * @return JWTParameter[]
 	 */
 	public function headerParameters() {
-		return array(AlgorithmParameter::fromAlgorithm($this));
+		return array_merge(parent::headerParameters(), 
+			array(AlgorithmParameter::fromAlgorithm($this)));
 	}
 }
