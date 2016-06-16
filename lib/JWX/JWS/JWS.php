@@ -3,6 +3,8 @@
 namespace JWX\JWS;
 
 use JWX\JWK\JWK;
+use JWX\JWK\JWKSet;
+use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\CriticalParameter;
@@ -191,7 +193,7 @@ class JWS
 	}
 	
 	/**
-	 * Validate signature using given JWK.
+	 * Validate the signature using the given JWK.
 	 *
 	 * Signature algorithm is determined from the header.
 	 *
@@ -200,6 +202,20 @@ class JWS
 	 */
 	public function validateWithJWK(JWK $jwk) {
 		$algo = SignatureAlgorithm::fromJWK($jwk, $this->header());
+		return $this->validate($algo);
+	}
+	
+	/**
+	 * Validate the signature using a key from the given JWK set.
+	 *
+	 * Correct key shall be sought by the key ID indicated by the header.
+	 *
+	 * @param JWKSet $set Set of JSON Web Keys
+	 * @return bool True if signature is valid
+	 */
+	public function validateWithJWKSet(JWKSet $set) {
+		$factory = new SignatureAlgorithmFactory($this->header());
+		$algo = $factory->algoByKeys($set);
 		return $this->validate($algo);
 	}
 	
