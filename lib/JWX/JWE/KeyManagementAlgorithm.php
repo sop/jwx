@@ -2,6 +2,7 @@
 
 namespace JWX\JWE;
 
+use JWX\JWE\KeyAlgorithm\KeyAlgorithmFactory;
 use JWX\JWK\JWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\HeaderParameters;
@@ -88,7 +89,7 @@ abstract class KeyManagementAlgorithm implements
 	 * @return KeyManagementAlgorithm
 	 */
 	public static function fromJWK(JWK $jwk, Header $header) {
-		throw new \BadMethodCallException(
-			__FUNCTION__ . " must be implemented in derived class.");
+		$factory = new KeyAlgorithmFactory($header);
+		return $factory->algoByKey($jwk);
 	}
 }
