@@ -2,6 +2,7 @@
 
 namespace JWX\JWS;
 
+use JWX\JWA\JWA;
 use JWX\JWK\JWK;
 use JWX\JWK\JWKSet;
 use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
@@ -142,6 +143,15 @@ class JWS
 		return $this->header()
 			->algorithm()
 			->value();
+	}
+	
+	/**
+	 * Check whether JWS is unsecured, that is, contains no signature.
+	 *
+	 * @return bool
+	 */
+	public function isUnsecured() {
+		return $this->algorithmName() == JWA::ALGO_NONE;
 	}
 	
 	/**
