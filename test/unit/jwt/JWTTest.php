@@ -122,7 +122,7 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 * @param JWT $jwt
 	 */
 	public function testClaimsFromJWS(JWT $jwt) {
-		$ctx = ValidationContext::fromKey(
+		$ctx = ValidationContext::fromJWK(
 			SymmetricKeyJWK::fromKey(self::KEY_128));
 		$claims = $jwt->claims($ctx);
 		$this->assertEquals(self::$_claims, $claims);
@@ -152,7 +152,7 @@ class JWTTest extends PHPUnit_Framework_TestCase
 		$parts = explode(".", $jwt->token());
 		$parts[2] = "";
 		$jwt = new JWT(implode(".", $parts));
-		$ctx = ValidationContext::fromKey(
+		$ctx = ValidationContext::fromJWK(
 			SymmetricKeyJWK::fromKey(self::KEY_128));
 		$jwt->claims($ctx);
 	}
@@ -221,7 +221,7 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 * @param JWT $jwt
 	 */
 	public function testClaimsFromEncrypted(JWT $jwt) {
-		$ctx = ValidationContext::fromKey(
+		$ctx = ValidationContext::fromJWK(
 			SymmetricKeyJWK::fromKey(self::KEY_128));
 		$claims = $jwt->claims($ctx);
 		$this->assertEquals(self::$_claims, $claims);

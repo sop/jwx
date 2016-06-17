@@ -13,7 +13,7 @@ class ClaimTest extends PHPUnit_Framework_TestCase
 {
 	public function testCustomClaimWithoutValidatorValidate() {
 		$claim = new Claim("test", "value");
-		$this->assertTrue($claim->validate("nope"));
+		$this->assertFalse($claim->validate("nope"));
 	}
 	
 	public function testCustomClaimValidate() {
@@ -29,8 +29,22 @@ class ClaimTest extends PHPUnit_Framework_TestCase
 	
 	public function testValidateWithContext() {
 		$claim = new Claim("test", "value");
-		$ctx = new ValidationContext(["test" => "value"]);
+		$ctx = new ValidationContext();
+		$ctx = $ctx->withConstraint("test", "value", new EqualsValidator());
 		$this->assertTrue($claim->validateWithContext($ctx));
+	}
+	
+	public function testValidateWithContextFails() {
+		$claim = new Claim("test", "value");
+		$ctx = new ValidationContext();
+		$ctx = $ctx->withConstraint("test", "fail", new EqualsValidator());
+		$this->assertFalse($claim->validateWithContext($ctx));
+	}
+	
+	public function testValidateWithContextNoValidator() {
+		$claim = new Claim("test", "value");
+		$ctx = new ValidationContext(["test" => "value"]);
+		$this->assertFalse($claim->validateWithContext($ctx));
 	}
 	
 	public function testValidateWithContextNoConstraint() {

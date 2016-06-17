@@ -126,4 +126,14 @@ class ValidationContextTest extends PHPUnit_Framework_TestCase
 	public function testConstaintNotSet(ValidationContext $ctx) {
 		$ctx->constraint("nope");
 	}
+	
+	/**
+	 * @depends testCreate
+	 * @expectedException LogicException
+	 *
+	 * @param ValidationContext $ctx
+	 */
+	public function testValidatorNotSet(ValidationContext $ctx) {
+		$ctx->validator("nope");
+	}
 }
