@@ -4,9 +4,10 @@ namespace JWX\JWT\Claim\Validator;
 
 
 /**
- * Validator to check whether value contains given constraint.
- * If value is an array, validator checks whether the array has constraint as a
- * value. Otherwise variable equality is tested.
+ * Validator to check whether the claim value contains a given constraint.
+ *
+ * If the claim value is an array, validator checks whether the array contains
+ * a constraint. Otherwise variable equality is tested.
  */
 class ContainsValidator extends Validator
 {

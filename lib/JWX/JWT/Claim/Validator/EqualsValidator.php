@@ -4,7 +4,7 @@ namespace JWX\JWT\Claim\Validator;
 
 
 /**
- * Validator to check whether value is equal to constraint.
+ * Validator to check whether the claim value is equal to the constraint.
  */
 class EqualsValidator extends Validator
 {
