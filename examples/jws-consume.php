@@ -16,7 +16,7 @@ $jwt = new JWT($argv[1]);
 // key to use for signature validation
 $jwk = SymmetricKeyJWK::fromKey("secret");
 // create validation context
-$ctx = ValidationContext::fromKey($jwk)->withIssuer("John Doe")
+$ctx = ValidationContext::fromJWK($jwk)->withIssuer("John Doe")
 	->withSubject("Jane Doe")
 	->withAudience("acme-client");
 // get claims set from the JWT. signature shall be verified and claims

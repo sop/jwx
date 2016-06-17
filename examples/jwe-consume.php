@@ -19,7 +19,7 @@ $jwt = new JWT($argv[1]);
 $jwk = RSAPrivateKeyJWK::fromPEM(
 	PEM::fromFile(dirname(__DIR__) . "/test/assets/rsa/private_key.pem"));
 // create validation context containing only key for decryption
-$ctx = ValidationContext::fromKey($jwk);
+$ctx = ValidationContext::fromJWK($jwk);
 // decrypt claims from the encrypted JWT
 $claims = $jwt->claims($ctx);
 // print all claims
