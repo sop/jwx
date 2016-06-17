@@ -3,6 +3,7 @@
 namespace JWX\JWT;
 
 use JWX\JWT\Claim\Claim;
+use JWX\JWT\Claim\TypedClaims;
 
 
 /**
@@ -12,6 +13,8 @@ use JWX\JWT\Claim\Claim;
  */
 class Claims implements \Countable, \IteratorAggregate
 {
+	use TypedClaims;
+	
 	/**
 	 * Claims.
 	 *
