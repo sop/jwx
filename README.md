@@ -56,9 +56,41 @@ signed or encrypted, producing a JWS or a JWE respectively.
 JWS and JWE may also be used to carry arbitrary payload, not just JSON claims.
 
 ## Code examples
-Examples are located in
-[`/examples`](https://github.com/sop/jwx/tree/master/examples)
-directory.
+
+### Simple JWT
+Parse JWT from [https://jwt.io/](https://jwt.io/#debugger-io) example.
+```php
+$jwt = new JWT($token);
+// create context for the claims validation
+// "secret" key is used to verify the signature
+$ctx = ValidationContext::fromJWK(
+    SymmetricKeyJWK::fromKey("secret"));
+// validate claims
+$claims = $jwt->claims($ctx);
+// print value of the subject claim
+echo $claims->subject()->value() . "\n";
+```
+
+### Additional Validation
+Parse the same token as above but additionally validate subject and admin claims.
+```php
+$jwt = new JWT($token);
+// validate that the subject is "1234567890"
+// validate that the admin claim is true using explicitly provided validator
+$ctx = ValidationContext::fromJWK(
+    SymmetricKeyJWK::fromKey("secret"),
+    ["sub" => "1234567890"])->withConstraint(
+        "admin", true, new EqualsValidator());
+// validate and print all claims
+$claims = $jwt->claims($ctx);
+foreach ($claims as $claim) {
+    printf("%s: %s\n", $claim->name(), $claim->value());
+}
+```
+
+### More Examples
+See [`/examples`](https://github.com/sop/jwx/tree/master/examples)
+directory for more examples.
 * [Create a signed JWT](
     https://github.com/sop/jwx/blob/master/examples/jws-create.php)
 * [Consume a signed JWT](
