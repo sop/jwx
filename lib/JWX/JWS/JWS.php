@@ -208,6 +208,7 @@ class JWS
 	 * Signature algorithm is determined from the header.
 	 *
 	 * @param JWK $jwk JSON Web Key
+	 * @throws \RuntimeException If algorithm initialization fails
 	 * @return bool True if signature is valid
 	 */
 	public function validateWithJWK(JWK $jwk) {
@@ -221,9 +222,13 @@ class JWS
 	 * Correct key shall be sought by the key ID indicated by the header.
 	 *
 	 * @param JWKSet $set Set of JSON Web Keys
+	 * @throws \RuntimeException If algorithm initialization fails
 	 * @return bool True if signature is valid
 	 */
 	public function validateWithJWKSet(JWKSet $set) {
+		if (!count($set)) {
+			throw new \RuntimeException("No keys.");
+		}
 		$factory = new SignatureAlgorithmFactory($this->header());
 		$algo = $factory->algoByKeys($set);
 		return $this->validate($algo);

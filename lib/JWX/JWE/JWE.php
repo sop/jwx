@@ -234,6 +234,7 @@ class JWE
 	 * header.
 	 *
 	 * @param JWK $jwk JSON Web Key
+	 * @throws \RuntimeException If algorithm initialization fails
 	 * @return string Plaintext payload
 	 */
 	public function decryptWithJWK(JWK $jwk) {
@@ -249,9 +250,13 @@ class JWE
 	 * Correct key shall be sought by the key ID indicated by the header.
 	 *
 	 * @param JWKSet $set Set of JSON Web Keys
+	 * @throws \RuntimeException If algorithm initialization fails
 	 * @return string Plaintext payload
 	 */
 	public function decryptWithJWKSet(JWKSet $set) {
+		if (!count($set)) {
+			throw new \RuntimeException("No keys.");
+		}
 		$header = $this->header();
 		$factory = new KeyAlgorithmFactory($header);
 		$key_algo = $factory->algoByKeys($set);
