@@ -85,6 +85,16 @@ class JWSTest extends PHPUnit_Framework_TestCase
 	
 	/**
 	 * @depends testCreate
+	 * @expectedException RuntimeException
+	 *
+	 * @param JWS $jws
+	 */
+	public function testValidateWithJWKSetNoKeys(JWS $jws) {
+		$jws->validateWithJWKSet(new JWKSet());
+	}
+	
+	/**
+	 * @depends testCreate
 	 *
 	 * @param JWS $jws
 	 */

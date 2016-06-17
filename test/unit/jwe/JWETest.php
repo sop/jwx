@@ -104,6 +104,16 @@ class JWETest extends PHPUnit_Framework_TestCase
 	
 	/**
 	 * @depends testEncrypt
+	 * @expectedException RuntimeException
+	 *
+	 * @param JWE $jwe
+	 */
+	public function testDecryptWithJWKSetNoKeys(JWE $jwe) {
+		$jwe->decryptWithJWKSet(new JWKSet());
+	}
+	
+	/**
+	 * @depends testEncrypt
 	 *
 	 * @param JWE $jwe
 	 */
