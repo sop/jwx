@@ -5,15 +5,23 @@ namespace JWX\JWT;
 use JWX\JWK\JWK;
 use JWX\JWK\JWKSet;
 use JWX\JWT\Claim\RegisteredClaim;
+use JWX\JWT\Claim\Validator\Validator;
 use JWX\JWT\Exception\ValidationException;
 
 
 /**
  * Class to provide context for claims validation.
  *
- * Validation constraints are variables, that are compared against the claims.
+ * Validation constraints are variables that are compared against the claims.
+ * Validation of the expiration, not-before and not-after claims is provided by
+ * default.
+ *
  * Context also provides a set of JSON Web Keys, that shall be used for the
- * JWS signature validation, or JWE payload decryption.
+ * JWS signature validation or JWE payload decryption.
+ *
+ * Registered claims provide their own validation logic. Claims that are not
+ * supported by this library must be provided with an explicit validator along
+ * with the constraint.
  */
 class ValidationContext
 {
@@ -39,6 +47,13 @@ class ValidationContext
 	protected $_constraints;
 	
 	/**
+	 * Explicitly defined validators for named claims.
+	 *
+	 * @var Validator[] $_validators
+	 */
+	protected $_validators;
+	
+	/**
 	 * Set of JSON Web Keys usable for the validation.
 	 *
 	 * @var JWKSet $_keys
@@ -56,15 +71,16 @@ class ValidationContext
 	/**
 	 * Constructor.
 	 *
-	 * @param array $constraints Optional array of constraints keyed by claim
-	 *        names
+	 * @param array $constraints Optional array of constraints for the
+	 *        registered claims
 	 * @param JWKSet $keys Optional set of JSON Web Keys used for signature
 	 *        validation and/or decryption
 	 */
 	public function __construct(array $constraints = null, JWKSet $keys = null) {
 		$this->_refTime = time();
 		$this->_leeway = 60;
-		$this->_constraints = $constraints ? $constraints : [];
+		$this->_constraints = $constraints ? $constraints : array();
+		$this->_validators = array();
 		$this->_keys = $keys ? $keys : new JWKSet();
 		$this->_allowUnsecured = false;
 	}
@@ -138,20 +154,28 @@ class ValidationContext
 	/**
 	 * Get self with a validation constraint.
 	 *
+	 * If the claim does not provide its own validator, an explicit validator
+	 * must be given.
+	 *
 	 * @param string $name Claim name
 	 * @param mixed $constraint Value to check claim against
+	 * @param Validator|null $validator Optional explicit validator
 	 * @return self
 	 */
-	public function withConstraint($name, $constraint) {
+	public function withConstraint($name, $constraint, 
+			Validator $validator = null) {
 		$obj = clone $this;
 		$obj->_constraints[$name] = $constraint;
+		if ($validator) {
+			$obj->_validators[$name] = $validator;
+		}
 		return $obj;
 	}
 	
 	/**
 	 * Get self with the issuer constraint.
 	 *
-	 * @param string $issuer
+	 * @param string $issuer Issuer name
 	 * @return self
 	 */
 	public function withIssuer($issuer) {
@@ -161,7 +185,7 @@ class ValidationContext
 	/**
 	 * Get self with the subject constraint.
 	 *
-	 * @param string $subject
+	 * @param string $subject Subject name
 	 * @return self
 	 */
 	public function withSubject($subject) {
@@ -171,7 +195,7 @@ class ValidationContext
 	/**
 	 * Get self with the audience constraint.
 	 *
-	 * @param string $audience
+	 * @param string $audience Audience name
 	 * @return self
 	 */
 	public function withAudience($audience) {
@@ -181,7 +205,7 @@ class ValidationContext
 	/**
 	 * Get self with the JWT ID constraint.
 	 *
-	 * @param string $id
+	 * @param string $id JWT ID
 	 * @return self
 	 */
 	public function withID($id) {
@@ -210,6 +234,30 @@ class ValidationContext
 			throw new \LogicException("Constraint $name not set.");
 		}
 		return $this->_constraints[$name];
+	}
+	
+	/**
+	 * Check whether a validator is defined for the given claim name.
+	 *
+	 * @param string $name Claim name
+	 * @return bool
+	 */
+	public function hasValidator($name) {
+		return isset($this->_validators[$name]);
+	}
+	
+	/**
+	 * Get explicitly defined validator by the claim name.
+	 *
+	 * @param string $name Claim name
+	 * @throws \LogicException If validator is not set
+	 * @return Validator
+	 */
+	public function validator($name) {
+		if (!$this->hasValidator($name)) {
+			throw new \LogicException("Validator $name not set.");
+		}
+		return $this->_validators[$name];
 	}
 	
 	/**

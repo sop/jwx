@@ -90,10 +90,11 @@ class Claim
 	 * @return bool True if the claim is valid
 	 */
 	public function validate($constraint) {
-		if (isset($this->_validator)) {
-			return $this->_validator->validate($this->_value, $constraint);
+		// if claim has no validator, consider validation failed
+		if (!isset($this->_validator)) {
+			return false;
 		}
-		return true;
+		return $this->_validator->validate($this->_value, $constraint);
 	}
 	
 	/**
@@ -103,9 +104,18 @@ class Claim
 	 * @return bool True if claim is valid
 	 */
 	public function validateWithContext(ValidationContext $ctx) {
-		if ($ctx->hasConstraint($this->_name)) {
-			return $this->validate($ctx->constraint($this->_name));
+		// if validator has no constraint for the claim
+		if (!$ctx->hasConstraint($this->_name)) {
+			return true;
 		}
-		return true;
+		$constraint = $ctx->constraint($this->_name);
+		// if validation context has an explicitly
+		// defined validator for the claim
+		if ($ctx->hasValidator($this->_name)) {
+			return $ctx->validator($this->_name)->validate($this->_value, 
+				$constraint);
+		}
+		// validate using claim's default validator
+		return $this->validate($ctx->constraint($this->_name));
 	}
 }
