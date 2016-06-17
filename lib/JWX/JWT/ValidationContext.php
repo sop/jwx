@@ -10,6 +10,10 @@ use JWX\JWT\Exception\ValidationException;
 
 /**
  * Class to provide context for claims validation.
+ *
+ * Validation constraints are variables, that are compared against the claims.
+ * Context also provides a set of JSON Web Keys, that shall be used for the
+ * JWS signature validation, or JWE payload decryption.
  */
 class ValidationContext
 {
@@ -50,12 +54,12 @@ class ValidationContext
 	protected $_allowUnsecured;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @param array $constraints Optional array of constraints keyed by claim
 	 *        names
 	 * @param JWKSet $keys Optional set of JSON Web Keys used for signature
-	 *        validation and/or decryption.
+	 *        validation and/or decryption
 	 */
 	public function __construct(array $constraints = null, JWKSet $keys = null) {
 		$this->_refTime = time();
@@ -72,12 +76,12 @@ class ValidationContext
 	 * @param array $constraints Optional constraints
 	 * @return self
 	 */
-	public static function fromKey(JWK $key, array $constraints = []) {
+	public static function fromJWK(JWK $key, array $constraints = null) {
 		return new self($constraints, new JWKSet($key));
 	}
 	
 	/**
-	 * Get self with reference time.
+	 * Get self with the reference time.
 	 *
 	 * @param int|null $ts Unix timestamp
 	 * @return self
@@ -89,7 +93,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Check whether reference time is set.
+	 * Check whether the reference time is set.
 	 *
 	 * @return bool
 	 */
@@ -98,7 +102,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get reference time.
+	 * Get the reference time.
 	 *
 	 * @throws \LogicException
 	 * @return int
@@ -111,7 +115,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with reference time leeway.
+	 * Get self with the reference time leeway.
 	 *
 	 * @param int $seconds
 	 * @return self
@@ -123,7 +127,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get reference time leeway.
+	 * Get the reference time leeway.
 	 *
 	 * @return int
 	 */
@@ -132,7 +136,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with validation constraint.
+	 * Get self with a validation constraint.
 	 *
 	 * @param string $name Claim name
 	 * @param mixed $constraint Value to check claim against
@@ -145,7 +149,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with issuer constraint.
+	 * Get self with the issuer constraint.
 	 *
 	 * @param string $issuer
 	 * @return self
@@ -155,7 +159,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with subject constraint.
+	 * Get self with the subject constraint.
 	 *
 	 * @param string $subject
 	 * @return self
@@ -165,7 +169,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with audience constraint.
+	 * Get self with the audience constraint.
 	 *
 	 * @param string $audience
 	 * @return self
@@ -175,7 +179,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get self with JWT ID constraint.
+	 * Get self with the JWT ID constraint.
 	 *
 	 * @param string $id
 	 * @return self
@@ -185,7 +189,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Check whether constraint is present.
+	 * Check whether a named constraint is present.
 	 *
 	 * @param string $name Claim name
 	 * @return bool
@@ -195,10 +199,10 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get constraint by claim name.
+	 * Get a constraint value by the claim name.
 	 *
-	 * @param string $name
-	 * @throws \LogicException
+	 * @param string $name Claim name
+	 * @throws \LogicException If constraint is not set
 	 * @return mixed Constraint value
 	 */
 	public function constraint($name) {
@@ -209,7 +213,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Get the set of JSON Web Keys defined in this context.
+	 * Get a set of JSON Web Keys defined in this context.
 	 *
 	 * @return JWKSet
 	 */
@@ -219,6 +223,9 @@ class ValidationContext
 	
 	/**
 	 * Get self with 'allow unsecured' flag set.
+	 *
+	 * If the unsecured JWT's are allowed, claims shall be considered valid even
+	 * though they are not signed nor encrypted.
 	 *
 	 * @param bool $allow Whether to allow unsecured JWT's
 	 * @return self
@@ -230,7 +237,7 @@ class ValidationContext
 	}
 	
 	/**
-	 * Check whether unsecured JWT's are allowed.
+	 * Check whether the unsecured JWT's are allowed.
 	 *
 	 * @return bool
 	 */
@@ -242,7 +249,7 @@ class ValidationContext
 	 * Validate claims.
 	 *
 	 * @param Claims $claims
-	 * @throws \RuntimeException If any of the claims is not valid
+	 * @throws ValidationException If any of the claims is not valid
 	 * @return self
 	 */
 	public function validate(Claims $claims) {

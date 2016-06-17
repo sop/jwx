@@ -27,7 +27,7 @@ use JWX\Util\Base64;
 class JWT
 {
 	/**
-	 * Type identifier for signed JWT.
+	 * Type identifier for the signed JWT.
 	 *
 	 * @internal
 	 *
@@ -36,7 +36,7 @@ class JWT
 	const TYPE_JWS = 0;
 	
 	/**
-	 * Type identifier for encrypted JWT.
+	 * Type identifier for the encrypted JWT.
 	 *
 	 * @internal
 	 *
@@ -59,7 +59,7 @@ class JWT
 	protected $_type;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @param string $token JWT string
 	 * @throws \UnexpectedValueException
@@ -81,6 +81,10 @@ class JWT
 	/**
 	 * Convert claims set to an unsecured JWT.
 	 *
+	 * Unsecured JWT is not signed nor encrypted neither integrity protected,
+	 * and should thus be handled with care!
+	 *
+	 * @link https://tools.ietf.org/html/rfc7519#section-6
 	 * @param Claims $claims Claims set
 	 * @param Header|null $header Optional header
 	 * @throws \RuntimeException For generic errors
@@ -125,6 +129,40 @@ class JWT
 		$payload = $claims->toJSON();
 		$jwe = JWE::encrypt($payload, $key_algo, $enc_algo, $zip_algo, $header);
 		return new self($jwe->toCompact());
+	}
+	
+	/**
+	 * Get claims from the JWT.
+	 *
+	 * Claims shall be validated according to given validation context.
+	 * Validation context must contain all the necessary keys for the signature
+	 * validation and/or content decryption.
+	 *
+	 * If validation context contains only one key, it shall be used explicitly.
+	 * If multiple keys are provided, they must contain a JWK ID parameter for
+	 * the key identification.
+	 *
+	 * @param ValidationContext $ctx
+	 * @throws ValidationException If signature is invalid, or decryption fails,
+	 *         or claims validation fails.
+	 * @throws \RuntimeException For generic errors
+	 * @return Claims
+	 */
+	public function claims(ValidationContext $ctx) {
+		// check signature or decrypt depending on the JWT type.
+		if ($this->isJWS()) {
+			$payload = self::_validatedPayloadFromJWS($this->JWS(), $ctx);
+		} else {
+			$payload = self::_validatedPayloadFromJWE($this->JWE(), $ctx);
+		}
+		// if JWT contains a nested token
+		if ($this->isNested()) {
+			return $this->_claimsFromNestedPayload($payload, $ctx);
+		}
+		// decode claims and validate
+		$claims = Claims::fromJSON($payload);
+		$ctx->validate($claims);
+		return $claims;
 	}
 	
 	/**
@@ -274,36 +312,6 @@ class JWT
 	}
 	
 	/**
-	 * Get claims from the JWT.
-	 *
-	 * Claims shall be validated according to given validation context.
-	 * Validation context must contain all the necessary keys for the signature
-	 * validation and/or content decryption.
-	 *
-	 * @param ValidationContext $ctx
-	 * @throws ValidationException If signature is invalid, or decryption fails,
-	 *         or claims validation fails.
-	 * @throws \RuntimeException For generic errors
-	 * @return Claims
-	 */
-	public function claims(ValidationContext $ctx) {
-		// check signature or decrypt depending on the JWT type.
-		if ($this->isJWS()) {
-			$payload = self::_validatedPayloadFromJWS($this->JWS(), $ctx);
-		} else {
-			$payload = self::_validatedPayloadFromJWE($this->JWE(), $ctx);
-		}
-		// if JWT contains a nested token
-		if ($this->isNested()) {
-			return $this->_claimsFromNestedPayload($payload, $ctx);
-		}
-		// decode claims and validate
-		$claims = Claims::fromJSON($payload);
-		$ctx->validate($claims);
-		return $claims;
-	}
-	
-	/**
 	 * Get claims from a nested payload.
 	 *
 	 * @param string $payload JWT payload
@@ -320,7 +328,7 @@ class JWT
 	}
 	
 	/**
-	 * Get payload from JWS.
+	 * Get validated payload from JWS.
 	 *
 	 * @param JWS $jws JWS
 	 * @param ValidationContext $ctx Validation context
@@ -329,19 +337,20 @@ class JWT
 	 */
 	private static function _validatedPayloadFromJWS(JWS $jws, 
 			ValidationContext $ctx) {
+		// if JWS is unsecured
 		if ($jws->isUnsecured()) {
 			return self::_validatedPayloadFromUnsecuredJWS($jws, $ctx);
 		}
 		return self::_validatedPayloadFromSignedJWS($jws, $ctx->keys());
-	
 	}
 	
 	/**
 	 * Get validated payload from an unsecured JWS.
 	 *
-	 * @param JWS $jws
-	 * @param ValidationContext $ctx
-	 * @throws ValidationException
+	 * @param JWS $jws JWS
+	 * @param ValidationContext $ctx Validation context
+	 * @throws ValidationException If unsecured JWT's are not allowed, or JWS
+	 *         token is malformed
 	 * @return string
 	 */
 	private static function _validatedPayloadFromUnsecuredJWS(JWS $jws, 
@@ -358,14 +367,15 @@ class JWT
 	/**
 	 * Get validated payload from a signed JWS.
 	 *
-	 * @param JWS $jws
-	 * @param JWKSet $keys
-	 * @throws ValidationException
+	 * @param JWS $jws JWS
+	 * @param JWKSet $keys Set of allowed keys for the signature validation
+	 * @throws ValidationException If validation fails
 	 * @return string
 	 */
 	private static function _validatedPayloadFromSignedJWS(JWS $jws, 
 			JWKSet $keys) {
 		try {
+			// explicitly defined key
 			if (1 == count($keys)) {
 				$valid = $jws->validateWithJWK($keys->first());
 			} else {
@@ -392,6 +402,7 @@ class JWT
 			ValidationContext $ctx) {
 		try {
 			$keys = $ctx->keys();
+			// explicitly defined key
 			if (1 == count($keys)) {
 				return $jwe->decryptWithJWK($keys->first());
 			}

@@ -34,8 +34,8 @@ class Claims implements \Countable, \IteratorAggregate
 	/**
 	 * Initialize from a JSON string.
 	 *
-	 * @param string $json
-	 * @throws \UnexpectedValueException
+	 * @param string $json JSON
+	 * @throws \UnexpectedValueException If JSON is malformed
 	 * @return self
 	 */
 	public static function fromJSON($json) {
@@ -113,7 +113,7 @@ class Claims implements \Countable, \IteratorAggregate
 	/**
 	 * Check whether a claims set is valid in the given context.
 	 *
-	 * @param ValidationContext $ctx
+	 * @param ValidationContext $ctx Validation context
 	 * @return bool
 	 */
 	public function isValid(ValidationContext $ctx) {
@@ -139,7 +139,7 @@ class Claims implements \Countable, \IteratorAggregate
 	 * Get iterator for Claim objects keyed by claim name.
 	 *
 	 * @see IteratorAggregate::getIterator()
-	 * @return Claim[]
+	 * @return \ArrayIterator
 	 */
 	public function getIterator() {
 		return new \ArrayIterator($this->_claims);

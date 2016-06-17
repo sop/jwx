@@ -49,10 +49,12 @@ class Claim
 	}
 	
 	/**
-	 * Initialize from name and value.
+	 * Initialize from a name and a value.
 	 *
-	 * @param string $name
-	 * @param mixed $value
+	 * Returns a specific claim object if applicable.
+	 *
+	 * @param string $name Claim name
+	 * @param mixed $value Claim value
 	 * @return Claim
 	 */
 	public static function fromNameAndValue($name, $value) {
@@ -82,7 +84,7 @@ class Claim
 	}
 	
 	/**
-	 * Validate the claim against given constraint.
+	 * Validate the claim against a given constraint.
 	 *
 	 * @param mixed $constraint Constraint value
 	 * @return bool True if the claim is valid
