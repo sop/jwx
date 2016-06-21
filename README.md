@@ -99,6 +99,10 @@ directory for more examples.
     https://github.com/sop/jwx/blob/master/examples/jwe-create.php)
 * [Consume an encrypted JWT](
     https://github.com/sop/jwx/blob/master/examples/jwe-consume.php)
+* [Create a nested JWT](
+    https://github.com/sop/jwx/blob/master/examples/nested-create.php)
+* [Consume a nested JWT](
+    https://github.com/sop/jwx/blob/master/examples/nested-consume.php)
 * [Encrypt arbitrary data](
     https://github.com/sop/jwx/blob/master/examples/arbitrary-encrypt.php)
 * [Decrypt arbitrary data](
