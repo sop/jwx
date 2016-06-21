@@ -212,13 +212,13 @@ class JWE
 			 $this->encryptionAlgorithmName()) {
 			throw new \UnexpectedValueException("Invalid encryption algorithm.");
 		}
+		$header = $this->header();
 		// decrypt content encryption key
-		$cek = $key_algo->decrypt($this->_encryptedKey);
+		$cek = $key_algo->decrypt($this->_encryptedKey, $header);
 		// decrypt payload
 		$aad = Base64::urlEncode($this->_protectedHeader->toJSON());
 		$payload = $enc_algo->decrypt($this->_ciphertext, $cek, $this->_iv, 
 			$aad, $this->_authenticationTag);
-		$header = $this->header();
 		// decompress
 		if ($header->hasCompressionAlgorithm()) {
 			$payload = CompressionFactory::algoByHeader($header)->decompress(
