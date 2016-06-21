@@ -77,4 +77,9 @@ class AESGCMKWTest extends PHPUnit_Framework_TestCase
 			new AlgorithmParameter(JWA::ALGO_NONE));
 		AESGCMKWAlgorithm::fromJWK($jwk, $header);
 	}
+	
+	public function testFromKey() {
+		$algo = A128GCMKWAlgorithm::fromKey(self::KEY_128);
+		$this->assertInstanceOf(A128GCMKWAlgorithm::class, $algo);
+	}
 }
