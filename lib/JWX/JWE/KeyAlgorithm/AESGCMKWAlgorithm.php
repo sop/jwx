@@ -55,6 +55,20 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 	);
 	
 	/**
+	 * Required IV size in bytes.
+	 *
+	 * @var int
+	 */
+	const IV_SIZE = 12;
+	
+	/**
+	 * Authentication tag size in bytes.
+	 *
+	 * @var int
+	 */
+	const AUTH_TAG_SIZE = 16;
+	
+	/**
 	 * Get GCM Cipher instance.
 	 *
 	 * @return Cipher
@@ -74,7 +88,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 	 * @return GCM
 	 */
 	final protected function _getGCM() {
-		return new GCM($this->_getGCMCipher(), 16);
+		return new GCM($this->_getGCMCipher(), self::AUTH_TAG_SIZE);
 	}
 	
 	/**
@@ -87,7 +101,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 		if (strlen($kek) != $this->_keySize()) {
 			throw new \LengthException("Invalid key size.");
 		}
-		if (strlen($iv) != 12) {
+		if (strlen($iv) != self::IV_SIZE) {
 			throw new \LengthException("Initialization vector must be 96 bits.");
 		}
 		$this->_kek = $kek;
@@ -115,6 +129,24 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 		return new $cls($jwk->key(), $iv);
 	}
 	
+	/**
+	 * Initialize from key encryption key with random IV.
+	 *
+	 * Key size must match the underlying cipher.
+	 *
+	 * @param string $key Key encryption key
+	 * @return self
+	 */
+	public static function fromKey($key) {
+		$iv = openssl_random_pseudo_bytes(self::IV_SIZE);
+		return new static($key, $iv);
+	}
+	
+	/**
+	 *
+	 * @see \JWX\JWE\KeyManagementAlgorithm::_encryptKey()
+	 * @return string
+	 */
 	protected function _encryptKey($key, Header &$header) {
 		list($ciphertext, $auth_tag) = $this->_getGCM()->encrypt($key, "", 
 			$this->_kek, $this->_iv);
@@ -124,6 +156,12 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 		return $ciphertext;
 	}
 	
+	/**
+	 *
+	 * @see \JWX\JWE\KeyManagementAlgorithm::_decryptKey()
+	 * @throws \RuntimeException For generic errors
+	 * @return string
+	 */
 	protected function _decryptKey($ciphertext, Header $header) {
 		if (!$header->hasAuthenticationTag()) {
 			throw new \RuntimeException(
