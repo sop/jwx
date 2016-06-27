@@ -5,7 +5,7 @@ namespace JWX\JWK\EC;
 use CryptoUtil\ASN1\EC\ECPublicKey;
 use CryptoUtil\Conversion\ECConversion;
 use CryptoUtil\PEM\PEM;
-use JWX\JWK\Feature\AsymmetricPublicKey;
+use JWX\JWK\Asymmetric\PublicKeyJWK;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\JWKParameter;
@@ -22,7 +22,7 @@ use JWX\JWK\Parameter\YCoordinateParameter;
  * @link https://tools.ietf.org/html/rfc7518#section-6.2
  * @link https://tools.ietf.org/html/rfc7518#section-6.2.1
  */
-class ECPublicKeyJWK extends JWK implements AsymmetricPublicKey
+class ECPublicKeyJWK extends PublicKeyJWK
 {
 	/**
 	 * Parameter names managed by this class.

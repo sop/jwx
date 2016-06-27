@@ -6,7 +6,7 @@ use CryptoUtil\ASN1\EC\ECPrivateKey;
 use CryptoUtil\ASN1\EC\ECPublicKey;
 use CryptoUtil\Conversion\ECConversion;
 use CryptoUtil\PEM\PEM;
-use JWX\JWK\Feature\AsymmetricPrivateKey;
+use JWX\JWK\Asymmetric\PrivateKeyJWK;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\ECCPrivateKeyParameter;
@@ -24,7 +24,7 @@ use JWX\JWK\Parameter\YCoordinateParameter;
  * @link https://tools.ietf.org/html/rfc7518#section-6.2
  * @link https://tools.ietf.org/html/rfc7518#section-6.2.2
  */
-class ECPrivateKeyJWK extends JWK implements AsymmetricPrivateKey
+class ECPrivateKeyJWK extends PrivateKeyJWK
 {
 	/**
 	 * Parameter names managed by this class.

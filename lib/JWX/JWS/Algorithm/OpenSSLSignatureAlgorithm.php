@@ -2,8 +2,8 @@
 
 namespace JWX\JWS\Algorithm;
 
-use JWX\JWK\Feature\AsymmetricPrivateKey;
-use JWX\JWK\Feature\AsymmetricPublicKey;
+use JWX\JWK\Asymmetric\PrivateKeyJWK;
+use JWX\JWK\Asymmetric\PublicKeyJWK;
 use JWX\JWS\SignatureAlgorithm;
 
 
@@ -16,14 +16,14 @@ abstract class OpenSSLSignatureAlgorithm extends SignatureAlgorithm
 	/**
 	 * Public key.
 	 *
-	 * @var AsymmetricPublicKey $_publicKey
+	 * @var PublicKeyJWK $_publicKey
 	 */
 	protected $_publicKey;
 	
 	/**
 	 * Private key.
 	 *
-	 * @var AsymmetricPrivateKey|null $_privateKey
+	 * @var PrivateKeyJWK|null $_privateKey
 	 */
 	protected $_privateKey;
 	

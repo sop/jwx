@@ -6,7 +6,7 @@ use CryptoUtil\ASN1\AlgorithmIdentifier\Crypto\RSAEncryptionAlgorithmIdentifier;
 use CryptoUtil\ASN1\PrivateKeyInfo;
 use CryptoUtil\ASN1\RSA\RSAPrivateKey;
 use CryptoUtil\PEM\PEM;
-use JWX\JWK\Feature\AsymmetricPrivateKey;
+use JWX\JWK\Asymmetric\PrivateKeyJWK;
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
@@ -28,7 +28,7 @@ use JWX\JWK\Parameter\SecondPrimeFactorParameter;
  * @link https://tools.ietf.org/html/rfc7518#section-6.3
  * @link https://tools.ietf.org/html/rfc7518#section-6.3.2
  */
-class RSAPrivateKeyJWK extends JWK implements AsymmetricPrivateKey
+class RSAPrivateKeyJWK extends PrivateKeyJWK
 {
 	/**
 	 * Parameter names managed by this class.
