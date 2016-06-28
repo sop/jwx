@@ -13,6 +13,13 @@ trait Base64URLValue
 	use StringParameterValue;
 	
 	/**
+	 * Get the parameter value.
+	 *
+	 * @return string
+	 */
+	abstract public function value();
+	
+	/**
 	 * Initialize from native value.
 	 *
 	 * Value shall be encoded using Base64url encoding.
@@ -37,5 +44,14 @@ trait Base64URLValue
 				"Value must be base64url encoded.");
 		}
 		return $this;
+	}
+	
+	/**
+	 * Get the parameter value as a decoded string.
+	 *
+	 * @return string
+	 */
+	public function string() {
+		return Base64::urlDecode($this->value());
 	}
 }
