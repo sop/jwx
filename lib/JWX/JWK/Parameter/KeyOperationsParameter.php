@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\ArrayParameterValue;
+
 
 /**
  * Implements 'Key Operations' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWK\Parameter;
  */
 class KeyOperationsParameter extends JWKParameter
 {
+	use ArrayParameterValue;
+	
 	const OP_SIGN = "sign";
 	const OP_VERIFY = "verify";
 	const OP_ENCRYPT = "encrypt";
@@ -26,12 +30,5 @@ class KeyOperationsParameter extends JWKParameter
 	 */
 	public function __construct(...$ops) {
 		parent::__construct(self::PARAM_KEY_OPERATIONS, $ops);
-	}
-	
-	public static function fromJSONValue($value) {
-		if (!is_array($value)) {
-			throw new \UnexpectedValueException("key_ops must be an array.");
-		}
-		return new self(...$value);
 	}
 }
