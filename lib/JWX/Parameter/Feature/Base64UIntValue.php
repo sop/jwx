@@ -16,13 +16,6 @@ trait Base64UIntValue
 	use Base64URLValue;
 	
 	/**
-	 * Get the parameter value.
-	 *
-	 * @return string
-	 */
-	abstract public function value();
-	
-	/**
 	 * Initialize parameter from base10 number.
 	 *
 	 * @param int|string $number
