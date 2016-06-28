@@ -2,7 +2,6 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\PrivateExponentParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -23,7 +22,7 @@ class PrivateExponentParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT, 
+		$this->assertEquals(JWKParameter::PARAM_PRIVATE_EXPONENT, 
 			$param->name());
 	}
 }

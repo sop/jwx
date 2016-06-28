@@ -11,7 +11,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.7.1.2
  */
-class AuthenticationTagParameter extends RegisteredJWTParameter
+class AuthenticationTagParameter extends JWTParameter
 {
 	use Base64URLValue;
 	

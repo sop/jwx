@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.2
  */
-class PBES2CountParameter extends RegisteredJWTParameter
+class PBES2CountParameter extends JWTParameter
 {
 	/**
 	 * Constructor

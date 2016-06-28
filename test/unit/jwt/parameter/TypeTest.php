@@ -1,7 +1,6 @@
 <?php
 
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
 
 
@@ -23,6 +22,6 @@ class TypeParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_TYPE, $param->name());
+		$this->assertEquals(JWTParameter::PARAM_TYPE, $param->name());
 	}
 }

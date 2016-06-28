@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.9
  */
-class TypeParameter extends RegisteredJWTParameter
+class TypeParameter extends JWTParameter
 {
 	/**
 	 * Constructor

@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7516#section-4.1.3
  */
-class CompressionAlgorithmParameter extends RegisteredJWTParameter
+class CompressionAlgorithmParameter extends JWTParameter
 {
 	/**
 	 * Constructor

@@ -1,14 +1,14 @@
 <?php
 
-namespace JWX\JWT\Parameter;
+namespace JWX\JWK\Parameter;
 
 
 /**
  * Implements 'X.509 URL' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7515#section-4.1.5
+ * @link https://tools.ietf.org/html/rfc7517#section-4.6
  */
-class X509URLParameter extends JWTParameter
+class X509URLParameter extends JWKParameter
 {
 	/**
 	 * Constructor

@@ -2,7 +2,6 @@
 
 use JWX\JWK\Parameter\FirstPrimeFactorParameter;
 use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -23,7 +22,7 @@ class FirstPrimeFactorParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_FIRST_PRIME_FACTOR, 
+		$this->assertEquals(JWKParameter::PARAM_FIRST_PRIME_FACTOR, 
 			$param->name());
 	}
 }

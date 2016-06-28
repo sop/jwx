@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.2
  */
-class JWKSetURLParameter extends RegisteredJWTParameter
+class JWKSetURLParameter extends JWTParameter
 {
 	/**
 	 * Constructor

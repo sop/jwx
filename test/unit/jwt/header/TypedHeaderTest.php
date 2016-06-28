@@ -17,7 +17,6 @@ use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\KeyIDParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
 use JWX\JWT\Parameter\X509CertificateChainParameter;
 use JWX\JWT\Parameter\X509CertificateSHA1ThumbprintParameter;
@@ -218,7 +217,7 @@ class TypedHeaderTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testTypeFails() {
 		$header = new Header(
-			new JWTParameter(RegisteredJWTParameter::P_ALG, JWA::ALGO_NONE));
+			new JWTParameter(JWTParameter::P_ALG, JWA::ALGO_NONE));
 		$header->algorithm();
 	}
 }

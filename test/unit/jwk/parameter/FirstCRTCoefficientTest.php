@@ -2,7 +2,6 @@
 
 use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
 use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -23,7 +22,7 @@ class FirstCRTCoefficientParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_FIRST_CRT_COEFFICIENT, 
+		$this->assertEquals(JWKParameter::PARAM_FIRST_CRT_COEFFICIENT, 
 			$param->name());
 	}
 }

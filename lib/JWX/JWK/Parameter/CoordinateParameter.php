@@ -2,17 +2,14 @@
 
 namespace JWX\JWK\Parameter;
 
-use JWX\JWT\Parameter\Feature\Base64URLValue;
 use JWX\Util\Base64;
 
 
 /**
  * Base class for EC coordinate parameters.
  */
-abstract class CoordinateParameter extends RegisteredJWKParameter
+abstract class CoordinateParameter extends JWKParameter
 {
-	use Base64URLValue;
-	
 	/**
 	 * Get coordinate in octet string representation.
 	 *

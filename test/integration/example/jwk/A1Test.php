@@ -5,10 +5,10 @@ use JWX\JWK\JWKSet;
 use JWX\JWK\Parameter\AlgorithmParameter;
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\ExponentParameter;
+use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
 
@@ -74,7 +74,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return KeyTypeParameter
 	 */
 	public function testKey1Type(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_KEY_TYPE);
+		$param = $jwk->get(JWKParameter::PARAM_KEY_TYPE);
 		$this->assertInstanceOf(KeyTypeParameter::class, $param);
 		return $param;
 	
@@ -96,7 +96,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return CurveParameter
 	 */
 	public function testKey1Curve(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_CURVE);
+		$param = $jwk->get(JWKParameter::PARAM_CURVE);
 		$this->assertInstanceOf(CurveParameter::class, $param);
 		return $param;
 	}
@@ -117,7 +117,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return XCoordinateParameter
 	 */
 	public function testKey1XCoord(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_X_COORDINATE);
+		$param = $jwk->get(JWKParameter::PARAM_X_COORDINATE);
 		$this->assertInstanceOf(XCoordinateParameter::class, $param);
 		return $param;
 	}
@@ -139,7 +139,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return YCoordinateParameter
 	 */
 	public function testKey1YCoord(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_Y_COORDINATE);
+		$param = $jwk->get(JWKParameter::PARAM_Y_COORDINATE);
 		$this->assertInstanceOf(YCoordinateParameter::class, $param);
 		return $param;
 	}
@@ -161,7 +161,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return PublicKeyUseParameter
 	 */
 	public function testKey1Use(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_PUBLIC_KEY_USE);
+		$param = $jwk->get(JWKParameter::PARAM_PUBLIC_KEY_USE);
 		$this->assertInstanceOf(PublicKeyUseParameter::class, $param);
 		return $param;
 	
@@ -183,7 +183,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return KeyTypeParameter
 	 */
 	public function testKey2Type(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_KEY_TYPE);
+		$param = $jwk->get(JWKParameter::PARAM_KEY_TYPE);
 		$this->assertInstanceOf(KeyTypeParameter::class, $param);
 		return $param;
 	}
@@ -204,7 +204,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return ModulusParameter
 	 */
 	public function testKey2Modulus(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_MODULUS);
+		$param = $jwk->get(JWKParameter::PARAM_MODULUS);
 		$this->assertInstanceOf(ModulusParameter::class, $param);
 		return $param;
 	}
@@ -226,7 +226,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return ExponentParameter
 	 */
 	public function testKey2Exponent(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_EXPONENT);
+		$param = $jwk->get(JWKParameter::PARAM_EXPONENT);
 		$this->assertInstanceOf(ExponentParameter::class, $param);
 		return $param;
 	}
@@ -248,7 +248,7 @@ class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
 	 * @return AlgorithmParameter
 	 */
 	public function testKey2Algo(JWK $jwk) {
-		$param = $jwk->get(RegisteredJWKParameter::PARAM_ALGORITHM);
+		$param = $jwk->get(JWKParameter::PARAM_ALGORITHM);
 		$this->assertInstanceOf(AlgorithmParameter::class, $param);
 		return $param;
 	}

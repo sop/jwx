@@ -3,7 +3,7 @@
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWS\JWS;
 use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
 
 
@@ -38,7 +38,7 @@ class UnsecuredJWSTest extends PHPUnit_Framework_TestCase
 	
 	public function testHeader() {
 		$header = Header::fromJSON(Base64::urlDecode(self::$_header));
-		$alg = $header->get(RegisteredJWTParameter::P_ALG)->value();
+		$alg = $header->get(JWTParameter::P_ALG)->value();
 		$this->assertEquals("none", $alg);
 	}
 	

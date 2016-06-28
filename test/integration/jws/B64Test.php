@@ -5,7 +5,7 @@ use JWX\JWS\JWS;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\B64PayloadParameter;
 use JWX\JWT\Parameter\CriticalParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 
 /**
@@ -62,7 +62,7 @@ class B64Test extends PHPUnit_Framework_TestCase
 		$jws = JWS::sign(self::PAYLOAD, new HS256Algorithm(self::SECRET), 
 			new Header(new B64PayloadParameter(false), 
 				new CriticalParameter("test")));
-		$crit = $jws->header()->get(RegisteredJWTParameter::P_CRIT);
+		$crit = $jws->header()->get(JWTParameter::P_CRIT);
 		$this->assertEquals(["test", "b64"], $crit->names());
 	}
 }

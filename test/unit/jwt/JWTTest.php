@@ -14,7 +14,7 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\JWT;
 use JWX\JWT\Parameter\ContentTypeParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\ValidationContext;
 use JWX\Util\Base64;
 
@@ -334,7 +334,7 @@ class JWTTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testNestedHeader(JWT $jwt) {
 		$cty = $jwt->header()
-			->get(RegisteredJWTParameter::P_CTY)
+			->get(JWTParameter::P_CTY)
 			->value();
 		$this->assertEquals(ContentTypeParameter::TYPE_JWT, $cty);
 	}

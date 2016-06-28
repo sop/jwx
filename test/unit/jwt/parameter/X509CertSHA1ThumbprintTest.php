@@ -1,7 +1,6 @@
 <?php
 
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\X509CertificateSHA1ThumbprintParameter;
 
 
@@ -25,7 +24,6 @@ class X509CertificateSHA1ThumbprintParameterTest extends PHPUnit_Framework_TestC
 	 */
 	public function testParamName(JWTParameter $param) {
 		$this->assertEquals(
-			RegisteredJWTParameter::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT, 
-			$param->name());
+			JWTParameter::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT, $param->name());
 	}
 }

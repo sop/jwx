@@ -1,7 +1,6 @@
 <?php
 
 use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 
 
@@ -23,8 +22,7 @@ class XCoordinateParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_X_COORDINATE, 
-			$param->name());
+		$this->assertEquals(JWKParameter::PARAM_X_COORDINATE, $param->name());
 	}
 	
 	/**

@@ -4,7 +4,6 @@ use JWX\JWA\JWA;
 use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWT\Parameter\CompressionAlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -25,7 +24,7 @@ class CompressionAlgorithmParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_COMPRESSION_ALGORITHM, 
+		$this->assertEquals(JWTParameter::PARAM_COMPRESSION_ALGORITHM, 
 			$param->name());
 	}
 	

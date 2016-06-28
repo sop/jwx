@@ -11,7 +11,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-6.2.2.1
  */
-class ECCPrivateKeyParameter extends RegisteredJWKParameter
+class ECCPrivateKeyParameter extends JWKParameter
 {
 	use Base64URLValue;
 	

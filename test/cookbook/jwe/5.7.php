@@ -7,7 +7,7 @@ use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\InitializationVectorParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
 
 
@@ -45,7 +45,7 @@ class CookbookAESGCMKWWithAESCBCTest extends PHPUnit_Framework_TestCase
 		$enc_key = $algo->encrypt($cek, $header);
 		$this->assertEquals(self::$_testData["encrypting_key"]["encrypted_key"], 
 			Base64::urlEncode($enc_key));
-		$auth_tag = $header->get(RegisteredJWTParameter::P_TAG)->authenticationTag();
+		$auth_tag = $header->get(JWTParameter::P_TAG)->authenticationTag();
 		$this->assertEquals(self::$_testData["encrypting_key"]["tag"], 
 			Base64::urlEncode($auth_tag));
 	}

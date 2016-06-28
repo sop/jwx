@@ -18,7 +18,6 @@ use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\OtherPrimesInfoParameter;
 use JWX\JWK\Parameter\PrivateExponentParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\SecondPrimeFactorParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
@@ -233,8 +232,7 @@ class TypedJWKTest extends PHPUnit_Framework_TestCase
 	 * @expectedException UnexpectedValueException
 	 */
 	public function testTypeFails() {
-		$jwk = new JWK(
-			new JWKParameter(RegisteredJWKParameter::P_ALG, JWA::ALGO_NONE));
+		$jwk = new JWK(new JWKParameter(JWKParameter::P_ALG, JWA::ALGO_NONE));
 		$jwk->algorithmParameter();
 	}
 }

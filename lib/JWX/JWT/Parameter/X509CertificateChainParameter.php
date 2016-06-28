@@ -10,7 +10,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.6
  */
-class X509CertificateChainParameter extends RegisteredJWTParameter
+class X509CertificateChainParameter extends JWTParameter
 {
 	/**
 	 * Constructor

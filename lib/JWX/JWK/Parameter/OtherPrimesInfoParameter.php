@@ -9,7 +9,7 @@ namespace JWX\JWK\Parameter;
  * @todo Implement the underlying data structure
  * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.7
  */
-class OtherPrimesInfoParameter extends RegisteredJWKParameter
+class OtherPrimesInfoParameter extends JWKParameter
 {
 	/**
 	 * Constructor

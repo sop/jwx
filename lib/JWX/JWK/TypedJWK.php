@@ -18,7 +18,6 @@ use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\OtherPrimesInfoParameter;
 use JWX\JWK\Parameter\PrivateExponentParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\SecondPrimeFactorParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
@@ -52,7 +51,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasAlgorithmParameter() {
-		return $this->has(RegisteredJWKParameter::P_ALG);
+		return $this->has(JWKParameter::P_ALG);
 	}
 	
 	/**
@@ -63,7 +62,7 @@ trait TypedJWK
 	 * @return AlgorithmParameter
 	 */
 	public function algorithmParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_ALG), 
+		return self::_checkType($this->get(JWKParameter::P_ALG), 
 			AlgorithmParameter::class);
 	}
 	
@@ -73,7 +72,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasCurveParameter() {
-		return $this->has(RegisteredJWKParameter::P_CRV);
+		return $this->has(JWKParameter::P_CRV);
 	}
 	
 	/**
@@ -84,7 +83,7 @@ trait TypedJWK
 	 * @return CurveParameter
 	 */
 	public function curveParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_CRV), 
+		return self::_checkType($this->get(JWKParameter::P_CRV), 
 			CurveParameter::class);
 	}
 	
@@ -94,7 +93,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasECCPrivateKeyParameter() {
-		return $this->has(RegisteredJWKParameter::P_ECC_D);
+		return $this->has(JWKParameter::P_ECC_D);
 	}
 	
 	/**
@@ -105,7 +104,7 @@ trait TypedJWK
 	 * @return ECCPrivateKeyParameter
 	 */
 	public function ECCPrivateKeyParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_ECC_D), 
+		return self::_checkType($this->get(JWKParameter::P_ECC_D), 
 			ECCPrivateKeyParameter::class);
 	}
 	
@@ -115,7 +114,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasExponentParameter() {
-		return $this->has(RegisteredJWKParameter::P_E);
+		return $this->has(JWKParameter::P_E);
 	}
 	
 	/**
@@ -126,7 +125,7 @@ trait TypedJWK
 	 * @return ExponentParameter
 	 */
 	public function exponentParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_E), 
+		return self::_checkType($this->get(JWKParameter::P_E), 
 			ExponentParameter::class);
 	}
 	
@@ -136,7 +135,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasFirstCRTCoefficientParameter() {
-		return $this->has(RegisteredJWKParameter::P_QI);
+		return $this->has(JWKParameter::P_QI);
 	}
 	
 	/**
@@ -147,7 +146,7 @@ trait TypedJWK
 	 * @return FirstCRTCoefficientParameter
 	 */
 	public function firstCRTCoefficientParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_QI), 
+		return self::_checkType($this->get(JWKParameter::P_QI), 
 			FirstCRTCoefficientParameter::class);
 	}
 	
@@ -157,7 +156,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasFirstFactorCRTExponentParameter() {
-		return $this->has(RegisteredJWKParameter::P_DP);
+		return $this->has(JWKParameter::P_DP);
 	}
 	
 	/**
@@ -168,7 +167,7 @@ trait TypedJWK
 	 * @return FirstFactorCRTExponentParameter
 	 */
 	public function firstFactorCRTExponentParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_DP), 
+		return self::_checkType($this->get(JWKParameter::P_DP), 
 			FirstFactorCRTExponentParameter::class);
 	}
 	
@@ -178,7 +177,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasFirstPrimeFactorParameter() {
-		return $this->has(RegisteredJWKParameter::P_P);
+		return $this->has(JWKParameter::P_P);
 	}
 	
 	/**
@@ -189,7 +188,7 @@ trait TypedJWK
 	 * @return FirstPrimeFactorParameter
 	 */
 	public function firstPrimeFactorParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_P), 
+		return self::_checkType($this->get(JWKParameter::P_P), 
 			FirstPrimeFactorParameter::class);
 	}
 	
@@ -199,7 +198,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasKeyIDParameter() {
-		return $this->has(RegisteredJWKParameter::P_KID);
+		return $this->has(JWKParameter::P_KID);
 	}
 	
 	/**
@@ -210,7 +209,7 @@ trait TypedJWK
 	 * @return KeyIDParameter
 	 */
 	public function keyIDParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_KID), 
+		return self::_checkType($this->get(JWKParameter::P_KID), 
 			KeyIDParameter::class);
 	}
 	
@@ -220,7 +219,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasKeyOperationsParameter() {
-		return $this->has(RegisteredJWKParameter::P_KEY_OPS);
+		return $this->has(JWKParameter::P_KEY_OPS);
 	}
 	
 	/**
@@ -231,7 +230,7 @@ trait TypedJWK
 	 * @return KeyOperationsParameter
 	 */
 	public function keyOperationsParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_KEY_OPS), 
+		return self::_checkType($this->get(JWKParameter::P_KEY_OPS), 
 			KeyOperationsParameter::class);
 	}
 	
@@ -241,7 +240,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasKeyTypeParameter() {
-		return $this->has(RegisteredJWKParameter::P_KTY);
+		return $this->has(JWKParameter::P_KTY);
 	}
 	
 	/**
@@ -252,7 +251,7 @@ trait TypedJWK
 	 * @return KeyTypeParameter
 	 */
 	public function keyTypeParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_KTY), 
+		return self::_checkType($this->get(JWKParameter::P_KTY), 
 			KeyTypeParameter::class);
 	}
 	
@@ -262,7 +261,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasKeyValueParameter() {
-		return $this->has(RegisteredJWKParameter::P_K);
+		return $this->has(JWKParameter::P_K);
 	}
 	
 	/**
@@ -273,7 +272,7 @@ trait TypedJWK
 	 * @return KeyValueParameter
 	 */
 	public function keyValueParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_K), 
+		return self::_checkType($this->get(JWKParameter::P_K), 
 			KeyValueParameter::class);
 	}
 	
@@ -283,7 +282,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasModulusParameter() {
-		return $this->has(RegisteredJWKParameter::P_N);
+		return $this->has(JWKParameter::P_N);
 	}
 	
 	/**
@@ -294,7 +293,7 @@ trait TypedJWK
 	 * @return ModulusParameter
 	 */
 	public function modulusParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_N), 
+		return self::_checkType($this->get(JWKParameter::P_N), 
 			ModulusParameter::class);
 	}
 	
@@ -304,7 +303,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasOtherPrimesInfoParameter() {
-		return $this->has(RegisteredJWKParameter::P_OTH);
+		return $this->has(JWKParameter::P_OTH);
 	}
 	
 	/**
@@ -315,7 +314,7 @@ trait TypedJWK
 	 * @return OtherPrimesInfoParameter
 	 */
 	public function otherPrimesInfoParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_OTH), 
+		return self::_checkType($this->get(JWKParameter::P_OTH), 
 			OtherPrimesInfoParameter::class);
 	}
 	
@@ -325,7 +324,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasPrivateExponentParameter() {
-		return $this->has(RegisteredJWKParameter::P_RSA_D);
+		return $this->has(JWKParameter::P_RSA_D);
 	}
 	
 	/**
@@ -336,7 +335,7 @@ trait TypedJWK
 	 * @return PrivateExponentParameter
 	 */
 	public function privateExponentParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_RSA_D), 
+		return self::_checkType($this->get(JWKParameter::P_RSA_D), 
 			PrivateExponentParameter::class);
 	}
 	
@@ -346,7 +345,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasPublicKeyUseParameter() {
-		return $this->has(RegisteredJWKParameter::P_USE);
+		return $this->has(JWKParameter::P_USE);
 	}
 	
 	/**
@@ -357,7 +356,7 @@ trait TypedJWK
 	 * @return PublicKeyUseParameter
 	 */
 	public function publicKeyUseParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_USE), 
+		return self::_checkType($this->get(JWKParameter::P_USE), 
 			PublicKeyUseParameter::class);
 	}
 	
@@ -367,7 +366,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasSecondFactorCRTExponentParameter() {
-		return $this->has(RegisteredJWKParameter::P_DQ);
+		return $this->has(JWKParameter::P_DQ);
 	}
 	
 	/**
@@ -378,7 +377,7 @@ trait TypedJWK
 	 * @return SecondFactorCRTExponentParameter
 	 */
 	public function secondFactorCRTExponentParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_DQ), 
+		return self::_checkType($this->get(JWKParameter::P_DQ), 
 			SecondFactorCRTExponentParameter::class);
 	}
 	
@@ -388,7 +387,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasSecondPrimeFactorParameter() {
-		return $this->has(RegisteredJWKParameter::P_Q);
+		return $this->has(JWKParameter::P_Q);
 	}
 	
 	/**
@@ -399,7 +398,7 @@ trait TypedJWK
 	 * @return SecondPrimeFactorParameter
 	 */
 	public function secondPrimeFactorParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_Q), 
+		return self::_checkType($this->get(JWKParameter::P_Q), 
 			SecondPrimeFactorParameter::class);
 	}
 	
@@ -409,7 +408,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasXCoordinateParameter() {
-		return $this->has(RegisteredJWKParameter::P_X);
+		return $this->has(JWKParameter::P_X);
 	}
 	
 	/**
@@ -420,7 +419,7 @@ trait TypedJWK
 	 * @return XCoordinateParameter
 	 */
 	public function XCoordinateParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_X), 
+		return self::_checkType($this->get(JWKParameter::P_X), 
 			XCoordinateParameter::class);
 	}
 	
@@ -430,7 +429,7 @@ trait TypedJWK
 	 * @return bool
 	 */
 	public function hasYCoordinateParameter() {
-		return $this->has(RegisteredJWKParameter::P_Y);
+		return $this->has(JWKParameter::P_Y);
 	}
 	
 	/**
@@ -441,7 +440,7 @@ trait TypedJWK
 	 * @return YCoordinateParameter
 	 */
 	public function YCoordinateParameter() {
-		return self::_checkType($this->get(RegisteredJWKParameter::P_Y), 
+		return self::_checkType($this->get(JWKParameter::P_Y), 
 			YCoordinateParameter::class);
 	}
 	

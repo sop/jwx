@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.10
  */
-class ContentTypeParameter extends RegisteredJWTParameter
+class ContentTypeParameter extends JWTParameter
 {
 	/**
 	 * Content type for the nested JWT.

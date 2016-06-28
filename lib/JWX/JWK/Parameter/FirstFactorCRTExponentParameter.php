@@ -10,7 +10,7 @@ use JWX\JWK\Parameter\Feature\Base64UIntValue;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.4
  */
-class FirstFactorCRTExponentParameter extends RegisteredJWKParameter
+class FirstFactorCRTExponentParameter extends JWKParameter
 {
 	use Base64UIntValue;
 	

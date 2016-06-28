@@ -8,7 +8,7 @@ namespace JWX\JWK\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4.2
  */
-class PublicKeyUseParameter extends RegisteredJWKParameter
+class PublicKeyUseParameter extends JWKParameter
 {
 	const USE_SIGNATURE = "sig";
 	const USE_ENCRYPTION = "enc";

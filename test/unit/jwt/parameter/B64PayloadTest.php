@@ -2,7 +2,6 @@
 
 use JWX\JWT\Parameter\B64PayloadParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -23,8 +22,7 @@ class B64PayloadParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(
-			RegisteredJWTParameter::PARAM_BASE64URL_ENCODE_PAYLOAD, 
+		$this->assertEquals(JWTParameter::PARAM_BASE64URL_ENCODE_PAYLOAD, 
 			$param->name());
 	}
 }

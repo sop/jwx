@@ -4,7 +4,7 @@ use JWX\JWA\JWA;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\ContentTypeParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
 
 
@@ -26,7 +26,7 @@ class JOSETest extends PHPUnit_Framework_TestCase
 	 * @param JOSE $jose
 	 */
 	public function testHas(JOSE $jose) {
-		$this->assertTrue($jose->has(RegisteredJWTParameter::PARAM_TYPE));
+		$this->assertTrue($jose->has(JWTParameter::PARAM_TYPE));
 	}
 	
 	/**

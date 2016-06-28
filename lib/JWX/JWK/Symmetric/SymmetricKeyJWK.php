@@ -6,7 +6,6 @@ use JWX\JWK\JWK;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\KeyValueParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\Util\Base64;
 
 
@@ -26,8 +25,8 @@ class SymmetricKeyJWK extends JWK
 	 */
 	const MANAGED_PARAMS = array(
 		/* @formatter:off */
-		RegisteredJWKParameter::PARAM_KEY_TYPE, 
-		RegisteredJWKParameter::PARAM_KEY_VALUE
+		JWKParameter::PARAM_KEY_TYPE, 
+		JWKParameter::PARAM_KEY_VALUE
 		/* @formatter:on */
 	);
 	

@@ -2,7 +2,7 @@
 
 namespace JWX\JWK;
 
-use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\Parameter\JWKParameter;
 
 
 /**
@@ -128,7 +128,7 @@ class JWKSet implements \Countable, \IteratorAggregate
 	 * @return JWK|null Null if not found
 	 */
 	protected function _getKeyByID($id) {
-		$map = $this->_getMapping(RegisteredJWKParameter::PARAM_KEY_ID);
+		$map = $this->_getMapping(JWKParameter::PARAM_KEY_ID);
 		return isset($map[$id]) ? $map[$id] : null;
 	}
 	

@@ -2,7 +2,6 @@
 
 use JWX\JWT\Parameter\AuthenticationTagParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -23,7 +22,7 @@ class AuthenticationTagParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_AUTHENTICATION_TAG, 
+		$this->assertEquals(JWTParameter::PARAM_AUTHENTICATION_TAG, 
 			$param->name());
 	}
 	

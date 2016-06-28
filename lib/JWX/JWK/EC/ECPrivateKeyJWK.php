@@ -12,7 +12,6 @@ use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\ECCPrivateKeyParameter;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
 
@@ -35,10 +34,10 @@ class ECPrivateKeyJWK extends PrivateKeyJWK
 	 */
 	const MANAGED_PARAMS = array(
 		/* @formatter:off */
-		RegisteredJWKParameter::PARAM_KEY_TYPE, 
-		RegisteredJWKParameter::PARAM_CURVE, 
-		RegisteredJWKParameter::PARAM_X_COORDINATE, 
-		RegisteredJWKParameter::PARAM_ECC_PRIVATE_KEY
+		JWKParameter::PARAM_KEY_TYPE, 
+		JWKParameter::PARAM_CURVE, 
+		JWKParameter::PARAM_X_COORDINATE, 
+		JWKParameter::PARAM_ECC_PRIVATE_KEY
 		/* @formatter:on */
 	);
 	
@@ -59,7 +58,7 @@ class ECPrivateKeyJWK extends PrivateKeyJWK
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
 		// cast ECC private key parameter to correct class
-		$key = RegisteredJWKParameter::PARAM_ECC_PRIVATE_KEY;
+		$key = JWKParameter::PARAM_ECC_PRIVATE_KEY;
 		$this->_parameters[$key] = new ECCPrivateKeyParameter(
 			$this->_parameters[$key]->value());
 	}

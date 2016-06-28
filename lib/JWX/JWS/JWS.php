@@ -9,7 +9,7 @@ use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\CriticalParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
 
 
@@ -113,10 +113,9 @@ class JWS
 		// ensure that if b64 parameter is used, it's marked critical
 		if ($header->hasB64Payload()) {
 			if (!$header->hasCritical()) {
-				$crit = new CriticalParameter(RegisteredJWTParameter::P_B64);
+				$crit = new CriticalParameter(JWTParameter::P_B64);
 			} else {
-				$crit = $header->critical()->withParamName(
-					RegisteredJWTParameter::P_B64);
+				$crit = $header->critical()->withParamName(JWTParameter::P_B64);
 			}
 			$header = $header->withParameters($crit);
 		}

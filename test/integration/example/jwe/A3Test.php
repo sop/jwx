@@ -4,7 +4,7 @@ use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
 use JWX\JWK\JWK;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
+use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
@@ -46,7 +46,7 @@ class JWEUsingA128KWAndA128CBCTest extends PHPUnit_Framework_TestCase
 	
 	public function testJWKKey() {
 		$jwk = SymmetricKeyJWK::fromJSON(self::$_jwkJSON);
-		$key = $jwk->get(RegisteredJWKParameter::P_K)->key();
+		$key = $jwk->get(JWKParameter::P_K)->key();
 		$this->assertEquals(16, strlen($key));
 		return $key;
 	}

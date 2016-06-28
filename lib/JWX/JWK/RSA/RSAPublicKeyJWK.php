@@ -12,7 +12,6 @@ use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\ModulusParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -33,9 +32,9 @@ class RSAPublicKeyJWK extends PublicKeyJWK
 	 */
 	const MANAGED_PARAMS = array(
 		/* @formatter:off */
-		RegisteredJWKParameter::PARAM_KEY_TYPE,
-		RegisteredJWKParameter::PARAM_MODULUS,
-		RegisteredJWKParameter::PARAM_EXPONENT
+		JWKParameter::PARAM_KEY_TYPE,
+		JWKParameter::PARAM_MODULUS,
+		JWKParameter::PARAM_EXPONENT
 		/* @formatter:on */
 	);
 	

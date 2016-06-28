@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.11
  */
-class CriticalParameter extends RegisteredJWTParameter
+class CriticalParameter extends JWTParameter
 {
 	/**
 	 * Constructor

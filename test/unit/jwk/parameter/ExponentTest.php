@@ -2,7 +2,6 @@
 
 use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -23,7 +22,6 @@ class ExponentParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_EXPONENT, 
-			$param->name());
+		$this->assertEquals(JWKParameter::PARAM_EXPONENT, $param->name());
 	}
 }

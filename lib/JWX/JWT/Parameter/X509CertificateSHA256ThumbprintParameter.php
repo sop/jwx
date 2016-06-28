@@ -10,7 +10,7 @@ use JWX\JWT\Parameter\Feature\Base64URLValue;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.8
  */
-class X509CertificateSHA256ThumbprintParameter extends RegisteredJWTParameter
+class X509CertificateSHA256ThumbprintParameter extends JWTParameter
 {
 	use Base64URLValue;
 	

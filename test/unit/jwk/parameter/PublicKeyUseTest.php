@@ -2,7 +2,6 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -23,7 +22,6 @@ class PublicKeyUseParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_PUBLIC_KEY_USE, 
-			$param->name());
+		$this->assertEquals(JWKParameter::PARAM_PUBLIC_KEY_USE, $param->name());
 	}
 }

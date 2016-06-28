@@ -2,7 +2,6 @@
 
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -23,8 +22,7 @@ class CriticalParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_CRITICAL, 
-			$param->name());
+		$this->assertEquals(JWTParameter::PARAM_CRITICAL, $param->name());
 	}
 	
 	/**

@@ -10,7 +10,7 @@ use JWX\JWK\Parameter\Feature\Base64UIntValue;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-6.3.1.1
  */
-class ModulusParameter extends RegisteredJWKParameter
+class ModulusParameter extends JWKParameter
 {
 	use Base64UIntValue;
 	

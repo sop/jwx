@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\JWT\Parameter\Feature\Base64URLValue;
+
 
 /**
  * Implements 'Y Coordinate' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWK\Parameter;
  */
 class YCoordinateParameter extends CoordinateParameter
 {
+	use Base64URLValue;
+	
 	/**
 	 * Constructor
 	 *

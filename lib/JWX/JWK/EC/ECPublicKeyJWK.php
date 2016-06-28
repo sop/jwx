@@ -10,7 +10,6 @@ use JWX\JWK\JWK;
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
 
@@ -31,9 +30,9 @@ class ECPublicKeyJWK extends PublicKeyJWK
 	 */
 	const MANAGED_PARAMS = array(
 		/* @formatter:off */
-		RegisteredJWKParameter::PARAM_KEY_TYPE, 
-		RegisteredJWKParameter::PARAM_CURVE, 
-		RegisteredJWKParameter::PARAM_X_COORDINATE
+		JWKParameter::PARAM_KEY_TYPE, 
+		JWKParameter::PARAM_CURVE, 
+		JWKParameter::PARAM_X_COORDINATE
 		/* @formatter:on */
 	);
 	

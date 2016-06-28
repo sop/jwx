@@ -8,7 +8,7 @@ namespace JWX\JWK\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4.4
  */
-class AlgorithmParameter extends RegisteredJWKParameter
+class AlgorithmParameter extends JWKParameter
 {
 	/**
 	 * Constructor

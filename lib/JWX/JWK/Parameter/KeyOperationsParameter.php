@@ -8,7 +8,7 @@ namespace JWX\JWK\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4.3
  */
-class KeyOperationsParameter extends RegisteredJWKParameter
+class KeyOperationsParameter extends JWKParameter
 {
 	const OP_SIGN = "sign";
 	const OP_VERIFY = "verify";

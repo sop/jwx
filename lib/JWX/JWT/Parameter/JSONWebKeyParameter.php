@@ -10,7 +10,7 @@ use JWX\JWK\JWK;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.3
  */
-class JSONWebKeyParameter extends RegisteredJWTParameter
+class JSONWebKeyParameter extends JWTParameter
 {
 	/**
 	 * Constructor

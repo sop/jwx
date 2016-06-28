@@ -8,7 +8,7 @@ namespace JWX\JWT\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7515#section-4.1.4
  */
-class KeyIDParameter extends RegisteredJWTParameter
+class KeyIDParameter extends JWTParameter
 {
 	/**
 	 * Constructor

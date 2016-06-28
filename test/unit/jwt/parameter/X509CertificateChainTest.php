@@ -1,7 +1,6 @@
 <?php
 
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\X509CertificateChainParameter;
 use JWX\Util\Base64;
 
@@ -25,8 +24,8 @@ class X509CertificateChainParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(
-			RegisteredJWTParameter::PARAM_X509_CERTIFICATE_CHAIN, $param->name());
+		$this->assertEquals(JWTParameter::PARAM_X509_CERTIFICATE_CHAIN, 
+			$param->name());
 	}
 	
 	/**

@@ -3,7 +3,6 @@
 use JWX\JWA\JWA;
 use JWX\JWK\Parameter\AlgorithmParameter;
 use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -24,7 +23,6 @@ class JWKAlgorithmParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_ALGORITHM, 
-			$param->name());
+		$this->assertEquals(JWKParameter::PARAM_ALGORITHM, $param->name());
 	}
 }

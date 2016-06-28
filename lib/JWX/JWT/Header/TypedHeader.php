@@ -16,7 +16,6 @@ use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\KeyIDParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
 use JWX\JWT\Parameter\X509CertificateChainParameter;
 use JWX\JWT\Parameter\X509CertificateSHA1ThumbprintParameter;
@@ -53,7 +52,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasAlgorithm() {
-		return $this->has(RegisteredJWTParameter::P_ALG);
+		return $this->has(JWTParameter::P_ALG);
 	}
 	
 	/**
@@ -64,7 +63,7 @@ trait TypedHeader
 	 * @return AlgorithmParameter
 	 */
 	public function algorithm() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_ALG), 
+		return self::_checkType($this->get(JWTParameter::P_ALG), 
 			AlgorithmParameter::class);
 	}
 	
@@ -74,7 +73,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasAuthenticationTag() {
-		return $this->has(RegisteredJWTParameter::P_TAG);
+		return $this->has(JWTParameter::P_TAG);
 	}
 	
 	/**
@@ -85,7 +84,7 @@ trait TypedHeader
 	 * @return AuthenticationTagParameter
 	 */
 	public function authenticationTag() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_TAG), 
+		return self::_checkType($this->get(JWTParameter::P_TAG), 
 			AuthenticationTagParameter::class);
 	}
 	
@@ -95,7 +94,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasB64Payload() {
-		return $this->has(RegisteredJWTParameter::P_B64);
+		return $this->has(JWTParameter::P_B64);
 	}
 	
 	/**
@@ -106,7 +105,7 @@ trait TypedHeader
 	 * @return B64PayloadParameter
 	 */
 	public function B64Payload() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_B64), 
+		return self::_checkType($this->get(JWTParameter::P_B64), 
 			B64PayloadParameter::class);
 	}
 	
@@ -116,7 +115,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasCompressionAlgorithm() {
-		return $this->has(RegisteredJWTParameter::P_ZIP);
+		return $this->has(JWTParameter::P_ZIP);
 	}
 	
 	/**
@@ -127,7 +126,7 @@ trait TypedHeader
 	 * @return CompressionAlgorithmParameter
 	 */
 	public function compressionAlgorithm() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_ZIP), 
+		return self::_checkType($this->get(JWTParameter::P_ZIP), 
 			CompressionAlgorithmParameter::class);
 	}
 	
@@ -137,7 +136,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasContentType() {
-		return $this->has(RegisteredJWTParameter::P_CTY);
+		return $this->has(JWTParameter::P_CTY);
 	}
 	
 	/**
@@ -148,7 +147,7 @@ trait TypedHeader
 	 * @return ContentTypeParameter
 	 */
 	public function contentType() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_CTY), 
+		return self::_checkType($this->get(JWTParameter::P_CTY), 
 			ContentTypeParameter::class);
 	}
 	
@@ -158,7 +157,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasCritical() {
-		return $this->has(RegisteredJWTParameter::P_CRIT);
+		return $this->has(JWTParameter::P_CRIT);
 	}
 	
 	/**
@@ -169,7 +168,7 @@ trait TypedHeader
 	 * @return CriticalParameter
 	 */
 	public function critical() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_CRIT), 
+		return self::_checkType($this->get(JWTParameter::P_CRIT), 
 			CriticalParameter::class);
 	}
 	
@@ -179,7 +178,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasEncryptionAlgorithm() {
-		return $this->has(RegisteredJWTParameter::P_ENC);
+		return $this->has(JWTParameter::P_ENC);
 	}
 	
 	/**
@@ -190,7 +189,7 @@ trait TypedHeader
 	 * @return EncryptionAlgorithmParameter
 	 */
 	public function encryptionAlgorithm() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_ENC), 
+		return self::_checkType($this->get(JWTParameter::P_ENC), 
 			EncryptionAlgorithmParameter::class);
 	}
 	
@@ -200,7 +199,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasInitializationVector() {
-		return $this->has(RegisteredJWTParameter::P_IV);
+		return $this->has(JWTParameter::P_IV);
 	}
 	
 	/**
@@ -211,7 +210,7 @@ trait TypedHeader
 	 * @return InitializationVectorParameter
 	 */
 	public function initializationVector() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_IV), 
+		return self::_checkType($this->get(JWTParameter::P_IV), 
 			InitializationVectorParameter::class);
 	}
 	
@@ -221,7 +220,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasJSONWebKey() {
-		return $this->has(RegisteredJWTParameter::P_JWK);
+		return $this->has(JWTParameter::P_JWK);
 	}
 	
 	/**
@@ -232,7 +231,7 @@ trait TypedHeader
 	 * @return JSONWebKeyParameter
 	 */
 	public function JSONWebKey() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_JWK), 
+		return self::_checkType($this->get(JWTParameter::P_JWK), 
 			JSONWebKeyParameter::class);
 	}
 	
@@ -242,7 +241,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasJWKSetURL() {
-		return $this->has(RegisteredJWTParameter::P_JKU);
+		return $this->has(JWTParameter::P_JKU);
 	}
 	
 	/**
@@ -253,7 +252,7 @@ trait TypedHeader
 	 * @return JWKSetURLParameter
 	 */
 	public function JWKSetURL() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_JKU), 
+		return self::_checkType($this->get(JWTParameter::P_JKU), 
 			JWKSetURLParameter::class);
 	}
 	
@@ -263,7 +262,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasKeyID() {
-		return $this->has(RegisteredJWTParameter::P_KID);
+		return $this->has(JWTParameter::P_KID);
 	}
 	
 	/**
@@ -274,7 +273,7 @@ trait TypedHeader
 	 * @return KeyIDParameter
 	 */
 	public function keyID() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_KID), 
+		return self::_checkType($this->get(JWTParameter::P_KID), 
 			KeyIDParameter::class);
 	}
 	
@@ -284,7 +283,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasPBES2Count() {
-		return $this->has(RegisteredJWTParameter::P_P2C);
+		return $this->has(JWTParameter::P_P2C);
 	}
 	
 	/**
@@ -295,7 +294,7 @@ trait TypedHeader
 	 * @return PBES2CountParameter
 	 */
 	public function PBES2Count() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_P2C), 
+		return self::_checkType($this->get(JWTParameter::P_P2C), 
 			PBES2CountParameter::class);
 	}
 	
@@ -305,7 +304,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasPBES2SaltInput() {
-		return $this->has(RegisteredJWTParameter::P_P2S);
+		return $this->has(JWTParameter::P_P2S);
 	}
 	
 	/**
@@ -316,7 +315,7 @@ trait TypedHeader
 	 * @return PBES2SaltInputParameter
 	 */
 	public function PBES2SaltInput() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_P2S), 
+		return self::_checkType($this->get(JWTParameter::P_P2S), 
 			PBES2SaltInputParameter::class);
 	}
 	
@@ -326,7 +325,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasType() {
-		return $this->has(RegisteredJWTParameter::P_TYP);
+		return $this->has(JWTParameter::P_TYP);
 	}
 	
 	/**
@@ -337,7 +336,7 @@ trait TypedHeader
 	 * @return TypeParameter
 	 */
 	public function type() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_TYP), 
+		return self::_checkType($this->get(JWTParameter::P_TYP), 
 			TypeParameter::class);
 	}
 	
@@ -347,7 +346,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasX509CertificateChain() {
-		return $this->has(RegisteredJWTParameter::P_X5C);
+		return $this->has(JWTParameter::P_X5C);
 	}
 	
 	/**
@@ -358,7 +357,7 @@ trait TypedHeader
 	 * @return X509CertificateChainParameter
 	 */
 	public function X509CertificateChain() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_X5C), 
+		return self::_checkType($this->get(JWTParameter::P_X5C), 
 			X509CertificateChainParameter::class);
 	}
 	
@@ -369,7 +368,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasX509CertificateSHA1Thumbprint() {
-		return $this->has(RegisteredJWTParameter::P_X5T);
+		return $this->has(JWTParameter::P_X5T);
 	}
 	
 	/**
@@ -380,7 +379,7 @@ trait TypedHeader
 	 * @return X509CertificateSHA1ThumbprintParameter
 	 */
 	public function X509CertificateSHA1Thumbprint() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_X5T), 
+		return self::_checkType($this->get(JWTParameter::P_X5T), 
 			X509CertificateSHA1ThumbprintParameter::class);
 	}
 	
@@ -391,7 +390,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasX509CertificateSHA256Thumbprint() {
-		return $this->has(RegisteredJWTParameter::P_X5TS256);
+		return $this->has(JWTParameter::P_X5TS256);
 	}
 	
 	/**
@@ -402,7 +401,7 @@ trait TypedHeader
 	 * @return X509CertificateSHA256ThumbprintParameter
 	 */
 	public function X509CertificateSHA256Thumbprint() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_X5TS256), 
+		return self::_checkType($this->get(JWTParameter::P_X5TS256), 
 			X509CertificateSHA256ThumbprintParameter::class);
 	}
 	
@@ -412,7 +411,7 @@ trait TypedHeader
 	 * @return bool
 	 */
 	public function hasX509URL() {
-		return $this->has(RegisteredJWTParameter::P_X5U);
+		return $this->has(JWTParameter::P_X5U);
 	}
 	
 	/**
@@ -423,7 +422,7 @@ trait TypedHeader
 	 * @return X509URLParameter
 	 */
 	public function X509URL() {
-		return self::_checkType($this->get(RegisteredJWTParameter::P_X5U), 
+		return self::_checkType($this->get(JWTParameter::P_X5U), 
 			X509URLParameter::class);
 	}
 	

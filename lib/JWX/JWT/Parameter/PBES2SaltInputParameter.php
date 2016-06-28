@@ -11,7 +11,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.1
  */
-class PBES2SaltInputParameter extends RegisteredJWTParameter
+class PBES2SaltInputParameter extends JWTParameter
 {
 	use Base64URLValue;
 	

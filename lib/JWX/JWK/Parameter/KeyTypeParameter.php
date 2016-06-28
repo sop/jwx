@@ -8,7 +8,7 @@ namespace JWX\JWK\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#section-4.1
  */
-class KeyTypeParameter extends RegisteredJWKParameter
+class KeyTypeParameter extends JWKParameter
 {
 	/**
 	 * Octet sequence key type.

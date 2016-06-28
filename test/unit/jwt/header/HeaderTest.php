@@ -3,7 +3,6 @@
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\ContentTypeParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
 
 
@@ -61,7 +60,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	 * @param Header $header
 	 */
 	public function testGet(Header $header) {
-		$param = $header->get(RegisteredJWTParameter::PARAM_TYPE);
+		$param = $header->get(JWTParameter::PARAM_TYPE);
 		$this->assertInstanceOf(TypeParameter::class, $param);
 	}
 	
@@ -125,7 +124,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase
 	public function testModify(Header $header) {
 		$header = $header->withParameters(new TypeParameter("modified"));
 		$this->assertEquals("modified", 
-			$header->get(RegisteredJWTParameter::PARAM_TYPE)
+			$header->get(JWTParameter::PARAM_TYPE)
 				->value());
 	}
 	

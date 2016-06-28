@@ -2,7 +2,6 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -25,7 +24,7 @@ class PBES2SaltInputParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_PBES2_SALT_INPUT, 
+		$this->assertEquals(JWTParameter::PARAM_PBES2_SALT_INPUT, 
 			$param->name());
 	}
 	

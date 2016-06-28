@@ -11,7 +11,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-4.7.1.1
  */
-class InitializationVectorParameter extends RegisteredJWTParameter
+class InitializationVectorParameter extends JWTParameter
 {
 	use Base64URLValue;
 	

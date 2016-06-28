@@ -8,7 +8,7 @@ namespace JWX\JWK\Parameter;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-6.2.1.1
  */
-class CurveParameter extends RegisteredJWKParameter
+class CurveParameter extends JWKParameter
 {
 	const CURVE_P256 = "P-256";
 	const CURVE_P384 = "P-384";

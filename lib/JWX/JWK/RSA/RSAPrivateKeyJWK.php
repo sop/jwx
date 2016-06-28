@@ -16,7 +16,6 @@ use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\PrivateExponentParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\SecondPrimeFactorParameter;
 
@@ -39,15 +38,15 @@ class RSAPrivateKeyJWK extends PrivateKeyJWK
 	 */
 	const MANAGED_PARAMS = array(
 		/* @formatter:off */
-		RegisteredJWKParameter::PARAM_KEY_TYPE,
-		RegisteredJWKParameter::PARAM_MODULUS,
-		RegisteredJWKParameter::PARAM_EXPONENT,
-		RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT,
-		RegisteredJWKParameter::PARAM_FIRST_PRIME_FACTOR,
-		RegisteredJWKParameter::PARAM_SECOND_PRIME_FACTOR,
-		RegisteredJWKParameter::PARAM_FIRST_FACTOR_CRT_EXPONENT,
-		RegisteredJWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT,
-		RegisteredJWKParameter::PARAM_FIRST_CRT_COEFFICIENT
+		JWKParameter::PARAM_KEY_TYPE,
+		JWKParameter::PARAM_MODULUS,
+		JWKParameter::PARAM_EXPONENT,
+		JWKParameter::PARAM_PRIVATE_EXPONENT,
+		JWKParameter::PARAM_FIRST_PRIME_FACTOR,
+		JWKParameter::PARAM_SECOND_PRIME_FACTOR,
+		JWKParameter::PARAM_FIRST_FACTOR_CRT_EXPONENT,
+		JWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT,
+		JWKParameter::PARAM_FIRST_CRT_COEFFICIENT
 		/* @formatter:on */
 	);
 	
@@ -68,7 +67,7 @@ class RSAPrivateKeyJWK extends PrivateKeyJWK
 			throw new \UnexpectedValueException("Invalid key type.");
 		}
 		// cast private exponent to correct class
-		$key = RegisteredJWKParameter::PARAM_PRIVATE_EXPONENT;
+		$key = JWKParameter::PARAM_PRIVATE_EXPONENT;
 		$this->_parameters[$key] = new PrivateExponentParameter(
 			$this->_parameters[$key]->value());
 	}

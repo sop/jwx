@@ -4,7 +4,6 @@ use JWX\JWA\JWA;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -25,8 +24,7 @@ class JWTAlgorithmParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_ALGORITHM, 
-			$param->name());
+		$this->assertEquals(JWTParameter::PARAM_ALGORITHM, $param->name());
 	}
 	
 	public function testFromAlgo() {

@@ -10,7 +10,7 @@ use JWX\JWK\Parameter\Feature\Base64UIntValue;
  *
  * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.1
  */
-class PrivateExponentParameter extends RegisteredJWKParameter
+class PrivateExponentParameter extends JWKParameter
 {
 	use Base64UIntValue;
 	

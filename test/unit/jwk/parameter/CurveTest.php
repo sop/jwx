@@ -2,7 +2,6 @@
 
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\RegisteredJWKParameter;
 
 
 /**
@@ -25,7 +24,7 @@ class CurveParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWKParameter $param) {
-		$this->assertEquals(RegisteredJWKParameter::PARAM_CURVE, $param->name());
+		$this->assertEquals(JWKParameter::PARAM_CURVE, $param->name());
 	}
 	
 	public function testFromOID() {

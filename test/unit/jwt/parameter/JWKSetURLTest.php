@@ -2,7 +2,6 @@
 
 use JWX\JWT\Parameter\JWKSetURLParameter;
 use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
 
 
 /**
@@ -23,7 +22,6 @@ class JWKSetURLParameterTest extends PHPUnit_Framework_TestCase
 	 * @param JWKParameter $param
 	 */
 	public function testParamName(JWTParameter $param) {
-		$this->assertEquals(RegisteredJWTParameter::PARAM_JWK_SET_URL, 
-			$param->name());
+		$this->assertEquals(JWTParameter::PARAM_JWK_SET_URL, $param->name());
 	}
 }

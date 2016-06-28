@@ -7,7 +7,7 @@ use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\RegisteredJWTParameter;
+use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
 
 
@@ -198,8 +198,8 @@ EOF;
 			43, 65, 49, 50, 56, 75, 87, 0, 217, 96, 147, 112, 150, 117, 70, 247, 
 			127, 8, 155, 137, 174, 42, 80, 215];
 		$expected = implode("", array_map("chr", $expectedBytes));
-		$p2s = $header->get(RegisteredJWTParameter::P_P2S);
-		$alg = $header->get(RegisteredJWTParameter::P_ALG);
+		$p2s = $header->get(JWTParameter::P_P2S);
+		$alg = $header->get(JWTParameter::P_ALG);
 		$salt = $p2s->salt($alg);
 		$this->assertEquals($expected, $salt);
 		return $salt;
@@ -216,8 +216,8 @@ EOF;
 			249, 52, 117, 184, 140, 81, 246, 158, 161, 177, 20, 33, 245, 57, 59, 
 			4];
 		$expected = implode("", array_map("chr", $expectedBytes));
-		$p2s = $header->get(RegisteredJWTParameter::P_P2S);
-		$count = $header->get(RegisteredJWTParameter::P_P2C)->value();
+		$p2s = $header->get(JWTParameter::P_P2S);
+		$count = $header->get(JWTParameter::P_P2C)->value();
 		$key_algo = new PBES2HS256A128KWAlgorithm(self::$_passphrase, 
 			$p2s->saltInput(), $count);
 		$data = $key_algo->encrypt(self::$_cek);
