@@ -3,7 +3,6 @@
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
-use JWX\Util\Base64;
 
 
 /**
@@ -31,6 +30,6 @@ class KeyValueParameter extends JWKParameter
 	 * @return string
 	 */
 	public function key() {
-		return Base64::urlDecode($this->_value);
+		return $this->string();
 	}
 }

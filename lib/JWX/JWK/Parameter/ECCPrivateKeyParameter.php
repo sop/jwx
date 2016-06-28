@@ -3,7 +3,6 @@
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
-use JWX\Util\Base64;
 
 
 /**
@@ -31,6 +30,6 @@ class ECCPrivateKeyParameter extends JWKParameter
 	 * @return string
 	 */
 	public function privateKeyOctets() {
-		return Base64::urlDecode($this->_value);
+		return $this->string();
 	}
 }
