@@ -20,6 +20,10 @@ use JWX\JWK\Parameter\PrivateExponentParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\SecondPrimeFactorParameter;
+use JWX\JWK\Parameter\X509CertificateChainParameter;
+use JWX\JWK\Parameter\X509CertificateSHA1ThumbprintParameter;
+use JWX\JWK\Parameter\X509CertificateSHA256ThumbprintParameter;
+use JWX\JWK\Parameter\X509URLParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
 
@@ -400,6 +404,92 @@ trait TypedJWK
 	public function secondPrimeFactorParameter() {
 		return self::_checkType($this->get(JWKParameter::P_Q), 
 			SecondPrimeFactorParameter::class);
+	}
+	
+	/**
+	 * Check whether the X.509 certificate chain parameter is present.
+	 *
+	 * @return bool
+	 */
+	public function hasX509CertificateChainParameter() {
+		return $this->has(JWKParameter::P_X5C);
+	}
+	
+	/**
+	 * Get the X.509 certificate chain parameter.
+	 *
+	 * @throws \UnexpectedValueException If the parameter has a wrong class
+	 * @throws \LogicException If the parameter is not present
+	 * @return X509CertificateChainParameter
+	 */
+	public function X509CertificateChainParameter() {
+		return self::_checkType($this->get(JWKParameter::P_X5C), 
+			X509CertificateChainParameter::class);
+	}
+	
+	/**
+	 * Check whether the X.509 certificate SHA-1 thumbprint parameter is
+	 * present.
+	 *
+	 * @return bool
+	 */
+	public function hasX509CertificateSHA1ThumbprintParameter() {
+		return $this->has(JWKParameter::P_X5T);
+	}
+	
+	/**
+	 * Get the X.509 certificate SHA-1 thumbprint parameter.
+	 *
+	 * @throws \UnexpectedValueException If the parameter has a wrong class
+	 * @throws \LogicException If the parameter is not present
+	 * @return X509CertificateSHA1ThumbprintParameter
+	 */
+	public function X509CertificateSHA1ThumbprintParameter() {
+		return self::_checkType($this->get(JWKParameter::P_X5T), 
+			X509CertificateSHA1ThumbprintParameter::class);
+	}
+	
+	/**
+	 * Check whether the X.509 certificate SHA-256 thumbprint parameter is
+	 * present.
+	 *
+	 * @return bool
+	 */
+	public function hasX509CertificateSHA256ThumbprintParameter() {
+		return $this->has(JWKParameter::P_X5TS256);
+	}
+	
+	/**
+	 * Get the X.509 certificate SHA-256 thumbprint parameter.
+	 *
+	 * @throws \UnexpectedValueException If the parameter has a wrong class
+	 * @throws \LogicException If the parameter is not present
+	 * @return X509CertificateSHA256ThumbprintParameter
+	 */
+	public function X509CertificateSHA256ThumbprintParameter() {
+		return self::_checkType($this->get(JWKParameter::P_X5TS256), 
+			X509CertificateSHA256ThumbprintParameter::class);
+	}
+	
+	/**
+	 * Check whether the X.509 URL parameter is present.
+	 *
+	 * @return bool
+	 */
+	public function hasX509URLParameter() {
+		return $this->has(JWKParameter::P_X5U);
+	}
+	
+	/**
+	 * Get the X.509 URL parameter.
+	 *
+	 * @throws \UnexpectedValueException If the parameter has a wrong class
+	 * @throws \LogicException If the parameter is not present
+	 * @return X509URLParameter
+	 */
+	public function X509URLParameter() {
+		return self::_checkType($this->get(JWKParameter::P_X5U), 
+			X509URLParameter::class);
 	}
 	
 	/**

@@ -20,8 +20,13 @@ use JWX\JWK\Parameter\PrivateExponentParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 use JWX\JWK\Parameter\SecondPrimeFactorParameter;
+use JWX\JWK\Parameter\X509CertificateChainParameter;
+use JWX\JWK\Parameter\X509CertificateSHA1ThumbprintParameter;
+use JWX\JWK\Parameter\X509CertificateSHA256ThumbprintParameter;
+use JWX\JWK\Parameter\X509URLParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
+use JWX\Util\Base64;
 
 
 /**
@@ -47,6 +52,10 @@ class TypedJWKTest extends PHPUnit_Framework_TestCase
 			new PublicKeyUseParameter(PublicKeyUseParameter::USE_SIGNATURE), 
 			SecondFactorCRTExponentParameter::fromNumber(42), 
 			SecondPrimeFactorParameter::fromNumber(42), 
+			new X509CertificateChainParameter(Base64::encode("\x5\0")), 
+			X509CertificateSHA1ThumbprintParameter::fromString("test"), 
+			X509CertificateSHA256ThumbprintParameter::fromString("test"), 
+			new X509URLParameter("http://example.com/"), 
 			XCoordinateParameter::fromString("\ff"), 
 			YCoordinateParameter::fromString("\xff"));
 	}
@@ -208,6 +217,44 @@ class TypedJWKTest extends PHPUnit_Framework_TestCase
 	public function testSecondPrimeFactor() {
 		$this->assertInstanceOf(SecondPrimeFactorParameter::class, 
 			self::$_jwk->secondPrimeFactorParameter());
+	}
+	
+	public function testHasX509CertificateChain() {
+		$this->assertTrue(self::$_jwk->hasX509CertificateChainParameter());
+	}
+	
+	public function testX509CertificateChain() {
+		$this->assertInstanceOf(X509CertificateChainParameter::class, 
+			self::$_jwk->X509CertificateChainParameter());
+	}
+	
+	public function testHasX509CertificateSHA1Thumbprint() {
+		$this->assertTrue(
+			self::$_jwk->hasX509CertificateSHA1ThumbprintParameter());
+	}
+	
+	public function testX509CertificateSHA1Thumbprint() {
+		$this->assertInstanceOf(X509CertificateSHA1ThumbprintParameter::class, 
+			self::$_jwk->X509CertificateSHA1ThumbprintParameter());
+	}
+	
+	public function testHasX509CertificateSHA256Thumbprint() {
+		$this->assertTrue(
+			self::$_jwk->hasX509CertificateSHA256ThumbprintParameter());
+	}
+	
+	public function testX509CertificateSHA256Thumbprint() {
+		$this->assertInstanceOf(X509CertificateSHA256ThumbprintParameter::class, 
+			self::$_jwk->X509CertificateSHA256ThumbprintParameter());
+	}
+	
+	public function testHasX509URL() {
+		$this->assertTrue(self::$_jwk->hasX509URLParameter());
+	}
+	
+	public function testX509URL() {
+		$this->assertInstanceOf(X509URLParameter::class, 
+			self::$_jwk->X509URLParameter());
 	}
 	
 	public function testHasXCoordinate() {
