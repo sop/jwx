@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\ArrayParameterValue;
+
 
 /**
  * Implements 'Other Primes Info' parameter.
@@ -11,6 +13,8 @@ namespace JWX\JWK\Parameter;
  */
 class OtherPrimesInfoParameter extends JWKParameter
 {
+	use ArrayParameterValue;
+	
 	/**
 	 * Constructor
 	 *
@@ -18,12 +22,5 @@ class OtherPrimesInfoParameter extends JWKParameter
 	 */
 	public function __construct(...$primes) {
 		parent::__construct(self::PARAM_OTHER_PRIMES_INFO, $primes);
-	}
-	
-	public static function fromJSONValue($value) {
-		if (!is_array($value)) {
-			throw new \UnexpectedValueException("oth must be an array.");
-		}
-		return new self(...$value);
 	}
 }
