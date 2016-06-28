@@ -112,6 +112,19 @@ class JWKSetTest extends PHPUnit_Framework_TestCase
 	public function testFromJSON($json) {
 		$jwkset = JWKSet::fromJSON($json);
 		$this->assertInstanceOf(JWKSet::class, $jwkset);
+		return $jwkset;
+	}
+	
+	/**
+	 * @depends testCreate
+	 * @depends testFromJSON
+	 *
+	 * @param JWKSet $ref
+	 * @param JWKSet $jwkset
+	 */
+	public function testRecoded(JWKSet $ref, JWKSet $jwkset) {
+		// clone to reset internal state
+		$this->assertEquals(clone $ref, clone $jwkset);
 	}
 	
 	/**

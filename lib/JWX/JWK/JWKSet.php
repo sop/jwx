@@ -180,14 +180,26 @@ class JWKSet implements \Countable, \IteratorAggregate
 	}
 	
 	/**
+	 * Convert to array.
+	 *
+	 * @return array
+	 */
+	public function toArray() {
+		$data = $this->_additional;
+		$data["keys"] = array_map(
+			function (JWK $jwk) {
+				return $jwk->toArray();
+			}, $this->_jwks);
+		return $data;
+	}
+	
+	/**
 	 * Convert to JSON.
 	 *
 	 * @return string
 	 */
 	public function toJSON() {
-		$data = $this->_additional;
-		$data["keys"] = $this->_jwks;
-		return json_encode((object) $data, JSON_UNESCAPED_SLASHES);
+		return json_encode((object) $this->toArray(), JSON_UNESCAPED_SLASHES);
 	}
 	
 	/**
