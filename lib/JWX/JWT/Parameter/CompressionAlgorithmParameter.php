@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Compression Algorithm' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWT\Parameter;
  */
 class CompressionAlgorithmParameter extends JWTParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Constructor
 	 *

@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Curve' parameter.
@@ -10,8 +12,27 @@ namespace JWX\JWK\Parameter;
  */
 class CurveParameter extends JWKParameter
 {
+	use StringParameterValue;
+	
+	/**
+	 * P-256 Curve
+	 *
+	 * @var string
+	 */
 	const CURVE_P256 = "P-256";
+	
+	/**
+	 * P-384 Curve
+	 *
+	 * @var string
+	 */
 	const CURVE_P384 = "P-384";
+	
+	/**
+	 * P-521 Curve
+	 *
+	 * @var string
+	 */
 	const CURVE_P521 = "P-521";
 	
 	/**

@@ -2,7 +2,7 @@
 
 namespace JWX\JWK\Parameter;
 
-use JWX\JWK\Parameter\Feature\Base64UIntValue;
+use JWX\Parameter\Feature\Base64UIntValue;
 
 
 /**

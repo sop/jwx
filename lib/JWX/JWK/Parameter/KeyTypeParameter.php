@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Key Type' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWK\Parameter;
  */
 class KeyTypeParameter extends JWKParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Octet sequence key type.
 	 */

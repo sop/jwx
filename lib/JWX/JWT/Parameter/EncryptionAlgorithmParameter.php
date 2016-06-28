@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Encryption Algorithm' parameter for JWE headers.
@@ -10,6 +12,8 @@ namespace JWX\JWT\Parameter;
  */
 class EncryptionAlgorithmParameter extends JWTParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Constructor
 	 *

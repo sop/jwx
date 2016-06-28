@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'X.509 URL' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWK\Parameter;
  */
 class X509URLParameter extends JWKParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Constructor
 	 *

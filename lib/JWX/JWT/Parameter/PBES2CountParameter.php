@@ -18,4 +18,14 @@ class PBES2CountParameter extends JWTParameter
 	public function __construct($count) {
 		parent::__construct(self::PARAM_PBES2_COUNT, intval($count));
 	}
+	
+	/**
+	 * Initialize from a JSON value.
+	 *
+	 * @param int $value
+	 * @return self
+	 */
+	public static function fromJSONValue($value) {
+		return new self(intval($value));
+	}
 }

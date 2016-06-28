@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'JWK Set URL' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWT\Parameter;
  */
 class JWKSetURLParameter extends JWTParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Constructor
 	 *

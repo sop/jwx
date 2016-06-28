@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Algorithm' parameter for JWS/JWE headers.
@@ -11,6 +13,8 @@ namespace JWX\JWT\Parameter;
  */
 class AlgorithmParameter extends JWTParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Constructor
 	 *

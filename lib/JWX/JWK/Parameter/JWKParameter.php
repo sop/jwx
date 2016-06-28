@@ -124,12 +124,13 @@ class JWKParameter extends Parameter
 	}
 	
 	/**
-	 * Initialize a concrete JWK parameter instance from a JSON value.
+	 * Initialize from a JSON value.
 	 *
 	 * @param mixed $value
 	 * @return self
 	 */
 	public static function fromJSONValue($value) {
-		return new static($value);
+		throw new \BadMethodCallException(
+			__FUNCTION__ . " must be implemented in a derived class.");
 	}
 }

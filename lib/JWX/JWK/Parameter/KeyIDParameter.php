@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Key ID' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWK\Parameter;
  */
 class KeyIDParameter extends JWKParameter
 {
+	use StringParameterValue;
+	
 	/**
 	 * Constructor
 	 *

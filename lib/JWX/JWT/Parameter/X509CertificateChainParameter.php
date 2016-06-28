@@ -2,6 +2,7 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Parameter\Feature\ArrayParameterValue;
 use JWX\Util\Base64;
 
 
@@ -12,6 +13,8 @@ use JWX\Util\Base64;
  */
 class X509CertificateChainParameter extends JWTParameter
 {
+	use ArrayParameterValue;
+	
 	/**
 	 * Constructor
 	 *
@@ -25,12 +28,5 @@ class X509CertificateChainParameter extends JWTParameter
 			}
 		}
 		parent::__construct(self::PARAM_X509_CERTIFICATE_CHAIN, $certs);
-	}
-	
-	public static function fromJSONValue($value) {
-		if (!is_array($value)) {
-			throw new \UnexpectedValueException("x5c must be an array.");
-		}
-		return new static(...$value);
 	}
 }

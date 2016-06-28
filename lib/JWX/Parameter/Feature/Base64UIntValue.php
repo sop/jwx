@@ -1,14 +1,13 @@
 <?php
 
-namespace JWX\JWK\Parameter\Feature;
+namespace JWX\Parameter\Feature;
 
-use JWX\JWT\Parameter\Feature\Base64URLValue;
 use JWX\Util\Base64;
 use JWX\Util\BigInt;
 
 
 /**
- * Trait for parameter having Base64urlUInt value.
+ * Trait for parameters having Base64urlUInt value.
  *
  * @link https://tools.ietf.org/html/rfc7518#section-2
  */

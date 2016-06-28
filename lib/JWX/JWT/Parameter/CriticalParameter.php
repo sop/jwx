@@ -2,6 +2,8 @@
 
 namespace JWX\JWT\Parameter;
 
+use JWX\Parameter\Feature\ArrayParameterValue;
+
 
 /**
  * Implements 'Critical' parameter.
@@ -10,20 +12,15 @@ namespace JWX\JWT\Parameter;
  */
 class CriticalParameter extends JWTParameter
 {
+	use ArrayParameterValue;
+	
 	/**
 	 * Constructor
 	 *
-	 * @param string[] $names
+	 * @param string ...$names
 	 */
 	public function __construct(...$names) {
 		parent::__construct(self::PARAM_CRITICAL, $names);
-	}
-	
-	public static function fromJSONValue($value) {
-		if (!is_array($value)) {
-			throw new \UnexpectedValueException("crit must be an array.");
-		}
-		return new static(...$value);
 	}
 	
 	/**

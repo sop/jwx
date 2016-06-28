@@ -1,21 +1,16 @@
 <?php
 
-namespace JWX\JWT\Parameter\Feature;
+namespace JWX\Parameter\Feature;
 
 use JWX\Util\Base64;
 
 
 /**
- * Trait for parameter having Base64url value.
+ * Trait for parameters having Base64url value.
  */
 trait Base64URLValue
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param string $value Parameter value
-	 */
-	abstract public function __construct($value);
+	use StringParameterValue;
 	
 	/**
 	 * Initialize from native value.

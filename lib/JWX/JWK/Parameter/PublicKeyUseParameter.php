@@ -2,6 +2,8 @@
 
 namespace JWX\JWK\Parameter;
 
+use JWX\Parameter\Feature\StringParameterValue;
+
 
 /**
  * Implements 'Public Key Use' parameter.
@@ -10,6 +12,8 @@ namespace JWX\JWK\Parameter;
  */
 class PublicKeyUseParameter extends JWKParameter
 {
+	use StringParameterValue;
+	
 	const USE_SIGNATURE = "sig";
 	const USE_ENCRYPTION = "enc";
 	

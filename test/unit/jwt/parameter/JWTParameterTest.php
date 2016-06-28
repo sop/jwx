@@ -13,4 +13,11 @@ class JWTParameterTest extends PHPUnit_Framework_TestCase
 		$param = JWTParameter::fromNameAndValue("unknown", "value");
 		$this->assertInstanceOf(JWTParameter::class, $param);
 	}
+	
+	/**
+	 * @expectedException BadMethodCallException
+	 */
+	public function testFromJSONValueBadCall() {
+		JWTParameter::fromJSONValue(null);
+	}
 }

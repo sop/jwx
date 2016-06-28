@@ -18,4 +18,14 @@ class B64PayloadParameter extends JWTParameter
 	public function __construct($flag) {
 		parent::__construct(self::PARAM_BASE64URL_ENCODE_PAYLOAD, (bool) $flag);
 	}
+	
+	/**
+	 * Initialize from a JSON value.
+	 *
+	 * @param bool $value
+	 * @return self
+	 */
+	public static function fromJSONValue($value) {
+		return new self(boolval($value));
+	}
 }
