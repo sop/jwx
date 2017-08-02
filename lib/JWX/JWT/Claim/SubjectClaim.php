@@ -4,7 +4,6 @@ namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\EqualsValidator;
 
-
 /**
  * Implements 'Subject' claim.
  *
@@ -12,13 +11,14 @@ use JWX\JWT\Claim\Validator\EqualsValidator;
  */
 class SubjectClaim extends RegisteredClaim
 {
-	/**
-	 * Constructor
-	 *
-	 * @param string $subject Subject
-	 */
-	public function __construct($subject) {
-		parent::__construct(self::NAME_SUBJECT, (string) $subject, 
-			new EqualsValidator());
-	}
+    /**
+     * Constructor.
+     *
+     * @param string $subject Subject
+     */
+    public function __construct($subject)
+    {
+        parent::__construct(self::NAME_SUBJECT, (string) $subject,
+            new EqualsValidator());
+    }
 }

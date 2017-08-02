@@ -5,7 +5,6 @@ namespace JWX\JWE\KeyAlgorithm;
 use AESKW\AESKW128;
 use JWX\JWA\JWA;
 
-
 /**
  * Implements AES key wrap with 128-bit key.
  *
@@ -13,15 +12,30 @@ use JWX\JWA\JWA;
  */
 class A128KWAlgorithm extends AESKWAlgorithm
 {
-	protected function _kekSize() {
-		return 16;
-	}
-	
-	protected function _AESKWAlgo() {
-		return new AESKW128();
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_A128KW;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _kekSize()
+    {
+        return 16;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _AESKWAlgo()
+    {
+        return new AESKW128();
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_A128KW;
+    }
 }

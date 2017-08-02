@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
 
-
 /**
  * Implements 'Y Coordinate' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64URLValue;
  */
 class YCoordinateParameter extends CoordinateParameter
 {
-	use Base64URLValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $coord Y coordinate in base64url encoding
-	 */
-	public function __construct($coord) {
-		$this->_validateEncoding($coord);
-		parent::__construct(self::PARAM_Y_COORDINATE, $coord);
-	}
+    use Base64URLValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $coord Y coordinate in base64url encoding
+     */
+    public function __construct($coord)
+    {
+        $this->_validateEncoding($coord);
+        parent::__construct(self::PARAM_Y_COORDINATE, $coord);
+    }
 }

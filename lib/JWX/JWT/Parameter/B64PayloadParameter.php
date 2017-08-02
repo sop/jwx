@@ -2,7 +2,6 @@
 
 namespace JWX\JWT\Parameter;
 
-
 /**
  * Implements 'base64url-encode payload' parameter.
  *
@@ -10,22 +9,24 @@ namespace JWX\JWT\Parameter;
  */
 class B64PayloadParameter extends JWTParameter
 {
-	/**
-	 * Constructor
-	 *
-	 * @param bool $flag
-	 */
-	public function __construct($flag) {
-		parent::__construct(self::PARAM_BASE64URL_ENCODE_PAYLOAD, (bool) $flag);
-	}
-	
-	/**
-	 * Initialize from a JSON value.
-	 *
-	 * @param bool $value
-	 * @return self
-	 */
-	public static function fromJSONValue($value) {
-		return new self(boolval($value));
-	}
+    /**
+     * Constructor.
+     *
+     * @param bool $flag
+     */
+    public function __construct($flag)
+    {
+        parent::__construct(self::PARAM_BASE64URL_ENCODE_PAYLOAD, (bool) $flag);
+    }
+    
+    /**
+     * Initialize from a JSON value.
+     *
+     * @param bool $value
+     * @return self
+     */
+    public static function fromJSONValue($value)
+    {
+        return new self(boolval($value));
+    }
 }

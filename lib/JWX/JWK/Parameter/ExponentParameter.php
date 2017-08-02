@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
 
-
 /**
  * Implements 'Exponent' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64UIntValue;
  */
 class ExponentParameter extends JWKParameter
 {
-	use Base64UIntValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $e Exponent in base64urlUInt encoding
-	 */
-	public function __construct($e) {
-		$this->_validateEncoding($e);
-		parent::__construct(self::PARAM_EXPONENT, $e);
-	}
+    use Base64UIntValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $e Exponent in base64urlUInt encoding
+     */
+    public function __construct($e)
+    {
+        $this->_validateEncoding($e);
+        parent::__construct(self::PARAM_EXPONENT, $e);
+    }
 }

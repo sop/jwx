@@ -7,9 +7,9 @@
  * php arbitrary-encrypt.php
  */
 
+use JWX\JWE\JWE;
 use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128GCMAlgorithm;
-use JWX\JWE\JWE;
 use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 
 require dirname(__DIR__) . "/vendor/autoload.php";

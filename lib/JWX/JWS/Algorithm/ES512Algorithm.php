@@ -5,7 +5,6 @@ namespace JWX\JWS\Algorithm;
 use JWX\JWA\JWA;
 use JWX\JWK\Parameter\CurveParameter;
 
-
 /**
  * Implements ECDSA using P-521 and SHA-512.
  *
@@ -13,15 +12,30 @@ use JWX\JWK\Parameter\CurveParameter;
  */
 class ES512Algorithm extends ECDSAAlgorithm
 {
-	protected function _curveName() {
-		return CurveParameter::CURVE_P521;
-	}
-	
-	protected function _mdMethod() {
-		return "sha512";
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_ES512;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _curveName()
+    {
+        return CurveParameter::CURVE_P521;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _mdMethod()
+    {
+        return "sha512";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_ES512;
+    }
 }

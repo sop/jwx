@@ -4,7 +4,6 @@ namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\EqualsValidator;
 
-
 /**
  * Implements 'JWT ID' claim.
  *
@@ -12,13 +11,14 @@ use JWX\JWT\Claim\Validator\EqualsValidator;
  */
 class JWTIDClaim extends RegisteredClaim
 {
-	/**
-	 * Constructor
-	 *
-	 * @param string $id JWT unique identifier
-	 */
-	public function __construct($id) {
-		parent::__construct(self::NAME_JWT_ID, (string) $id, 
-			new EqualsValidator());
-	}
+    /**
+     * Constructor.
+     *
+     * @param string $id JWT unique identifier
+     */
+    public function __construct($id)
+    {
+        parent::__construct(self::NAME_JWT_ID, (string) $id,
+            new EqualsValidator());
+    }
 }

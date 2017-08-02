@@ -5,7 +5,6 @@ namespace JWX\JWK\Parameter;
 use JWX\Parameter\Feature\ArrayParameterValue;
 use JWX\Util\Base64;
 
-
 /**
  * Implements 'X.509 Certificate Chain' parameter.
  *
@@ -13,20 +12,21 @@ use JWX\Util\Base64;
  */
 class X509CertificateChainParameter extends JWKParameter
 {
-	use ArrayParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string ...$certs Base64 encoded DER certificates
-	 */
-	public function __construct(...$certs) {
-		foreach ($certs as $cert) {
-			if (!Base64::isValid($cert)) {
-				throw new \UnexpectedValueException(
-					"Certificate must be base64 encoded.");
-			}
-		}
-		parent::__construct(self::PARAM_X509_CERTIFICATE_CHAIN, $certs);
-	}
+    use ArrayParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string ...$certs Base64 encoded DER certificates
+     */
+    public function __construct(...$certs)
+    {
+        foreach ($certs as $cert) {
+            if (!Base64::isValid($cert)) {
+                throw new \UnexpectedValueException(
+                    "Certificate must be base64 encoded.");
+            }
+        }
+        parent::__construct(self::PARAM_X509_CERTIFICATE_CHAIN, $certs);
+    }
 }

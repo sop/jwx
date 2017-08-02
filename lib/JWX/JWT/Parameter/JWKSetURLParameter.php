@@ -4,7 +4,6 @@ namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'JWK Set URL' parameter.
  *
@@ -12,14 +11,15 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class JWKSetURLParameter extends JWTParameter
 {
-	use StringParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $uri
-	 */
-	public function __construct($uri) {
-		parent::__construct(self::PARAM_JWK_SET_URL, (string) $uri);
-	}
+    use StringParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $uri
+     */
+    public function __construct($uri)
+    {
+        parent::__construct(self::PARAM_JWK_SET_URL, (string) $uri);
+    }
 }

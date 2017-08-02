@@ -4,7 +4,6 @@ namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements key encryption with RSAES OAEP.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class RSAESOAEPAlgorithm extends RSAESKeyAlgorithm
 {
-	protected function _paddingScheme() {
-		return OPENSSL_PKCS1_OAEP_PADDING;
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_RSA_OAEP;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _paddingScheme()
+    {
+        return OPENSSL_PKCS1_OAEP_PADDING;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_RSA_OAEP;
+    }
 }

@@ -5,7 +5,6 @@ namespace JWX\JWE\EncryptionAlgorithm;
 use GCM\Cipher\AES\AES192Cipher;
 use JWX\JWA\JWA;
 
-
 /**
  * Implements AES-GCM with 192-bit key.
  *
@@ -13,15 +12,30 @@ use JWX\JWA\JWA;
  */
 class A192GCMAlgorithm extends AESGCMAlgorithm
 {
-	public function encryptionAlgorithmParamValue() {
-		return JWA::ALGO_A192GCM;
-	}
-	
-	public function keySize() {
-		return 24;
-	}
-	
-	protected function _getGCMCipher() {
-		return new AES192Cipher();
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function encryptionAlgorithmParamValue()
+    {
+        return JWA::ALGO_A192GCM;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function keySize()
+    {
+        return 24;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _getGCMCipher()
+    {
+        return new AES192Cipher();
+    }
 }

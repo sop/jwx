@@ -4,7 +4,6 @@ namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'Encryption Algorithm' parameter for JWE headers.
  *
@@ -12,25 +11,27 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class EncryptionAlgorithmParameter extends JWTParameter
 {
-	use StringParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $algo Algorithm name
-	 */
-	public function __construct($algo) {
-		parent::__construct(self::PARAM_ENCRYPTION_ALGORITHM, $algo);
-	}
-	
-	/**
-	 * Initialize from EncryptionAlgorithmParameterValue.
-	 *
-	 * @param EncryptionAlgorithmParameterValue $value
-	 * @return self
-	 */
-	public static function fromAlgorithm(
-			EncryptionAlgorithmParameterValue $value) {
-		return new self($value->encryptionAlgorithmParamValue());
-	}
+    use StringParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $algo Algorithm name
+     */
+    public function __construct($algo)
+    {
+        parent::__construct(self::PARAM_ENCRYPTION_ALGORITHM, $algo);
+    }
+    
+    /**
+     * Initialize from EncryptionAlgorithmParameterValue.
+     *
+     * @param EncryptionAlgorithmParameterValue $value
+     * @return self
+     */
+    public static function fromAlgorithm(
+        EncryptionAlgorithmParameterValue $value)
+    {
+        return new self($value->encryptionAlgorithmParamValue());
+    }
 }

@@ -5,7 +5,6 @@ namespace JWX\JWE\KeyAlgorithm;
 use GCM\Cipher\AES\AES256Cipher;
 use JWX\JWA\JWA;
 
-
 /**
  * Implements key encryption with AES GCM using 256-bit key.
  *
@@ -13,15 +12,30 @@ use JWX\JWA\JWA;
  */
 class A256GCMKWAlgorithm extends AESGCMKWAlgorithm
 {
-	protected function _getGCMCipher() {
-		return new AES256Cipher();
-	}
-	
-	protected function _keySize() {
-		return 32;
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_A256GCMKW;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _getGCMCipher()
+    {
+        return new AES256Cipher();
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _keySize()
+    {
+        return 32;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_A256GCMKW;
+    }
 }

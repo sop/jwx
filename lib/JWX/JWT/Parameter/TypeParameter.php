@@ -4,7 +4,6 @@ namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'Type' parameter.
  *
@@ -12,14 +11,15 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class TypeParameter extends JWTParameter
 {
-	use StringParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $type
-	 */
-	public function __construct($type) {
-		parent::__construct(self::PARAM_TYPE, (string) $type);
-	}
+    use StringParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $type
+     */
+    public function __construct($type)
+    {
+        parent::__construct(self::PARAM_TYPE, (string) $type);
+    }
 }

@@ -4,7 +4,6 @@ namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'Algorithm' parameter for JWS/JWE headers.
  *
@@ -13,24 +12,26 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class AlgorithmParameter extends JWTParameter
 {
-	use StringParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $algo Algorithm name
-	 */
-	public function __construct($algo) {
-		parent::__construct(self::PARAM_ALGORITHM, (string) $algo);
-	}
-	
-	/**
-	 * Initialize from AlgorithmParameterValue.
-	 *
-	 * @param AlgorithmParameterValue $value
-	 * @return self
-	 */
-	public static function fromAlgorithm(AlgorithmParameterValue $value) {
-		return new self($value->algorithmParamValue());
-	}
+    use StringParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $algo Algorithm name
+     */
+    public function __construct($algo)
+    {
+        parent::__construct(self::PARAM_ALGORITHM, (string) $algo);
+    }
+    
+    /**
+     * Initialize from AlgorithmParameterValue.
+     *
+     * @param AlgorithmParameterValue $value
+     * @return self
+     */
+    public static function fromAlgorithm(AlgorithmParameterValue $value)
+    {
+        return new self($value->algorithmParamValue());
+    }
 }

@@ -4,7 +4,6 @@ namespace JWX\JWT\Parameter;
 
 use JWX\JWT\Claim\Claim;
 
-
 /**
  * Parameter allowing claims to be inserted into header.
  *
@@ -12,12 +11,13 @@ use JWX\JWT\Claim\Claim;
  */
 class ReplicatedClaimParameter extends JWTParameter
 {
-	/**
-	 * Constructor
-	 *
-	 * @param Claim $claim
-	 */
-	public function __construct(Claim $claim) {
-		parent::__construct($claim->name(), $claim->value());
-	}
+    /**
+     * Constructor.
+     *
+     * @param Claim $claim
+     */
+    public function __construct(Claim $claim)
+    {
+        parent::__construct($claim->name(), $claim->value());
+    }
 }

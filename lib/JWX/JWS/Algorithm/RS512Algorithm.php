@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements RSASSA-PKCS1-v1_5 using SHA-512.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class RS512Algorithm extends RSASSAPKCS1Algorithm
 {
-	protected function _mdMethod() {
-		return "sha512WithRSAEncryption";
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_RS512;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _mdMethod()
+    {
+        return "sha512WithRSAEncryption";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_RS512;
+    }
 }

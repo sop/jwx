@@ -4,7 +4,6 @@ namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\ContainsValidator;
 
-
 /**
  * Implements 'Audience' claim.
  *
@@ -12,18 +11,24 @@ use JWX\JWT\Claim\Validator\ContainsValidator;
  */
 class AudienceClaim extends RegisteredClaim
 {
-	/**
-	 * Constructor
-	 *
-	 * @param string ...$audiences One or more audiences
-	 */
-	public function __construct(...$audiences) {
-		parent::__construct(self::NAME_AUDIENCE, $audiences, 
-			new ContainsValidator());
-	}
-	
-	public static function fromJSONValue($value) {
-		$value = (array) $value;
-		return new self(...$value);
-	}
+    /**
+     * Constructor.
+     *
+     * @param string ...$audiences One or more audiences
+     */
+    public function __construct(...$audiences)
+    {
+        parent::__construct(self::NAME_AUDIENCE, $audiences,
+            new ContainsValidator());
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public static function fromJSONValue($value)
+    {
+        $value = (array) $value;
+        return new self(...$value);
+    }
 }

@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'Public Key Use' parameter.
  *
@@ -12,17 +11,18 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class PublicKeyUseParameter extends JWKParameter
 {
-	use StringParameterValue;
-	
-	const USE_SIGNATURE = "sig";
-	const USE_ENCRYPTION = "enc";
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $use Intended use of the public key
-	 */
-	public function __construct($use) {
-		parent::__construct(self::PARAM_PUBLIC_KEY_USE, $use);
-	}
+    use StringParameterValue;
+    
+    const USE_SIGNATURE = "sig";
+    const USE_ENCRYPTION = "enc";
+    
+    /**
+     * Constructor.
+     *
+     * @param string $use Intended use of the public key
+     */
+    public function __construct($use)
+    {
+        parent::__construct(self::PARAM_PUBLIC_KEY_USE, $use);
+    }
 }

@@ -8,26 +8,26 @@
  * php jwe-create.php
  */
 
-use CryptoUtil\PEM\PEM;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use JWX\JWT\Claims;
+use JWX\JWT\JWT;
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\ExpirationTimeClaim;
 use JWX\JWT\Claim\IssuedAtClaim;
 use JWX\JWT\Claim\NotBeforeClaim;
-use JWX\JWT\Claims;
-use JWX\JWT\JWT;
+use Sop\CryptoEncoding\PEM;
 
 require dirname(__DIR__) . "/vendor/autoload.php";
 
 // compose claims set
-$claims = new Claims(new Claim("secret data", "for your eyes only"), 
-	IssuedAtClaim::now(), NotBeforeClaim::now(), 
-	ExpirationTimeClaim::fromString("now + 30 minutes"));
+$claims = new Claims(new Claim("secret data", "for your eyes only"),
+    IssuedAtClaim::now(), NotBeforeClaim::now(),
+    ExpirationTimeClaim::fromString("now + 30 minutes"));
 // load RSA public key
 $jwk = RSAPublicKeyJWK::fromPEM(
-	PEM::fromFile(dirname(__DIR__) . "/test/assets/rsa/public_key.pem"));
+    PEM::fromFile(dirname(__DIR__) . "/test/assets/rsa/public_key.pem"));
 $key_algo = RSAESPKCS1Algorithm::fromPublicKey($jwk);
 $enc_algo = new A128CBCHS256Algorithm();
 // create an encrypted JWT token

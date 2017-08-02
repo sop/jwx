@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements HMAC using SHA-384.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class HS384Algorithm extends HMACAlgorithm
 {
-	protected function _hashAlgo() {
-		return "sha384";
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_HS384;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _hashAlgo()
+    {
+        return "sha384";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_HS384;
+    }
 }

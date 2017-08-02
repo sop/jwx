@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements RSASSA-PKCS1-v1_5 using SHA-256.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class RS256Algorithm extends RSASSAPKCS1Algorithm
 {
-	protected function _mdMethod() {
-		return "sha256WithRSAEncryption";
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_RS256;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _mdMethod()
+    {
+        return "sha256WithRSAEncryption";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_RS256;
+    }
 }

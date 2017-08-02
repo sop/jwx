@@ -4,7 +4,6 @@ namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements AES with 256-bit key in CBC mode with HMAC SHA-512 authentication.
  *
@@ -12,31 +11,66 @@ use JWX\JWA\JWA;
  */
 class A256CBCHS512Algorithm extends AESCBCAlgorithm
 {
-	public function keySize() {
-		return 64;
-	}
-	
-	public function encryptionAlgorithmParamValue() {
-		return JWA::ALGO_A256CBC_HS512;
-	}
-	
-	protected function _cipherMethod() {
-		return "AES-256-CBC";
-	}
-	
-	protected function _hashAlgo() {
-		return "sha512";
-	}
-	
-	protected function _encKeyLen() {
-		return 32;
-	}
-	
-	protected function _macKeyLen() {
-		return 32;
-	}
-	
-	protected function _tagLen() {
-		return 32;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function keySize()
+    {
+        return 64;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function encryptionAlgorithmParamValue()
+    {
+        return JWA::ALGO_A256CBC_HS512;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _cipherMethod()
+    {
+        return "AES-256-CBC";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _hashAlgo()
+    {
+        return "sha512";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _encKeyLen()
+    {
+        return 32;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _macKeyLen()
+    {
+        return 32;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _tagLen()
+    {
+        return 32;
+    }
 }

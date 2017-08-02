@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
 
-
 /**
  * Implements 'First Factor CRT Exponent' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64UIntValue;
  */
 class FirstFactorCRTExponentParameter extends JWKParameter
 {
-	use Base64UIntValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $dp First factor CRT exponent in base64urlUInt encoding
-	 */
-	public function __construct($dp) {
-		$this->_validateEncoding($dp);
-		parent::__construct(self::PARAM_FIRST_FACTOR_CRT_EXPONENT, $dp);
-	}
+    use Base64UIntValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $dp First factor CRT exponent in base64urlUInt encoding
+     */
+    public function __construct($dp)
+    {
+        $this->_validateEncoding($dp);
+        parent::__construct(self::PARAM_FIRST_FACTOR_CRT_EXPONENT, $dp);
+    }
 }

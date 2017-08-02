@@ -5,7 +5,6 @@ namespace JWX\Parameter\Feature;
 use JWX\Util\Base64;
 use JWX\Util\BigInt;
 
-
 /**
  * Trait for parameters having Base64urlUInt value.
  *
@@ -13,25 +12,27 @@ use JWX\Util\BigInt;
  */
 trait Base64UIntValue
 {
-	use Base64URLValue;
-	
-	/**
-	 * Initialize parameter from base10 number.
-	 *
-	 * @param int|string $number
-	 * @return self
-	 */
-	public static function fromNumber($number) {
-		$data = BigInt::fromBase10($number)->base256();
-		return self::fromString($data);
-	}
-	
-	/**
-	 * Get value as a number.
-	 *
-	 * @return BigInt
-	 */
-	public function number() {
-		return BigInt::fromBase256(Base64::urlDecode($this->value()));
-	}
+    use Base64URLValue;
+    
+    /**
+     * Initialize parameter from base10 number.
+     *
+     * @param int|string $number
+     * @return self
+     */
+    public static function fromNumber($number)
+    {
+        $data = BigInt::fromBase10($number)->base256();
+        return self::fromString($data);
+    }
+    
+    /**
+     * Get value as a number.
+     *
+     * @return BigInt
+     */
+    public function number()
+    {
+        return BigInt::fromBase256(Base64::urlDecode($this->value()));
+    }
 }

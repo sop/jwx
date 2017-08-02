@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
 
-
 /**
  * Implements 'First CRT Coefficient' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64UIntValue;
  */
 class FirstCRTCoefficientParameter extends JWKParameter
 {
-	use Base64UIntValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $qi First CRT coefficient in base64urlUInt encoding
-	 */
-	public function __construct($qi) {
-		$this->_validateEncoding($qi);
-		parent::__construct(self::PARAM_FIRST_CRT_COEFFICIENT, $qi);
-	}
+    use Base64UIntValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $qi First CRT coefficient in base64urlUInt encoding
+     */
+    public function __construct($qi)
+    {
+        $this->_validateEncoding($qi);
+        parent::__construct(self::PARAM_FIRST_CRT_COEFFICIENT, $qi);
+    }
 }

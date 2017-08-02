@@ -2,7 +2,6 @@
 
 namespace JWX\JWT\Claim\Validator;
 
-
 /**
  * Validator to check whether the claim value contains a given constraint.
  *
@@ -11,10 +10,15 @@ namespace JWX\JWT\Claim\Validator;
  */
 class ContainsValidator extends Validator
 {
-	public function validate($value, $constraint) {
-		if (is_array($value)) {
-			return in_array($constraint, $value);
-		}
-		return $value == $constraint;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function validate($value, $constraint)
+    {
+        if (is_array($value)) {
+            return in_array($constraint, $value);
+        }
+        return $value == $constraint;
+    }
 }

@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
 
-
 /**
  * Implements 'Second Prime Factor' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64UIntValue;
  */
 class SecondPrimeFactorParameter extends JWKParameter
 {
-	use Base64UIntValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $q Second prime factor in base64urlUInt encoding
-	 */
-	public function __construct($q) {
-		$this->_validateEncoding($q);
-		parent::__construct(self::PARAM_SECOND_PRIME_FACTOR, $q);
-	}
+    use Base64UIntValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $q Second prime factor in base64urlUInt encoding
+     */
+    public function __construct($q)
+    {
+        $this->_validateEncoding($q);
+        parent::__construct(self::PARAM_SECOND_PRIME_FACTOR, $q);
+    }
 }

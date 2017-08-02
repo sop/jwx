@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'Key ID' parameter.
  *
@@ -12,14 +11,15 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class KeyIDParameter extends JWKParameter
 {
-	use StringParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $id Key ID
-	 */
-	public function __construct($id) {
-		parent::__construct(self::PARAM_KEY_ID, $id);
-	}
+    use StringParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $id Key ID
+     */
+    public function __construct($id)
+    {
+        parent::__construct(self::PARAM_KEY_ID, $id);
+    }
 }

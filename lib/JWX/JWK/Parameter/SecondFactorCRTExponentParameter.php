@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
 
-
 /**
  * Implements 'Second Factor CRT Exponent' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64UIntValue;
  */
 class SecondFactorCRTExponentParameter extends JWKParameter
 {
-	use Base64UIntValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $dq Second factor CRT exponent in base64urlUInt encoding
-	 */
-	public function __construct($dq) {
-		$this->_validateEncoding($dq);
-		parent::__construct(self::PARAM_SECOND_FACTOR_CRT_EXPONENT, $dq);
-	}
+    use Base64UIntValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $dq Second factor CRT exponent in base64urlUInt encoding
+     */
+    public function __construct($dq)
+    {
+        $this->_validateEncoding($dq);
+        parent::__construct(self::PARAM_SECOND_FACTOR_CRT_EXPONENT, $dq);
+    }
 }

@@ -4,7 +4,6 @@ namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements key encryption with RSAES-PKCS1-v1_5.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class RSAESPKCS1Algorithm extends RSAESKeyAlgorithm
 {
-	protected function _paddingScheme() {
-		return OPENSSL_PKCS1_PADDING;
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_RSA1_5;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _paddingScheme()
+    {
+        return OPENSSL_PKCS1_PADDING;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_RSA1_5;
+    }
 }

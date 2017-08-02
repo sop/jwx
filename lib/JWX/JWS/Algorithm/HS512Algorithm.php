@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements HMAC using SHA-512.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class HS512Algorithm extends HMACAlgorithm
 {
-	protected function _hashAlgo() {
-		return "sha512";
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_HS512;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _hashAlgo()
+    {
+        return "sha512";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_HS512;
+    }
 }

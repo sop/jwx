@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\ArrayParameterValue;
 
-
 /**
  * Implements 'Other Primes Info' parameter.
  *
@@ -13,14 +12,15 @@ use JWX\Parameter\Feature\ArrayParameterValue;
  */
 class OtherPrimesInfoParameter extends JWKParameter
 {
-	use ArrayParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param array[] ...$primes
-	 */
-	public function __construct(...$primes) {
-		parent::__construct(self::PARAM_OTHER_PRIMES_INFO, $primes);
-	}
+    use ArrayParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param array[] ...$primes
+     */
+    public function __construct(...$primes)
+    {
+        parent::__construct(self::PARAM_OTHER_PRIMES_INFO, $primes);
+    }
 }

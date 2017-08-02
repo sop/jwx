@@ -4,7 +4,6 @@ namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\EqualsValidator;
 
-
 /**
  * Implements 'Issuer' claim.
  *
@@ -12,13 +11,14 @@ use JWX\JWT\Claim\Validator\EqualsValidator;
  */
 class IssuerClaim extends RegisteredClaim
 {
-	/**
-	 * Constructor
-	 *
-	 * @param string $issuer
-	 */
-	public function __construct($issuer) {
-		parent::__construct(self::NAME_ISSUER, (string) $issuer, 
-			new EqualsValidator());
-	}
+    /**
+     * Constructor.
+     *
+     * @param string $issuer
+     */
+    public function __construct($issuer)
+    {
+        parent::__construct(self::NAME_ISSUER, (string) $issuer,
+            new EqualsValidator());
+    }
 }

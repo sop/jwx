@@ -2,7 +2,6 @@
 
 namespace JWX\JWT\Parameter;
 
-
 /**
  * Implements 'PBES2 Count' parameter.
  *
@@ -10,22 +9,24 @@ namespace JWX\JWT\Parameter;
  */
 class PBES2CountParameter extends JWTParameter
 {
-	/**
-	 * Constructor
-	 *
-	 * @param int $count
-	 */
-	public function __construct($count) {
-		parent::__construct(self::PARAM_PBES2_COUNT, intval($count));
-	}
-	
-	/**
-	 * Initialize from a JSON value.
-	 *
-	 * @param int $value
-	 * @return self
-	 */
-	public static function fromJSONValue($value) {
-		return new self(intval($value));
-	}
+    /**
+     * Constructor.
+     *
+     * @param int $count
+     */
+    public function __construct($count)
+    {
+        parent::__construct(self::PARAM_PBES2_COUNT, intval($count));
+    }
+    
+    /**
+     * Initialize from a JSON value.
+     *
+     * @param int $value
+     * @return self
+     */
+    public static function fromJSONValue($value)
+    {
+        return new self(intval($value));
+    }
 }

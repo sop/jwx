@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
 
-
 /**
  * Implements 'X.509 URL' parameter.
  *
@@ -12,14 +11,15 @@ use JWX\Parameter\Feature\StringParameterValue;
  */
 class X509URLParameter extends JWKParameter
 {
-	use StringParameterValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $uri
-	 */
-	public function __construct($uri) {
-		parent::__construct(self::PARAM_X509_URL, (string) $uri);
-	}
+    use StringParameterValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $uri
+     */
+    public function __construct($uri)
+    {
+        parent::__construct(self::PARAM_X509_URL, (string) $uri);
+    }
 }

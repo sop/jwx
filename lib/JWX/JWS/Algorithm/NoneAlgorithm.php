@@ -5,8 +5,6 @@ namespace JWX\JWS\Algorithm;
 use JWX\JWA\JWA;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\JWTParameter;
-
 
 /**
  * Algorithm for unsecured JWS/JWT.
@@ -16,25 +14,41 @@ use JWX\JWT\Parameter\JWTParameter;
  */
 class NoneAlgorithm extends SignatureAlgorithm
 {
-	public function algorithmParamValue() {
-		return JWA::ALGO_NONE;
-	}
-	
-	public function computeSignature($data) {
-		return "";
-	}
-	
-	public function validateSignature($data, $signature) {
-		return $signature === "";
-	}
-	
-	/**
-	 *
-	 * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
-	 * @return JWTParameter[]
-	 */
-	public function headerParameters() {
-		return array_merge(parent::headerParameters(), 
-			array(AlgorithmParameter::fromAlgorithm($this)));
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_NONE;
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function computeSignature($data)
+    {
+        return "";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function validateSignature($data, $signature)
+    {
+        return $signature === "";
+    }
+    
+    /**
+     *
+     * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
+     * @return \JWX\JWT\Parameter\JWTParameter[]
+     */
+    public function headerParameters()
+    {
+        return array_merge(parent::headerParameters(),
+            array(AlgorithmParameter::fromAlgorithm($this)));
+    }
 }

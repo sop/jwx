@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
 
-
 /**
  * Implements 'Modulus' parameter.
  *
@@ -12,15 +11,16 @@ use JWX\Parameter\Feature\Base64UIntValue;
  */
 class ModulusParameter extends JWKParameter
 {
-	use Base64UIntValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $n Modulus in base64urlUInt encoding
-	 */
-	public function __construct($n) {
-		$this->_validateEncoding($n);
-		parent::__construct(self::PARAM_MODULUS, $n);
-	}
+    use Base64UIntValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $n Modulus in base64urlUInt encoding
+     */
+    public function __construct($n)
+    {
+        $this->_validateEncoding($n);
+        parent::__construct(self::PARAM_MODULUS, $n);
+    }
 }

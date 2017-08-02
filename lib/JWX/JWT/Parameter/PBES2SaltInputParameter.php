@@ -4,7 +4,6 @@ namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
 
-
 /**
  * Implements 'PBES2 Salt Input' parameter.
  *
@@ -12,34 +11,37 @@ use JWX\Parameter\Feature\Base64URLValue;
  */
 class PBES2SaltInputParameter extends JWTParameter
 {
-	use Base64URLValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $salt Base64url encoded salt input value
-	 */
-	public function __construct($salt) {
-		$this->_validateEncoding($salt);
-		parent::__construct(self::PARAM_PBES2_SALT_INPUT, (string) $salt);
-	}
-	
-	/**
-	 * Get salt input value.
-	 *
-	 * @return string
-	 */
-	public function saltInput() {
-		return $this->string();
-	}
-	
-	/**
-	 * Get computed salt value.
-	 *
-	 * @param AlgorithmParameter $algo
-	 * @return string
-	 */
-	public function salt(AlgorithmParameter $algo) {
-		return $algo->value() . "\0" . $this->saltInput();
-	}
+    use Base64URLValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $salt Base64url encoded salt input value
+     */
+    public function __construct($salt)
+    {
+        $this->_validateEncoding($salt);
+        parent::__construct(self::PARAM_PBES2_SALT_INPUT, (string) $salt);
+    }
+    
+    /**
+     * Get salt input value.
+     *
+     * @return string
+     */
+    public function saltInput()
+    {
+        return $this->string();
+    }
+    
+    /**
+     * Get computed salt value.
+     *
+     * @param AlgorithmParameter $algo
+     * @return string
+     */
+    public function salt(AlgorithmParameter $algo)
+    {
+        return $algo->value() . "\0" . $this->saltInput();
+    }
 }

@@ -4,7 +4,6 @@ namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 
-
 /**
  * Implements RSASSA-PKCS1-v1_5 using SHA-384.
  *
@@ -12,11 +11,21 @@ use JWX\JWA\JWA;
  */
 class RS384Algorithm extends RSASSAPKCS1Algorithm
 {
-	protected function _mdMethod() {
-		return "sha384WithRSAEncryption";
-	}
-	
-	public function algorithmParamValue() {
-		return JWA::ALGO_RS384;
-	}
+    /**
+     *
+     * {@inheritdoc}
+     */
+    protected function _mdMethod()
+    {
+        return "sha384WithRSAEncryption";
+    }
+    
+    /**
+     *
+     * {@inheritdoc}
+     */
+    public function algorithmParamValue()
+    {
+        return JWA::ALGO_RS384;
+    }
 }

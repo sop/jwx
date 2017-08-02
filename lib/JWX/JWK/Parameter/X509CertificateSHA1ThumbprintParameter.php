@@ -4,7 +4,6 @@ namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
 
-
 /**
  * Implements 'X.509 Certificate SHA-1 Thumbprint' parameter.
  *
@@ -12,16 +11,17 @@ use JWX\Parameter\Feature\Base64URLValue;
  */
 class X509CertificateSHA1ThumbprintParameter extends JWKParameter
 {
-	use Base64URLValue;
-	
-	/**
-	 * Constructor
-	 *
-	 * @param string $thumbprint Base64url encoded SHA-1 hash
-	 */
-	public function __construct($thumbprint) {
-		$this->_validateEncoding($thumbprint);
-		parent::__construct(self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT, 
-			(string) $thumbprint);
-	}
+    use Base64URLValue;
+    
+    /**
+     * Constructor.
+     *
+     * @param string $thumbprint Base64url encoded SHA-1 hash
+     */
+    public function __construct($thumbprint)
+    {
+        $this->_validateEncoding($thumbprint);
+        parent::__construct(self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT,
+            (string) $thumbprint);
+    }
 }
