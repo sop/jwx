@@ -3,4 +3,5 @@
 .*.yml export-ignore
 test/ export-ignore
 phpunit.* export-ignore
+.editorconfig export-ignore
 examples/ export-ignore
