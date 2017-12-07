@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\ArrayParameterValue;
@@ -19,7 +21,7 @@ class X509CertificateChainParameter extends JWTParameter
      *
      * @param string ...$certs Base64 encoded DER certificates
      */
-    public function __construct(...$certs)
+    public function __construct(string ...$certs)
     {
         foreach ($certs as $cert) {
             if (!Base64::isValid($cert)) {

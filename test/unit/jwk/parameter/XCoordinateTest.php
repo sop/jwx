@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class XCoordinateParameterTest extends PHPUnit_Framework_TestCase
+class XCoordinateParameterTest extends TestCase
 {
     public function testCreate()
     {

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
 use JWX\JWK\JWK;
 use JWX\JWK\JWKSet;
+use JWX\JWS\SignatureAlgorithm;
 use JWX\JWT\Header\Header;
 
 /**
@@ -54,9 +57,9 @@ class SignatureAlgorithmFactory
      * Get signature algorithm by given JWK.
      *
      * @param JWK $jwk
-     * @return \JWX\JWS\SignatureAlgorithm
+     * @return SignatureAlgorithm
      */
-    public function algoByKey(JWK $jwk)
+    public function algoByKey(JWK $jwk): SignatureAlgorithm
     {
         $alg = JWA::deriveAlgorithmName($this->_header, $jwk);
         $cls = self::_algoClassByName($alg);
@@ -68,9 +71,9 @@ class SignatureAlgorithmFactory
      *
      * @param JWKSet $set
      * @throws \UnexpectedValueException If a key cannot be found
-     * @return \JWX\JWS\SignatureAlgorithm
+     * @return SignatureAlgorithm
      */
-    public function algoByKeys(JWKSet $set)
+    public function algoByKeys(JWKSet $set): SignatureAlgorithm
     {
         if (!$this->_header->hasKeyID()) {
             throw new \UnexpectedValueException("No key ID paremeter.");
@@ -89,7 +92,7 @@ class SignatureAlgorithmFactory
      * @throws \UnexpectedValueException
      * @return string Class name
      */
-    private static function _algoClassByName($alg)
+    private static function _algoClassByName(string $alg): string
     {
         if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
             throw new \UnexpectedValueException(

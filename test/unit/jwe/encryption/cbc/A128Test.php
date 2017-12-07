@@ -4,12 +4,13 @@ use JWX\JWA\JWA;
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\EncryptionAlgorithm\AESCBCAlgorithm;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group encryption
  */
-class A128CBCEncryptionTest extends PHPUnit_Framework_TestCase
+class A128CBCEncryptionTest extends TestCase
 {
     const PLAINTEXT = "My hovercraft is full of eels.";
     const KEY_128 = "123456789 123456789 123456789 12";

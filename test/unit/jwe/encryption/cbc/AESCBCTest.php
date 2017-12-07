@@ -4,12 +4,13 @@ use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\EncryptionAlgorithm\AESCBCAlgorithm;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group encryption
  */
-class AESCBCEncryptionTest extends PHPUnit_Framework_TestCase
+class AESCBCEncryptionTest extends TestCase
 {
     const KEY_128 = "123456789 123456789 123456789 12";
     const IV = "123456789 123456";
@@ -112,7 +113,7 @@ class AESCBCEncryptionTest extends PHPUnit_Framework_TestCase
 
 class AESCBCEncryptionTest_UnsupportedCipher extends A128CBCHS256Algorithm
 {
-    protected function _cipherMethod()
+    protected function _cipherMethod(): string
     {
         return "nope";
     }

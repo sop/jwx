@@ -2,11 +2,12 @@
 
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  */
-class SymmetricKeyJWKTest extends PHPUnit_Framework_TestCase
+class SymmetricKeyJWKTest extends TestCase
 {
     const KEY = "password";
     

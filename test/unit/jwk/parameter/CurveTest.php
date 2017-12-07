@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\JWKParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class CurveParameterTest extends PHPUnit_Framework_TestCase
+class CurveParameterTest extends TestCase
 {
     const OID_P256 = "1.2.840.10045.3.1.7";
     

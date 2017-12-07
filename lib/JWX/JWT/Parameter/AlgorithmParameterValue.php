@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 /**
@@ -12,5 +14,5 @@ interface AlgorithmParameterValue
      *
      * @return string
      */
-    public function algorithmParamValue();
+    public function algorithmParamValue(): string;
 }

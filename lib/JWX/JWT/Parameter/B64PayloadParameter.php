@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 /**
@@ -14,9 +16,9 @@ class B64PayloadParameter extends JWTParameter
      *
      * @param bool $flag
      */
-    public function __construct($flag)
+    public function __construct(bool $flag)
     {
-        parent::__construct(self::PARAM_BASE64URL_ENCODE_PAYLOAD, (bool) $flag);
+        parent::__construct(self::PARAM_BASE64URL_ENCODE_PAYLOAD, $flag);
     }
     
     /**
@@ -25,7 +27,7 @@ class B64PayloadParameter extends JWTParameter
      * @param bool $value
      * @return self
      */
-    public static function fromJSONValue($value)
+    public static function fromJSONValue($value): self
     {
         return new self(boolval($value));
     }

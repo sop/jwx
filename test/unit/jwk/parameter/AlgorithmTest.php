@@ -3,12 +3,13 @@
 use JWX\JWA\JWA;
 use JWX\JWK\Parameter\AlgorithmParameter;
 use JWX\JWK\Parameter\JWKParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class JWKAlgorithmParameterTest extends PHPUnit_Framework_TestCase
+class JWKAlgorithmParameterTest extends TestCase
 {
     public function testCreate()
     {

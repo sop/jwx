@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Feature\NumericDateClaim;
@@ -18,9 +20,9 @@ class IssuedAtClaim extends RegisteredClaim
      *
      * @param int $issue_time Issued at time
      */
-    public function __construct($issue_time)
+    public function __construct(int $issue_time)
     {
-        parent::__construct(self::NAME_ISSUED_AT, intval($issue_time));
+        parent::__construct(self::NAME_ISSUED_AT, $issue_time);
     }
     
     /**
@@ -28,7 +30,7 @@ class IssuedAtClaim extends RegisteredClaim
      *
      * @return self
      */
-    public static function now()
+    public static function now(): self
     {
         return new self(time());
     }

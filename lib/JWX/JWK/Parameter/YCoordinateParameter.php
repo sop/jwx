@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,7 +20,7 @@ class YCoordinateParameter extends CoordinateParameter
      *
      * @param string $coord Y coordinate in base64url encoding
      */
-    public function __construct($coord)
+    public function __construct(string $coord)
     {
         $this->_validateEncoding($coord);
         parent::__construct(self::PARAM_Y_COORDINATE, $coord);

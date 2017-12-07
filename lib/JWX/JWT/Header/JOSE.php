@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Header;
 
 /**
@@ -38,7 +40,7 @@ class JOSE extends Header
      * @param Header $header
      * @return self
      */
-    public function withHeader(Header $header)
+    public function withHeader(Header $header): self
     {
         return new self($this, $header);
     }
@@ -48,7 +50,7 @@ class JOSE extends Header
      *
      * @return bool
      */
-    public function isJWS()
+    public function isJWS(): bool
     {
         return $this->hasAlgorithm() && !$this->hasEncryptionAlgorithm();
     }
@@ -58,7 +60,7 @@ class JOSE extends Header
      *
      * @return bool
      */
-    public function isJWE()
+    public function isJWE(): bool
     {
         return $this->hasEncryptionAlgorithm();
     }

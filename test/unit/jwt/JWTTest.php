@@ -17,11 +17,12 @@ use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\ContentTypeParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  */
-class JWTTest extends PHPUnit_Framework_TestCase
+class JWTTest extends TestCase
 {
     private static $_claims;
     

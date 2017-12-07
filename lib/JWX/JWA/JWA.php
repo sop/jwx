@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWA;
 
 use JWX\JWK\JWK;
@@ -209,7 +211,7 @@ abstract class JWA
      *         or header and JWK algorithms differ.
      * @return string Algorithm name
      */
-    public static function deriveAlgorithmName(Header $header, JWK $jwk = null)
+    public static function deriveAlgorithmName(Header $header, JWK $jwk = null): string
     {
         if ($header->hasAlgorithm()) {
             $alg = $header->algorithm()->value();

@@ -6,6 +6,7 @@ use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7519 appendix A.2.
@@ -15,7 +16,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7519#appendix-A.2
  */
-class NestedJWTTest extends PHPUnit_Framework_TestCase
+class NestedJWTTest extends TestCase
 {
     private static $_innerJWTSrc = <<<EOF
 eyJhbGciOiJSUzI1NiJ9
@@ -69,7 +70,8 @@ EOF;
         self::$_innerJWT = str_replace(["\r", "\n"], "", self::$_innerJWTSrc);
         self::$_iv = implode("", array_map("chr", self::$_ivBytes));
         self::$_cek = Base64::urlDecode(self::$_cekBase64);
-        self::$_encryptedCEK = Base64::urlDecode(self::$_encryptedCEKBase64);
+        self::$_encryptedCEK = Base64::urlDecode(
+            str_replace(["\r", "\n"], "", self::$_encryptedCEKBase64));
         self::$_jwk = RSAPrivateKeyJWK::fromJSON(
             file_get_contents(TEST_ASSETS_DIR . "/example/rfc7516-a2-jwk.json"));
     }

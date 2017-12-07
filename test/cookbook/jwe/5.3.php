@@ -6,8 +6,9 @@ use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
+class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends TestCase
 {
     private static $_testData;
     

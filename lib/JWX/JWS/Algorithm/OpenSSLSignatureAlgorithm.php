@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWS\SignatureAlgorithm;
@@ -29,7 +31,7 @@ abstract class OpenSSLSignatureAlgorithm extends SignatureAlgorithm
      *
      * @return string
      */
-    abstract protected function _mdMethod();
+    abstract protected function _mdMethod(): string;
     
     /**
      *
@@ -38,7 +40,7 @@ abstract class OpenSSLSignatureAlgorithm extends SignatureAlgorithm
      * @throws \RuntimeException For generic errors
      * @return string
      */
-    public function computeSignature($data)
+    public function computeSignature(string $data): string
     {
         /**
          * NOTE: OpenSSL uses PKCS #1 v1.5 padding by default, so no explicit
@@ -67,7 +69,7 @@ abstract class OpenSSLSignatureAlgorithm extends SignatureAlgorithm
      * @throws \RuntimeException For generic errors
      * @return bool
      */
-    public function validateSignature($data, $signature)
+    public function validateSignature(string $data, string $signature): bool
     {
         $key = openssl_pkey_get_public($this->_publicKey->toPEM()->string());
         if (!$key) {

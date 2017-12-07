@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT;
 
 use JWX\JWE\CompressionAlgorithm;
@@ -62,7 +64,7 @@ class JWT
      * @param string $token JWT string
      * @throws \UnexpectedValueException
      */
-    public function __construct($token)
+    public function __construct(string $token)
     {
         $this->_parts = explode(".", $token);
         switch (count($this->_parts)) {
@@ -90,7 +92,7 @@ class JWT
      * @return self
      */
     public static function unsecuredFromClaims(Claims $claims,
-        Header $header = null)
+        Header $header = null): self
     {
         return self::signedFromClaims($claims, new NoneAlgorithm(), $header);
     }
@@ -105,7 +107,7 @@ class JWT
      * @return self
      */
     public static function signedFromClaims(Claims $claims,
-        SignatureAlgorithm $algo, Header $header = null)
+        SignatureAlgorithm $algo, Header $header = null): self
     {
         $payload = $claims->toJSON();
         $jws = JWS::sign($payload, $algo, $header);
@@ -125,7 +127,7 @@ class JWT
      */
     public static function encryptedFromClaims(Claims $claims,
         KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo,
-        CompressionAlgorithm $zip_algo = null, Header $header = null)
+        CompressionAlgorithm $zip_algo = null, Header $header = null): self
     {
         $payload = $claims->toJSON();
         $jwe = JWE::encrypt($payload, $key_algo, $enc_algo, $zip_algo, $header);
@@ -149,7 +151,7 @@ class JWT
      * @throws \RuntimeException For generic errors
      * @return Claims
      */
-    public function claims(ValidationContext $ctx)
+    public function claims(ValidationContext $ctx): Claims
     {
         // check signature or decrypt depending on the JWT type.
         if ($this->isJWS()) {
@@ -179,7 +181,7 @@ class JWT
      * @throws \RuntimeException For generic errors
      * @return self
      */
-    public function signNested(SignatureAlgorithm $algo, Header $header = null)
+    public function signNested(SignatureAlgorithm $algo, Header $header = null): self
     {
         if (!isset($header)) {
             $header = new Header();
@@ -207,7 +209,7 @@ class JWT
      */
     public function encryptNested(KeyManagementAlgorithm $key_algo,
         ContentEncryptionAlgorithm $enc_algo,
-        CompressionAlgorithm $zip_algo = null, Header $header = null)
+        CompressionAlgorithm $zip_algo = null, Header $header = null): self
     {
         if (!isset($header)) {
             $header = new Header();
@@ -225,7 +227,7 @@ class JWT
      *
      * @return bool
      */
-    public function isJWS()
+    public function isJWS(): bool
     {
         return $this->_type == self::TYPE_JWS;
     }
@@ -236,7 +238,7 @@ class JWT
      * @throws \LogicException
      * @return JWS
      */
-    public function JWS()
+    public function JWS(): JWS
     {
         if (!$this->isJWS()) {
             throw new \LogicException("Not a JWS.");
@@ -249,7 +251,7 @@ class JWT
      *
      * @return bool
      */
-    public function isJWE()
+    public function isJWE(): bool
     {
         return $this->_type == self::TYPE_JWE;
     }
@@ -260,7 +262,7 @@ class JWT
      * @throws \LogicException
      * @return JWE
      */
-    public function JWE()
+    public function JWE(): JWE
     {
         if (!$this->isJWE()) {
             throw new \LogicException("Not a JWE.");
@@ -273,7 +275,7 @@ class JWT
      *
      * @return bool
      */
-    public function isNested()
+    public function isNested(): bool
     {
         $header = $this->header();
         if (!$header->hasContentType()) {
@@ -292,7 +294,7 @@ class JWT
      *
      * @return bool
      */
-    public function isUnsecured()
+    public function isUnsecured(): bool
     {
         // encrypted JWT shall be considered secure
         if ($this->isJWE()) {
@@ -307,7 +309,7 @@ class JWT
      *
      * @return JOSE
      */
-    public function header()
+    public function header(): JOSE
     {
         $header = Header::fromJSON(Base64::urlDecode($this->_parts[0]));
         return new JOSE($header);
@@ -318,7 +320,7 @@ class JWT
      *
      * @return string
      */
-    public function token()
+    public function token(): string
     {
         return implode(".", $this->_parts);
     }
@@ -330,7 +332,8 @@ class JWT
      * @param ValidationContext $ctx Validation context
      * @return Claims
      */
-    private function _claimsFromNestedPayload($payload, ValidationContext $ctx)
+    private function _claimsFromNestedPayload(string $payload,
+        ValidationContext $ctx): Claims
     {
         $jwt = new JWT($payload);
         // if this token secured, allow nested tokens to be unsecured.
@@ -349,7 +352,7 @@ class JWT
      * @return string
      */
     private static function _validatedPayloadFromJWS(JWS $jws,
-        ValidationContext $ctx)
+        ValidationContext $ctx): string
     {
         // if JWS is unsecured
         if ($jws->isUnsecured()) {
@@ -368,7 +371,7 @@ class JWT
      * @return string
      */
     private static function _validatedPayloadFromUnsecuredJWS(JWS $jws,
-        ValidationContext $ctx)
+        ValidationContext $ctx): string
     {
         if (!$ctx->isUnsecuredAllowed()) {
             throw new ValidationException("Unsecured JWS not allowed.");
@@ -387,7 +390,7 @@ class JWT
      * @throws ValidationException If validation fails
      * @return string
      */
-    private static function _validatedPayloadFromSignedJWS(JWS $jws, JWKSet $keys)
+    private static function _validatedPayloadFromSignedJWS(JWS $jws, JWKSet $keys): string
     {
         try {
             // explicitly defined key
@@ -397,7 +400,7 @@ class JWT
                 $valid = $jws->validateWithJWKSet($keys);
             }
         } catch (\RuntimeException $e) {
-            throw new ValidationException("JWS validation failed.", null, $e);
+            throw new ValidationException("JWS validation failed.", 0, $e);
         }
         if (!$valid) {
             throw new ValidationException("JWS signature is invalid.");
@@ -414,7 +417,7 @@ class JWT
      * @return string
      */
     private static function _validatedPayloadFromJWE(JWE $jwe,
-        ValidationContext $ctx)
+        ValidationContext $ctx): string
     {
         try {
             $keys = $ctx->keys();
@@ -424,7 +427,7 @@ class JWT
             }
             return $jwe->decryptWithJWKSet($keys);
         } catch (\RuntimeException $e) {
-            throw new ValidationException("JWE validation failed.", null, $e);
+            throw new ValidationException("JWE validation failed.", 0, $e);
         }
     }
     

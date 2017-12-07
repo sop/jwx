@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\ValidationContext;
@@ -41,7 +43,7 @@ class Claim
      * @param Validator|null $validator Claim validator or null if claim doesn't
      *        provide validation
      */
-    public function __construct($name, $value, Validator $validator = null)
+    public function __construct(string $name, $value, Validator $validator = null)
     {
         $this->_name = $name;
         $this->_value = $value;
@@ -57,7 +59,7 @@ class Claim
      * @param mixed $value Claim value
      * @return Claim
      */
-    public static function fromNameAndValue($name, $value)
+    public static function fromNameAndValue(string $name, $value)
     {
         if (array_key_exists($name, RegisteredClaim::MAP_NAME_TO_CLASS)) {
             $cls = RegisteredClaim::MAP_NAME_TO_CLASS[$name];
@@ -71,7 +73,7 @@ class Claim
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->_name;
     }
@@ -92,7 +94,7 @@ class Claim
      * @param mixed $constraint Constraint value
      * @return bool True if the claim is valid
      */
-    public function validate($constraint)
+    public function validate($constraint): bool
     {
         // if claim has no validator, consider validation failed
         if (!isset($this->_validator)) {
@@ -107,7 +109,7 @@ class Claim
      * @param ValidationContext $ctx
      * @return bool True if claim is valid
      */
-    public function validateWithContext(ValidationContext $ctx)
+    public function validateWithContext(ValidationContext $ctx): bool
     {
         // if validator has no constraint for the claim
         if (!$ctx->hasConstraint($this->_name)) {

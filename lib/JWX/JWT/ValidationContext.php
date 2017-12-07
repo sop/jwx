@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT;
 
 use JWX\JWK\JWK;
@@ -92,7 +94,7 @@ class ValidationContext
      * @param array $constraints Optional constraints
      * @return self
      */
-    public static function fromJWK(JWK $key, array $constraints = null)
+    public static function fromJWK(JWK $key, array $constraints = null): self
     {
         return new self($constraints, new JWKSet($key));
     }
@@ -103,7 +105,7 @@ class ValidationContext
      * @param int|null $ts Unix timestamp
      * @return self
      */
-    public function withReferenceTime($ts)
+    public function withReferenceTime($ts): self
     {
         $obj = clone $this;
         $obj->_refTime = $ts;
@@ -115,7 +117,7 @@ class ValidationContext
      *
      * @return bool
      */
-    public function hasReferenceTime()
+    public function hasReferenceTime(): bool
     {
         return isset($this->_refTime);
     }
@@ -126,7 +128,7 @@ class ValidationContext
      * @throws \LogicException
      * @return int
      */
-    public function referenceTime()
+    public function referenceTime(): int
     {
         if (!$this->hasReferenceTime()) {
             throw new \LogicException("Reference time not set.");
@@ -140,7 +142,7 @@ class ValidationContext
      * @param int $seconds
      * @return self
      */
-    public function withLeeway($seconds)
+    public function withLeeway(int $seconds): self
     {
         $obj = clone $this;
         $obj->_leeway = $seconds;
@@ -152,7 +154,7 @@ class ValidationContext
      *
      * @return int
      */
-    public function leeway()
+    public function leeway(): int
     {
         return $this->_leeway;
     }
@@ -168,8 +170,8 @@ class ValidationContext
      * @param Validator|null $validator Optional explicit validator
      * @return self
      */
-    public function withConstraint($name, $constraint,
-        Validator $validator = null)
+    public function withConstraint(string $name, $constraint,
+        Validator $validator = null): self
     {
         $obj = clone $this;
         $obj->_constraints[$name] = $constraint;
@@ -185,7 +187,7 @@ class ValidationContext
      * @param string $issuer Issuer name
      * @return self
      */
-    public function withIssuer($issuer)
+    public function withIssuer(string $issuer): self
     {
         return $this->withConstraint(RegisteredClaim::NAME_ISSUER, $issuer);
     }
@@ -196,7 +198,7 @@ class ValidationContext
      * @param string $subject Subject name
      * @return self
      */
-    public function withSubject($subject)
+    public function withSubject(string $subject): self
     {
         return $this->withConstraint(RegisteredClaim::NAME_SUBJECT, $subject);
     }
@@ -207,7 +209,7 @@ class ValidationContext
      * @param string $audience Audience name
      * @return self
      */
-    public function withAudience($audience)
+    public function withAudience(string $audience): self
     {
         return $this->withConstraint(RegisteredClaim::NAME_AUDIENCE, $audience);
     }
@@ -218,7 +220,7 @@ class ValidationContext
      * @param string $id JWT ID
      * @return self
      */
-    public function withID($id)
+    public function withID(string $id): self
     {
         return $this->withConstraint(RegisteredClaim::NAME_JWT_ID, $id);
     }
@@ -229,7 +231,7 @@ class ValidationContext
      * @param string $name Claim name
      * @return bool
      */
-    public function hasConstraint($name)
+    public function hasConstraint(string $name): bool
     {
         return isset($this->_constraints[$name]);
     }
@@ -241,7 +243,7 @@ class ValidationContext
      * @throws \LogicException If constraint is not set
      * @return mixed Constraint value
      */
-    public function constraint($name)
+    public function constraint(string $name)
     {
         if (!$this->hasConstraint($name)) {
             throw new \LogicException("Constraint $name not set.");
@@ -255,7 +257,7 @@ class ValidationContext
      * @param string $name Claim name
      * @return bool
      */
-    public function hasValidator($name)
+    public function hasValidator(string $name): bool
     {
         return isset($this->_validators[$name]);
     }
@@ -267,7 +269,7 @@ class ValidationContext
      * @throws \LogicException If validator is not set
      * @return Validator
      */
-    public function validator($name)
+    public function validator(string $name): Validator
     {
         if (!$this->hasValidator($name)) {
             throw new \LogicException("Validator $name not set.");
@@ -280,7 +282,7 @@ class ValidationContext
      *
      * @return JWKSet
      */
-    public function keys()
+    public function keys(): JWKSet
     {
         return $this->_keys;
     }
@@ -294,10 +296,10 @@ class ValidationContext
      * @param bool $allow Whether to allow unsecured JWT's
      * @return self
      */
-    public function withUnsecuredAllowed($allow)
+    public function withUnsecuredAllowed(bool $allow): self
     {
         $obj = clone $this;
-        $obj->_allowUnsecured = (bool) $allow;
+        $obj->_allowUnsecured = $allow;
         return $obj;
     }
     
@@ -306,7 +308,7 @@ class ValidationContext
      *
      * @return bool
      */
-    public function isUnsecuredAllowed()
+    public function isUnsecuredAllowed(): bool
     {
         return $this->_allowUnsecured;
     }
@@ -318,7 +320,7 @@ class ValidationContext
      * @throws ValidationException If any of the claims is not valid
      * @return self
      */
-    public function validate(Claims $claims)
+    public function validate(Claims $claims): self
     {
         foreach ($claims as $claim) {
             if (!$claim->validateWithContext($this)) {

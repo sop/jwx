@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWE\ContentEncryptionAlgorithm;
@@ -18,35 +20,35 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      *
      * @return string
      */
-    abstract protected function _cipherMethod();
+    abstract protected function _cipherMethod(): string;
     
     /**
      * Get algorithm name that is recognized by the Hash extension.
      *
      * @return string
      */
-    abstract protected function _hashAlgo();
+    abstract protected function _hashAlgo(): string;
     
     /**
      * Get length of the encryption key.
      *
      * @return int
      */
-    abstract protected function _encKeyLen();
+    abstract protected function _encKeyLen(): int;
     
     /**
      * Get length of the MAC key.
      *
      * @return int
      */
-    abstract protected function _macKeyLen();
+    abstract protected function _macKeyLen(): int;
     
     /**
      * Get length of the authentication tag.
      *
      * @return int
      */
-    abstract protected function _tagLen();
+    abstract protected function _tagLen(): int;
     
     /**
      * Get cipher method and verify that it's supported.
@@ -54,7 +56,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @throws \RuntimeException
      * @return string
      */
-    final protected function _getCipherMethod()
+    final protected function _getCipherMethod(): string
     {
         static $supported_ciphers;
         if (!isset($supported_ciphers)) {
@@ -75,7 +77,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @param string $key
      * @throws \RuntimeException
      */
-    final protected function _validateKey($key)
+    final protected function _validateKey(string $key)
     {
         if (strlen($key) != $this->keySize()) {
             throw new \RuntimeException("Invalid key size.");
@@ -88,7 +90,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @param string $iv
      * @throws \RuntimeException
      */
-    final protected function _validateIV($iv)
+    final protected function _validateIV(string $iv)
     {
         $len = openssl_cipher_iv_length($this->_getCipherMethod());
         if ($len != strlen($iv)) {
@@ -102,7 +104,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @param string $key
      * @return string
      */
-    final protected function _macKey($key)
+    final protected function _macKey(string $key): string
     {
         return substr($key, 0, $this->_macKeyLen());
     }
@@ -113,7 +115,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @param string $key
      * @return string
      */
-    final protected function _encKey($key)
+    final protected function _encKey(string $key): string
     {
         return substr($key, -$this->_encKeyLen());
     }
@@ -124,7 +126,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @param string $aad
      * @return string 64 bits
      */
-    final protected function _aadLen($aad)
+    final protected function _aadLen(string $aad): string
     {
         // truncate on 32 bit hosts
         if (PHP_INT_SIZE < 8) {
@@ -140,7 +142,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * @param string $key CEK
      * @return string
      */
-    final protected function _computeAuthTag($data, $key)
+    final protected function _computeAuthTag(string $data, string $key): string
     {
         $tag = hash_hmac($this->_hashAlgo(), $data, $this->_macKey($key), true);
         return substr($tag, 0, $this->_tagLen());
@@ -150,7 +152,8 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function encrypt($plaintext, $key, $iv, $aad)
+    public function encrypt(string $plaintext, string $key, string $iv,
+        string $aad): array
     {
         $this->_validateKey($key);
         $this->_validateIV($iv);
@@ -169,7 +172,8 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag)
+    public function decrypt(string $ciphertext, string $key, string $iv,
+        string $aad, string $auth_tag): string
     {
         $this->_validateKey($key);
         $this->_validateIV($iv);
@@ -204,7 +208,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function ivSize()
+    public function ivSize(): int
     {
         return 16;
     }
@@ -213,7 +217,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array(EncryptionAlgorithmParameter::fromAlgorithm($this));
     }

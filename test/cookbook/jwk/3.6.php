@@ -1,8 +1,9 @@
 <?php
 
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
+use PHPUnit\Framework\TestCase;
 
-class CookbookSymmetricEncKeyTest extends PHPUnit_Framework_TestCase
+class CookbookSymmetricEncKeyTest extends TestCase
 {
     public function testJWK()
     {

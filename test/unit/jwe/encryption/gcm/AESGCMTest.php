@@ -4,12 +4,13 @@ use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128GCMAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\AESGCMAlgorithm;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group encryption
  */
-class AESGCMEncryptionTest extends PHPUnit_Framework_TestCase
+class AESGCMEncryptionTest extends TestCase
 {
     const KEY = "0123456789abcdef";
     const IV = "0123456789ab";

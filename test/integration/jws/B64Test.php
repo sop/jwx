@@ -6,11 +6,12 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\B64PayloadParameter;
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jws
  */
-class B64Test extends PHPUnit_Framework_TestCase
+class B64Test extends TestCase
 {
     const PAYLOAD = "PAYLOAD";
     

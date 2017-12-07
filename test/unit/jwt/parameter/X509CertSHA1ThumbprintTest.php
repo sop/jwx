@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\X509CertificateSHA1ThumbprintParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class X509CertificateSHA1ThumbprintParameterTest extends PHPUnit_Framework_TestCase
+class X509CertificateSHA1ThumbprintParameterTest extends TestCase
 {
     public function testCreate()
     {

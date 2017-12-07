@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\ModulusParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class ModulusParameterTest extends PHPUnit_Framework_TestCase
+class ModulusParameterTest extends TestCase
 {
     public function testCreate()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\CompressionAlgorithm;
 
 use JWX\JWA\JWA;
@@ -26,7 +28,7 @@ class DeflateAlgorithm implements CompressionAlgorithm
      *
      * @param int $level Compression level 0..9
      */
-    public function __construct($level = -1)
+    public function __construct(int $level = -1)
     {
         if ($level < -1 || $level > 9) {
             throw new \DomainException("Compression level must be -1..9.");
@@ -39,13 +41,13 @@ class DeflateAlgorithm implements CompressionAlgorithm
      * @see \JWX\JWE\CompressionAlgorithm::compress()
      * @throws \RuntimeException
      */
-    public function compress($data)
+    public function compress(string $data): string
     {
         $ret = @gzdeflate($data, $this->_compressionLevel);
         if (false === $ret) {
             $err = error_get_last();
-            $msg = isset($err) ? $err["message"] : "gzdeflate() failed.";
-            throw new \RuntimeException($msg);
+            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? "gzdeflate() failed.");
         }
         return $ret;
     }
@@ -55,13 +57,13 @@ class DeflateAlgorithm implements CompressionAlgorithm
      * @see \JWX\JWE\CompressionAlgorithm::decompress()
      * @throws \RuntimeException
      */
-    public function decompress($data)
+    public function decompress(string $data): string
     {
         $ret = @gzinflate($data);
         if (false === $ret) {
             $err = error_get_last();
-            $msg = isset($err) ? $err["message"] : "gzinflate() failed.";
-            throw new \RuntimeException($msg);
+            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? "gzinflate() failed.");
         }
         return $ret;
     }
@@ -70,7 +72,7 @@ class DeflateAlgorithm implements CompressionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function compressionParamValue()
+    public function compressionParamValue(): string
     {
         return JWA::ALGO_DEFLATE;
     }
@@ -79,7 +81,7 @@ class DeflateAlgorithm implements CompressionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array(CompressionAlgorithmParameter::fromAlgorithm($this));
     }

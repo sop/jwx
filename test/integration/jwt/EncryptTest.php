@@ -5,12 +5,13 @@ use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
 use JWX\JWT\Claims;
 use JWX\JWT\JWT;
 use JWX\JWT\Claim\IssuedAtClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group jwe
  */
-class JWTEncryptTest extends PHPUnit_Framework_TestCase
+class JWTEncryptTest extends TestCase
 {
     private static $_claims;
     

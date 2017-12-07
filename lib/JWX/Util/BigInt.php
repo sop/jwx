@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Util;
 
 /**
@@ -30,7 +32,7 @@ class BigInt
      * @param string|int $number
      * @return self
      */
-    public static function fromBase10($number)
+    public static function fromBase10($number): self
     {
         $num = gmp_init($number, 10);
         return new self($num);
@@ -45,7 +47,7 @@ class BigInt
      * @param string $octets
      * @return self
      */
-    public static function fromBase256($octets)
+    public static function fromBase256(string $octets): self
     {
         $num = gmp_import($octets, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
         return new self($num);
@@ -56,7 +58,7 @@ class BigInt
      *
      * @return string
      */
-    public function base10()
+    public function base10(): string
     {
         return gmp_strval($this->_num, 10);
     }
@@ -66,7 +68,7 @@ class BigInt
      *
      * @return string
      */
-    public function base16()
+    public function base16(): string
     {
         return gmp_strval($this->_num, 16);
     }
@@ -76,7 +78,7 @@ class BigInt
      *
      * @return string
      */
-    public function base256()
+    public function base256(): string
     {
         return gmp_export($this->_num, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\EqualsValidator;
@@ -16,9 +18,9 @@ class IssuerClaim extends RegisteredClaim
      *
      * @param string $issuer
      */
-    public function __construct($issuer)
+    public function __construct(string $issuer)
     {
-        parent::__construct(self::NAME_ISSUER, (string) $issuer,
+        parent::__construct(self::NAME_ISSUER, $issuer,
             new EqualsValidator());
     }
 }

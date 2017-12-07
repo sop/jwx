@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
-use GCM\Cipher\AES\AES128Cipher;
 use JWX\JWA\JWA;
+use Sop\GCM\Cipher\Cipher;
+use Sop\GCM\Cipher\AES\AES128Cipher;
 
 /**
  * Implements key encryption with AES GCM using 128-bit key.
@@ -16,7 +19,7 @@ class A128GCMKWAlgorithm extends AESGCMKWAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _getGCMCipher()
+    protected function _getGCMCipher(): Cipher
     {
         return new AES128Cipher();
     }
@@ -25,7 +28,7 @@ class A128GCMKWAlgorithm extends AESGCMKWAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _keySize()
+    protected function _keySize(): int
     {
         return 16;
     }
@@ -34,7 +37,7 @@ class A128GCMKWAlgorithm extends AESGCMKWAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_A128GCMKW;
     }

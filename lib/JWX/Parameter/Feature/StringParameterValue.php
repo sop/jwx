@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Parameter\Feature;
 
 /**
@@ -12,7 +14,7 @@ trait StringParameterValue
      *
      * @param string $value Parameter value
      */
-    abstract public function __construct($value);
+    abstract public function __construct(string $value);
     
     /**
      * Initialize from a JSON value.

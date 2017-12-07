@@ -5,11 +5,12 @@ use JWX\JWK\JWK;
 use JWX\JWK\Parameter\AlgorithmParameter as JWKAlgo;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter as JWTAlgo;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwa
  */
-class JWATest extends PHPUnit_Framework_TestCase
+class JWATest extends TestCase
 {
     public function testDeriveByHeader()
     {

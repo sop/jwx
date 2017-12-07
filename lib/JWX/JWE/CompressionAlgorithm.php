@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE;
 
 use JWX\JWT\Header\HeaderParameters;
@@ -15,14 +17,16 @@ interface CompressionAlgorithm extends
     /**
      * Compress data.
      *
-     * @param string $data Compressed data
+     * @param string $data Uncompressed data
+     * @return string Compressed data
      */
-    public function compress($data);
+    public function compress(string $data): string;
     
     /**
      * Decompress data.
      *
-     * @param string $data Uncompressed data
+     * @param string $data Compressed data
+     * @return string Uncompressed data
      */
-    public function decompress($data);
+    public function decompress(string $data): string;
 }

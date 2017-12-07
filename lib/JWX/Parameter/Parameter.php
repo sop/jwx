@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Parameter;
 
 /**
@@ -26,7 +28,7 @@ abstract class Parameter
      *
      * @return string
      */
-    public function name()
+    public function name(): string
     {
         return $this->_name;
     }

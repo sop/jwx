@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Header;
 
 /**
@@ -12,5 +14,5 @@ interface HeaderParameters
      *
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters();
+    public function headerParameters(): array;
 }

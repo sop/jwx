@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,8 +20,8 @@ class JWKSetURLParameter extends JWTParameter
      *
      * @param string $uri
      */
-    public function __construct($uri)
+    public function __construct(string $uri)
     {
-        parent::__construct(self::PARAM_JWK_SET_URL, (string) $uri);
+        parent::__construct(self::PARAM_JWK_SET_URL, $uri);
     }
 }

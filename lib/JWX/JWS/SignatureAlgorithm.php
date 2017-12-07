@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS;
 
 use JWX\JWK\JWK;
@@ -32,7 +34,7 @@ abstract class SignatureAlgorithm implements
      * @param string $data Data for which the signature is computed
      * @return string
      */
-    abstract public function computeSignature($data);
+    abstract public function computeSignature(string $data): string;
     
     /**
      * Validate signature.
@@ -41,7 +43,7 @@ abstract class SignatureAlgorithm implements
      * @param string $signature Signature to compare
      * @return bool
      */
-    abstract public function validateSignature($data, $signature);
+    abstract public function validateSignature(string $data, string $signature): bool;
     
     /**
      * Initialize signature algorithm from a JWK and a header.
@@ -62,7 +64,7 @@ abstract class SignatureAlgorithm implements
      * @param string|null $id Key ID or null to remove
      * @return self
      */
-    public function withKeyID($id)
+    public function withKeyID($id): self
     {
         $obj = clone $this;
         $obj->_keyID = $id;
@@ -74,7 +76,7 @@ abstract class SignatureAlgorithm implements
      * @see \JWX\JWT\Header\HeaderParameters::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         $params = array();
         if (isset($this->_keyID)) {

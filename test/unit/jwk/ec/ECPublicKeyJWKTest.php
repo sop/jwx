@@ -2,6 +2,7 @@
 
 use JWX\JWK\JWK;
 use JWX\JWK\EC\ECPublicKeyJWK;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\EC\ECPublicKey;
 
@@ -9,7 +10,7 @@ use Sop\CryptoTypes\Asymmetric\EC\ECPublicKey;
  * @group jwk
  * @group ec
  */
-class ECPublicKeyJWKTest extends PHPUnit_Framework_TestCase
+class ECPublicKeyJWKTest extends TestCase
 {
     private static $_pubPEM;
     

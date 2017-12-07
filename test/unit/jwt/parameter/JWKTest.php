@@ -3,12 +3,13 @@
 use JWX\JWK\JWK;
 use JWX\JWT\Parameter\JSONWebKeyParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class JSONWebKeyParameterTest extends PHPUnit_Framework_TestCase
+class JSONWebKeyParameterTest extends TestCase
 {
     public function testCreate()
     {

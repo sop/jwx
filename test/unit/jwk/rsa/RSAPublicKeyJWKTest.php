@@ -1,13 +1,14 @@
 <?php
 
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jwk
  * @group rsa
  */
-class RSAPublicKeyJWKTest extends PHPUnit_Framework_TestCase
+class RSAPublicKeyJWKTest extends TestCase
 {
     private static $_pubPEM;
     

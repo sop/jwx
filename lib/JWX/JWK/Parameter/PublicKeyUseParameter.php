@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -21,7 +23,7 @@ class PublicKeyUseParameter extends JWKParameter
      *
      * @param string $use Intended use of the public key
      */
-    public function __construct($use)
+    public function __construct(string $use)
     {
         parent::__construct(self::PARAM_PUBLIC_KEY_USE, $use);
     }

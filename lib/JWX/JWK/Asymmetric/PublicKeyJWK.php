@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Asymmetric;
 
 use JWX\JWK\JWK;
 use JWX\JWK\EC\ECPublicKeyJWK;
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 use Sop\CryptoTypes\Asymmetric\PublicKeyInfo;
 use Sop\CryptoTypes\Asymmetric\EC\ECPublicKey;
@@ -18,9 +21,9 @@ abstract class PublicKeyJWK extends JWK
     /**
      * Convert public key to PEM.
      *
-     * @return \Sop\CryptoEncoding\PEM
+     * @return PEM
      */
-    abstract public function toPEM();
+    abstract public function toPEM(): PEM;
     
     /**
      * Initialize from a PublicKey object.
@@ -29,7 +32,7 @@ abstract class PublicKeyJWK extends JWK
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPublicKey(PublicKey $pub_key)
+    public static function fromPublicKey(PublicKey $pub_key): PublicKeyJWK
     {
         if ($pub_key instanceof RSAPublicKey) {
             return RSAPublicKeyJWK::fromRSAPublicKey($pub_key);
@@ -46,7 +49,7 @@ abstract class PublicKeyJWK extends JWK
      * @param PublicKeyInfo $pki Public key info
      * @return self
      */
-    public static function fromPublicKeyInfo(PublicKeyInfo $pki)
+    public static function fromPublicKeyInfo(PublicKeyInfo $pki): PublicKeyJWK
     {
         return self::fromPublicKey($pki->publicKey());
     }

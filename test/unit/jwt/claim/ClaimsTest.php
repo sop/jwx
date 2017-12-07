@@ -7,12 +7,13 @@ use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\IssuerClaim;
 use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\SubjectClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class ClaimsTest extends PHPUnit_Framework_TestCase
+class ClaimsTest extends TestCase
 {
     public function testCreate()
     {

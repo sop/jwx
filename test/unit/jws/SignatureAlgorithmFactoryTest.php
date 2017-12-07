@@ -9,11 +9,12 @@ use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\KeyIDParameter as JWTID;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jws
  */
-class SignatureAlgorithmFactoryTest extends PHPUnit_Framework_TestCase
+class SignatureAlgorithmFactoryTest extends TestCase
 {
     public function testAlgoByKey()
     {

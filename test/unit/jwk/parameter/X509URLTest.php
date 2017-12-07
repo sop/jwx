@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\X509URLParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class JWKX509URLParameterTest extends PHPUnit_Framework_TestCase
+class JWKX509URLParameterTest extends TestCase
 {
     public function testCreate()
     {

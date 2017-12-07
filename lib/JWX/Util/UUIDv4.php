@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Util;
 
 /* @formatter:off */
@@ -40,7 +42,7 @@ class UUIDv4
      *
      * @param string $uuid UUIDv4 in canonical hexadecimal format
      */
-    public function __construct($uuid)
+    public function __construct(string $uuid)
     {
         // @todo Check that UUID is version 4
         $this->_uuid = $uuid;
@@ -51,7 +53,7 @@ class UUIDv4
      *
      * @return self
      */
-    public static function createRandom()
+    public static function createRandom(): self
     {
         /*
          1. Set the two most significant bits (bits 6 and 7) of
@@ -85,7 +87,7 @@ class UUIDv4
      *
      * @return string
      */
-    public function canonical()
+    public function canonical(): string
     {
         return $this->_uuid;
     }

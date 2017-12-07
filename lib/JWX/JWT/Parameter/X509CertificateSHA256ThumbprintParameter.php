@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,10 +20,10 @@ class X509CertificateSHA256ThumbprintParameter extends JWTParameter
      *
      * @param string $thumbprint Base64url encoded SHA-256 hash
      */
-    public function __construct($thumbprint)
+    public function __construct(string $thumbprint)
     {
         $this->_validateEncoding($thumbprint);
         parent::__construct(self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT,
-            (string) $thumbprint);
+            $thumbprint);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -43,14 +45,14 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      *
      * @return string
      */
-    abstract protected function _hashAlgo();
+    abstract protected function _hashAlgo(): string;
     
     /**
      * Constructor.
      *
      * @param string $key Shared secret key
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $this->_key = $key;
     }
@@ -59,7 +61,7 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public static function fromJWK(JWK $jwk, Header $header)
+    public static function fromJWK(JWK $jwk, Header $header): self
     {
         $jwk = SymmetricKeyJWK::fromJWK($jwk);
         $alg = JWA::deriveAlgorithmName($header, $jwk);
@@ -74,13 +76,13 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public function computeSignature($data)
+    public function computeSignature(string $data): string
     {
         $result = @hash_hmac($this->_hashAlgo(), $data, $this->_key, true);
         if (false === $result) {
             $err = error_get_last();
-            $msg = isset($err) ? $err["message"] : "hash_hmac() failed.";
-            throw new \RuntimeException($msg);
+            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? 'hash_hmac() failed.');
         }
         return $result;
     }
@@ -89,7 +91,7 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public function validateSignature($data, $signature)
+    public function validateSignature(string $data, string $signature): bool
     {
         return $this->computeSignature($data) === $signature;
     }
@@ -99,7 +101,7 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

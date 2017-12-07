@@ -3,12 +3,13 @@
 use JWX\JWT\ValidationContext;
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\Validator\EqualsValidator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class ClaimTest extends PHPUnit_Framework_TestCase
+class ClaimTest extends TestCase
 {
     public function testCustomClaimWithoutValidatorValidate()
     {

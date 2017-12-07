@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\EC;
 
 use JWX\JWK\Asymmetric\PublicKeyJWK;
@@ -60,7 +62,7 @@ class ECPublicKeyJWK extends PublicKeyJWK
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromECPublicKey(ECPublicKey $pk)
+    public static function fromECPublicKey(ECPublicKey $pk): self
     {
         if (!$pk->hasNamedCurve()) {
             throw new \UnexpectedValueException("No curve name.");
@@ -79,7 +81,7 @@ class ECPublicKeyJWK extends PublicKeyJWK
      * @param PEM $pem
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         return self::fromECPublicKey(ECPublicKey::fromPEM($pem));
     }
@@ -89,7 +91,7 @@ class ECPublicKeyJWK extends PublicKeyJWK
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         $curve_oid = CurveParameter::nameToOID($this->curveParameter()->value());
         $x = ECConversion::octetsToNumber(

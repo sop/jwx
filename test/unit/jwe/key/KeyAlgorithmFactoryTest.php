@@ -9,12 +9,13 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\KeyIDParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class KeyAlgorithmFactoryTest extends PHPUnit_Framework_TestCase
+class KeyAlgorithmFactoryTest extends TestCase
 {
     const KEY_ID = "test-key";
     

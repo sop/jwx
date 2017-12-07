@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Util\Base64;
@@ -14,7 +16,7 @@ abstract class CoordinateParameter extends JWKParameter
      *
      * @return string
      */
-    public function coordinateOctets()
+    public function coordinateOctets(): string
     {
         return Base64::urlDecode($this->_value);
     }

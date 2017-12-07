@@ -5,13 +5,14 @@ use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWE\KeyAlgorithm\RSAESKeyAlgorithm;
 use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jwe
  * @group key
  */
-class RSAESPKCS1KeyTest extends PHPUnit_Framework_TestCase
+class RSAESPKCS1KeyTest extends TestCase
 {
     const CEK = "123456789 123456";
     

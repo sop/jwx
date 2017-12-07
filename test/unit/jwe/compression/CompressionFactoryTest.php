@@ -5,12 +5,13 @@ use JWX\JWE\CompressionAlgorithm;
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\CompressionAlgorithmParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group compression
  */
-class CompressionFactoryTest extends PHPUnit_Framework_TestCase
+class CompressionFactoryTest extends TestCase
 {
     public function testAlgoByName()
     {

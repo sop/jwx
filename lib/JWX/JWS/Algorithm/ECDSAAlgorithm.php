@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -45,7 +47,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      *
      * @return string
      */
-    abstract protected function _curveName();
+    abstract protected function _curveName(): string;
     
     /**
      * Constructor.
@@ -74,7 +76,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      * @param ECPublicKeyJWK $jwk
      * @return self
      */
-    public static function fromPublicKey(ECPublicKeyJWK $jwk)
+    public static function fromPublicKey(ECPublicKeyJWK $jwk): self
     {
         return new static($jwk);
     }
@@ -85,7 +87,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      * @param ECPrivateKeyJWK $jwk
      * @return self
      */
-    public static function fromPrivateKey(ECPrivateKeyJWK $jwk)
+    public static function fromPrivateKey(ECPrivateKeyJWK $jwk): self
     {
         return new static($jwk->publicKey(), $jwk);
     }
@@ -94,7 +96,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public static function fromJWK(JWK $jwk, Header $header)
+    public static function fromJWK(JWK $jwk, Header $header): self
     {
         $alg = JWA::deriveAlgorithmName($header, $jwk);
         if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
@@ -112,7 +114,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      * @see \JWX\JWS\Algorithm\OpenSSLSignatureAlgorithm::computeSignature()
      * @return string
      */
-    public function computeSignature($data)
+    public function computeSignature(string $data): string
     {
         // OpenSSL returns ECDSA signature as a DER encoded ECDSA-Sig-Value
         $der = parent::computeSignature($data);
@@ -128,7 +130,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      * @see \JWX\JWS\Algorithm\OpenSSLSignatureAlgorithm::validateSignature()
      * @return bool
      */
-    public function validateSignature($data, $signature)
+    public function validateSignature(string $data, string $signature): bool
     {
         if (strlen($signature) != $this->_signatureSize) {
             throw new \UnexpectedValueException("Invalid signature length.");
@@ -147,7 +149,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

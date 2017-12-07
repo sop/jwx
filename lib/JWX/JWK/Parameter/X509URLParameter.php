@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,8 +20,8 @@ class X509URLParameter extends JWKParameter
      *
      * @param string $uri
      */
-    public function __construct($uri)
+    public function __construct(string $uri)
     {
-        parent::__construct(self::PARAM_X509_URL, (string) $uri);
+        parent::__construct(self::PARAM_X509_URL, $uri);
     }
 }

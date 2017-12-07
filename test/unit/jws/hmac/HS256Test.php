@@ -5,12 +5,13 @@ use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\HMACAlgorithm;
 use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jws
  * @group hmac
  */
-class HS256Test extends PHPUnit_Framework_TestCase
+class HS256Test extends TestCase
 {
     const KEY = "12345678";
     

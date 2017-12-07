@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
@@ -11,6 +13,7 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
+use Sop\AESKW\AESKeyWrapAlgorithm;
 
 /**
  * Base class for algorithms implementing PBES2 key encryption.
@@ -69,21 +72,21 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * @return string
      */
-    abstract protected function _hashAlgo();
+    abstract protected function _hashAlgo(): string;
     
     /**
      * Get derived key length.
      *
      * @return int
      */
-    abstract protected function _keyLength();
+    abstract protected function _keyLength(): int;
     
     /**
      * Get key wrapping algoritym.
      *
-     * @return \AESKW\AESKeyWrapAlgorithm
+     * @return AESKeyWrapAlgorithm
      */
-    abstract protected function _kwAlgo();
+    abstract protected function _kwAlgo(): AESKeyWrapAlgorithm;
     
     /**
      * Constructor.
@@ -92,7 +95,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      * @param string $salt_input Salt input
      * @param int $count Iteration count
      */
-    public function __construct($password, $salt_input, $count)
+    public function __construct(string $password, string $salt_input, int $count)
     {
         $this->_password = $password;
         $this->_saltInput = $salt_input;
@@ -104,7 +107,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      * @param JWK $jwk
      * @param Header $header
      * @throws \UnexpectedValueException
-     * @return PBES2Algorithm
+     * @return self
      */
     public static function fromJWK(JWK $jwk, Header $header)
     {
@@ -133,7 +136,8 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      * @param int $salt_bytes Optional user defined salt length
      * @return self
      */
-    public static function fromPassword($password, $count = 64000, $salt_bytes = 8)
+    public static function fromPassword(string $password, int $count = 64000,
+        int $salt_bytes = 8): self
     {
         $salt_input = openssl_random_pseudo_bytes($salt_bytes);
         return new static($password, $salt_input, $count);
@@ -144,7 +148,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * @return string
      */
-    public function saltInput()
+    public function saltInput(): string
     {
         return $this->_saltInput;
     }
@@ -154,7 +158,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * @return string
      */
-    public function salt()
+    public function salt(): string
     {
         return PBES2SaltInputParameter::fromString($this->_saltInput)->salt(
             AlgorithmParameter::fromAlgorithm($this));
@@ -165,7 +169,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * @return int
      */
-    public function iterationCount()
+    public function iterationCount(): int
     {
         return $this->_count;
     }
@@ -175,7 +179,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * @return string
      */
-    protected function _derivedKey()
+    protected function _derivedKey(): string
     {
         if (!isset($this->_derivedKey)) {
             $this->_derivedKey = hash_pbkdf2($this->_hashAlgo(),
@@ -189,7 +193,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _encryptKey($key, Header &$header)
+    protected function _encryptKey(string $key, Header &$header): string
     {
         return $this->_kwAlgo()->wrap($key, $this->_derivedKey());
     }
@@ -198,7 +202,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _decryptKey($ciphertext, Header $header)
+    protected function _decryptKey(string $ciphertext, Header $header): string
     {
         return $this->_kwAlgo()->unwrap($ciphertext, $this->_derivedKey());
     }
@@ -208,7 +212,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this),

@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWKSetURLParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class JWKSetURLParameterTest extends PHPUnit_Framework_TestCase
+class JWKSetURLParameterTest extends TestCase
 {
     public function testCreate()
     {

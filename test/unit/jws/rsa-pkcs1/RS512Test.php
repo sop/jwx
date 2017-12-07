@@ -6,13 +6,14 @@ use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\RS512Algorithm;
 use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jws
  * @group rsassa
  */
-class RS512Test extends PHPUnit_Framework_TestCase
+class RS512Test extends TestCase
 {
     private static $_privKey;
     

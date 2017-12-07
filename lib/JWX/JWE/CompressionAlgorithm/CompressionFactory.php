@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\CompressionAlgorithm;
 
 use JWX\JWA\JWA;
+use JWX\JWE\CompressionAlgorithm;
 use JWX\JWT\Header\Header;
 
 /**
@@ -28,9 +31,9 @@ abstract class CompressionFactory
      *
      * @param string $name
      * @throws \UnexpectedValueException If algorithm is not supported
-     * @return \JWX\JWE\CompressionAlgorithm
+     * @return CompressionAlgorithm
      */
-    public static function algoByName($name)
+    public static function algoByName(string $name): CompressionAlgorithm
     {
         if (!array_key_exists($name, self::MAP_ALGO_TO_CLASS)) {
             throw new \UnexpectedValueException(
@@ -46,9 +49,9 @@ abstract class CompressionFactory
      * @param Header $header Header
      * @throws \UnexpectedValueException If compression algorithm parameter is
      *         not present or algorithm is not supported
-     * @return \JWX\JWE\CompressionAlgorithm
+     * @return CompressionAlgorithm
      */
-    public static function algoByHeader(Header $header)
+    public static function algoByHeader(Header $header): CompressionAlgorithm
     {
         if (!$header->hasCompressionAlgorithm()) {
             throw new \UnexpectedValueException(

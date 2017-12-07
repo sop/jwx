@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
@@ -15,7 +17,7 @@ class RSAESPKCS1Algorithm extends RSAESKeyAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _paddingScheme()
+    protected function _paddingScheme(): int
     {
         return OPENSSL_PKCS1_PADDING;
     }
@@ -24,7 +26,7 @@ class RSAESPKCS1Algorithm extends RSAESKeyAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_RSA1_5;
     }

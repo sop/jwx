@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class CriticalParameterTest extends PHPUnit_Framework_TestCase
+class CriticalParameterTest extends TestCase
 {
     public function testCreate()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,7 +20,7 @@ class KeyValueParameter extends JWKParameter
      *
      * @param string $key Base64url encoded key
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $this->_validateEncoding($key);
         parent::__construct(self::PARAM_KEY_VALUE, $key);
@@ -29,7 +31,7 @@ class KeyValueParameter extends JWKParameter
      *
      * @return string
      */
-    public function key()
+    public function key(): string
     {
         return $this->string();
     }

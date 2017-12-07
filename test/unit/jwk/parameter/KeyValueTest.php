@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyValueParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class KeyValueParameterTest extends PHPUnit_Framework_TestCase
+class KeyValueParameterTest extends TestCase
 {
     const KEY = "password";
     

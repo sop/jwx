@@ -1,8 +1,9 @@
 <?php
 
 use JWX\JWK\RSA\RSAPublicKeyJWK;
+use PHPUnit\Framework\TestCase;
 
-class CookbookRSAPublicKeyTest extends PHPUnit_Framework_TestCase
+class CookbookRSAPublicKeyTest extends TestCase
 {
     public function testJWK()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,7 +20,7 @@ class ECCPrivateKeyParameter extends JWKParameter
      *
      * @param string $key Private key in base64url encoding
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $this->_validateEncoding($key);
         parent::__construct(self::PARAM_ECC_PRIVATE_KEY, $key);
@@ -29,7 +31,7 @@ class ECCPrivateKeyParameter extends JWKParameter
      *
      * @return string
      */
-    public function privateKeyOctets()
+    public function privateKeyOctets(): string
     {
         return $this->string();
     }

@@ -6,13 +6,14 @@ use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\ECDSAAlgorithm;
 use JWX\JWS\Algorithm\ES384Algorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jws
  * @group ec
  */
-class ES384Test extends PHPUnit_Framework_TestCase
+class ES384Test extends TestCase
 {
     const DATA = "CONTENT";
     

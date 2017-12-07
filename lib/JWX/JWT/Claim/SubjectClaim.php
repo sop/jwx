@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\EqualsValidator;
@@ -16,9 +18,8 @@ class SubjectClaim extends RegisteredClaim
      *
      * @param string $subject Subject
      */
-    public function __construct($subject)
+    public function __construct(string $subject)
     {
-        parent::__construct(self::NAME_SUBJECT, (string) $subject,
-            new EqualsValidator());
+        parent::__construct(self::NAME_SUBJECT, $subject, new EqualsValidator());
     }
 }

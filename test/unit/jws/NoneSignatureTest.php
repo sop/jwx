@@ -4,11 +4,12 @@ use JWX\JWA\JWA;
 use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jws
  */
-class NoneSignatureTest extends PHPUnit_Framework_TestCase
+class NoneSignatureTest extends TestCase
 {
     const DATA = "CONTENT";
     

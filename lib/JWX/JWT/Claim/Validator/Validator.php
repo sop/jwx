@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim\Validator;
 
 /**
@@ -14,7 +16,7 @@ abstract class Validator
      * @param mixed $constraint Constraint
      * @return bool True if value is valid
      */
-    abstract public function validate($value, $constraint);
+    abstract public function validate($value, $constraint): bool;
     
     /**
      * Functor method.
@@ -23,7 +25,7 @@ abstract class Validator
      * @param mixed $constraint
      * @return bool
      */
-    public function __invoke($value, $constraint)
+    public function __invoke($value, $constraint): bool
     {
         return $this->validate($value, $constraint);
     }

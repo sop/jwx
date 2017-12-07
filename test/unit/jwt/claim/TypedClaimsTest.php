@@ -9,12 +9,13 @@ use JWX\JWT\Claim\IssuerClaim;
 use JWX\JWT\Claim\JWTIDClaim;
 use JWX\JWT\Claim\NotBeforeClaim;
 use JWX\JWT\Claim\SubjectClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class TypedClaimsTest extends PHPUnit_Framework_TestCase
+class TypedClaimsTest extends TestCase
 {
     private static $_claims;
     

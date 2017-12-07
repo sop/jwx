@@ -10,12 +10,13 @@ use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class PBES2Test extends PHPUnit_Framework_TestCase
+class PBES2Test extends TestCase
 {
     const PASSWORD = "password";
     const SALT = "salt";

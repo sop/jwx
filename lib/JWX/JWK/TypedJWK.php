@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK;
+
+use JWX\JWK\Parameter\JWKParameter;
 
 /**
  * Trait for JWK to provide parameter accessor methods for typed return values.
@@ -13,22 +17,22 @@ trait TypedJWK
      * @param string ...$names Parameter names
      * @return bool
      */
-    abstract public function has(...$names);
+    abstract public function has(string ...$names): bool;
     
     /**
      * Get a parameter.
      *
      * @param string $name Parameter name
-     * @return \JWX\JWK\Parameter\JWKParameter
+     * @return JWKParameter
      */
-    abstract public function get($name);
+    abstract public function get(string $name): JWKParameter;
     
     /**
      * Check whether the algorithm parameter is present.
      *
      * @return bool
      */
-    public function hasAlgorithmParameter()
+    public function hasAlgorithmParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_ALG);
     }
@@ -40,7 +44,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\AlgorithmParameter
      */
-    public function algorithmParameter()
+    public function algorithmParameter(): Parameter\AlgorithmParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_ALG),
             Parameter\AlgorithmParameter::class);
@@ -51,7 +55,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasCurveParameter()
+    public function hasCurveParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_CRV);
     }
@@ -63,7 +67,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\CurveParameter
      */
-    public function curveParameter()
+    public function curveParameter(): Parameter\CurveParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_CRV),
             Parameter\CurveParameter::class);
@@ -74,7 +78,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasECCPrivateKeyParameter()
+    public function hasECCPrivateKeyParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_ECC_D);
     }
@@ -86,7 +90,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\ECCPrivateKeyParameter
      */
-    public function ECCPrivateKeyParameter()
+    public function ECCPrivateKeyParameter(): Parameter\ECCPrivateKeyParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_ECC_D),
             Parameter\ECCPrivateKeyParameter::class);
@@ -97,7 +101,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasExponentParameter()
+    public function hasExponentParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_E);
     }
@@ -109,7 +113,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\ExponentParameter
      */
-    public function exponentParameter()
+    public function exponentParameter(): Parameter\ExponentParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_E),
             Parameter\ExponentParameter::class);
@@ -120,7 +124,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasFirstCRTCoefficientParameter()
+    public function hasFirstCRTCoefficientParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_QI);
     }
@@ -132,7 +136,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\FirstCRTCoefficientParameter
      */
-    public function firstCRTCoefficientParameter()
+    public function firstCRTCoefficientParameter(): Parameter\FirstCRTCoefficientParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_QI),
             Parameter\FirstCRTCoefficientParameter::class);
@@ -143,7 +147,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasFirstFactorCRTExponentParameter()
+    public function hasFirstFactorCRTExponentParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_DP);
     }
@@ -155,7 +159,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\FirstFactorCRTExponentParameter
      */
-    public function firstFactorCRTExponentParameter()
+    public function firstFactorCRTExponentParameter(): Parameter\FirstFactorCRTExponentParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_DP),
             Parameter\FirstFactorCRTExponentParameter::class);
@@ -166,7 +170,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasFirstPrimeFactorParameter()
+    public function hasFirstPrimeFactorParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_P);
     }
@@ -178,7 +182,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\FirstPrimeFactorParameter
      */
-    public function firstPrimeFactorParameter()
+    public function firstPrimeFactorParameter(): Parameter\FirstPrimeFactorParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_P),
             Parameter\FirstPrimeFactorParameter::class);
@@ -189,7 +193,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasKeyIDParameter()
+    public function hasKeyIDParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_KID);
     }
@@ -201,7 +205,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\KeyIDParameter
      */
-    public function keyIDParameter()
+    public function keyIDParameter(): Parameter\KeyIDParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_KID),
             Parameter\KeyIDParameter::class);
@@ -212,7 +216,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasKeyOperationsParameter()
+    public function hasKeyOperationsParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_KEY_OPS);
     }
@@ -224,7 +228,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\KeyOperationsParameter
      */
-    public function keyOperationsParameter()
+    public function keyOperationsParameter(): Parameter\KeyOperationsParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_KEY_OPS),
             Parameter\KeyOperationsParameter::class);
@@ -235,7 +239,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasKeyTypeParameter()
+    public function hasKeyTypeParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_KTY);
     }
@@ -247,7 +251,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\KeyTypeParameter
      */
-    public function keyTypeParameter()
+    public function keyTypeParameter(): Parameter\KeyTypeParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_KTY),
             Parameter\KeyTypeParameter::class);
@@ -258,7 +262,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasKeyValueParameter()
+    public function hasKeyValueParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_K);
     }
@@ -270,7 +274,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\KeyValueParameter
      */
-    public function keyValueParameter()
+    public function keyValueParameter(): Parameter\KeyValueParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_K),
             Parameter\KeyValueParameter::class);
@@ -281,7 +285,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasModulusParameter()
+    public function hasModulusParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_N);
     }
@@ -293,7 +297,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\ModulusParameter
      */
-    public function modulusParameter()
+    public function modulusParameter(): Parameter\ModulusParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_N),
             Parameter\ModulusParameter::class);
@@ -304,7 +308,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasOtherPrimesInfoParameter()
+    public function hasOtherPrimesInfoParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_OTH);
     }
@@ -316,7 +320,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\OtherPrimesInfoParameter
      */
-    public function otherPrimesInfoParameter()
+    public function otherPrimesInfoParameter(): Parameter\OtherPrimesInfoParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_OTH),
             Parameter\OtherPrimesInfoParameter::class);
@@ -327,7 +331,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasPrivateExponentParameter()
+    public function hasPrivateExponentParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_RSA_D);
     }
@@ -339,7 +343,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\PrivateExponentParameter
      */
-    public function privateExponentParameter()
+    public function privateExponentParameter(): Parameter\PrivateExponentParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_RSA_D),
             Parameter\PrivateExponentParameter::class);
@@ -350,7 +354,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasPublicKeyUseParameter()
+    public function hasPublicKeyUseParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_USE);
     }
@@ -362,7 +366,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\PublicKeyUseParameter
      */
-    public function publicKeyUseParameter()
+    public function publicKeyUseParameter(): Parameter\PublicKeyUseParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_USE),
             Parameter\PublicKeyUseParameter::class);
@@ -373,7 +377,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasSecondFactorCRTExponentParameter()
+    public function hasSecondFactorCRTExponentParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_DQ);
     }
@@ -385,7 +389,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\SecondFactorCRTExponentParameter
      */
-    public function secondFactorCRTExponentParameter()
+    public function secondFactorCRTExponentParameter(): Parameter\SecondFactorCRTExponentParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_DQ),
             Parameter\SecondFactorCRTExponentParameter::class);
@@ -396,7 +400,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasSecondPrimeFactorParameter()
+    public function hasSecondPrimeFactorParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_Q);
     }
@@ -408,7 +412,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\SecondPrimeFactorParameter
      */
-    public function secondPrimeFactorParameter()
+    public function secondPrimeFactorParameter(): Parameter\SecondPrimeFactorParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_Q),
             Parameter\SecondPrimeFactorParameter::class);
@@ -419,7 +423,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasX509CertificateChainParameter()
+    public function hasX509CertificateChainParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_X5C);
     }
@@ -431,7 +435,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\X509CertificateChainParameter
      */
-    public function X509CertificateChainParameter()
+    public function X509CertificateChainParameter(): Parameter\X509CertificateChainParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_X5C),
             Parameter\X509CertificateChainParameter::class);
@@ -443,7 +447,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasX509CertificateSHA1ThumbprintParameter()
+    public function hasX509CertificateSHA1ThumbprintParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_X5T);
     }
@@ -455,7 +459,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\X509CertificateSHA1ThumbprintParameter
      */
-    public function X509CertificateSHA1ThumbprintParameter()
+    public function X509CertificateSHA1ThumbprintParameter(): Parameter\X509CertificateSHA1ThumbprintParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_X5T),
             Parameter\X509CertificateSHA1ThumbprintParameter::class);
@@ -467,7 +471,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasX509CertificateSHA256ThumbprintParameter()
+    public function hasX509CertificateSHA256ThumbprintParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_X5TS256);
     }
@@ -479,7 +483,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\X509CertificateSHA256ThumbprintParameter
      */
-    public function X509CertificateSHA256ThumbprintParameter()
+    public function X509CertificateSHA256ThumbprintParameter(): Parameter\X509CertificateSHA256ThumbprintParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_X5TS256),
             Parameter\X509CertificateSHA256ThumbprintParameter::class);
@@ -490,7 +494,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasX509URLParameter()
+    public function hasX509URLParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_X5U);
     }
@@ -502,7 +506,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\X509URLParameter
      */
-    public function X509URLParameter()
+    public function X509URLParameter(): Parameter\X509URLParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_X5U),
             Parameter\X509URLParameter::class);
@@ -513,7 +517,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasXCoordinateParameter()
+    public function hasXCoordinateParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_X);
     }
@@ -525,7 +529,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\XCoordinateParameter
      */
-    public function XCoordinateParameter()
+    public function XCoordinateParameter(): Parameter\XCoordinateParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_X),
             Parameter\XCoordinateParameter::class);
@@ -536,7 +540,7 @@ trait TypedJWK
      *
      * @return bool
      */
-    public function hasYCoordinateParameter()
+    public function hasYCoordinateParameter(): bool
     {
         return $this->has(Parameter\JWKParameter::P_Y);
     }
@@ -548,7 +552,7 @@ trait TypedJWK
      * @throws \LogicException If the parameter is not present
      * @return Parameter\YCoordinateParameter
      */
-    public function YCoordinateParameter()
+    public function YCoordinateParameter(): Parameter\YCoordinateParameter
     {
         return self::_checkType($this->get(Parameter\JWKParameter::P_Y),
             Parameter\YCoordinateParameter::class);
@@ -562,7 +566,7 @@ trait TypedJWK
      * @throws \UnexpectedValueException
      * @return Parameter\JWKParameter
      */
-    private static function _checkType(Parameter\JWKParameter $param, $cls)
+    private static function _checkType(Parameter\JWKParameter $param, string $cls): Parameter\JWKParameter
     {
         if (!$param instanceof $cls) {
             throw new \UnexpectedValueException(

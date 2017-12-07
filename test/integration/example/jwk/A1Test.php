@@ -11,6 +11,7 @@ use JWX\JWK\Parameter\ModulusParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7517 appendix A.1.
@@ -20,7 +21,7 @@ use JWX\JWK\Parameter\YCoordinateParameter;
  *
  * @link https://tools.ietf.org/html/rfc7517#appendix-A.1
  */
-class JWKPublicKeysTest extends PHPUnit_Framework_TestCase
+class JWKPublicKeysTest extends TestCase
 {
     /**
      *

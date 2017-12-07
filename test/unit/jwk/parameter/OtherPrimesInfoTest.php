@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\OtherPrimesInfoParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class OtherPrimesInfoParameterTest extends PHPUnit_Framework_TestCase
+class OtherPrimesInfoParameterTest extends TestCase
 {
     public function testCreate()
     {

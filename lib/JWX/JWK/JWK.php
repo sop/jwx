@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK;
 
 use JWX\JWK\Parameter\JWKParameter;
@@ -40,7 +42,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @param array $members
      * @return self
      */
-    public static function fromArray(array $members)
+    public static function fromArray(array $members): self
     {
         $params = array();
         foreach ($members as $name => $value) {
@@ -56,7 +58,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromJSON($json)
+    public static function fromJSON(string $json): self
     {
         $members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
         if (!is_array($members)) {
@@ -73,7 +75,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @param JWK $jwk
      * @return self
      */
-    public static function fromJWK(JWK $jwk)
+    public static function fromJWK(JWK $jwk): self
     {
         return new static(...array_values($jwk->_parameters));
     }
@@ -84,7 +86,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @param JWKParameter ...$params
      * @return self
      */
-    public function withParameters(JWKParameter ...$params)
+    public function withParameters(JWKParameter ...$params): self
     {
         $obj = clone $this;
         foreach ($params as $param) {
@@ -98,7 +100,7 @@ class JWK implements \Countable, \IteratorAggregate
      *
      * @return JWKParameter[]
      */
-    public function parameters()
+    public function parameters(): array
     {
         return $this->_parameters;
     }
@@ -109,7 +111,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @param string $id Key ID as a string
      * @return self
      */
-    public function withKeyID($id)
+    public function withKeyID(string $id): self
     {
         return $this->withParameters(new KeyIDParameter($id));
     }
@@ -122,7 +124,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @param string ...$names Parameter names
      * @return bool
      */
-    public function has(...$names)
+    public function has(string ...$names): bool
     {
         foreach ($names as $name) {
             if (!isset($this->_parameters[$name])) {
@@ -139,7 +141,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @throws \LogicException
      * @return JWKParameter
      */
-    public function get($name)
+    public function get(string $name): JWKParameter
     {
         if (!$this->has($name)) {
             throw new \LogicException("Parameter $name doesn't exists.");
@@ -152,7 +154,7 @@ class JWK implements \Countable, \IteratorAggregate
      *
      * @return array Parameter values keyed by parameter names
      */
-    public function toArray()
+    public function toArray(): array
     {
         $a = array();
         foreach ($this->_parameters as $param) {
@@ -166,7 +168,7 @@ class JWK implements \Countable, \IteratorAggregate
      *
      * @return string
      */
-    public function toJSON()
+    public function toJSON(): string
     {
         $data = $this->toArray();
         if (empty($data)) {
@@ -180,7 +182,7 @@ class JWK implements \Countable, \IteratorAggregate
      *
      * @see \Countable::count()
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_parameters);
     }
@@ -191,7 +193,7 @@ class JWK implements \Countable, \IteratorAggregate
      * @see \IteratorAggregate::getIterator()
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->_parameters);
     }

@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\EncryptionAlgorithm;
 
-use GCM\GCM;
-use GCM\Exception\AuthenticationException as GCMAuthException;
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\Exception\AuthenticationException;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+use Sop\GCM\GCM;
+use Sop\GCM\Cipher\Cipher;
+use Sop\GCM\Exception\AuthenticationException as GCMAuthException;
 
 /**
  * Base class for algorithms implementing AES in Galois/Counter mode.
@@ -18,16 +21,16 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
     /**
      * Get GCM Cipher instance.
      *
-     * @return \GCM\Cipher\Cipher
+     * @return Cipher
      */
-    abstract protected function _getGCMCipher();
+    abstract protected function _getGCMCipher(): Cipher;
     
     /**
      * Get GCM instance.
      *
      * @return GCM
      */
-    final protected function _getGCM()
+    final protected function _getGCM(): GCM
     {
         return new GCM($this->_getGCMCipher(), 16);
     }
@@ -38,7 +41,7 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
      * @param string $key
      * @throws \RuntimeException
      */
-    final protected function _validateKey($key)
+    final protected function _validateKey(string $key)
     {
         if (strlen($key) != $this->keySize()) {
             throw new \RuntimeException("Invalid key size.");
@@ -51,7 +54,7 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
      * @param string $iv
      * @throws \RuntimeException
      */
-    final protected function _validateIV($iv)
+    final protected function _validateIV(string $iv)
     {
         if (strlen($iv) != $this->ivSize()) {
             throw new \RuntimeException("Invalid IV length.");
@@ -62,7 +65,8 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function encrypt($plaintext, $key, $iv, $aad)
+    public function encrypt(string $plaintext, string $key, string $iv,
+        string $aad): array
     {
         $this->_validateKey($key);
         $this->_validateIV($iv);
@@ -75,7 +79,8 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag)
+    public function decrypt(string $ciphertext, string $key, string $iv,
+        string $aad, string $auth_tag): string
     {
         $this->_validateKey($key);
         $this->_validateIV($iv);
@@ -92,7 +97,7 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function ivSize()
+    public function ivSize(): int
     {
         return 12;
     }
@@ -101,7 +106,7 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
      *
      * {@inheritdoc}
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array(EncryptionAlgorithmParameter::fromAlgorithm($this));
     }

@@ -8,12 +8,13 @@ use JWX\JWK\Parameter\KeyValueParameter;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\Algorithm\HMACAlgorithm;
 use JWX\JWT\Header\Header;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jws
  * @group hmac
  */
-class HMACAlgorithmTest extends PHPUnit_Framework_TestCase
+class HMACAlgorithmTest extends TestCase
 {
     public function testFromJWK()
     {
@@ -46,12 +47,12 @@ class HMACAlgorithmTest extends PHPUnit_Framework_TestCase
 
 class HMACAlgorithmTest_InvalidAlgo extends HMACAlgorithm
 {
-    protected function _hashAlgo()
+    protected function _hashAlgo(): string
     {
         return "nope";
     }
     
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return $this->_hashAlgo();
     }

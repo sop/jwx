@@ -3,6 +3,7 @@
 use JWX\JWK\JWK;
 use JWX\JWK\EC\ECPrivateKeyJWK;
 use JWX\JWK\EC\ECPublicKeyJWK;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
 
@@ -10,7 +11,7 @@ use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
  * @group jwk
  * @group ec
  */
-class ECPrivateKeyJWKTest extends PHPUnit_Framework_TestCase
+class ECPrivateKeyJWKTest extends TestCase
 {
     private static $_privPEM;
     

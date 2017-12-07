@@ -9,6 +9,7 @@ use JWX\JWK\RSA\RSAPublicKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\RSA\RSAPrivateKey;
 use Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey;
@@ -17,7 +18,7 @@ use Sop\CryptoTypes\Asymmetric\RSA\RSAPublicKey;
  * @group jwe
  * @group key
  */
-class RSAESKeyTest extends PHPUnit_Framework_TestCase
+class RSAESKeyTest extends TestCase
 {
     private static $_publicKey;
     
@@ -177,17 +178,17 @@ class RSAESKeyTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class RSAESKeyTest_KeyMockup
+class RSAESKeyTest_KeyMockup extends RSAPrivateKeyJWK
 {
-    public function toPEM()
+    public function toPEM(): PEM
     {
         return new RSAESKeyTest_PEMMockup();
     }
 }
 
-class RSAESKeyTest_PEMMockup
+class RSAESKeyTest_PEMMockup extends PEM
 {
-    public function string()
+    public function string(): string
     {
         return "";
     }

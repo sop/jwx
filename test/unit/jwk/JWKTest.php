@@ -2,11 +2,12 @@
 
 use JWX\JWK\JWK;
 use JWX\JWK\Parameter\JWKParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  */
-class JWKTest extends PHPUnit_Framework_TestCase
+class JWKTest extends TestCase
 {
     public function testCreate()
     {

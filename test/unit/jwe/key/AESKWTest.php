@@ -10,12 +10,13 @@ use JWX\JWK\Parameter\KeyTypeParameter;
 use JWX\JWK\Parameter\KeyValueParameter;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class AESKWTest extends PHPUnit_Framework_TestCase
+class AESKWTest extends TestCase
 {
     const KEY_128 = "123456789 123456";
     

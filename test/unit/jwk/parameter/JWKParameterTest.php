@@ -1,12 +1,13 @@
 <?php
 
 use JWX\JWK\Parameter\JWKParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class JWKParameterTest extends PHPUnit_Framework_TestCase
+class JWKParameterTest extends TestCase
 {
     /**
      * @expectedException BadMethodCallException

@@ -5,6 +5,7 @@ use JWX\JWE\EncryptionAlgorithm\A256GCMAlgorithm;
 use JWX\JWE\KeyAlgorithm\RSAESOAEPAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7516 appendix A.1.
@@ -14,7 +15,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7516#appendix-A.1
  */
-class JWEUsingRSAESOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
+class JWEUsingRSAESOAEPAndAESGCMTest extends TestCase
 {
     private static $_plaintextBytes = [84, 104, 101, 32, 116, 114, 117, 101,
         32, 115, 105, 103, 110, 32, 111, 102, 32, 105, 110, 116, 101, 108, 108,

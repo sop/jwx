@@ -9,6 +9,7 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7517 appendix C.
@@ -18,7 +19,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7517#appendix-C
  */
-class JWKEncryptedRSAPrivateKeyTest extends PHPUnit_Framework_TestCase
+class JWKEncryptedRSAPrivateKeyTest extends TestCase
 {
     private static $_jwkBytes = [123, 34, 107, 116, 121, 34, 58, 34, 82, 83,
         65, 34, 44, 34, 107, 105, 100, 34, 58, 34, 106, 117, 108, 105, 101, 116,

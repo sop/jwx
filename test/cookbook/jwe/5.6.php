@@ -6,8 +6,9 @@ use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookDirectEncWithAESGCMTest extends PHPUnit_Framework_TestCase
+class CookbookDirectEncWithAESGCMTest extends TestCase
 {
     private static $_testData;
     

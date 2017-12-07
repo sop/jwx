@@ -3,12 +3,13 @@
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\IssuedAtClaim;
 use JWX\JWT\Claim\RegisteredClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class IssuedAtClaimTest extends PHPUnit_Framework_TestCase
+class IssuedAtClaimTest extends TestCase
 {
     const TIME = "Thu, May 12, 2016  2:33:41 PM";
     

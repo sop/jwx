@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
-use AESKW\AESKW128;
 use JWX\JWA\JWA;
+use Sop\AESKW\AESKW128;
+use Sop\AESKW\AESKeyWrapAlgorithm;
 
 /**
  * Implements PBES2 with HMAC SHA-256 and "A128KW" wrapping.
@@ -16,7 +19,7 @@ class PBES2HS256A128KWAlgorithm extends PBES2Algorithm
      *
      * {@inheritdoc}
      */
-    protected function _hashAlgo()
+    protected function _hashAlgo(): string
     {
         return "sha256";
     }
@@ -25,7 +28,7 @@ class PBES2HS256A128KWAlgorithm extends PBES2Algorithm
      *
      * {@inheritdoc}
      */
-    protected function _keyLength()
+    protected function _keyLength(): int
     {
         return 16;
     }
@@ -34,7 +37,7 @@ class PBES2HS256A128KWAlgorithm extends PBES2Algorithm
      *
      * {@inheritdoc}
      */
-    protected function _kwAlgo()
+    protected function _kwAlgo(): AESKeyWrapAlgorithm
     {
         return new AESKW128();
     }
@@ -43,7 +46,7 @@ class PBES2HS256A128KWAlgorithm extends PBES2Algorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_PBES2_HS256_A128KW;
     }

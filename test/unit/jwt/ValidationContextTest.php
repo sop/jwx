@@ -2,12 +2,13 @@
 
 use JWX\JWT\ValidationContext;
 use JWX\JWT\Claim\RegisteredClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group validator
  */
-class ValidationContextTest extends PHPUnit_Framework_TestCase
+class ValidationContextTest extends TestCase
 {
     public function testCreate()
     {

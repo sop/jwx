@@ -1,12 +1,13 @@
 <?php
 
 use JWX\JWT\Claim\Validator\LessValidator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group validator
  */
-class LessValidatorTest extends PHPUnit_Framework_TestCase
+class LessValidatorTest extends TestCase
 {
     private $_validator;
     

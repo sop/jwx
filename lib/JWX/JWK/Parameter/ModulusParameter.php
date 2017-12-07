@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
@@ -18,7 +20,7 @@ class ModulusParameter extends JWKParameter
      *
      * @param string $n Modulus in base64urlUInt encoding
      */
-    public function __construct($n)
+    public function __construct(string $n)
     {
         $this->_validateEncoding($n);
         parent::__construct(self::PARAM_MODULUS, $n);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE;
 
 use JWX\JWE\KeyAlgorithm\KeyAlgorithmFactory;
@@ -35,7 +37,7 @@ abstract class KeyManagementAlgorithm implements
      *        be updated to contain parameters specific to the encryption
      * @return string Ciphertext
      */
-    abstract protected function _encryptKey($key, Header &$header);
+    abstract protected function _encryptKey(string $key, Header &$header): string;
     
     /**
      * Decrypt a key.
@@ -45,7 +47,7 @@ abstract class KeyManagementAlgorithm implements
      *        parameters
      * @return string Plaintext key
      */
-    abstract protected function _decryptKey($ciphertext, Header $header);
+    abstract protected function _decryptKey(string $ciphertext, Header $header): string;
     
     /**
      * Encrypt a key to be inserted into JWE header.
@@ -58,7 +60,7 @@ abstract class KeyManagementAlgorithm implements
      * @throws \RuntimeException For generic errors
      * @return string Encrypted key
      */
-    final public function encrypt($cek, Header &$header = null)
+    final public function encrypt(string $cek, Header &$header = null): string
     {
         if (!isset($header)) {
             $header = new Header();
@@ -75,7 +77,7 @@ abstract class KeyManagementAlgorithm implements
      * @throws \RuntimeException For generic errors
      * @return string Content encryption key
      */
-    final public function decrypt($data, Header $header = null)
+    final public function decrypt(string $data, Header $header = null): string
     {
         if (!isset($header)) {
             $header = new Header();
@@ -91,7 +93,7 @@ abstract class KeyManagementAlgorithm implements
      * @param int $length Required key size in bytes
      * @return string
      */
-    abstract public function cekForEncryption($length);
+    abstract public function cekForEncryption(int $length): string;
     
     /**
      * Initialize key management algorithm from a JWK and a header.
@@ -112,7 +114,7 @@ abstract class KeyManagementAlgorithm implements
      * @param string|null $id Key ID or null to remove
      * @return self
      */
-    public function withKeyID($id)
+    public function withKeyID($id): self
     {
         $obj = clone $this;
         $obj->_keyID = $id;
@@ -124,7 +126,7 @@ abstract class KeyManagementAlgorithm implements
      * @see \JWX\JWT\Header\HeaderParameters::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         $params = array();
         if (isset($this->_keyID)) {

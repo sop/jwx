@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,10 +20,10 @@ class PBES2SaltInputParameter extends JWTParameter
      *
      * @param string $salt Base64url encoded salt input value
      */
-    public function __construct($salt)
+    public function __construct(string $salt)
     {
         $this->_validateEncoding($salt);
-        parent::__construct(self::PARAM_PBES2_SALT_INPUT, (string) $salt);
+        parent::__construct(self::PARAM_PBES2_SALT_INPUT, $salt);
     }
     
     /**
@@ -29,7 +31,7 @@ class PBES2SaltInputParameter extends JWTParameter
      *
      * @return string
      */
-    public function saltInput()
+    public function saltInput(): string
     {
         return $this->string();
     }
@@ -40,7 +42,7 @@ class PBES2SaltInputParameter extends JWTParameter
      * @param AlgorithmParameter $algo
      * @return string
      */
-    public function salt(AlgorithmParameter $algo)
+    public function salt(AlgorithmParameter $algo): string
     {
         return $algo->value() . "\0" . $this->saltInput();
     }

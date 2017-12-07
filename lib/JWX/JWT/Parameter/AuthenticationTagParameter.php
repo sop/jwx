@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,10 +20,10 @@ class AuthenticationTagParameter extends JWTParameter
      *
      * @param string $tag Base64url encoded authentication tag
      */
-    public function __construct($tag)
+    public function __construct(string $tag)
     {
         $this->_validateEncoding($tag);
-        parent::__construct(self::PARAM_AUTHENTICATION_TAG, (string) $tag);
+        parent::__construct(self::PARAM_AUTHENTICATION_TAG, $tag);
     }
     
     /**
@@ -29,7 +31,7 @@ class AuthenticationTagParameter extends JWTParameter
      *
      * @return string
      */
-    public function authenticationTag()
+    public function authenticationTag(): string
     {
         return $this->string();
     }

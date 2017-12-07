@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,7 +20,7 @@ class AlgorithmParameter extends JWKParameter
      *
      * @param string $algo Algorithm name
      */
-    public function __construct($algo)
+    public function __construct(string $algo)
     {
         parent::__construct(self::PARAM_ALGORITHM, $algo);
     }

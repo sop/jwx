@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Util;
 
 /**
@@ -14,7 +16,7 @@ class Base64
      * @param string $data
      * @return string
      */
-    public static function urlEncode($data)
+    public static function urlEncode(string $data): string
     {
         return strtr(rtrim(self::encode($data), "="), "+/", "-_");
     }
@@ -27,7 +29,7 @@ class Base64
      * @throws \UnexpectedValueException
      * @return string
      */
-    public static function urlDecode($data)
+    public static function urlDecode(string $data): string
     {
         $data = strtr($data, "-_", "+/");
         switch (strlen($data) % 4) {
@@ -53,7 +55,7 @@ class Base64
      * @param string $data
      * @return bool
      */
-    public static function isValidURLEncoding($data)
+    public static function isValidURLEncoding(string $data): bool
     {
         return preg_match('#^[A-Za-z0-9\-_]*$#', $data) == 1;
     }
@@ -66,13 +68,13 @@ class Base64
      * @throws \RuntimeException If encoding fails
      * @return string
      */
-    public static function encode($data)
+    public static function encode(string $data): string
     {
         $ret = @base64_encode($data);
         if (!is_string($ret)) {
             $err = error_get_last();
-            $msg = isset($err) ? $err["message"] : "base64_encode() failed.";
-            throw new \RuntimeException($msg);
+            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? "base64_encode() failed.");
         }
         return $ret;
     }
@@ -85,13 +87,13 @@ class Base64
      * @throws \RuntimeException If decoding fails
      * @return string
      */
-    public static function decode($data)
+    public static function decode(string $data): string
     {
         $ret = base64_decode($data, true);
         if (!is_string($ret)) {
             $err = error_get_last();
-            $msg = isset($err) ? $err["message"] : "base64_decode() failed.";
-            throw new \RuntimeException($msg);
+            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? "base64_decode() failed.");
         }
         return $ret;
     }
@@ -103,7 +105,7 @@ class Base64
      * @param string $data
      * @return bool
      */
-    public static function isValid($data)
+    public static function isValid(string $data): bool
     {
         return preg_match('#^[A-Za-z0-9+/]*={0,2}$#', $data) == 1;
     }

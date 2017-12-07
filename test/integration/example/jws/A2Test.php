@@ -4,6 +4,7 @@ use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\RS256Algorithm;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7515 appendix A.2.
@@ -13,7 +14,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7515#appendix-A.2
  */
-class JWSUsingRS256Test extends PHPUnit_Framework_TestCase
+class JWSUsingRS256Test extends TestCase
 {
     private static $_headerBytes = [123, 34, 97, 108, 103, 34, 58, 34, 82,
         83, 50, 53, 54, 34, 125];

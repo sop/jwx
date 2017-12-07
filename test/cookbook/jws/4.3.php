@@ -5,8 +5,9 @@ use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\ECDSAAlgorithm;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookECDSASignatureTest extends PHPUnit_Framework_TestCase
+class CookbookECDSASignatureTest extends TestCase
 {
     private static $_testData;
     

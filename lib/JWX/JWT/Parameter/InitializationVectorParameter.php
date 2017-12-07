@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\Base64URLValue;
@@ -18,10 +20,10 @@ class InitializationVectorParameter extends JWTParameter
      *
      * @param string $iv Base64url encoded initialization vector
      */
-    public function __construct($iv)
+    public function __construct(string $iv)
     {
         $this->_validateEncoding($iv);
-        parent::__construct(self::PARAM_INITIALIZATION_VECTOR, (string) $iv);
+        parent::__construct(self::PARAM_INITIALIZATION_VECTOR, $iv);
     }
     
     /**
@@ -29,7 +31,7 @@ class InitializationVectorParameter extends JWTParameter
      *
      * @return string
      */
-    public function initializationVector()
+    public function initializationVector(): string
     {
         return $this->string();
     }

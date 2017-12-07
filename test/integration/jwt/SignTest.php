@@ -4,12 +4,13 @@ use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\JWT\Claims;
 use JWX\JWT\JWT;
 use JWX\JWT\Claim\IssuedAtClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group jws
  */
-class JWTSigningTest extends PHPUnit_Framework_TestCase
+class JWTSigningTest extends TestCase
 {
     private static $_claims;
     

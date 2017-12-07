@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWA\JWA;
+use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWT\Header\Header;
 
 /**
@@ -33,9 +36,9 @@ abstract class EncryptionAlgorithmFactory
      *
      * @param string $name Algorithm name
      * @throws \UnexpectedValueException If algorithm is not supported.
-     * @return \JWX\JWE\ContentEncryptionAlgorithm
+     * @return ContentEncryptionAlgorithm
      */
-    public static function algoByName($name)
+    public static function algoByName(string $name): ContentEncryptionAlgorithm
     {
         if (!array_key_exists($name, self::MAP_ALGO_TO_CLASS)) {
             throw new \UnexpectedValueException(
@@ -51,9 +54,9 @@ abstract class EncryptionAlgorithmFactory
      * @param Header $header Header
      * @throws \UnexpectedValueException If content encryption algorithm
      *         parameter is not present or algorithm is not supported.
-     * @return \JWX\JWE\ContentEncryptionAlgorithm
+     * @return ContentEncryptionAlgorithm
      */
-    public static function algoByHeader(Header $header)
+    public static function algoByHeader(Header $header): ContentEncryptionAlgorithm
     {
         if (!$header->hasEncryptionAlgorithm()) {
             throw new \UnexpectedValueException(

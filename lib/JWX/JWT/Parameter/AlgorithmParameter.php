@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -19,9 +21,9 @@ class AlgorithmParameter extends JWTParameter
      *
      * @param string $algo Algorithm name
      */
-    public function __construct($algo)
+    public function __construct(string $algo)
     {
-        parent::__construct(self::PARAM_ALGORITHM, (string) $algo);
+        parent::__construct(self::PARAM_ALGORITHM, $algo);
     }
     
     /**
@@ -30,7 +32,7 @@ class AlgorithmParameter extends JWTParameter
      * @param AlgorithmParameterValue $value
      * @return self
      */
-    public static function fromAlgorithm(AlgorithmParameterValue $value)
+    public static function fromAlgorithm(AlgorithmParameterValue $value): self
     {
         return new self($value->algorithmParamValue());
     }

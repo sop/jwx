@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class YCoordinateParameterTest extends PHPUnit_Framework_TestCase
+class YCoordinateParameterTest extends TestCase
 {
     public function testCreate()
     {

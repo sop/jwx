@@ -27,11 +27,12 @@ use JWX\JWK\Parameter\X509URLParameter;
 use JWX\JWK\Parameter\XCoordinateParameter;
 use JWX\JWK\Parameter\YCoordinateParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  */
-class TypedJWKTest extends PHPUnit_Framework_TestCase
+class TypedJWKTest extends TestCase
 {
     private static $_jwk;
     

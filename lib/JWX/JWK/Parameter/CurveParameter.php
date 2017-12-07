@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -69,7 +71,7 @@ class CurveParameter extends JWKParameter
      *
      * @param string $curve Curve name
      */
-    public function __construct($curve)
+    public function __construct(string $curve)
     {
         parent::__construct(self::PARAM_CURVE, $curve);
     }
@@ -81,7 +83,7 @@ class CurveParameter extends JWKParameter
      * @throws \UnexpectedValueException If the curve is not supported
      * @return self
      */
-    public static function fromOID($oid)
+    public static function fromOID(string $oid): self
     {
         if (!array_key_exists($oid, self::MAP_OID_TO_CURVE)) {
             throw new \UnexpectedValueException("OID $oid not supported.");
@@ -96,7 +98,7 @@ class CurveParameter extends JWKParameter
      * @throws \UnexpectedValueException
      * @return int
      */
-    public function keySizeBits()
+    public function keySizeBits(): int
     {
         if (!array_key_exists($this->_value, self::MAP_CURVE_TO_SIZE)) {
             throw new \UnexpectedValueException(
@@ -112,7 +114,7 @@ class CurveParameter extends JWKParameter
      * @throws \UnexpectedValueException If the curve is not supported
      * @return string OID in dotted format
      */
-    public static function nameToOID($name)
+    public static function nameToOID(string $name): string
     {
         static $reverseMap;
         if (!isset($reverseMap)) {

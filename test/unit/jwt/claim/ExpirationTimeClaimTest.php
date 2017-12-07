@@ -4,12 +4,13 @@ use JWX\JWT\ValidationContext;
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\ExpirationTimeClaim;
 use JWX\JWT\Claim\RegisteredClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class ExpirationTimeClaimTest extends PHPUnit_Framework_TestCase
+class ExpirationTimeClaimTest extends TestCase
 {
     const VALUE = 1460703960;
     

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -15,7 +17,7 @@ class HS256Algorithm extends HMACAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _hashAlgo()
+    protected function _hashAlgo(): string
     {
         return "sha256";
     }
@@ -24,7 +26,7 @@ class HS256Algorithm extends HMACAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_HS256;
     }

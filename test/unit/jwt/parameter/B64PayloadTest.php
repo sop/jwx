@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\B64PayloadParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class B64PayloadParameterTest extends PHPUnit_Framework_TestCase
+class B64PayloadParameterTest extends TestCase
 {
     public function testCreate()
     {

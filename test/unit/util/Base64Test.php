@@ -1,12 +1,13 @@
 <?php
 
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group util
  * @group base64
  */
-class Base64Test extends PHPUnit_Framework_TestCase
+class Base64Test extends TestCase
 {
     const DATA = "My hovercraft is full of eels.";
     
@@ -90,13 +91,5 @@ class Base64Test extends PHPUnit_Framework_TestCase
     public function testDecodeFail()
     {
         Base64::decode("#");
-    }
-    
-    /**
-     * @expectedException RuntimeException
-     */
-    public function testEncodeFail()
-    {
-        Base64::encode(new stdClass());
     }
 }

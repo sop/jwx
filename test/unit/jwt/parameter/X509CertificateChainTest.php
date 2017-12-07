@@ -3,12 +3,13 @@
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\X509CertificateChainParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class X509CertificateChainParameterTest extends PHPUnit_Framework_TestCase
+class X509CertificateChainParameterTest extends TestCase
 {
     public function testCreate()
     {

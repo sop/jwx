@@ -4,12 +4,13 @@ use JWX\JWA\JWA;
 use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A192GCMAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\AESGCMAlgorithm;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group encryption
  */
-class A192GCMEncryptionTest extends PHPUnit_Framework_TestCase
+class A192GCMEncryptionTest extends TestCase
 {
     const PLAINTEXT = "My hovercraft is full of eels.";
     const KEY = "0123456789abcdef01234567";

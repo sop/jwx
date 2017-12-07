@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim\Feature;
 
 use JWX\JWT\ValidationContext;
@@ -15,7 +17,7 @@ trait ReferenceTimeValidation
      * @param mixed $constraint
      * @return bool
      */
-    abstract public function validate($constraint);
+    abstract public function validate($constraint): bool;
     
     /**
      * Override default Claim validation.
@@ -26,7 +28,7 @@ trait ReferenceTimeValidation
      * @param ValidationContext $ctx
      * @return bool
      */
-    public function validateWithContext(ValidationContext $ctx)
+    public function validateWithContext(ValidationContext $ctx): bool
     {
         if ($ctx->hasReferenceTime()) {
             // try to validate with leeway added

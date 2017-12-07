@@ -3,12 +3,13 @@
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\JWTIDClaim;
 use JWX\JWT\Claim\RegisteredClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class JWTIDTest extends PHPUnit_Framework_TestCase
+class JWTIDTest extends TestCase
 {
     const VALUE = "uuid";
     

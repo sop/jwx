@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\ContainsValidator;
@@ -16,7 +18,7 @@ class AudienceClaim extends RegisteredClaim
      *
      * @param string ...$audiences One or more audiences
      */
-    public function __construct(...$audiences)
+    public function __construct(string ...$audiences)
     {
         parent::__construct(self::NAME_AUDIENCE, $audiences,
             new ContainsValidator());
@@ -26,7 +28,7 @@ class AudienceClaim extends RegisteredClaim
      *
      * {@inheritdoc}
      */
-    public static function fromJSONValue($value)
+    public static function fromJSONValue($value): self
     {
         $value = (array) $value;
         return new self(...$value);

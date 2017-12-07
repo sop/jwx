@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 /**
@@ -12,5 +14,5 @@ interface EncryptionAlgorithmParameterValue
      *
      * @return string
      */
-    public function encryptionAlgorithmParamValue();
+    public function encryptionAlgorithmParamValue(): string;
 }

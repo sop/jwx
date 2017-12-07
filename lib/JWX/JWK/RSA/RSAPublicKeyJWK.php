@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\RSA;
 
 use JWX\JWK\Asymmetric\PublicKeyJWK;
@@ -60,7 +62,7 @@ class RSAPublicKeyJWK extends PublicKeyJWK
      * @param RSAPublicKey $pk
      * @return self
      */
-    public static function fromRSAPublicKey(RSAPublicKey $pk)
+    public static function fromRSAPublicKey(RSAPublicKey $pk): self
     {
         $n = ModulusParameter::fromNumber($pk->modulus());
         $e = ExponentParameter::fromNumber($pk->publicExponent());
@@ -74,7 +76,7 @@ class RSAPublicKeyJWK extends PublicKeyJWK
      * @param PEM $pem
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         return self::fromRSAPublicKey(RSAPublicKey::fromPEM($pem));
     }
@@ -84,7 +86,7 @@ class RSAPublicKeyJWK extends PublicKeyJWK
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         $n = $this->modulusParameter()
             ->number()

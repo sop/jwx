@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 /**
@@ -12,5 +14,5 @@ interface CompressionAlgorithmParameterValue
      *
      * @return string
      */
-    public function compressionParamValue();
+    public function compressionParamValue(): string;
 }

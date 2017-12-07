@@ -1,12 +1,13 @@
 <?php
 
 use JWX\JWT\Claim\Validator\ContainsValidator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group validator
  */
-class ContainsValidatorTest extends PHPUnit_Framework_TestCase
+class ContainsValidatorTest extends TestCase
 {
     private $_validator;
     

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Asymmetric;
 
 use JWX\JWK\JWK;
 use JWX\JWK\EC\ECPrivateKeyJWK;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
+use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
 use Sop\CryptoTypes\Asymmetric\PrivateKeyInfo;
 use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
@@ -20,14 +23,14 @@ abstract class PrivateKeyJWK extends JWK
      *
      * @return PublicKeyJWK
      */
-    abstract public function publicKey();
+    abstract public function publicKey(): PublicKeyJWK;
     
     /**
      * Convert private key to PEM.
      *
-     * @return \Sop\CryptoEncoding\PEM
+     * @return PEM
      */
-    abstract public function toPEM();
+    abstract public function toPEM(): PEM;
     
     /**
      * Initialize from a PrivateKey object.
@@ -36,7 +39,7 @@ abstract class PrivateKeyJWK extends JWK
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromPrivateKey(PrivateKey $priv_key)
+    public static function fromPrivateKey(PrivateKey $priv_key): PrivateKeyJWK
     {
         if ($priv_key instanceof RSAPrivateKey) {
             return RSAPrivateKeyJWK::fromRSAPrivateKey($priv_key);
@@ -53,7 +56,7 @@ abstract class PrivateKeyJWK extends JWK
      * @param PrivateKeyInfo $pki PrivateKeyInfo
      * @return self
      */
-    public static function fromPrivateKeyInfo(PrivateKeyInfo $pki)
+    public static function fromPrivateKeyInfo(PrivateKeyInfo $pki): PrivateKeyJWK
     {
         return self::fromPrivateKey($pki->privateKey());
     }

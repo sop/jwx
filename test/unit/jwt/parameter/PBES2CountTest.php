@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2CountParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class PBES2CountParameterTest extends PHPUnit_Framework_TestCase
+class PBES2CountParameterTest extends TestCase
 {
     public function testCreate()
     {

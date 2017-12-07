@@ -4,12 +4,13 @@ use JWX\JWA\JWA;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class EncryptionAlgorithmParameterTest extends PHPUnit_Framework_TestCase
+class EncryptionAlgorithmParameterTest extends TestCase
 {
     public function testCreate()
     {

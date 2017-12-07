@@ -4,12 +4,13 @@ use JWX\JWA\JWA;
 use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWT\Parameter\CompressionAlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class CompressionAlgorithmParameterTest extends PHPUnit_Framework_TestCase
+class CompressionAlgorithmParameterTest extends TestCase
 {
     public function testCreate()
     {

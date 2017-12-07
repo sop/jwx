@@ -3,12 +3,13 @@
 use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
 use JWX\JWE\KeyAlgorithm\PBES2HS384A192KWAlgorithm;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class PBES2A192KWTest extends PHPUnit_Framework_TestCase
+class PBES2A192KWTest extends TestCase
 {
     const PASSWORD = "password";
     const SALT = "salt";

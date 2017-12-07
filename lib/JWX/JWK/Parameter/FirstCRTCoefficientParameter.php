@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
@@ -18,7 +20,7 @@ class FirstCRTCoefficientParameter extends JWKParameter
      *
      * @param string $qi First CRT coefficient in base64urlUInt encoding
      */
-    public function __construct($qi)
+    public function __construct(string $qi)
     {
         $this->_validateEncoding($qi);
         parent::__construct(self::PARAM_FIRST_CRT_COEFFICIENT, $qi);

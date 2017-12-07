@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\ArrayParameterValue;
@@ -27,7 +29,7 @@ class KeyOperationsParameter extends JWKParameter
      *
      * @param string ...$ops Key operations
      */
-    public function __construct(...$ops)
+    public function __construct(string ...$ops)
     {
         parent::__construct(self::PARAM_KEY_OPERATIONS, $ops);
     }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
-use GCM\GCM;
 use JWX\JWA\JWA;
 use JWX\JWE\KeyManagementAlgorithm;
 use JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
@@ -12,6 +13,8 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\AuthenticationTagParameter;
 use JWX\JWT\Parameter\InitializationVectorParameter;
+use Sop\GCM\GCM;
+use Sop\GCM\Cipher\Cipher;
 
 /**
  * Base class for AES GCM key encryption algorithms.
@@ -68,23 +71,23 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
     /**
      * Get GCM Cipher instance.
      *
-     * @return \GCM\Cipher\Cipher
+     * @return Cipher
      */
-    abstract protected function _getGCMCipher();
+    abstract protected function _getGCMCipher(): Cipher;
     
     /**
      * Get the required key size.
      *
      * @return int
      */
-    abstract protected function _keySize();
+    abstract protected function _keySize(): int;
     
     /**
      * Get GCM instance.
      *
      * @return GCM
      */
-    final protected function _getGCM()
+    final protected function _getGCM(): GCM
     {
         return new GCM($this->_getGCMCipher(), self::AUTH_TAG_SIZE);
     }
@@ -95,7 +98,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * @param string $kek Key encryption key
      * @param string $iv Initialization vector
      */
-    public function __construct($kek, $iv)
+    public function __construct(string $kek, string $iv)
     {
         if (strlen($kek) != $this->_keySize()) {
             throw new \LengthException("Invalid key size.");
@@ -112,7 +115,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * @param JWK $jwk
      * @param Header $header
      * @throws \UnexpectedValueException
-     * @return AESGCMKWAlgorithm
+     * @return self
      */
     public static function fromJWK(JWK $jwk, Header $header)
     {
@@ -137,7 +140,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * @param string $key Key encryption key
      * @return self
      */
-    public static function fromKey($key)
+    public static function fromKey(string $key): self
     {
         $iv = openssl_random_pseudo_bytes(self::IV_SIZE);
         return new static($key, $iv);
@@ -148,7 +151,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * @see \JWX\JWE\KeyManagementAlgorithm::_encryptKey()
      * @return string
      */
-    protected function _encryptKey($key, Header &$header)
+    protected function _encryptKey(string $key, Header &$header): string
     {
         list($ciphertext, $auth_tag) = $this->_getGCM()->encrypt($key, "",
             $this->_kek, $this->_iv);
@@ -164,7 +167,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * @throws \RuntimeException For generic errors
      * @return string
      */
-    protected function _decryptKey($ciphertext, Header $header)
+    protected function _decryptKey(string $ciphertext, Header $header): string
     {
         if (!$header->hasAuthenticationTag()) {
             throw new \RuntimeException(
@@ -181,7 +184,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this),

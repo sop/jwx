@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -18,7 +20,7 @@ class NoneAlgorithm extends SignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_NONE;
     }
@@ -27,7 +29,7 @@ class NoneAlgorithm extends SignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public function computeSignature($data)
+    public function computeSignature(string $data): string
     {
         return "";
     }
@@ -36,7 +38,7 @@ class NoneAlgorithm extends SignatureAlgorithm
      *
      * {@inheritdoc}
      */
-    public function validateSignature($data, $signature)
+    public function validateSignature(string $data, string $signature): bool
     {
         return $signature === "";
     }
@@ -46,7 +48,7 @@ class NoneAlgorithm extends SignatureAlgorithm
      * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

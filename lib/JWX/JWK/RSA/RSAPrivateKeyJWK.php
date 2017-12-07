@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\RSA;
 
 use JWX\JWK\Asymmetric\PrivateKeyJWK;
+use JWX\JWK\Asymmetric\PublicKeyJWK;
 use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
 use JWX\JWK\Parameter\FirstFactorCRTExponentParameter;
@@ -76,7 +79,7 @@ class RSAPrivateKeyJWK extends PrivateKeyJWK
      * @param RSAPrivateKey $pk
      * @return self
      */
-    public static function fromRSAPrivateKey(RSAPrivateKey $pk)
+    public static function fromRSAPrivateKey(RSAPrivateKey $pk): self
     {
         $n = ModulusParameter::fromNumber($pk->modulus());
         $e = ExponentParameter::fromNumber($pk->publicExponent());
@@ -96,7 +99,7 @@ class RSAPrivateKeyJWK extends PrivateKeyJWK
      * @param PEM $pem
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         return self::fromRSAPrivateKey(RSAPrivateKey::fromPEM($pem));
     }
@@ -106,7 +109,7 @@ class RSAPrivateKeyJWK extends PrivateKeyJWK
      *
      * @return RSAPublicKeyJWK
      */
-    public function publicKey()
+    public function publicKey(): PublicKeyJWK
     {
         $kty = $this->keyTypeParameter();
         $n = $this->modulusParameter();
@@ -119,7 +122,7 @@ class RSAPrivateKeyJWK extends PrivateKeyJWK
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         $n = $this->modulusParameter()
             ->number()

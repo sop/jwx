@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\PBES2SaltInputParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class PBES2SaltInputParameterTest extends PHPUnit_Framework_TestCase
+class PBES2SaltInputParameterTest extends TestCase
 {
     const SALT_INPUT = "abcdef";
     
@@ -31,7 +32,7 @@ class PBES2SaltInputParameterTest extends PHPUnit_Framework_TestCase
     /**
      * @depends testCreate
      *
-     * @param JWKParameter $param
+     * @param PBES2SaltInputParameter $param
      */
     public function testSaltInput(PBES2SaltInputParameter $param)
     {

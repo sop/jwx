@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
@@ -18,7 +20,7 @@ class SecondPrimeFactorParameter extends JWKParameter
      *
      * @param string $q Second prime factor in base64urlUInt encoding
      */
-    public function __construct($q)
+    public function __construct(string $q)
     {
         $this->_validateEncoding($q);
         parent::__construct(self::PARAM_SECOND_PRIME_FACTOR, $q);

@@ -7,12 +7,13 @@ use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
 use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
 use JWX\JWT\JWT;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group compression
  */
-class DeflateTest extends PHPUnit_Framework_TestCase
+class DeflateTest extends TestCase
 {
     const PAYLOAD = "My hovercraft is full of eels.";
     const CEK_A128 = "123456789 123456789 123456789 12";

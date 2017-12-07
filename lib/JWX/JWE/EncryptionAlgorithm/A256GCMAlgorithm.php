@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\EncryptionAlgorithm;
 
-use GCM\Cipher\AES\AES256Cipher;
 use JWX\JWA\JWA;
+use Sop\GCM\Cipher\Cipher;
+use Sop\GCM\Cipher\AES\AES256Cipher;
 
 /**
  * Implements AES-GCM with 256-bit key.
@@ -16,7 +19,7 @@ class A256GCMAlgorithm extends AESGCMAlgorithm
      *
      * {@inheritdoc}
      */
-    public function encryptionAlgorithmParamValue()
+    public function encryptionAlgorithmParamValue(): string
     {
         return JWA::ALGO_A256GCM;
     }
@@ -25,7 +28,7 @@ class A256GCMAlgorithm extends AESGCMAlgorithm
      *
      * {@inheritdoc}
      */
-    public function keySize()
+    public function keySize(): int
     {
         return 32;
     }
@@ -34,7 +37,7 @@ class A256GCMAlgorithm extends AESGCMAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _getGCMCipher()
+    protected function _getGCMCipher(): Cipher
     {
         return new AES256Cipher();
     }

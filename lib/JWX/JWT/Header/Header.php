@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Header;
 
 use JWX\JWT\Parameter\JWTParameter;
@@ -37,7 +39,7 @@ class Header implements \Countable, \IteratorAggregate
      * @param array $members
      * @return self
      */
-    public static function fromArray(array $members)
+    public static function fromArray(array $members): self
     {
         $params = array();
         foreach ($members as $name => $value) {
@@ -53,7 +55,7 @@ class Header implements \Countable, \IteratorAggregate
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromJSON($json)
+    public static function fromJSON(string $json): self
     {
         $members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
         if (!is_array($members)) {
@@ -68,7 +70,7 @@ class Header implements \Countable, \IteratorAggregate
      * @param JWTParameter ...$param
      * @return self
      */
-    public function withParameters(JWTParameter ...$params)
+    public function withParameters(JWTParameter ...$params): self
     {
         $obj = clone $this;
         foreach ($params as $param) {
@@ -82,7 +84,7 @@ class Header implements \Countable, \IteratorAggregate
      *
      * @return JWTParameter[]
      */
-    public function parameters()
+    public function parameters(): array
     {
         return $this->_parameters;
     }
@@ -95,7 +97,7 @@ class Header implements \Countable, \IteratorAggregate
      * @param string ...$names Parameter names
      * @return bool
      */
-    public function has(...$names)
+    public function has(string ...$names): bool
     {
         foreach ($names as $name) {
             if (!isset($this->_parameters[$name])) {
@@ -112,7 +114,7 @@ class Header implements \Countable, \IteratorAggregate
      * @throws \LogicException
      * @return JWTParameter
      */
-    public function get($name)
+    public function get(string $name): JWTParameter
     {
         if (!$this->has($name)) {
             throw new \LogicException("Parameter $name doesn't exists.");
@@ -125,7 +127,7 @@ class Header implements \Countable, \IteratorAggregate
      *
      * @return string
      */
-    public function toJSON()
+    public function toJSON(): string
     {
         if (empty($this->_parameters)) {
             return "";
@@ -143,7 +145,7 @@ class Header implements \Countable, \IteratorAggregate
      * @see \Countable::count()
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_parameters);
     }
@@ -154,7 +156,7 @@ class Header implements \Countable, \IteratorAggregate
      * @see \IteratorAggregate::getIterator()
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->_parameters);
     }

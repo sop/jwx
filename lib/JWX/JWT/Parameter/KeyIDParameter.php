@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,8 +20,8 @@ class KeyIDParameter extends JWTParameter
      *
      * @param string $id
      */
-    public function __construct($id)
+    public function __construct(string $id)
     {
-        parent::__construct(self::PARAM_KEY_ID, (string) $id);
+        parent::__construct(self::PARAM_KEY_ID, $id);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Symmetric;
 
 use JWX\JWK\JWK;
@@ -55,7 +57,7 @@ class SymmetricKeyJWK extends JWK
      * @param JWKParameter ...$params Optional additional parameters
      * @return self
      */
-    public static function fromKey($key, JWKParameter ...$params)
+    public static function fromKey(string $key, JWKParameter ...$params): self
     {
         $params[] = new KeyTypeParameter(KeyTypeParameter::TYPE_OCT);
         $params[] = KeyValueParameter::fromString($key);
@@ -67,7 +69,7 @@ class SymmetricKeyJWK extends JWK
      *
      * @return string
      */
-    public function key()
+    public function key(): string
     {
         return Base64::urlDecode($this->keyValueParameter()->value());
     }

@@ -6,8 +6,9 @@ use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookAESKWWithAESGCMTest extends PHPUnit_Framework_TestCase
+class CookbookAESKWWithAESGCMTest extends TestCase
 {
     private static $_testData;
     

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Parameter\Feature;
 
 use JWX\Util\Base64;
@@ -31,7 +33,7 @@ trait Base64UIntValue
      *
      * @return BigInt
      */
-    public function number()
+    public function number(): BigInt
     {
         return BigInt::fromBase256(Base64::urlDecode($this->value()));
     }

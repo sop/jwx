@@ -8,6 +8,7 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7516 appendix A.3.
@@ -17,7 +18,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7516#appendix-A.3
  */
-class JWEUsingA128KWAndA128CBCTest extends PHPUnit_Framework_TestCase
+class JWEUsingA128KWAndA128CBCTest extends TestCase
 {
     private static $_plaintextBytes = [76, 105, 118, 101, 32, 108, 111, 110,
         103, 32, 97, 110, 100, 32, 112, 114, 111, 115, 112, 101, 114, 46];

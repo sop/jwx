@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm\Feature;
 
 /**
@@ -10,11 +12,11 @@ trait RandomCEK
     /**
      * Generate a random content encryption key.
      *
-     * @param string $length Key length in bytes
+     * @param int $length Key length in bytes
      * @throws \RuntimeException
      * @return string
      */
-    public function cekForEncryption($length)
+    public function cekForEncryption(int $length): string
     {
         $ret = openssl_random_pseudo_bytes($length);
         if (false === $ret) {

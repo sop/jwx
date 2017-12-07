@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Header;
 
 use JWX\JWT\Parameter;
+use JWX\JWT\Parameter\JWTParameter;
 
 /**
  * Trait for Header to provide parameter accessor methods for typed return
@@ -16,23 +19,23 @@ trait TypedHeader
      * @param string ...$names Parameter names
      * @return bool
      */
-    abstract public function has(...$names);
+    abstract public function has(string ...$names): bool;
     
     /**
      * Get a parameter.
      *
      * @param string $name Parameter name
      * @throws \LogicException If the parameter is not present
-     * @return \JWX\JWT\Parameter\JWTParameter
+     * @return JWTParameter
      */
-    abstract public function get($name);
+    abstract public function get(string $name): JWTParameter;
     
     /**
      * Check whether the algorithm parameter is present.
      *
      * @return bool
      */
-    public function hasAlgorithm()
+    public function hasAlgorithm(): bool
     {
         return $this->has(Parameter\JWTParameter::P_ALG);
     }
@@ -44,7 +47,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\AlgorithmParameter
      */
-    public function algorithm()
+    public function algorithm(): Parameter\AlgorithmParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_ALG),
             Parameter\AlgorithmParameter::class);
@@ -55,7 +58,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasAuthenticationTag()
+    public function hasAuthenticationTag(): bool
     {
         return $this->has(Parameter\JWTParameter::P_TAG);
     }
@@ -67,7 +70,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\AuthenticationTagParameter
      */
-    public function authenticationTag()
+    public function authenticationTag(): Parameter\AuthenticationTagParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_TAG),
             Parameter\AuthenticationTagParameter::class);
@@ -78,7 +81,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasB64Payload()
+    public function hasB64Payload(): bool
     {
         return $this->has(Parameter\JWTParameter::P_B64);
     }
@@ -90,7 +93,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\B64PayloadParameter
      */
-    public function B64Payload()
+    public function B64Payload(): Parameter\B64PayloadParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_B64),
             Parameter\B64PayloadParameter::class);
@@ -101,7 +104,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasCompressionAlgorithm()
+    public function hasCompressionAlgorithm(): bool
     {
         return $this->has(Parameter\JWTParameter::P_ZIP);
     }
@@ -113,7 +116,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\CompressionAlgorithmParameter
      */
-    public function compressionAlgorithm()
+    public function compressionAlgorithm(): Parameter\CompressionAlgorithmParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_ZIP),
             Parameter\CompressionAlgorithmParameter::class);
@@ -124,7 +127,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasContentType()
+    public function hasContentType(): bool
     {
         return $this->has(Parameter\JWTParameter::P_CTY);
     }
@@ -136,7 +139,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\ContentTypeParameter
      */
-    public function contentType()
+    public function contentType(): Parameter\ContentTypeParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_CTY),
             Parameter\ContentTypeParameter::class);
@@ -147,7 +150,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasCritical()
+    public function hasCritical(): bool
     {
         return $this->has(Parameter\JWTParameter::P_CRIT);
     }
@@ -159,7 +162,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\CriticalParameter
      */
-    public function critical()
+    public function critical(): Parameter\CriticalParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_CRIT),
             Parameter\CriticalParameter::class);
@@ -170,7 +173,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasEncryptionAlgorithm()
+    public function hasEncryptionAlgorithm(): bool
     {
         return $this->has(Parameter\JWTParameter::P_ENC);
     }
@@ -182,7 +185,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\EncryptionAlgorithmParameter
      */
-    public function encryptionAlgorithm()
+    public function encryptionAlgorithm(): Parameter\EncryptionAlgorithmParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_ENC),
             Parameter\EncryptionAlgorithmParameter::class);
@@ -193,7 +196,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasInitializationVector()
+    public function hasInitializationVector(): bool
     {
         return $this->has(Parameter\JWTParameter::P_IV);
     }
@@ -205,7 +208,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\InitializationVectorParameter
      */
-    public function initializationVector()
+    public function initializationVector(): Parameter\InitializationVectorParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_IV),
             Parameter\InitializationVectorParameter::class);
@@ -216,7 +219,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasJSONWebKey()
+    public function hasJSONWebKey(): bool
     {
         return $this->has(Parameter\JWTParameter::P_JWK);
     }
@@ -228,7 +231,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\JSONWebKeyParameter
      */
-    public function JSONWebKey()
+    public function JSONWebKey(): Parameter\JSONWebKeyParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_JWK),
             Parameter\JSONWebKeyParameter::class);
@@ -239,7 +242,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasJWKSetURL()
+    public function hasJWKSetURL(): bool
     {
         return $this->has(Parameter\JWTParameter::P_JKU);
     }
@@ -251,7 +254,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\JWKSetURLParameter
      */
-    public function JWKSetURL()
+    public function JWKSetURL(): Parameter\JWKSetURLParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_JKU),
             Parameter\JWKSetURLParameter::class);
@@ -262,7 +265,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasKeyID()
+    public function hasKeyID(): bool
     {
         return $this->has(Parameter\JWTParameter::P_KID);
     }
@@ -274,7 +277,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\KeyIDParameter
      */
-    public function keyID()
+    public function keyID(): Parameter\KeyIDParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_KID),
             Parameter\KeyIDParameter::class);
@@ -285,7 +288,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasPBES2Count()
+    public function hasPBES2Count(): bool
     {
         return $this->has(Parameter\JWTParameter::P_P2C);
     }
@@ -297,7 +300,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\PBES2CountParameter
      */
-    public function PBES2Count()
+    public function PBES2Count(): Parameter\PBES2CountParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_P2C),
             Parameter\PBES2CountParameter::class);
@@ -308,7 +311,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasPBES2SaltInput()
+    public function hasPBES2SaltInput(): bool
     {
         return $this->has(Parameter\JWTParameter::P_P2S);
     }
@@ -320,7 +323,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\PBES2SaltInputParameter
      */
-    public function PBES2SaltInput()
+    public function PBES2SaltInput(): Parameter\PBES2SaltInputParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_P2S),
             Parameter\PBES2SaltInputParameter::class);
@@ -331,7 +334,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasType()
+    public function hasType(): bool
     {
         return $this->has(Parameter\JWTParameter::P_TYP);
     }
@@ -343,7 +346,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\TypeParameter
      */
-    public function type()
+    public function type(): Parameter\TypeParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_TYP),
             Parameter\TypeParameter::class);
@@ -354,7 +357,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasX509CertificateChain()
+    public function hasX509CertificateChain(): bool
     {
         return $this->has(Parameter\JWTParameter::P_X5C);
     }
@@ -366,7 +369,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\X509CertificateChainParameter
      */
-    public function X509CertificateChain()
+    public function X509CertificateChain(): Parameter\X509CertificateChainParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_X5C),
             Parameter\X509CertificateChainParameter::class);
@@ -378,7 +381,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasX509CertificateSHA1Thumbprint()
+    public function hasX509CertificateSHA1Thumbprint(): bool
     {
         return $this->has(Parameter\JWTParameter::P_X5T);
     }
@@ -390,7 +393,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\X509CertificateSHA1ThumbprintParameter
      */
-    public function X509CertificateSHA1Thumbprint()
+    public function X509CertificateSHA1Thumbprint(): Parameter\X509CertificateSHA1ThumbprintParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_X5T),
             Parameter\X509CertificateSHA1ThumbprintParameter::class);
@@ -402,7 +405,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasX509CertificateSHA256Thumbprint()
+    public function hasX509CertificateSHA256Thumbprint(): bool
     {
         return $this->has(Parameter\JWTParameter::P_X5TS256);
     }
@@ -414,7 +417,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\X509CertificateSHA256ThumbprintParameter
      */
-    public function X509CertificateSHA256Thumbprint()
+    public function X509CertificateSHA256Thumbprint(): Parameter\X509CertificateSHA256ThumbprintParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_X5TS256),
             Parameter\X509CertificateSHA256ThumbprintParameter::class);
@@ -425,7 +428,7 @@ trait TypedHeader
      *
      * @return bool
      */
-    public function hasX509URL()
+    public function hasX509URL(): bool
     {
         return $this->has(Parameter\JWTParameter::P_X5U);
     }
@@ -437,7 +440,7 @@ trait TypedHeader
      * @throws \LogicException If the parameter is not present
      * @return \JWX\JWT\Parameter\X509URLParameter
      */
-    public function X509URL()
+    public function X509URL(): Parameter\X509URLParameter
     {
         return self::_checkType($this->get(Parameter\JWTParameter::P_X5U),
             Parameter\X509URLParameter::class);
@@ -451,7 +454,7 @@ trait TypedHeader
      * @throws \UnexpectedValueException
      * @return \JWX\JWT\Parameter\JWTParameter
      */
-    private static function _checkType(Parameter\JWTParameter $param, $cls)
+    private static function _checkType(Parameter\JWTParameter $param, string $cls): Parameter\JWTParameter
     {
         if (!$param instanceof $cls) {
             throw new \UnexpectedValueException(

@@ -6,8 +6,9 @@ use JWX\JWE\KeyAlgorithm\RSAESOAEPAlgorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookKeyEncRSAOAEPAndAESGCMTest extends PHPUnit_Framework_TestCase
+class CookbookKeyEncRSAOAEPAndAESGCMTest extends TestCase
 {
     private static $_testData;
     

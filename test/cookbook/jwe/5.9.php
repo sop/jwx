@@ -7,8 +7,9 @@ use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookCompressedContentTest extends PHPUnit_Framework_TestCase
+class CookbookCompressedContentTest extends TestCase
 {
     private static $_testData;
     

@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\KeyIDParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class JWKKeyIDParameterTest extends PHPUnit_Framework_TestCase
+class JWKKeyIDParameterTest extends TestCase
 {
     public function testCreate()
     {

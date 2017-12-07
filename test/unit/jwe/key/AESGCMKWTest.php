@@ -8,12 +8,13 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\InitializationVectorParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class AESGCMKWTest extends PHPUnit_Framework_TestCase
+class AESGCMKWTest extends TestCase
 {
     const KEY_128 = "123456789 123456";
     

@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\X509URLParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class X509URLParameterTest extends PHPUnit_Framework_TestCase
+class X509URLParameterTest extends TestCase
 {
     public function testCreate()
     {

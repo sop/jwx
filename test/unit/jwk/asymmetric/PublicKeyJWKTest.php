@@ -1,7 +1,9 @@
 <?php
 
 use JWX\JWK\Asymmetric\PublicKeyJWK;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
+use Sop\CryptoTypes\AlgorithmIdentifier\Feature\AlgorithmIdentifierType;
 use Sop\CryptoTypes\Asymmetric\PublicKey;
 use Sop\CryptoTypes\Asymmetric\PublicKeyInfo;
 
@@ -9,7 +11,7 @@ use Sop\CryptoTypes\Asymmetric\PublicKeyInfo;
  * @group jwk
  * @group asymmetric
  */
-class PublicKeyJWKTest extends PHPUnit_Framework_TestCase
+class PublicKeyJWKTest extends TestCase
 {
     public function testFromRSA()
     {
@@ -38,16 +40,15 @@ class PublicKeyJWKTest extends PHPUnit_Framework_TestCase
 
 class PublicKeyJWKTest_UnsupportedKey extends PublicKey
 {
-    public function publicKeyInfo()
+    public function publicKeyInfo(): PublicKeyInfo
     {
     }
     
-    public function toDER()
+    public function toDER(): string
     {
     }
     
-    public function algorithmIdentifier()
+    public function algorithmIdentifier(): AlgorithmIdentifierType
     {
     }
-
 }

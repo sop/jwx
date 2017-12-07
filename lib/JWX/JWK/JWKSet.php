@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK;
 
 use JWX\JWK\Parameter\JWKParameter;
@@ -58,7 +60,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromArray(array $members)
+    public static function fromArray(array $members): self
     {
         if (!isset($members["keys"]) || !is_array($members["keys"])) {
             throw new \UnexpectedValueException(
@@ -81,7 +83,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromJSON($json)
+    public static function fromJSON(string $json): self
     {
         $members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
         if (!is_array($members)) {
@@ -96,7 +98,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @param JWK ...$keys JWK objects
      * @return self
      */
-    public function withKeys(JWK ...$keys)
+    public function withKeys(JWK ...$keys): self
     {
         $obj = clone $this;
         $obj->_jwks = array_merge($obj->_jwks, $keys);
@@ -108,7 +110,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      *
      * @return JWK[]
      */
-    public function keys()
+    public function keys(): array
     {
         return $this->_jwks;
     }
@@ -119,7 +121,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @throws \LogicException
      * @return JWK
      */
-    public function first()
+    public function first(): JWK
     {
         if (!count($this->_jwks)) {
             throw new \LogicException("No keys.");
@@ -133,7 +135,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @param string $id
      * @return JWK|null Null if not found
      */
-    protected function _getKeyByID($id)
+    protected function _getKeyByID(string $id)
     {
         $map = $this->_getMapping(JWKParameter::PARAM_KEY_ID);
         return isset($map[$id]) ? $map[$id] : null;
@@ -145,7 +147,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @param string $id
      * @return bool
      */
-    public function hasKeyID($id)
+    public function hasKeyID(string $id): bool
     {
         return $this->_getKeyByID($id) !== null;
     }
@@ -157,7 +159,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @throws \LogicException
      * @return JWK
      */
-    public function keyByID($id)
+    public function keyByID(string $id): JWK
     {
         $jwk = $this->_getKeyByID($id);
         if (!$jwk) {
@@ -174,7 +176,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @param string $name Parameter name
      * @return array
      */
-    protected function _getMapping($name)
+    protected function _getMapping(string $name): array
     {
         if (!isset($this->_mappings[$name])) {
             $mapping = array();
@@ -194,7 +196,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $data = $this->_additional;
         $data["keys"] = array_map(
@@ -209,7 +211,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      *
      * @return string
      */
-    public function toJSON()
+    public function toJSON(): string
     {
         return json_encode((object) $this->toArray(), JSON_UNESCAPED_SLASHES);
     }
@@ -219,7 +221,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      *
      * @see \Countable::count()
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_jwks);
     }
@@ -230,7 +232,7 @@ class JWKSet implements \Countable, \IteratorAggregate
      * @see \IteratorAggregate::getIterator()
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->_jwks);
     }

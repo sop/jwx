@@ -13,11 +13,12 @@ use JWX\JWT\Parameter\B64PayloadParameter;
 use JWX\JWT\Parameter\CriticalParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\KeyIDParameter as JWTID;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jws
  */
-class JWSTest extends PHPUnit_Framework_TestCase
+class JWSTest extends TestCase
 {
     const KEY = "12345678";
     

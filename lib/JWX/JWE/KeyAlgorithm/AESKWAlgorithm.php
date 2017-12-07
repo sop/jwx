@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
@@ -9,6 +11,7 @@ use JWX\JWK\JWK;
 use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
+use Sop\AESKW\AESKeyWrapAlgorithm;
 
 /**
  * Base class for algorithms implementing AES key wrap.
@@ -31,7 +34,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      *
      * Lazily initialized.
      *
-     * @var \AESKW\AESKeyWrapAlgorithm|null $_kw
+     * @var AESKeyWrapAlgorithm|null $_kw
      */
     protected $_kw;
     
@@ -55,21 +58,21 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      *
      * @return int
      */
-    abstract protected function _kekSize();
+    abstract protected function _kekSize(): int;
     
     /**
      * Get key wrapping algorithm instance.
      *
-     * @return \AESKW\AESKeyWrapAlgorithm
+     * @return AESKeyWrapAlgorithm
      */
-    abstract protected function _AESKWAlgo();
+    abstract protected function _AESKWAlgo(): AESKeyWrapAlgorithm;
     
     /**
      * Constructor.
      *
      * @param string $kek Key encryption key
      */
-    public function __construct($kek)
+    public function __construct(string $kek)
     {
         if (strlen($kek) != $this->_kekSize()) {
             throw new \LengthException(
@@ -83,7 +86,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      * @param JWK $jwk
      * @param Header $header
      * @throws \UnexpectedValueException
-     * @return AESKWAlgorithm
+     * @return self
      */
     public static function fromJWK(JWK $jwk, Header $header)
     {
@@ -99,9 +102,9 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
     /**
      * Get key wrapping algorithm.
      *
-     * @return \AESKW\AESKeyWrapAlgorithm
+     * @return AESKeyWrapAlgorithm
      */
-    protected function _kw()
+    protected function _kw(): AESKeyWrapAlgorithm
     {
         if (!isset($this->_kw)) {
             $this->_kw = $this->_AESKWAlgo();
@@ -113,7 +116,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _encryptKey($key, Header &$header)
+    protected function _encryptKey(string $key, Header &$header): string
     {
         return $this->_kw()->wrap($key, $this->_kek);
     }
@@ -122,7 +125,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _decryptKey($ciphertext, Header $header)
+    protected function _decryptKey(string $ciphertext, Header $header): string
     {
         return $this->_kw()->unwrap($ciphertext, $this->_kek);
     }
@@ -132,7 +135,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

@@ -4,12 +4,13 @@ use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\SubjectClaim;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\ReplicatedClaimParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class ReplicatedClaimParameterTest extends PHPUnit_Framework_TestCase
+class ReplicatedClaimParameterTest extends TestCase
 {
     public function testCreate()
     {

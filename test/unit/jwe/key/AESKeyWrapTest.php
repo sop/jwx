@@ -3,12 +3,13 @@
 use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
 use JWX\JWE\KeyAlgorithm\A192KWAlgorithm;
 use JWX\JWE\KeyAlgorithm\A256KWAlgorithm;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class AESKeyWrapTest extends PHPUnit_Framework_TestCase
+class AESKeyWrapTest extends TestCase
 {
     /**
      * @dataProvider provideCEK

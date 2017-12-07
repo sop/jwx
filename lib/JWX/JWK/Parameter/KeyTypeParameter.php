@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -33,7 +35,7 @@ class KeyTypeParameter extends JWKParameter
      *
      * @param string $type Key type
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
         parent::__construct(self::PARAM_KEY_TYPE, $type);
     }

@@ -5,12 +5,13 @@ use JWX\JWE\ContentEncryptionAlgorithm;
 use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group encryption
  */
-class EncryptionFactoryTest extends PHPUnit_Framework_TestCase
+class EncryptionFactoryTest extends TestCase
 {
     public function testAlgoByName()
     {

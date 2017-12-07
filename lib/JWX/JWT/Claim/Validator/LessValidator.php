@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim\Validator;
 
 /**
@@ -11,7 +13,7 @@ class LessValidator extends Validator
      *
      * {@inheritdoc}
      */
-    public function validate($value, $constraint)
+    public function validate($value, $constraint): bool
     {
         return $value < $constraint;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\JWK\JWK;
@@ -25,7 +27,7 @@ class JSONWebKeyParameter extends JWTParameter
      *
      * {@inheritdoc}
      */
-    public static function fromJSONValue($value)
+    public static function fromJSONValue($value): self
     {
         if (!is_array($value)) {
             throw new \UnexpectedValueException("jwk must be an array.");
@@ -38,7 +40,7 @@ class JSONWebKeyParameter extends JWTParameter
      *
      * @return JWK
      */
-    public function jwk()
+    public function jwk(): JWK
     {
         return JWK::fromArray($this->_value);
     }

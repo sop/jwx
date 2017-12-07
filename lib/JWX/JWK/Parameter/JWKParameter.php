@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Parameter;
@@ -100,7 +102,7 @@ class JWKParameter extends Parameter
      * @param string $name Parameter name
      * @param mixed $value Parameter value
      */
-    public function __construct($name, $value)
+    public function __construct(string $name, $value)
     {
         $this->_name = $name;
         $this->_value = $value;
@@ -115,7 +117,7 @@ class JWKParameter extends Parameter
      * @param mixed $value Parameter value
      * @return self
      */
-    public static function fromNameAndValue($name, $value)
+    public static function fromNameAndValue(string $name, string $value): self
     {
         if (array_key_exists($name, self::MAP_NAME_TO_CLASS)) {
             $cls = self::MAP_NAME_TO_CLASS[$name];

@@ -1,12 +1,13 @@
 <?php
 
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class JWTParameterTest extends PHPUnit_Framework_TestCase
+class JWTParameterTest extends TestCase
 {
     public function testCreateUnknown()
     {

@@ -14,11 +14,12 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\KeyIDParameter as JWTID;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  */
-class JWETest extends PHPUnit_Framework_TestCase
+class JWETest extends TestCase
 {
     const PAYLOAD = "PAYLOAD";
     
@@ -277,28 +278,28 @@ class JWETest extends PHPUnit_Framework_TestCase
 
 class JWETest_EvilKeyAlgo extends KeyManagementAlgorithm
 {
-    protected function _encryptKey($key, Header &$header)
+    protected function _encryptKey(string $key, Header &$header): string
     {
         $header = null;
         return $key;
     }
     
-    protected function _decryptKey($ciphertext, Header $header)
+    protected function _decryptKey(string $ciphertext, Header $header): string
     {
         return $ciphertext;
     }
     
-    public function cekForEncryption($length)
+    public function cekForEncryption(int $length): string
     {
         return str_repeat("\0", $length);
     }
     
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return "test";
     }
     
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array();
     }

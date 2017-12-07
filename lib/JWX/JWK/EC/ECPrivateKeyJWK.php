@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\EC;
 
 use JWX\JWK\Asymmetric\PrivateKeyJWK;
+use JWX\JWK\Asymmetric\PublicKeyJWK;
 use JWX\JWK\Parameter\CurveParameter;
 use JWX\JWK\Parameter\ECCPrivateKeyParameter;
 use JWX\JWK\Parameter\JWKParameter;
@@ -69,7 +72,7 @@ class ECPrivateKeyJWK extends PrivateKeyJWK
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromECPrivateKey(ECPrivateKey $pk)
+    public static function fromECPrivateKey(ECPrivateKey $pk): self
     {
         if (!$pk->hasNamedCurve()) {
             throw new \UnexpectedValueException("No curve name.");
@@ -90,7 +93,7 @@ class ECPrivateKeyJWK extends PrivateKeyJWK
      * @param PEM $pem
      * @return self
      */
-    public static function fromPEM(PEM $pem)
+    public static function fromPEM(PEM $pem): self
     {
         return self::fromECPrivateKey(ECPrivateKey::fromPEM($pem));
     }
@@ -100,7 +103,7 @@ class ECPrivateKeyJWK extends PrivateKeyJWK
      *
      * @return ECPublicKeyJWK
      */
-    public function publicKey()
+    public function publicKey(): PublicKeyJWK
     {
         $kty = $this->keyTypeParameter();
         $curve = $this->curveParameter();
@@ -114,7 +117,7 @@ class ECPrivateKeyJWK extends PrivateKeyJWK
      *
      * @return PEM
      */
-    public function toPEM()
+    public function toPEM(): PEM
     {
         $curve_oid = CurveParameter::nameToOID($this->curveParameter()->value());
         $x = ECConversion::octetsToNumber(

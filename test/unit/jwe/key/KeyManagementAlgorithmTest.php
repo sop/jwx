@@ -6,12 +6,13 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class KeyManagementAlgorithmTest extends PHPUnit_Framework_TestCase
+class KeyManagementAlgorithmTest extends TestCase
 {
     public function testFromJWK()
     {

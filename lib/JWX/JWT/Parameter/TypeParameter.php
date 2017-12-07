@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,8 +20,8 @@ class TypeParameter extends JWTParameter
      *
      * @param string $type
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
-        parent::__construct(self::PARAM_TYPE, (string) $type);
+        parent::__construct(self::PARAM_TYPE, $type);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 /**
@@ -14,9 +16,9 @@ class PBES2CountParameter extends JWTParameter
      *
      * @param int $count
      */
-    public function __construct($count)
+    public function __construct(int $count)
     {
-        parent::__construct(self::PARAM_PBES2_COUNT, intval($count));
+        parent::__construct(self::PARAM_PBES2_COUNT, $count);
     }
     
     /**
@@ -25,7 +27,7 @@ class PBES2CountParameter extends JWTParameter
      * @param int $value
      * @return self
      */
-    public static function fromJSONValue($value)
+    public static function fromJSONValue($value): self
     {
         return new self(intval($value));
     }

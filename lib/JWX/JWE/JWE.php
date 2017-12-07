@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE;
 
 use JWX\JWE\CompressionAlgorithm\CompressionFactory;
@@ -42,7 +44,7 @@ class JWE
     /**
      * Additional authenticated data.
      *
-     * @var string $_aad
+     * @var string|null $_aad
      */
     protected $_aad;
     
@@ -70,8 +72,8 @@ class JWE
      * @param string $auth_tag Authentication tag
      * @param string|null $aad Additional authenticated data
      */
-    public function __construct(Header $protected_header, $encrypted_key, $iv,
-        $ciphertext, $auth_tag, $aad = null)
+    public function __construct(Header $protected_header, string $encrypted_key,
+        string $iv, string $ciphertext, string $auth_tag, $aad = null)
     {
         $this->_protectedHeader = $protected_header;
         $this->_encryptedKey = $encrypted_key;
@@ -87,7 +89,7 @@ class JWE
      * @param string $data
      * @return self
      */
-    public static function fromCompact($data)
+    public static function fromCompact(string $data): self
     {
         return self::fromParts(explode(".", $data));
     }
@@ -99,7 +101,7 @@ class JWE
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromParts(array $parts)
+    public static function fromParts(array $parts): self
     {
         if (count($parts) != 5) {
             throw new \UnexpectedValueException(
@@ -129,9 +131,9 @@ class JWE
      * @throws \RuntimeException If encrypt fails
      * @return self
      */
-    public static function encrypt($payload, KeyManagementAlgorithm $key_algo,
-        ContentEncryptionAlgorithm $enc_algo,
-        CompressionAlgorithm $zip_algo = null, Header $header = null, $cek = null, $iv = null)
+    public static function encrypt(string $payload,
+        KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo,
+        CompressionAlgorithm $zip_algo = null, Header $header = null, $cek = null, $iv = null): self
     {
         // if header was not given, initialize empty
         if (!isset($header)) {
@@ -166,9 +168,9 @@ class JWE
      * @throws \UnexpectedValueException
      * @return self
      */
-    private static function _encryptContent($plaintext, $cek, $iv,
-        KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo,
-        Header $header)
+    private static function _encryptContent(string $plaintext, string $cek,
+        string $iv, KeyManagementAlgorithm $key_algo,
+        ContentEncryptionAlgorithm $enc_algo, Header $header): self
     {
         // check that content encryption key has correct size
         if (strlen($cek) != $enc_algo->keySize()) {
@@ -192,6 +194,7 @@ class JWE
         // encrypt
         list($ciphertext, $auth_tag) = $enc_algo->encrypt($plaintext, $cek, $iv,
             $aad);
+        // TODO: should aad be passed
         return new self($header, $encrypted_key, $iv, $ciphertext, $auth_tag);
     }
     
@@ -204,7 +207,7 @@ class JWE
      * @return string Plaintext payload
      */
     public function decrypt(KeyManagementAlgorithm $key_algo,
-        ContentEncryptionAlgorithm $enc_algo)
+        ContentEncryptionAlgorithm $enc_algo): string
     {
         // check that key management algorithm matches
         if ($key_algo->algorithmParamValue() != $this->algorithmName()) {
@@ -241,7 +244,7 @@ class JWE
      * @throws \RuntimeException If algorithm initialization fails
      * @return string Plaintext payload
      */
-    public function decryptWithJWK(JWK $jwk)
+    public function decryptWithJWK(JWK $jwk): string
     {
         $header = $this->header();
         $key_algo = KeyManagementAlgorithm::fromJWK($jwk, $header);
@@ -258,7 +261,7 @@ class JWE
      * @throws \RuntimeException If algorithm initialization fails
      * @return string Plaintext payload
      */
-    public function decryptWithJWKSet(JWKSet $set)
+    public function decryptWithJWKSet(JWKSet $set): string
     {
         if (!count($set)) {
             throw new \RuntimeException("No keys.");
@@ -275,7 +278,7 @@ class JWE
      *
      * @return JOSE
      */
-    public function header()
+    public function header(): JOSE
     {
         return new JOSE($this->_protectedHeader);
     }
@@ -285,7 +288,7 @@ class JWE
      *
      * @return string
      */
-    public function algorithmName()
+    public function algorithmName(): string
     {
         return $this->header()
             ->algorithm()
@@ -297,7 +300,7 @@ class JWE
      *
      * @return string
      */
-    public function encryptionAlgorithmName()
+    public function encryptionAlgorithmName(): string
     {
         return $this->header()
             ->encryptionAlgorithm()
@@ -309,7 +312,7 @@ class JWE
      *
      * @return string
      */
-    public function encryptedKey()
+    public function encryptedKey(): string
     {
         return $this->_encryptedKey;
     }
@@ -319,7 +322,7 @@ class JWE
      *
      * @return string
      */
-    public function initializationVector()
+    public function initializationVector(): string
     {
         return $this->_iv;
     }
@@ -329,7 +332,7 @@ class JWE
      *
      * @return string
      */
-    public function ciphertext()
+    public function ciphertext(): string
     {
         return $this->_ciphertext;
     }
@@ -339,7 +342,7 @@ class JWE
      *
      * @return string
      */
-    public function authenticationTag()
+    public function authenticationTag(): string
     {
         return $this->_authenticationTag;
     }
@@ -349,7 +352,7 @@ class JWE
      *
      * @return string
      */
-    public function toCompact()
+    public function toCompact(): string
     {
         return Base64::urlEncode($this->_protectedHeader->toJSON()) . "." .
              Base64::urlEncode($this->_encryptedKey) . "." .

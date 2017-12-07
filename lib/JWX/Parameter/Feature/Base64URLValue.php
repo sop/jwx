@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\Parameter\Feature;
 
 use JWX\Util\Base64;
@@ -26,7 +28,7 @@ trait Base64URLValue
      * @param string $value
      * @return self
      */
-    public static function fromString($value)
+    public static function fromString(string $value)
     {
         return new static(Base64::urlEncode($value));
     }
@@ -38,7 +40,7 @@ trait Base64URLValue
      * @throws \UnexpectedValueException
      * @return self
      */
-    protected function _validateEncoding($value)
+    protected function _validateEncoding(string $value)
     {
         if (!Base64::isValidURLEncoding($value)) {
             throw new \UnexpectedValueException(
@@ -52,7 +54,7 @@ trait Base64URLValue
      *
      * @return string
      */
-    public function string()
+    public function string(): string
     {
         return Base64::urlDecode($this->value());
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE;
 
 use JWX\JWT\Header\HeaderParameters;
@@ -21,7 +23,8 @@ interface ContentEncryptionAlgorithm extends
      * @param string $aad Additional authenticated data
      * @return array Tuple of ciphertext and authentication tag
      */
-    public function encrypt($plaintext, $key, $iv, $aad);
+    public function encrypt(string $plaintext, string $key, string $iv,
+        string $aad);
     
     /**
      * Decrypt ciphertext.
@@ -33,19 +36,20 @@ interface ContentEncryptionAlgorithm extends
      * @param string $auth_tag Authentication tag to compare
      * @return string Plaintext
      */
-    public function decrypt($ciphertext, $key, $iv, $aad, $auth_tag);
+    public function decrypt(string $ciphertext, string $key, string $iv,
+        string $aad, string $auth_tag);
     
     /**
      * Get the required key size in bytes.
      *
      * @return int
      */
-    public function keySize();
+    public function keySize(): int;
     
     /**
      * Get the required IV size in bytes.
      *
      * @return int
      */
-    public function ivSize();
+    public function ivSize(): int;
 }

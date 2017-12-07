@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\ExponentParameter;
 use JWX\JWK\Parameter\JWKParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class ExponentParameterTest extends PHPUnit_Framework_TestCase
+class ExponentParameterTest extends TestCase
 {
     public function testCreate()
     {

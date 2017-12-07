@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
@@ -18,7 +20,7 @@ class ExponentParameter extends JWKParameter
      *
      * @param string $e Exponent in base64urlUInt encoding
      */
-    public function __construct($e)
+    public function __construct(string $e)
     {
         $this->_validateEncoding($e);
         parent::__construct(self::PARAM_EXPONENT, $e);

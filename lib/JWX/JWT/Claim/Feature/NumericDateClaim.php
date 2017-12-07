@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim\Feature;
 
 /**
@@ -12,7 +14,7 @@ trait NumericDateClaim
      *
      * @param int $timestamp Unix timestamp
      */
-    abstract public function __construct($timestamp);
+    abstract public function __construct(int $timestamp);
     
     /**
      * Get the parameter value.
@@ -29,7 +31,7 @@ trait NumericDateClaim
      * @throws \RuntimeException
      * @return static
      */
-    public static function fromString($time, $tz = "UTC")
+    public static function fromString(string $time, string $tz = "UTC")
     {
         try {
             $dt = new \DateTimeImmutable($time, self::_createTimeZone($tz));
@@ -46,7 +48,7 @@ trait NumericDateClaim
      *
      * @return int
      */
-    public function timestamp()
+    public function timestamp(): int
     {
         return (int) $this->value();
     }
@@ -58,9 +60,9 @@ trait NumericDateClaim
      * @throws \RuntimeException
      * @return \DateTimeImmutable
      */
-    public function dateTime($tz = "UTC")
+    public function dateTime(string $tz = "UTC"): \DateTimeImmutable
     {
-        $dt = \DateTimeImmutable::createFromFormat("!U", $this->value(),
+        $dt = \DateTimeImmutable::createFromFormat("!U", strval($this->value()),
             self::_createTimeZone($tz));
         if (false === $dt) {
             throw new \RuntimeException(
@@ -77,7 +79,7 @@ trait NumericDateClaim
      * @throws \UnexpectedValueException
      * @return \DateTimeZone
      */
-    private static function _createTimeZone($tz)
+    private static function _createTimeZone(string $tz): \DateTimeZone
     {
         try {
             return new \DateTimeZone($tz);
@@ -91,7 +93,7 @@ trait NumericDateClaim
      *
      * @return string
      */
-    private static function _getLastDateTimeImmutableErrorsStr()
+    private static function _getLastDateTimeImmutableErrorsStr(): string
     {
         $errors = \DateTimeImmutable::getLastErrors()["errors"];
         return implode(", ", $errors);

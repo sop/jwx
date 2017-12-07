@@ -6,12 +6,13 @@ use JWX\JWT\Header\JOSE;
 use JWX\JWT\Parameter\ContentTypeParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group header
  */
-class JOSETest extends PHPUnit_Framework_TestCase
+class JOSETest extends TestCase
 {
     public function testCreate()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT;
 
 use JWX\JWT\Claim\Claim;
@@ -41,7 +43,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @throws \UnexpectedValueException If JSON is malformed
      * @return self
      */
-    public static function fromJSON($json)
+    public static function fromJSON(string $json): self
     {
         $claims = array();
         $fields = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
@@ -60,7 +62,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @param Claim ...$claims One or more Claim objects
      * @return self
      */
-    public function withClaims(Claim ...$claims)
+    public function withClaims(Claim ...$claims): self
     {
         $obj = clone $this;
         foreach ($claims as $claim) {
@@ -74,7 +76,7 @@ class Claims implements \Countable, \IteratorAggregate
      *
      * @return Claim[]
      */
-    public function all()
+    public function all(): array
     {
         return $this->_claims;
     }
@@ -85,7 +87,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @param string $name Claim name
      * @return true
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return isset($this->_claims[$name]);
     }
@@ -97,7 +99,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @throws \LogicException If claim is not present
      * @return Claim
      */
-    public function get($name)
+    public function get(string $name): Claim
     {
         if (!isset($this->_claims[$name])) {
             throw new \LogicException("Claim $name not set.");
@@ -110,7 +112,7 @@ class Claims implements \Countable, \IteratorAggregate
      *
      * @return string
      */
-    public function toJSON()
+    public function toJSON(): string
     {
         $data = array();
         foreach ($this->_claims as $claim) {
@@ -125,7 +127,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @param ValidationContext $ctx Validation context
      * @return bool
      */
-    public function isValid(ValidationContext $ctx)
+    public function isValid(ValidationContext $ctx): bool
     {
         try {
             $ctx->validate($this);
@@ -141,7 +143,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @see \Countable::count()
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_claims);
     }
@@ -152,7 +154,7 @@ class Claims implements \Countable, \IteratorAggregate
      * @see \IteratorAggregate::getIterator()
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->_claims);
     }

@@ -10,13 +10,14 @@ use JWX\JWS\Algorithm\ES512Algorithm;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jws
  * @group ec
  */
-class ECDSAAlgorithmTest extends PHPUnit_Framework_TestCase
+class ECDSAAlgorithmTest extends TestCase
 {
     private static $_jwk;
     

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -50,7 +52,7 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
      * @param RSAPublicKeyJWK $jwk
      * @return self
      */
-    public static function fromPublicKey(RSAPublicKeyJWK $jwk)
+    public static function fromPublicKey(RSAPublicKeyJWK $jwk): self
     {
         return new static($jwk);
     }
@@ -61,7 +63,7 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
      * @param RSAPrivateKeyJWK $jwk
      * @return self
      */
-    public static function fromPrivateKey(RSAPrivateKeyJWK $jwk)
+    public static function fromPrivateKey(RSAPrivateKeyJWK $jwk): self
     {
         return new static($jwk->publicKey(), $jwk);
     }
@@ -73,7 +75,7 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
      * @throws \UnexpectedValueException
      * @return RSASSAPKCS1Algorithm
      */
-    public static function fromJWK(JWK $jwk, Header $header)
+    public static function fromJWK(JWK $jwk, Header $header): self
     {
         $alg = JWA::deriveAlgorithmName($header, $jwk);
         if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
@@ -91,7 +93,7 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
      * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

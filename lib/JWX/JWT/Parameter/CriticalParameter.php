@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\ArrayParameterValue;
@@ -18,7 +20,7 @@ class CriticalParameter extends JWTParameter
      *
      * @param string ...$names
      */
-    public function __construct(...$names)
+    public function __construct(string ...$names)
     {
         parent::__construct(self::PARAM_CRITICAL, $names);
     }
@@ -29,7 +31,7 @@ class CriticalParameter extends JWTParameter
      * @param string $name
      * @return self
      */
-    public function withParamName($name)
+    public function withParamName(string $name): self
     {
         $obj = clone $this;
         $obj->_value[] = $name;
@@ -43,7 +45,7 @@ class CriticalParameter extends JWTParameter
      * @param string $name
      * @return bool
      */
-    public function has($name)
+    public function has(string $name): bool
     {
         return false !== array_search($name, $this->_value);
     }
@@ -53,7 +55,7 @@ class CriticalParameter extends JWTParameter
      *
      * @return string[]
      */
-    public function names()
+    public function names(): array
     {
         return $this->_value;
     }

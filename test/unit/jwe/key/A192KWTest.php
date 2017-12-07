@@ -3,12 +3,13 @@
 use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\A192KWAlgorithm;
 use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class A192KWTest extends PHPUnit_Framework_TestCase
+class A192KWTest extends TestCase
 {
     const KEY_192 = "123456789 123456789 1234";
     const CEK_192 = "987654321 987654321 9876";

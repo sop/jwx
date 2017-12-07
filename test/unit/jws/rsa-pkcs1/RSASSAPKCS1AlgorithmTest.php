@@ -7,13 +7,14 @@ use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jws
  * @group rsassa
  */
-class RSASSAPKCS1AlgorithmTest extends PHPUnit_Framework_TestCase
+class RSASSAPKCS1AlgorithmTest extends TestCase
 {
     private static $_privKey;
     
@@ -139,12 +140,12 @@ class RSASSAPKCS1AlgorithmTest extends PHPUnit_Framework_TestCase
 
 class RSASSAPKCS1AlgorithmTest_InvalidMethod extends RSASSAPKCS1Algorithm
 {
-    protected function _mdMethod()
+    protected function _mdMethod(): string
     {
         return "nope";
     }
     
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return $this->_mdMethod();
     }
@@ -154,7 +155,7 @@ class RSASSAPKCS1AlgorithmTest_KeyMockup
 {
     public function toPEM()
     {
-        return new RSAESKeyTest_PEMMockup();
+        return new RSASSAPKCS1AlgorithmTest_PEMMockup();
     }
 }
 

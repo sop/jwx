@@ -3,12 +3,13 @@
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\X509CertificateChainParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class JWKX509CertificateChainParameterTest extends PHPUnit_Framework_TestCase
+class JWKX509CertificateChainParameterTest extends TestCase
 {
     public function testCreate()
     {

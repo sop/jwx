@@ -1,12 +1,13 @@
 <?php
 
 use JWX\Util\UUIDv4;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group util
  * @group uuid
  */
-class UUIDv4Test extends PHPUnit_Framework_TestCase
+class UUIDv4Test extends TestCase
 {
     const UUID = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
     

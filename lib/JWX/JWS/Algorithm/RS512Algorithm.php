@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -15,7 +17,7 @@ class RS512Algorithm extends RSASSAPKCS1Algorithm
      *
      * {@inheritdoc}
      */
-    protected function _mdMethod()
+    protected function _mdMethod(): string
     {
         return "sha512WithRSAEncryption";
     }
@@ -24,7 +26,7 @@ class RS512Algorithm extends RSASSAPKCS1Algorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_RS512;
     }

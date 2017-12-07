@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\KeyIDParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class JWTKeyIDParameterTest extends PHPUnit_Framework_TestCase
+class JWTKeyIDParameterTest extends TestCase
 {
     public function testCreate()
     {

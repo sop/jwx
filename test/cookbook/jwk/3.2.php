@@ -1,8 +1,9 @@
 <?php
 
 use JWX\JWK\EC\ECPrivateKeyJWK;
+use PHPUnit\Framework\TestCase;
 
-class CookbookECPrivateKeyTest extends PHPUnit_Framework_TestCase
+class CookbookECPrivateKeyTest extends TestCase
 {
     public function testJWK()
     {

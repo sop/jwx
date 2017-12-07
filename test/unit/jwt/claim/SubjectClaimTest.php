@@ -3,12 +3,13 @@
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\RegisteredClaim;
 use JWX\JWT\Claim\SubjectClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class SubjectClaimTest extends PHPUnit_Framework_TestCase
+class SubjectClaimTest extends TestCase
 {
     const VALUE = "subject";
     

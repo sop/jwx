@@ -5,8 +5,9 @@ use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookRSAv15SignatureTest extends PHPUnit_Framework_TestCase
+class CookbookRSAv15SignatureTest extends TestCase
 {
     private static $_testData;
     

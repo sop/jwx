@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
-use AESKW\AESKW128;
 use JWX\JWA\JWA;
+use Sop\AESKW\AESKW128;
+use Sop\AESKW\AESKeyWrapAlgorithm;
 
 /**
  * Implements AES key wrap with 128-bit key.
@@ -16,7 +19,7 @@ class A128KWAlgorithm extends AESKWAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _kekSize()
+    protected function _kekSize(): int
     {
         return 16;
     }
@@ -25,7 +28,7 @@ class A128KWAlgorithm extends AESKWAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _AESKWAlgo()
+    protected function _AESKWAlgo(): AESKeyWrapAlgorithm
     {
         return new AESKW128();
     }
@@ -34,7 +37,7 @@ class A128KWAlgorithm extends AESKWAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_A128KW;
     }

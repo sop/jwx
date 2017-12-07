@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,7 +20,7 @@ class KeyIDParameter extends JWKParameter
      *
      * @param string $id Key ID
      */
-    public function __construct($id)
+    public function __construct(string $id)
     {
         parent::__construct(self::PARAM_KEY_ID, $id);
     }

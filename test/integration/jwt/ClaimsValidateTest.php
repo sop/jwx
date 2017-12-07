@@ -11,12 +11,13 @@ use JWX\JWT\Claim\JWTIDClaim;
 use JWX\JWT\Claim\NotBeforeClaim;
 use JWX\JWT\Claim\SubjectClaim;
 use JWX\JWT\Claim\Validator\LessValidator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class ClaimsValidateTest extends PHPUnit_Framework_TestCase
+class ClaimsValidateTest extends TestCase
 {
     const REF_TIME = 1460293103;
     

@@ -3,12 +3,13 @@
 use JWX\JWA\JWA;
 use JWX\JWE\KeyAlgorithm\A256GCMKWAlgorithm;
 use JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class A256GCMKWTest extends PHPUnit_Framework_TestCase
+class A256GCMKWTest extends TestCase
 {
     const KEY_256 = "123456789 123456789 123456789 12";
     const IV = "123456789 12";

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 use JWX\JWT\Claim\Validator\EqualsValidator;
@@ -16,9 +18,9 @@ class JWTIDClaim extends RegisteredClaim
      *
      * @param string $id JWT unique identifier
      */
-    public function __construct($id)
+    public function __construct(string $id)
     {
-        parent::__construct(self::NAME_JWT_ID, (string) $id,
+        parent::__construct(self::NAME_JWT_ID, $id,
             new EqualsValidator());
     }
 }

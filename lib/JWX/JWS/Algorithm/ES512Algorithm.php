@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS\Algorithm;
 
 use JWX\JWA\JWA;
@@ -16,7 +18,7 @@ class ES512Algorithm extends ECDSAAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _curveName()
+    protected function _curveName(): string
     {
         return CurveParameter::CURVE_P521;
     }
@@ -25,7 +27,7 @@ class ES512Algorithm extends ECDSAAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _mdMethod()
+    protected function _mdMethod(): string
     {
         return "sha512";
     }
@@ -34,7 +36,7 @@ class ES512Algorithm extends ECDSAAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_ES512;
     }

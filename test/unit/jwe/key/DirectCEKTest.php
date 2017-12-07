@@ -7,12 +7,13 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwe
  * @group key
  */
-class DirectCEKTest extends PHPUnit_Framework_TestCase
+class DirectCEKTest extends TestCase
 {
     const KEY_128 = "123456789 123456";
     

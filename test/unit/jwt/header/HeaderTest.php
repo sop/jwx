@@ -4,12 +4,13 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\ContentTypeParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group header
  */
-class HeaderTest extends PHPUnit_Framework_TestCase
+class HeaderTest extends TestCase
 {
     /**
      *

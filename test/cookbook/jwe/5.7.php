@@ -8,8 +8,9 @@ use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\InitializationVectorParameter;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookAESGCMKWWithAESCBCTest extends PHPUnit_Framework_TestCase
+class CookbookAESGCMKWWithAESCBCTest extends TestCase
 {
     private static $_testData;
     

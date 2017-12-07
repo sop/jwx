@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\JWT\Parameter\TypeParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class TypeParameterTest extends PHPUnit_Framework_TestCase
+class TypeParameterTest extends TestCase
 {
     public function testCreate()
     {

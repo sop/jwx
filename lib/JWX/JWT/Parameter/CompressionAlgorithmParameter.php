@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Parameter;
 
 use JWX\Parameter\Feature\StringParameterValue;
@@ -18,9 +20,9 @@ class CompressionAlgorithmParameter extends JWTParameter
      *
      * @param string $algo
      */
-    public function __construct($algo)
+    public function __construct(string $algo)
     {
-        parent::__construct(self::PARAM_COMPRESSION_ALGORITHM, (string) $algo);
+        parent::__construct(self::PARAM_COMPRESSION_ALGORITHM, $algo);
     }
     
     /**
@@ -30,7 +32,7 @@ class CompressionAlgorithmParameter extends JWTParameter
      * @return self
      */
     public static function fromAlgorithm(
-        CompressionAlgorithmParameterValue $value)
+        CompressionAlgorithmParameterValue $value): self
     {
         return new self($value->compressionParamValue());
     }

@@ -22,12 +22,13 @@ use JWX\JWT\Parameter\X509CertificateChainParameter;
 use JWX\JWT\Parameter\X509CertificateSHA1ThumbprintParameter;
 use JWX\JWT\Parameter\X509CertificateSHA256ThumbprintParameter;
 use JWX\JWT\Parameter\X509URLParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group header
  */
-class TypedHeaderTest extends PHPUnit_Framework_TestCase
+class TypedHeaderTest extends TestCase
 {
     private static $_header;
     

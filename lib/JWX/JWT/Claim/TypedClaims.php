@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim;
 
 /**
@@ -13,7 +15,7 @@ trait TypedClaims
      * @param string $name Claim name
      * @return bool
      */
-    abstract public function has($name);
+    abstract public function has(string $name): bool;
     
     /**
      * Get the claim by name.
@@ -21,14 +23,14 @@ trait TypedClaims
      * @param string $name Claim name
      * @return Claim
      */
-    abstract public function get($name);
+    abstract public function get(string $name): Claim;
     
     /**
      * Check whether the issuer claim is present.
      *
      * @return bool
      */
-    public function hasIssuer()
+    public function hasIssuer(): bool
     {
         return $this->has(RegisteredClaim::NAME_ISSUER);
     }
@@ -38,7 +40,7 @@ trait TypedClaims
      *
      * @return IssuerClaim
      */
-    public function issuer()
+    public function issuer(): IssuerClaim
     {
         return self::_checkType($this->get(RegisteredClaim::NAME_ISSUER),
             IssuerClaim::class);
@@ -49,7 +51,7 @@ trait TypedClaims
      *
      * @return bool
      */
-    public function hasSubject()
+    public function hasSubject(): bool
     {
         return $this->has(RegisteredClaim::NAME_SUBJECT);
     }
@@ -59,7 +61,7 @@ trait TypedClaims
      *
      * @return SubjectClaim
      */
-    public function subject()
+    public function subject(): SubjectClaim
     {
         return self::_checkType($this->get(RegisteredClaim::NAME_SUBJECT),
             SubjectClaim::class);
@@ -70,7 +72,7 @@ trait TypedClaims
      *
      * @return bool
      */
-    public function hasAudience()
+    public function hasAudience(): bool
     {
         return $this->has(RegisteredClaim::NAME_AUDIENCE);
     }
@@ -80,7 +82,7 @@ trait TypedClaims
      *
      * @return AudienceClaim
      */
-    public function audience()
+    public function audience(): AudienceClaim
     {
         return self::_checkType($this->get(RegisteredClaim::NAME_AUDIENCE),
             AudienceClaim::class);
@@ -91,7 +93,7 @@ trait TypedClaims
      *
      * @return bool
      */
-    public function hasExpirationTime()
+    public function hasExpirationTime(): bool
     {
         return $this->has(RegisteredClaim::NAME_EXPIRATION_TIME);
     }
@@ -101,7 +103,7 @@ trait TypedClaims
      *
      * @return ExpirationTimeClaim
      */
-    public function expirationTime()
+    public function expirationTime(): ExpirationTimeClaim
     {
         return self::_checkType(
             $this->get(RegisteredClaim::NAME_EXPIRATION_TIME),
@@ -113,7 +115,7 @@ trait TypedClaims
      *
      * @return bool
      */
-    public function hasNotBefore()
+    public function hasNotBefore(): bool
     {
         return $this->has(RegisteredClaim::NAME_NOT_BEFORE);
     }
@@ -123,7 +125,7 @@ trait TypedClaims
      *
      * @return NotBeforeClaim
      */
-    public function notBefore()
+    public function notBefore(): NotBeforeClaim
     {
         return self::_checkType($this->get(RegisteredClaim::NAME_NOT_BEFORE),
             NotBeforeClaim::class);
@@ -134,7 +136,7 @@ trait TypedClaims
      *
      * @return bool
      */
-    public function hasIssuedAt()
+    public function hasIssuedAt(): bool
     {
         return $this->has(RegisteredClaim::NAME_ISSUED_AT);
     }
@@ -144,7 +146,7 @@ trait TypedClaims
      *
      * @return IssuedAtClaim
      */
-    public function issuedAt()
+    public function issuedAt(): IssuedAtClaim
     {
         return self::_checkType($this->get(RegisteredClaim::NAME_ISSUED_AT),
             IssuedAtClaim::class);
@@ -155,7 +157,7 @@ trait TypedClaims
      *
      * @return bool
      */
-    public function hasJWTID()
+    public function hasJWTID(): bool
     {
         return $this->has(RegisteredClaim::NAME_JWT_ID);
     }
@@ -165,7 +167,7 @@ trait TypedClaims
      *
      * @return JWTIDClaim
      */
-    public function JWTID()
+    public function JWTID(): JWTIDClaim
     {
         return self::_checkType($this->get(RegisteredClaim::NAME_JWT_ID),
             JWTIDClaim::class);
@@ -179,7 +181,7 @@ trait TypedClaims
      * @throws \UnexpectedValueException
      * @return Claim
      */
-    private static function _checkType(Claim $claim, $cls)
+    private static function _checkType(Claim $claim, string $cls): Claim
     {
         if (!$claim instanceof $cls) {
             throw new \UnexpectedValueException(

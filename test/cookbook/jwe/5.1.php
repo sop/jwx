@@ -6,8 +6,9 @@ use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
 use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookKeyEncRSA15AndAESHMACSHA2Test extends PHPUnit_Framework_TestCase
+class CookbookKeyEncRSA15AndAESHMACSHA2Test extends TestCase
 {
     private static $_testData;
     

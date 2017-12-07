@@ -6,13 +6,14 @@ use JWX\JWS\SignatureAlgorithm;
 use JWX\JWS\Algorithm\RS256Algorithm;
 use JWX\JWS\Algorithm\RSASSAPKCS1Algorithm;
 use JWX\JWT\Parameter\AlgorithmParameterValue;
+use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
 
 /**
  * @group jws
  * @group rsassa
  */
-class RS256Test extends PHPUnit_Framework_TestCase
+class RS256Test extends TestCase
 {
     private static $_privKey;
     

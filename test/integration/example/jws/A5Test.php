@@ -5,6 +5,7 @@ use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWT\Header\Header;
 use JWX\JWT\Parameter\JWTParameter;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7515 appendix A.5.
@@ -14,7 +15,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7515#appendix-A.5
  */
-class UnsecuredJWSTest extends PHPUnit_Framework_TestCase
+class UnsecuredJWSTest extends TestCase
 {
     private static $_header = "eyJhbGciOiJub25lIn0";
     

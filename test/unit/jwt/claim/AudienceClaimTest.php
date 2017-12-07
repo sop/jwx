@@ -3,12 +3,13 @@
 use JWX\JWT\Claim\AudienceClaim;
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\RegisteredClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class AudienceClaimTest extends PHPUnit_Framework_TestCase
+class AudienceClaimTest extends TestCase
 {
     const VALUE_SINGLE = "audience";
     const VALUE_MANY = array("audience #1", "audience #2");

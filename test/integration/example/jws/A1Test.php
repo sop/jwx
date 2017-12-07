@@ -4,6 +4,7 @@ use JWX\JWK\Symmetric\SymmetricKeyJWK;
 use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\HS256Algorithm;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Test case for RFC 7515 appendix A.1.
@@ -13,7 +14,7 @@ use JWX\Util\Base64;
  *
  * @link https://tools.ietf.org/html/rfc7515#appendix-A.1
  */
-class JWSUsingHS256Test extends PHPUnit_Framework_TestCase
+class JWSUsingHS256Test extends TestCase
 {
     private static $_headerBytes = [123, 34, 116, 121, 112, 34, 58, 34, 74,
         87, 84, 34, 44, 13, 10, 32, 34, 97, 108, 103, 34, 58, 34, 72, 83, 50, 53,

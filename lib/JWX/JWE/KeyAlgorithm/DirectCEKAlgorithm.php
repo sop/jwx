@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
@@ -28,7 +30,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      *
      * @param string $cek Content encryption key
      */
-    public function __construct($cek)
+    public function __construct(string $cek)
     {
         $this->_cek = $cek;
     }
@@ -55,7 +57,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      *
      * @return string
      */
-    public function cek()
+    public function cek(): string
     {
         return $this->_cek;
     }
@@ -64,7 +66,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _encryptKey($key, Header &$header)
+    protected function _encryptKey(string $key, Header &$header): string
     {
         if ($key != $this->_cek) {
             throw new \LogicException("Content encryption key doesn't match.");
@@ -76,7 +78,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _decryptKey($ciphertext, Header $header)
+    protected function _decryptKey(string $ciphertext, Header $header): string
     {
         if ($ciphertext !== "") {
             throw new \UnexpectedValueException(
@@ -89,7 +91,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    public function cekForEncryption($length)
+    public function cekForEncryption(int $length): string
     {
         if (strlen($this->_cek) != $length) {
             throw new \UnexpectedValueException("Invalid key length.");
@@ -101,7 +103,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    public function algorithmParamValue()
+    public function algorithmParamValue(): string
     {
         return JWA::ALGO_DIR;
     }
@@ -111,7 +113,7 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
      * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

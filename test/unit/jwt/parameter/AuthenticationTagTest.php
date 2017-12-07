@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\AuthenticationTagParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class AuthenticationTagParameterTest extends PHPUnit_Framework_TestCase
+class AuthenticationTagParameterTest extends TestCase
 {
     public function testCreate()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWS;
 
 use JWX\JWA\JWA;
@@ -55,8 +57,8 @@ class JWS
      * @param string $signature_input Input value for the signature computation
      * @param string $signature JWS Signature
      */
-    protected function __construct(Header $protected_header, $payload,
-        $signature_input, $signature)
+    protected function __construct(Header $protected_header, string $payload,
+        string $signature_input, string $signature)
     {
         $this->_protectedHeader = $protected_header;
         $this->_payload = $payload;
@@ -70,7 +72,7 @@ class JWS
      * @param string $data
      * @return self
      */
-    public static function fromCompact($data)
+    public static function fromCompact(string $data): self
     {
         return self::fromParts(explode(".", $data));
     }
@@ -82,7 +84,7 @@ class JWS
      * @throws \UnexpectedValueException
      * @return self
      */
-    public static function fromParts(array $parts)
+    public static function fromParts(array $parts): self
     {
         if (count($parts) != 3) {
             throw new \UnexpectedValueException(
@@ -106,8 +108,8 @@ class JWS
      * @throws \RuntimeException If signature computation fails
      * @return self
      */
-    public static function sign($payload, SignatureAlgorithm $algo,
-        Header $header = null)
+    public static function sign(string $payload, SignatureAlgorithm $algo,
+        Header $header = null): self
     {
         if (!isset($header)) {
             $header = new Header();
@@ -132,7 +134,7 @@ class JWS
      *
      * @return JOSE
      */
-    public function header()
+    public function header(): JOSE
     {
         return new JOSE($this->_protectedHeader);
     }
@@ -142,7 +144,7 @@ class JWS
      *
      * @return string
      */
-    public function algorithmName()
+    public function algorithmName(): string
     {
         return $this->header()
             ->algorithm()
@@ -154,7 +156,7 @@ class JWS
      *
      * @return bool
      */
-    public function isUnsecured()
+    public function isUnsecured(): bool
     {
         return $this->algorithmName() == JWA::ALGO_NONE;
     }
@@ -164,7 +166,7 @@ class JWS
      *
      * @return string
      */
-    public function payload()
+    public function payload(): string
     {
         return $this->_payload;
     }
@@ -174,7 +176,7 @@ class JWS
      *
      * @return string
      */
-    public function signature()
+    public function signature(): string
     {
         return $this->_signature;
     }
@@ -184,7 +186,7 @@ class JWS
      *
      * @return string
      */
-    protected function _encodedPayload()
+    protected function _encodedPayload(): string
     {
         $b64 = true;
         if ($this->_protectedHeader->hasB64Payload()) {
@@ -202,7 +204,7 @@ class JWS
      * @throws \RuntimeException If signature computation fails
      * @return bool True if signature is valid
      */
-    public function validate(SignatureAlgorithm $algo)
+    public function validate(SignatureAlgorithm $algo): bool
     {
         if ($algo->algorithmParamValue() != $this->algorithmName()) {
             throw new \UnexpectedValueException("Invalid signature algorithm.");
@@ -220,7 +222,7 @@ class JWS
      * @throws \RuntimeException If algorithm initialization fails
      * @return bool True if signature is valid
      */
-    public function validateWithJWK(JWK $jwk)
+    public function validateWithJWK(JWK $jwk): bool
     {
         $algo = SignatureAlgorithm::fromJWK($jwk, $this->header());
         return $this->validate($algo);
@@ -235,7 +237,7 @@ class JWS
      * @throws \RuntimeException If algorithm initialization fails
      * @return bool True if signature is valid
      */
-    public function validateWithJWKSet(JWKSet $set)
+    public function validateWithJWKSet(JWKSet $set): bool
     {
         if (!count($set)) {
             throw new \RuntimeException("No keys.");
@@ -250,7 +252,7 @@ class JWS
      *
      * @return string
      */
-    public function toCompact()
+    public function toCompact(): string
     {
         return Base64::urlEncode($this->_protectedHeader->toJSON()) . "." .
              $this->_encodedPayload() . "." .
@@ -262,7 +264,7 @@ class JWS
      *
      * @return string
      */
-    public function toCompactDetached()
+    public function toCompactDetached(): string
     {
         return Base64::urlEncode($this->_protectedHeader->toJSON()) . ".." .
              Base64::urlEncode($this->_signature);
@@ -275,7 +277,8 @@ class JWS
      * @param Header $header Protected header
      * @return string
      */
-    protected static function _generateSignatureInput($payload, Header $header)
+    protected static function _generateSignatureInput(string $payload,
+        Header $header): string
     {
         $b64 = $header->hasB64Payload() ? $header->B64Payload()->value() : true;
         $data = Base64::urlEncode($header->toJSON()) . ".";

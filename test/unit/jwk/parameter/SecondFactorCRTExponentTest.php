@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class SecondFactorCRTExponentParameterTest extends PHPUnit_Framework_TestCase
+class SecondFactorCRTExponentParameterTest extends TestCase
 {
     public function testCreate()
     {

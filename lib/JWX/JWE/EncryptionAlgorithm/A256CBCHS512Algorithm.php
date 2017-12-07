@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\EncryptionAlgorithm;
 
 use JWX\JWA\JWA;
@@ -15,7 +17,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    public function keySize()
+    public function keySize(): int
     {
         return 64;
     }
@@ -24,7 +26,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    public function encryptionAlgorithmParamValue()
+    public function encryptionAlgorithmParamValue(): string
     {
         return JWA::ALGO_A256CBC_HS512;
     }
@@ -33,7 +35,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _cipherMethod()
+    protected function _cipherMethod(): string
     {
         return "AES-256-CBC";
     }
@@ -42,7 +44,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _hashAlgo()
+    protected function _hashAlgo(): string
     {
         return "sha512";
     }
@@ -51,7 +53,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _encKeyLen()
+    protected function _encKeyLen(): int
     {
         return 32;
     }
@@ -60,7 +62,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _macKeyLen()
+    protected function _macKeyLen(): int
     {
         return 32;
     }
@@ -69,7 +71,7 @@ class A256CBCHS512Algorithm extends AESCBCAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _tagLen()
+    protected function _tagLen(): int
     {
         return 32;
     }

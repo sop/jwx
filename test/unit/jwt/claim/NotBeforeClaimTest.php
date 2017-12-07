@@ -3,12 +3,13 @@
 use JWX\JWT\Claim\Claim;
 use JWX\JWT\Claim\NotBeforeClaim;
 use JWX\JWT\Claim\RegisteredClaim;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group claim
  */
-class NotBeforeClaimTest extends PHPUnit_Framework_TestCase
+class NotBeforeClaimTest extends TestCase
 {
     const VALUE = 1460703960;
     

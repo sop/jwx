@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWE\KeyAlgorithm;
 
 use JWX\JWA\JWA;
@@ -54,7 +56,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      *
      * @return int
      */
-    abstract protected function _paddingScheme();
+    abstract protected function _paddingScheme(): int;
     
     /**
      * Constructor.
@@ -76,7 +78,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      * @param JWK $jwk
      * @param Header $header
      * @throws \UnexpectedValueException
-     * @return RSAESKeyAlgorithm
+     * @return self
      */
     public static function fromJWK(JWK $jwk, Header $header)
     {
@@ -97,7 +99,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      * @param RSAPublicKeyJWK $jwk
      * @return self
      */
-    public static function fromPublicKey(RSAPublicKeyJWK $jwk)
+    public static function fromPublicKey(RSAPublicKeyJWK $jwk): self
     {
         return new static($jwk);
     }
@@ -108,7 +110,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      * @param RSAPrivateKeyJWK $jwk
      * @return self
      */
-    public static function fromPrivateKey(RSAPrivateKeyJWK $jwk)
+    public static function fromPrivateKey(RSAPrivateKeyJWK $jwk): self
     {
         return new static($jwk->publicKey(), $jwk);
     }
@@ -118,7 +120,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      *
      * @return RSAPublicKeyJWK
      */
-    public function publicKey()
+    public function publicKey(): RSAPublicKeyJWK
     {
         return $this->_publicKey;
     }
@@ -128,7 +130,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      *
      * @return bool
      */
-    public function hasPrivateKey()
+    public function hasPrivateKey(): bool
     {
         return isset($this->_privateKey);
     }
@@ -139,7 +141,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      * @throws \LogicException
      * @return RSAPrivateKeyJWK
      */
-    public function privateKey()
+    public function privateKey(): RSAPrivateKeyJWK
     {
         if (!$this->hasPrivateKey()) {
             throw new \LogicException("Private key not set.");
@@ -151,7 +153,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _encryptKey($key, Header &$header)
+    protected function _encryptKey(string $key, Header &$header): string
     {
         $pubkey = openssl_pkey_get_public(
             $this->publicKey()
@@ -176,7 +178,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      *
      * {@inheritdoc}
      */
-    protected function _decryptKey($ciphertext, Header $header)
+    protected function _decryptKey(string $ciphertext, Header $header): string
     {
         $privkey = openssl_pkey_get_private(
             $this->privateKey()
@@ -216,7 +218,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      * @see \JWX\JWE\KeyManagementAlgorithm::headerParameters()
      * @return \JWX\JWT\Parameter\JWTParameter[]
      */
-    public function headerParameters()
+    public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
             array(AlgorithmParameter::fromAlgorithm($this)));

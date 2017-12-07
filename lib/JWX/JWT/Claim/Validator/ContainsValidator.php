@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWT\Claim\Validator;
 
 /**
@@ -14,7 +16,7 @@ class ContainsValidator extends Validator
      *
      * {@inheritdoc}
      */
-    public function validate($value, $constraint)
+    public function validate($value, $constraint): bool
     {
         if (is_array($value)) {
             return in_array($constraint, $value);

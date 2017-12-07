@@ -4,12 +4,13 @@ use JWX\JWA\JWA;
 use JWX\JWS\Algorithm\NoneAlgorithm;
 use JWX\JWT\Parameter\AlgorithmParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class JWTAlgorithmParameterTest extends PHPUnit_Framework_TestCase
+class JWTAlgorithmParameterTest extends TestCase
 {
     public function testCreate()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace JWX\JWK\Parameter;
 
 use JWX\Parameter\Feature\Base64UIntValue;
@@ -18,7 +20,7 @@ class PrivateExponentParameter extends JWKParameter
      *
      * @param string $d Private exponent in base64urlUInt encoding
      */
-    public function __construct($d)
+    public function __construct(string $d)
     {
         $this->_validateEncoding($d);
         parent::__construct(self::PARAM_PRIVATE_EXPONENT, $d);

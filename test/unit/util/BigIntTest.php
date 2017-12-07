@@ -1,12 +1,13 @@
 <?php
 
 use JWX\Util\BigInt;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group util
  * @group bigint
  */
-class BigIntTest extends PHPUnit_Framework_TestCase
+class BigIntTest extends TestCase
 {
     const BASE_10 = "255";
     

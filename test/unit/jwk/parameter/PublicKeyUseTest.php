@@ -2,12 +2,13 @@
 
 use JWX\JWK\Parameter\JWKParameter;
 use JWX\JWK\Parameter\PublicKeyUseParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwk
  * @group parameter
  */
-class PublicKeyUseParameterTest extends PHPUnit_Framework_TestCase
+class PublicKeyUseParameterTest extends TestCase
 {
     public function testCreate()
     {

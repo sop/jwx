@@ -5,8 +5,9 @@ use JWX\JWS\JWS;
 use JWX\JWS\Algorithm\HMACAlgorithm;
 use JWX\JWT\Header\Header;
 use JWX\Util\Base64;
+use PHPUnit\Framework\TestCase;
 
-class CookbookSignatureWithDetachedContentTest extends PHPUnit_Framework_TestCase
+class CookbookSignatureWithDetachedContentTest extends TestCase
 {
     private static $_testData;
     

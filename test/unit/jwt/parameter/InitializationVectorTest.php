@@ -2,12 +2,13 @@
 
 use JWX\JWT\Parameter\InitializationVectorParameter;
 use JWX\JWT\Parameter\JWTParameter;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group jwt
  * @group parameter
  */
-class InitializationVectorParameterTest extends PHPUnit_Framework_TestCase
+class InitializationVectorParameterTest extends TestCase
 {
     const IV = "abcdef";
     
