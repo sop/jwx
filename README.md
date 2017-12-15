@@ -45,6 +45,16 @@ Also implements unencoded payload option
 -   Compression
     -   DEFLATE
 
+## Requirements
+
+-   PHP >=7.0
+-   openssl
+-   hash
+-   [sop/crypto-types](https://github.com/sop/crypto-types)
+-   [sop/crypto-encoding](https://github.com/sop/crypto-encoding)
+-   [sop/aes-kw](https://github.com/sop/aes-kw)
+-   [sop/gcm](https://github.com/sop/gcm)
+
 ## Installation
 
 This library is available on
