@@ -30,4 +30,15 @@ class JWKX509CertificateSHA256ThumbprintParameterTest extends TestCase
             JWKParameter::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT,
             $param->name());
     }
+    
+    /**
+     * @depends testCreate
+     *
+     * @param JWKParameter $param
+     */
+    public function testFromNameAndValue(JWKParameter $param)
+    {
+        $p = JWKParameter::fromNameAndValue($param->name(), $param->value());
+        $this->assertEquals($p, $param);
+    }
 }

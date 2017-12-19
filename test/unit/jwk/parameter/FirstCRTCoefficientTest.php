@@ -27,4 +27,15 @@ class FirstCRTCoefficientParameterTest extends TestCase
         $this->assertEquals(JWKParameter::PARAM_FIRST_CRT_COEFFICIENT,
             $param->name());
     }
+    
+    /**
+     * @depends testCreate
+     *
+     * @param JWKParameter $param
+     */
+    public function testFromNameAndValue(JWKParameter $param)
+    {
+        $p = JWKParameter::fromNameAndValue($param->name(), $param->value());
+        $this->assertEquals($p, $param);
+    }
 }

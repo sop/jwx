@@ -38,4 +38,15 @@ class KeyValueParameterTest extends TestCase
     {
         $this->assertEquals(self::KEY, $param->key());
     }
+    
+    /**
+     * @depends testCreate
+     *
+     * @param JWKParameter $param
+     */
+    public function testFromNameAndValue(JWKParameter $param)
+    {
+        $p = JWKParameter::fromNameAndValue($param->name(), $param->value());
+        $this->assertEquals($p, $param);
+    }
 }

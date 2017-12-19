@@ -46,4 +46,15 @@ class OtherPrimesInfoParameterTest extends TestCase
     {
         OtherPrimesInfoParameter::fromJSONValue(null);
     }
+    
+    /**
+     * @depends testCreate
+     *
+     * @param JWKParameter $param
+     */
+    public function testFromNameAndValue(JWKParameter $param)
+    {
+        $p = JWKParameter::fromNameAndValue($param->name(), $param->value());
+        $this->assertEquals($p, $param);
+    }
 }

@@ -26,4 +26,15 @@ class KeyTypeParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_KEY_TYPE, $param->name());
     }
+    
+    /**
+     * @depends testCreate
+     *
+     * @param JWKParameter $param
+     */
+    public function testFromNameAndValue(JWKParameter $param)
+    {
+        $p = JWKParameter::fromNameAndValue($param->name(), $param->value());
+        $this->assertEquals($p, $param);
+    }
 }

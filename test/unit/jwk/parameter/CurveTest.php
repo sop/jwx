@@ -75,4 +75,15 @@ class CurveParameterTest extends TestCase
         $param = new CurveParameter("fail");
         $param->keySizeBits();
     }
+    
+    /**
+     * @depends testCreate
+     *
+     * @param JWKParameter $param
+     */
+    public function testFromNameAndValue(JWKParameter $param)
+    {
+        $p = JWKParameter::fromNameAndValue($param->name(), $param->value());
+        $this->assertEquals($p, $param);
+    }
 }
