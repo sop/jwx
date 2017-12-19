@@ -81,6 +81,10 @@ class JWKParameter extends Parameter
         self::P_KEY_OPS => KeyOperationsParameter::class,
         self::P_ALG => AlgorithmParameter::class,
         self::P_KID => KeyIDParameter::class,
+        self::P_X5U => X509URLParameter::class,
+        self::P_X5C => X509CertificateChainParameter::class,
+        self::P_X5T => X509CertificateSHA1ThumbprintParameter::class,
+        self::P_X5TS256 => X509CertificateSHA256ThumbprintParameter::class,
         self::P_CRV => CurveParameter::class,
         self::P_X => XCoordinateParameter::class,
         self::P_Y => YCoordinateParameter::class,
@@ -117,7 +121,7 @@ class JWKParameter extends Parameter
      * @param mixed $value Parameter value
      * @return self
      */
-    public static function fromNameAndValue(string $name, string $value): self
+    public static function fromNameAndValue(string $name, $value): self
     {
         if (array_key_exists($name, self::MAP_NAME_TO_CLASS)) {
             $cls = self::MAP_NAME_TO_CLASS[$name];
