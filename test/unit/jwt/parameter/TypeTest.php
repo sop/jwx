@@ -1,22 +1,26 @@
 <?php
 
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\TypeParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\Parameter\TypeParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class TypeParameterTest extends TestCase
 {
     public function testCreate()
     {
-        $param = new TypeParameter("example");
+        $param = new TypeParameter('example');
         $this->assertInstanceOf(TypeParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *

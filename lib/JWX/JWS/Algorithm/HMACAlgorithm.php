@@ -2,29 +2,22 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWS\Algorithm;
+namespace Sop\JWX\JWS\Algorithm;
 
-use JWX\JWA\JWA;
-use JWX\JWK\JWK;
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWS\SignatureAlgorithm;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\AlgorithmParameter;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWS\SignatureAlgorithm;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\AlgorithmParameter;
 
 /**
  * Base class for algorithms implementing HMAC signature.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-3.2
+ * @see https://tools.ietf.org/html/rfc7518#section-3.2
  */
 abstract class HMACAlgorithm extends SignatureAlgorithm
 {
-    /**
-     * Shared secret key.
-     *
-     * @var string $_key
-     */
-    protected $_key;
-    
     /**
      * Mapping from algorithm name to class name.
      *
@@ -32,21 +25,19 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = array(
-        /* @formatter:off */
-        JWA::ALGO_HS256 => HS256Algorithm::class, 
-        JWA::ALGO_HS384 => HS384Algorithm::class, 
-        JWA::ALGO_HS512 => HS512Algorithm::class
-        /* @formatter:on */
-    );
-    
+    const MAP_ALGO_TO_CLASS = [
+        JWA::ALGO_HS256 => HS256Algorithm::class,
+        JWA::ALGO_HS384 => HS384Algorithm::class,
+        JWA::ALGO_HS512 => HS512Algorithm::class,
+    ];
+
     /**
-     * Get algorithm name recognized by the Hash extension.
+     * Shared secret key.
      *
-     * @return string
+     * @var string
      */
-    abstract protected function _hashAlgo(): string;
-    
+    protected $_key;
+
     /**
      * Constructor.
      *
@@ -56,54 +47,60 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
     {
         $this->_key = $key;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
+     *
+     * @return self
      */
-    public static function fromJWK(JWK $jwk, Header $header): self
+    public static function fromJWK(JWK $jwk, Header $header): SignatureAlgorithm
     {
         $jwk = SymmetricKeyJWK::fromJWK($jwk);
         $alg = JWA::deriveAlgorithmName($header, $jwk);
         if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
-            throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
+            throw new \UnexpectedValueException("Unsupported algorithm '{$alg}'.");
         }
         $cls = self::MAP_ALGO_TO_CLASS[$alg];
         return new $cls($jwk->key());
     }
-    
+
     /**
-     *
      * {@inheritdoc}
+     *
+     * @throws \RuntimeException For generic errors
      */
     public function computeSignature(string $data): string
     {
         $result = @hash_hmac($this->_hashAlgo(), $data, $this->_key, true);
         if (false === $result) {
             $err = error_get_last();
-            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
+            $msg = isset($err) && __FILE__ === $err['file'] ? $err['message'] : null;
             throw new \RuntimeException($msg ?? 'hash_hmac() failed.');
         }
         return $result;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function validateSignature(string $data, string $signature): bool
     {
         return $this->computeSignature($data) === $signature;
     }
-    
+
     /**
-     *
-     * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
-     * @return \JWX\JWT\Parameter\JWTParameter[]
+     * {@inheritdoc}
      */
     public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
-            array(AlgorithmParameter::fromAlgorithm($this)));
+            [AlgorithmParameter::fromAlgorithm($this)]);
     }
+
+    /**
+     * Get algorithm name recognized by the Hash extension.
+     *
+     * @return string
+     */
+    abstract protected function _hashAlgo(): string;
 }

@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\ModulusParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\ModulusParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class ModulusParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class ModulusParameterTest extends TestCase
         $this->assertInstanceOf(ModulusParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class ModulusParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_MODULUS, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

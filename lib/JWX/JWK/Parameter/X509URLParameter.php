@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'X.509 URL' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4.6
+ * @see https://tools.ietf.org/html/rfc7517#section-4.6
  */
 class X509URLParameter extends JWKParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Constructor.
      *

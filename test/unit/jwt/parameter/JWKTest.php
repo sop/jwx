@@ -1,13 +1,17 @@
 <?php
 
-use JWX\JWK\JWK;
-use JWX\JWT\Parameter\JSONWebKeyParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWT\Parameter\JSONWebKeyParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class JSONWebKeyParameterTest extends TestCase
 {
@@ -17,7 +21,7 @@ class JSONWebKeyParameterTest extends TestCase
         $this->assertInstanceOf(JSONWebKeyParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class JSONWebKeyParameterTest extends TestCase
     {
         $this->assertEquals(JWTParameter::PARAM_JSON_WEB_KEY, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -38,7 +42,7 @@ class JSONWebKeyParameterTest extends TestCase
         $param = JSONWebKeyParameter::fromJSONValue($param->value());
         $this->assertInstanceOf(JSONWebKeyParameter::class, $param);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -49,12 +53,10 @@ class JSONWebKeyParameterTest extends TestCase
         $jwk = $param->jwk();
         $this->assertInstanceOf(JWK::class, $jwk);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJSONFail()
     {
+        $this->expectException(\UnexpectedValueException::class);
         JSONWebKeyParameter::fromJSONValue(null);
     }
 }

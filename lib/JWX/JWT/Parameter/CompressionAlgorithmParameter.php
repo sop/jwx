@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'Compression Algorithm' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7516#section-4.1.3
+ * @see https://tools.ietf.org/html/rfc7516#section-4.1.3
  */
 class CompressionAlgorithmParameter extends JWTParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Constructor.
      *
@@ -24,15 +24,16 @@ class CompressionAlgorithmParameter extends JWTParameter
     {
         parent::__construct(self::PARAM_COMPRESSION_ALGORITHM, $algo);
     }
-    
+
     /**
      * Initialize from CompressionAlgorithmParameterValue.
      *
      * @param CompressionAlgorithmParameterValue $value
+     *
      * @return self
      */
     public static function fromAlgorithm(
-        CompressionAlgorithmParameterValue $value): self
+        CompressionAlgorithmParameterValue $value): JWTParameter
     {
         return new self($value->compressionParamValue());
     }

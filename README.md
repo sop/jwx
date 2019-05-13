@@ -47,7 +47,7 @@ Also implements unencoded payload option
 
 ## Requirements
 
--   PHP >=7.0
+-   PHP >=7.2
 -   openssl
 -   hash
 -   [sop/crypto-types](https://github.com/sop/crypto-types)

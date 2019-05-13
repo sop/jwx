@@ -2,16 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Header;
+namespace Sop\JWX\JWT\Header;
 
 /**
  * Represents as JOSE header.
  *
  * JOSE header consists of one or more Header objects, that are merged together.
  *
- * @link https://tools.ietf.org/html/rfc7519#section-5
- * @link https://tools.ietf.org/html/rfc7515#section-4
- * @link https://tools.ietf.org/html/rfc7516#section-4
+ * @see https://tools.ietf.org/html/rfc7519#section-5
+ * @see https://tools.ietf.org/html/rfc7515#section-4
+ * @see https://tools.ietf.org/html/rfc7516#section-4
  */
 class JOSE extends Header
 {
@@ -22,29 +22,30 @@ class JOSE extends Header
      */
     public function __construct(Header ...$headers)
     {
-        $params = array();
+        $params = [];
         foreach ($headers as $header) {
             foreach ($header->parameters() as $param) {
                 if (isset($params[$param->name()])) {
-                    throw new \UnexpectedValueException("Duplicate parameter.");
+                    throw new \UnexpectedValueException('Duplicate parameter.');
                 }
                 $params[$param->name()] = $param;
             }
         }
         parent::__construct(...array_values($params));
     }
-    
+
     /**
      * Get self merged with another Header.
      *
      * @param Header $header
+     *
      * @return self
      */
     public function withHeader(Header $header): self
     {
         return new self($this, $header);
     }
-    
+
     /**
      * Whether JOSE is for a JWS.
      *
@@ -54,7 +55,7 @@ class JOSE extends Header
     {
         return $this->hasAlgorithm() && !$this->hasEncryptionAlgorithm();
     }
-    
+
     /**
      * Whether JOSE is for a JWE.
      *

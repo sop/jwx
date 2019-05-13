@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\Base64URLValue;
+use Sop\JWX\Parameter\Feature\Base64URLValue;
 
 /**
  * Implements 'Initialization Vector' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-4.7.1.1
+ * @see https://tools.ietf.org/html/rfc7518#section-4.7.1.1
  */
 class InitializationVectorParameter extends JWTParameter
 {
     use Base64URLValue;
-    
+
     /**
      * Constructor.
      *
@@ -25,7 +25,7 @@ class InitializationVectorParameter extends JWTParameter
         $this->_validateEncoding($iv);
         parent::__construct(self::PARAM_INITIALIZATION_VECTOR, $iv);
     }
-    
+
     /**
      * Get the initialization vector.
      *

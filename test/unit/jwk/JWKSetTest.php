@@ -1,22 +1,26 @@
 <?php
 
-use JWX\JWK\JWK;
-use JWX\JWK\JWKSet;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\JWKSet;
 
 /**
  * @group jwk
+ *
+ * @internal
  */
 class JWKSetTest extends TestCase
 {
     public function testCreate()
     {
-        $jwkset = new JWKSet(JWK::fromArray(["kid" => "key1"]),
-            JWK::fromArray(["kid" => "key2"]));
+        $jwkset = new JWKSet(JWK::fromArray(['kid' => 'key1']),
+            JWK::fromArray(['kid' => 'key2']));
         $this->assertInstanceOf(JWKSet::class, $jwkset);
         return $jwkset;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -24,9 +28,9 @@ class JWKSetTest extends TestCase
      */
     public function testHasKeyID(JWKSet $jwkset)
     {
-        $this->assertTrue($jwkset->hasKeyID("key1"));
+        $this->assertTrue($jwkset->hasKeyID('key1'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -34,9 +38,9 @@ class JWKSetTest extends TestCase
      */
     public function testHasNotKeyID(JWKSet $jwkset)
     {
-        $this->assertFalse($jwkset->hasKeyID("key3"));
+        $this->assertFalse($jwkset->hasKeyID('key3'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -44,21 +48,21 @@ class JWKSetTest extends TestCase
      */
     public function testKeyByID(JWKSet $jwkset)
     {
-        $jwk = $jwkset->keyByID("key1");
+        $jwk = $jwkset->keyByID('key1');
         $this->assertInstanceOf(JWK::class, $jwk);
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException LogicException
      *
      * @param JWKSet $jwkset
      */
     public function testKeyByIDFails(JWKSet $jwkset)
     {
-        $jwkset->keyByID("key3");
+        $this->expectException(\LogicException::class);
+        $jwkset->keyByID('key3');
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -66,11 +70,11 @@ class JWKSetTest extends TestCase
      */
     public function testWithKeys(JWKSet $jwkset)
     {
-        $set = $jwkset->withKeys(JWK::fromArray(["kid" => "key3"]));
+        $set = $jwkset->withKeys(JWK::fromArray(['kid' => 'key3']));
         $this->assertInstanceOf(JWKSet::class, $set);
         return $set;
     }
-    
+
     /**
      * @depends testWithKeys
      *
@@ -78,10 +82,10 @@ class JWKSetTest extends TestCase
      */
     public function testHasAdded(JWKSet $jwkset)
     {
-        $jwk = $jwkset->keyByID("key3");
+        $jwk = $jwkset->keyByID('key3');
         $this->assertInstanceOf(JWK::class, $jwk);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -92,16 +96,14 @@ class JWKSetTest extends TestCase
         $jwk = $jwkset->first();
         $this->assertInstanceOf(JWK::class, $jwk);
     }
-    
-    /**
-     * @expectedException LogicException
-     */
+
     public function testFirstFail()
     {
         $set = new JWKSet();
+        $this->expectException(\LogicException::class);
         $set->first();
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -113,7 +115,7 @@ class JWKSetTest extends TestCase
         $this->assertJson($json);
         return $json;
     }
-    
+
     /**
      * @depends testToJSON
      *
@@ -125,7 +127,7 @@ class JWKSetTest extends TestCase
         $this->assertInstanceOf(JWKSet::class, $jwkset);
         return $jwkset;
     }
-    
+
     /**
      * @depends testCreate
      * @depends testFromJSON
@@ -138,7 +140,7 @@ class JWKSetTest extends TestCase
         // clone to reset internal state
         $this->assertEquals(clone $ref, clone $jwkset);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -149,7 +151,7 @@ class JWKSetTest extends TestCase
         $keys = $jwkset->keys();
         $this->assertContainsOnlyInstancesOf(JWK::class, $keys);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -159,7 +161,7 @@ class JWKSetTest extends TestCase
     {
         $this->assertCount(2, $jwkset);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -167,26 +169,22 @@ class JWKSetTest extends TestCase
      */
     public function testIterator(JWKSet $jwkset)
     {
-        $values = array();
+        $values = [];
         foreach ($jwkset as $jwk) {
             $values[] = $jwk;
         }
         $this->assertContainsOnlyInstancesOf(JWK::class, $values);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testNoKeysParam()
     {
-        JWKSet::fromArray(array());
+        $this->expectException(\UnexpectedValueException::class);
+        JWKSet::fromArray([]);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidJSON()
     {
-        JWKSet::fromJSON("null");
+        $this->expectException(\UnexpectedValueException::class);
+        JWKSet::fromJSON('null');
     }
 }

@@ -1,11 +1,15 @@
 <?php
 
-use JWX\JWT\Claim\Validator\EqualsValidator;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Claim\Validator\EqualsValidator;
 
 /**
  * @group jwt
  * @group validator
+ *
+ * @internal
  */
 class ValidatorTest extends TestCase
 {

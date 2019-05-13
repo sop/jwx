@@ -1,28 +1,32 @@
 <?php
 
-use JWX\JWT\Claims;
-use JWX\JWT\ValidationContext;
-use JWX\JWT\Claim\AudienceClaim;
-use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\IssuerClaim;
-use JWX\JWT\Claim\RegisteredClaim;
-use JWX\JWT\Claim\SubjectClaim;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Claim\AudienceClaim;
+use Sop\JWX\JWT\Claim\Claim;
+use Sop\JWX\JWT\Claim\IssuerClaim;
+use Sop\JWX\JWT\Claim\RegisteredClaim;
+use Sop\JWX\JWT\Claim\SubjectClaim;
+use Sop\JWX\JWT\Claims;
+use Sop\JWX\JWT\ValidationContext;
 
 /**
  * @group jwt
  * @group claim
+ *
+ * @internal
  */
 class ClaimsTest extends TestCase
 {
     public function testCreate()
     {
-        $claims = new Claims(new IssuerClaim("issuer"),
-            new SubjectClaim("subject"), new AudienceClaim("test"));
+        $claims = new Claims(new IssuerClaim('issuer'),
+            new SubjectClaim('subject'), new AudienceClaim('test'));
         $this->assertInstanceOf(Claims::class, $claims);
         return $claims;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -34,7 +38,7 @@ class ClaimsTest extends TestCase
         $this->assertJson($json);
         return $json;
     }
-    
+
     /**
      * @depends testToJSON
      *
@@ -46,15 +50,13 @@ class ClaimsTest extends TestCase
         $this->assertInstanceOf(Claims::class, $claims);
         return $claims;
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJSONFail()
     {
-        Claims::fromJSON("null");
+        $this->expectException(\UnexpectedValueException::class);
+        Claims::fromJSON('null');
     }
-    
+
     /**
      * @depends testCreate
      * @depends testFromJSON
@@ -66,7 +68,7 @@ class ClaimsTest extends TestCase
     {
         $this->assertEquals($ref, $claims);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -76,7 +78,7 @@ class ClaimsTest extends TestCase
     {
         $this->assertTrue($claims->has(RegisteredClaim::NAME_ISSUER));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -87,18 +89,18 @@ class ClaimsTest extends TestCase
         $this->assertInstanceOf(Claim::class,
             $claims->get(RegisteredClaim::NAME_ISSUER));
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException LogicException
      *
      * @return string
      */
     public function testGetFails(Claims $claims)
     {
-        $claims->get("nope");
+        $this->expectException(\LogicException::class);
+        $claims->get('nope');
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -108,7 +110,7 @@ class ClaimsTest extends TestCase
     {
         $this->assertContainsOnlyInstancesOf(Claim::class, $claims->all());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -118,7 +120,7 @@ class ClaimsTest extends TestCase
     {
         $this->assertCount(3, $claims);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -126,13 +128,13 @@ class ClaimsTest extends TestCase
      */
     public function testIterator(Claims $claims)
     {
-        $values = array();
+        $values = [];
         foreach ($claims as $claim) {
             $values[] = $claim;
         }
         $this->assertContainsOnlyInstancesOf(Claim::class, $values);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -140,10 +142,10 @@ class ClaimsTest extends TestCase
      */
     public function testWithClaims(Claims $claims)
     {
-        $claims = $claims->withClaims(new Claim("name", "value"));
+        $claims = $claims->withClaims(new Claim('name', 'value'));
         $this->assertCount(4, $claims);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -154,22 +156,22 @@ class ClaimsTest extends TestCase
         $str = strval($claims);
         $this->assertJson($str);
     }
-    
+
     /**
      * @depends testCreate
      */
     public function testIsValid(Claims $claims)
     {
-        $ctx = new ValidationContext(["iss" => "issuer"]);
+        $ctx = new ValidationContext(['iss' => 'issuer']);
         $this->assertTrue($claims->isValid($ctx));
     }
-    
+
     /**
      * @depends testCreate
      */
     public function testIsNotValid(Claims $claims)
     {
-        $ctx = new ValidationContext(["iss" => "fail"]);
+        $ctx = new ValidationContext(['iss' => 'fail']);
         $this->assertFalse($claims->isValid($ctx));
     }
 }

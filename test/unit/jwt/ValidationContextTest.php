@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWT\ValidationContext;
-use JWX\JWT\Claim\RegisteredClaim;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Claim\RegisteredClaim;
+use Sop\JWX\JWT\ValidationContext;
 
 /**
  * @group jwt
  * @group validator
+ *
+ * @internal
  */
 class ValidationContextTest extends TestCase
 {
@@ -16,7 +20,7 @@ class ValidationContextTest extends TestCase
         $this->assertInstanceOf(ValidationContext::class, $validator);
         return $validator;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -28,7 +32,7 @@ class ValidationContextTest extends TestCase
         $ctx = $ctx->withReferenceTime($ts);
         $this->assertEquals($ts, $ctx->referenceTime());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -40,18 +44,18 @@ class ValidationContextTest extends TestCase
         $this->assertFalse($ctx->hasReferenceTime());
         return $ctx;
     }
-    
+
     /**
      * @depends testWithoutRefTime
-     * @expectedException LogicException
      *
      * @param ValidationContext $ctx
      */
     public function testRefTimeNotSet(ValidationContext $ctx)
     {
+        $this->expectException(\LogicException::class);
         $ctx->referenceTime();
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -63,7 +67,7 @@ class ValidationContextTest extends TestCase
         $ctx = $ctx->withLeeway($seconds);
         $this->assertEquals($seconds, $ctx->leeway());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -71,10 +75,10 @@ class ValidationContextTest extends TestCase
      */
     public function testWithConstraint(ValidationContext $ctx)
     {
-        $ctx = $ctx->withConstraint("test", "value");
-        $this->assertEquals("value", $ctx->constraint("test"));
+        $ctx = $ctx->withConstraint('test', 'value');
+        $this->assertEquals('value', $ctx->constraint('test'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -82,12 +86,12 @@ class ValidationContextTest extends TestCase
      */
     public function testWithIssuer(ValidationContext $ctx)
     {
-        static $value = "issuer";
+        static $value = 'issuer';
         $ctx = $ctx->withIssuer($value);
         $this->assertEquals($value,
             $ctx->constraint(RegisteredClaim::NAME_ISSUER));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -95,12 +99,12 @@ class ValidationContextTest extends TestCase
      */
     public function testWithSubject(ValidationContext $ctx)
     {
-        static $value = "subject";
+        static $value = 'subject';
         $ctx = $ctx->withSubject($value);
         $this->assertEquals($value,
             $ctx->constraint(RegisteredClaim::NAME_SUBJECT));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -108,12 +112,12 @@ class ValidationContextTest extends TestCase
      */
     public function testWithAudience(ValidationContext $ctx)
     {
-        static $value = "audience";
+        static $value = 'audience';
         $ctx = $ctx->withAudience($value);
         $this->assertEquals($value,
             $ctx->constraint(RegisteredClaim::NAME_AUDIENCE));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -121,31 +125,31 @@ class ValidationContextTest extends TestCase
      */
     public function testWithID(ValidationContext $ctx)
     {
-        static $value = "id";
+        static $value = 'id';
         $ctx = $ctx->withID($value);
         $this->assertEquals($value,
             $ctx->constraint(RegisteredClaim::NAME_JWT_ID));
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException LogicException
      *
      * @param ValidationContext $ctx
      */
     public function testConstaintNotSet(ValidationContext $ctx)
     {
-        $ctx->constraint("nope");
+        $this->expectException(\LogicException::class);
+        $ctx->constraint('nope');
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException LogicException
      *
      * @param ValidationContext $ctx
      */
     public function testValidatorNotSet(ValidationContext $ctx)
     {
-        $ctx->validator("nope");
+        $this->expectException(\LogicException::class);
+        $ctx->validator('nope');
     }
 }

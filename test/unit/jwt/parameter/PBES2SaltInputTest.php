@@ -1,24 +1,28 @@
 <?php
 
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\PBES2SaltInputParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\Parameter\PBES2SaltInputParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class PBES2SaltInputParameterTest extends TestCase
 {
-    const SALT_INPUT = "abcdef";
-    
+    const SALT_INPUT = 'abcdef';
+
     public function testCreate()
     {
         $param = PBES2SaltInputParameter::fromString(self::SALT_INPUT);
         $this->assertInstanceOf(PBES2SaltInputParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -28,7 +32,7 @@ class PBES2SaltInputParameterTest extends TestCase
     {
         $this->assertEquals(JWTParameter::PARAM_PBES2_SALT_INPUT, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

@@ -8,26 +8,30 @@
  * php jwe-create.php
  */
 
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
-use JWX\JWK\RSA\RSAPublicKeyJWK;
-use JWX\JWT\Claims;
-use JWX\JWT\JWT;
-use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\ExpirationTimeClaim;
-use JWX\JWT\Claim\IssuedAtClaim;
-use JWX\JWT\Claim\NotBeforeClaim;
-use Sop\CryptoEncoding\PEM;
+declare(strict_types = 1);
 
-require dirname(__DIR__) . "/vendor/autoload.php";
+use Sop\CryptoEncoding\PEM;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use Sop\JWX\JWE\KeyAlgorithm\RSAESPKCS1Algorithm;
+use Sop\JWX\JWK\RSA\RSAPublicKeyJWK;
+use Sop\JWX\JWT\Claim\Claim;
+use Sop\JWX\JWT\Claim\ExpirationTimeClaim;
+use Sop\JWX\JWT\Claim\IssuedAtClaim;
+use Sop\JWX\JWT\Claim\NotBeforeClaim;
+use Sop\JWX\JWT\Claims;
+use Sop\JWX\JWT\JWT;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 // compose claims set
-$claims = new Claims(new Claim("secret data", "for your eyes only"),
-    IssuedAtClaim::now(), NotBeforeClaim::now(),
-    ExpirationTimeClaim::fromString("now + 30 minutes"));
+$claims = new Claims(
+    new Claim('secret data', 'for your eyes only'),
+    IssuedAtClaim::now(),
+    NotBeforeClaim::now(),
+    ExpirationTimeClaim::fromString('now + 30 minutes'));
 // load RSA public key
 $jwk = RSAPublicKeyJWK::fromPEM(
-    PEM::fromFile(dirname(__DIR__) . "/test/assets/rsa/public_key.pem"));
+    PEM::fromFile(dirname(__DIR__) . '/test/assets/rsa/public_key.pem'));
 $key_algo = RSAESPKCS1Algorithm::fromPublicKey($jwk);
 $enc_algo = new A128CBCHS256Algorithm();
 // create an encrypted JWT token

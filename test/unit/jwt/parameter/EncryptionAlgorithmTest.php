@@ -1,14 +1,18 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use Sop\JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class EncryptionAlgorithmParameterTest extends TestCase
 {
@@ -18,7 +22,7 @@ class EncryptionAlgorithmParameterTest extends TestCase
         $this->assertInstanceOf(EncryptionAlgorithmParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -29,7 +33,7 @@ class EncryptionAlgorithmParameterTest extends TestCase
         $this->assertEquals(JWTParameter::PARAM_ENCRYPTION_ALGORITHM,
             $param->name());
     }
-    
+
     public function testFromAlgo()
     {
         $param = EncryptionAlgorithmParameter::fromAlgorithm(

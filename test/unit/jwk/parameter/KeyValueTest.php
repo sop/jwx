@@ -1,24 +1,28 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\KeyValueParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\KeyValueParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class KeyValueParameterTest extends TestCase
 {
-    const KEY = "password";
-    
+    const KEY = 'password';
+
     public function testCreate()
     {
         $param = KeyValueParameter::fromString(self::KEY);
         $this->assertInstanceOf(KeyValueParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -28,7 +32,7 @@ class KeyValueParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_KEY_VALUE, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -38,7 +42,7 @@ class KeyValueParameterTest extends TestCase
     {
         $this->assertEquals(self::KEY, $param->key());
     }
-    
+
     /**
      * @depends testCreate
      *

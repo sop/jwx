@@ -2,20 +2,20 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'Algorithm' parameter for JWS/JWE headers.
  *
- * @link https://tools.ietf.org/html/rfc7515#section-4.1.1
- * @link https://tools.ietf.org/html/rfc7516#section-4.1.1
+ * @see https://tools.ietf.org/html/rfc7515#section-4.1.1
+ * @see https://tools.ietf.org/html/rfc7516#section-4.1.1
  */
 class AlgorithmParameter extends JWTParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Constructor.
      *
@@ -25,11 +25,12 @@ class AlgorithmParameter extends JWTParameter
     {
         parent::__construct(self::PARAM_ALGORITHM, $algo);
     }
-    
+
     /**
      * Initialize from AlgorithmParameterValue.
      *
      * @param AlgorithmParameterValue $value
+     *
      * @return self
      */
     public static function fromAlgorithm(AlgorithmParameterValue $value): self

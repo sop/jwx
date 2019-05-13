@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\Base64URLValue;
+use Sop\JWX\Parameter\Feature\Base64URLValue;
 
 /**
  * Implements 'PBES2 Salt Input' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.1
+ * @see https://tools.ietf.org/html/rfc7518#section-4.8.1.1
  */
 class PBES2SaltInputParameter extends JWTParameter
 {
     use Base64URLValue;
-    
+
     /**
      * Constructor.
      *
@@ -25,7 +25,7 @@ class PBES2SaltInputParameter extends JWTParameter
         $this->_validateEncoding($salt);
         parent::__construct(self::PARAM_PBES2_SALT_INPUT, $salt);
     }
-    
+
     /**
      * Get salt input value.
      *
@@ -35,11 +35,12 @@ class PBES2SaltInputParameter extends JWTParameter
     {
         return $this->string();
     }
-    
+
     /**
      * Get computed salt value.
      *
      * @param AlgorithmParameter $algo
+     *
      * @return string
      */
     public function salt(AlgorithmParameter $algo): string

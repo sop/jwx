@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\YCoordinateParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\YCoordinateParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class YCoordinateParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class YCoordinateParameterTest extends TestCase
         $this->assertInstanceOf(YCoordinateParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class YCoordinateParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_Y_COORDINATE, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

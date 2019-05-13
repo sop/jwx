@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Claim\Validator;
+namespace Sop\JWX\JWT\Claim\Validator;
 
 /**
  * Validator to check whether the claim value contains a given constraint.
@@ -13,7 +13,6 @@ namespace JWX\JWT\Claim\Validator;
 class ContainsValidator extends Validator
 {
     /**
-     *
      * {@inheritdoc}
      */
     public function validate($value, $constraint): bool

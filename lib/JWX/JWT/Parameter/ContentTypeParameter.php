@@ -2,26 +2,26 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'Content Type' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7515#section-4.1.10
+ * @see https://tools.ietf.org/html/rfc7515#section-4.1.10
  */
 class ContentTypeParameter extends JWTParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Content type for the nested JWT.
      *
      * @var string
      */
-    const TYPE_JWT = "JWT";
-    
+    const TYPE_JWT = 'JWT';
+
     /**
      * Constructor.
      *

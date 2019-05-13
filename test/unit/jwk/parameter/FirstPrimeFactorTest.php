@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\FirstPrimeFactorParameter;
-use JWX\JWK\Parameter\JWKParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\FirstPrimeFactorParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class FirstPrimeFactorParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class FirstPrimeFactorParameterTest extends TestCase
         $this->assertInstanceOf(FirstPrimeFactorParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class FirstPrimeFactorParameterTest extends TestCase
         $this->assertEquals(JWKParameter::PARAM_FIRST_PRIME_FACTOR,
             $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

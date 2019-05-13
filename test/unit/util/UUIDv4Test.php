@@ -1,23 +1,27 @@
 <?php
 
-use JWX\Util\UUIDv4;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\Util\UUIDv4;
 
 /**
  * @group util
  * @group uuid
+ *
+ * @internal
  */
 class UUIDv4Test extends TestCase
 {
-    const UUID = "f47ac10b-58cc-4372-a567-0e02b2c3d479";
-    
+    const UUID = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
+
     public function testCreate()
     {
         $uuid = new UUIDv4(self::UUID);
         $this->assertInstanceOf(UUIDv4::class, $uuid);
         return $uuid;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class UUIDv4Test extends TestCase
     {
         $this->assertEquals(self::UUID, $uuid->canonical());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -38,7 +42,7 @@ class UUIDv4Test extends TestCase
         $str = strval($uuid);
         $this->assertEquals(self::UUID, $str);
     }
-    
+
     public function testCreateRandom()
     {
         $uuid = UUIDv4::createRandom();

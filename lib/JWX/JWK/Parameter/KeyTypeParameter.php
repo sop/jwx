@@ -2,34 +2,34 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'Key Type' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4.1
+ * @see https://tools.ietf.org/html/rfc7517#section-4.1
  */
 class KeyTypeParameter extends JWKParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Octet sequence key type.
      */
-    const TYPE_OCT = "oct";
-    
+    const TYPE_OCT = 'oct';
+
     /**
      * RSA key type.
      */
-    const TYPE_RSA = "RSA";
-    
+    const TYPE_RSA = 'RSA';
+
     /**
      * Elliptic curve key type.
      */
-    const TYPE_EC = "EC";
-    
+    const TYPE_EC = 'EC';
+
     /**
      * Constructor.
      *

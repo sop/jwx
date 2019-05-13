@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\ExponentParameter;
-use JWX\JWK\Parameter\JWKParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\ExponentParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class ExponentParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class ExponentParameterTest extends TestCase
         $this->assertInstanceOf(ExponentParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class ExponentParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_EXPONENT, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

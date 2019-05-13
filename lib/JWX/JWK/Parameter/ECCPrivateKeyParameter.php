@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\Base64URLValue;
+use Sop\JWX\Parameter\Feature\Base64URLValue;
 
 /**
  * Implements 'ECC Private Key' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-6.2.2.1
+ * @see https://tools.ietf.org/html/rfc7518#section-6.2.2.1
  */
 class ECCPrivateKeyParameter extends JWKParameter
 {
     use Base64URLValue;
-    
+
     /**
      * Constructor.
      *
@@ -25,7 +25,7 @@ class ECCPrivateKeyParameter extends JWKParameter
         $this->_validateEncoding($key);
         parent::__construct(self::PARAM_ECC_PRIVATE_KEY, $key);
     }
-    
+
     /**
      * Get the EC private key in octet string representation.
      *

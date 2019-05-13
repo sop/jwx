@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\Base64URLValue;
+use Sop\JWX\Parameter\Feature\Base64URLValue;
 
 /**
  * Implements 'X.509 Certificate SHA-1 Thumbprint' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4.8
+ * @see https://tools.ietf.org/html/rfc7517#section-4.8
  */
 class X509CertificateSHA1ThumbprintParameter extends JWKParameter
 {
     use Base64URLValue;
-    
+
     /**
      * Constructor.
      *

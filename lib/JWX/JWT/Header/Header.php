@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Header;
+namespace Sop\JWX\JWT\Header;
 
-use JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * Represents a header used in JWS and JWE.
@@ -12,14 +12,14 @@ use JWX\JWT\Parameter\JWTParameter;
 class Header implements \Countable, \IteratorAggregate
 {
     use TypedHeader;
-    
+
     /**
      * Parameters.
      *
-     * @var JWTParameter[] $_parameters
+     * @var JWTParameter[]
      */
     protected $_parameters;
-    
+
     /**
      * Constructor.
      *
@@ -27,47 +27,51 @@ class Header implements \Countable, \IteratorAggregate
      */
     public function __construct(JWTParameter ...$params)
     {
-        $this->_parameters = array();
+        $this->_parameters = [];
         foreach ($params as $param) {
             $this->_parameters[$param->name()] = $param;
         }
     }
-    
+
     /**
      * Initialize from an array representing a JSON object.
      *
      * @param array $members
+     *
      * @return self
      */
     public static function fromArray(array $members): self
     {
-        $params = array();
+        $params = [];
         foreach ($members as $name => $value) {
             $params[] = JWTParameter::fromNameAndValue($name, $value);
         }
         return new self(...$params);
     }
-    
+
     /**
      * Initialize from a JSON.
      *
      * @param string $json
+     *
      * @throws \UnexpectedValueException
+     *
      * @return self
      */
     public static function fromJSON(string $json): self
     {
         $members = json_decode($json, true, 32, JSON_BIGINT_AS_STRING);
         if (!is_array($members)) {
-            throw new \UnexpectedValueException("Invalid JSON.");
+            throw new \UnexpectedValueException('Invalid JSON.');
         }
         return self::fromArray($members);
     }
-    
+
     /**
      * Get self with parameters added.
      *
      * @param JWTParameter ...$param
+     *
      * @return self
      */
     public function withParameters(JWTParameter ...$params): self
@@ -78,7 +82,7 @@ class Header implements \Countable, \IteratorAggregate
         }
         return $obj;
     }
-    
+
     /**
      * Get all parameters.
      *
@@ -88,13 +92,14 @@ class Header implements \Countable, \IteratorAggregate
     {
         return $this->_parameters;
     }
-    
+
     /**
      * Whether parameters are present.
      *
      * Returns false if any of the given parameters is not set.
      *
      * @param string ...$names Parameter names
+     *
      * @return bool
      */
     public function has(string ...$names): bool
@@ -106,22 +111,24 @@ class Header implements \Countable, \IteratorAggregate
         }
         return true;
     }
-    
+
     /**
      * Get a parameter.
      *
      * @param string $name Parameter name
+     *
      * @throws \LogicException
+     *
      * @return JWTParameter
      */
     public function get(string $name): JWTParameter
     {
         if (!$this->has($name)) {
-            throw new \LogicException("Parameter $name doesn't exists.");
+            throw new \LogicException("Parameter {$name} doesn't exists.");
         }
         return $this->_parameters[$name];
     }
-    
+
     /**
      * Convert to a JSON.
      *
@@ -130,30 +137,32 @@ class Header implements \Countable, \IteratorAggregate
     public function toJSON(): string
     {
         if (empty($this->_parameters)) {
-            return "";
+            return '';
         }
-        $data = array();
+        $data = [];
         foreach ($this->_parameters as $param) {
             $data[$param->name()] = $param->value();
         }
         return json_encode((object) $data, JSON_UNESCAPED_SLASHES);
     }
-    
+
     /**
      * Get the number of parameters.
      *
      * @see \Countable::count()
+     *
      * @return int
      */
     public function count(): int
     {
         return count($this->_parameters);
     }
-    
+
     /**
      * Get iterator for the parameters.
      *
      * @see \IteratorAggregate::getIterator()
+     *
      * @return \ArrayIterator
      */
     public function getIterator(): \ArrayIterator

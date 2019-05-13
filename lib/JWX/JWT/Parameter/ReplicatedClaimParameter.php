@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\JWT\Claim\Claim;
+use Sop\JWX\JWT\Claim\Claim;
 
 /**
  * Parameter allowing claims to be inserted into header.
  *
- * @link https://tools.ietf.org/html/rfc7519#section-5.3
+ * @see https://tools.ietf.org/html/rfc7519#section-5.3
  */
 class ReplicatedClaimParameter extends JWTParameter
 {

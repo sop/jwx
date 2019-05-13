@@ -1,13 +1,17 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWK\Parameter\AlgorithmParameter;
-use JWX\JWK\Parameter\JWKParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWK\Parameter\AlgorithmParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class JWKAlgorithmParameterTest extends TestCase
 {
@@ -17,7 +21,7 @@ class JWKAlgorithmParameterTest extends TestCase
         $this->assertInstanceOf(AlgorithmParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class JWKAlgorithmParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_ALGORITHM, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

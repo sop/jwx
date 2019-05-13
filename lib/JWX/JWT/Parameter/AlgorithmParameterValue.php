@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
 /**
  * Interface for algorithms providing value for 'alg' header parameter.

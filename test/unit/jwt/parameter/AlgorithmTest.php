@@ -1,14 +1,18 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWS\Algorithm\NoneAlgorithm;
-use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWS\Algorithm\NoneAlgorithm;
+use Sop\JWX\JWT\Parameter\AlgorithmParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class JWTAlgorithmParameterTest extends TestCase
 {
@@ -18,7 +22,7 @@ class JWTAlgorithmParameterTest extends TestCase
         $this->assertInstanceOf(AlgorithmParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -28,7 +32,7 @@ class JWTAlgorithmParameterTest extends TestCase
     {
         $this->assertEquals(JWTParameter::PARAM_ALGORITHM, $param->name());
     }
-    
+
     public function testFromAlgo()
     {
         $param = AlgorithmParameter::fromAlgorithm(new NoneAlgorithm());

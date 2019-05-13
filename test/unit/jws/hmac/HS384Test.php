@@ -1,29 +1,33 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWS\SignatureAlgorithm;
-use JWX\JWS\Algorithm\HMACAlgorithm;
-use JWX\JWS\Algorithm\HS384Algorithm;
-use JWX\JWT\Parameter\AlgorithmParameterValue;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWS\Algorithm\HMACAlgorithm;
+use Sop\JWX\JWS\Algorithm\HS384Algorithm;
+use Sop\JWX\JWS\SignatureAlgorithm;
+use Sop\JWX\JWT\Parameter\AlgorithmParameterValue;
 
 /**
  * @group jws
  * @group hmac
+ *
+ * @internal
  */
 class HS384Test extends TestCase
 {
-    const KEY = "12345678";
-    
-    const DATA = "CONTENT";
-    
+    const KEY = '12345678';
+
+    const DATA = 'CONTENT';
+
     public function testCreate()
     {
         $algo = new HS384Algorithm(self::KEY);
         $this->assertInstanceOf(HMACAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -33,7 +37,7 @@ class HS384Test extends TestCase
     {
         $this->assertEquals(JWA::ALGO_HS384, $algo->algorithmParamValue());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -45,13 +49,13 @@ class HS384Test extends TestCase
         $this->assertEquals(48, strlen($sig));
         return $sig;
     }
-    
+
     /**
      * @depends testCreate
      * @depends testSign
      *
      * @param SignatureAlgorithm $algo
-     * @param string $signature
+     * @param string             $signature
      */
     public function testValidate(SignatureAlgorithm $algo, $signature)
     {

@@ -2,14 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Claim;
+namespace Sop\JWX\JWT\Claim;
 
-use JWX\JWT\Claim\Validator\ContainsValidator;
+use Sop\JWX\JWT\Claim\Validator\ContainsValidator;
 
 /**
  * Implements 'Audience' claim.
  *
- * @link https://tools.ietf.org/html/rfc7519#section-4.1.3
+ * @see https://tools.ietf.org/html/rfc7519#section-4.1.3
  */
 class AudienceClaim extends RegisteredClaim
 {
@@ -23,12 +23,11 @@ class AudienceClaim extends RegisteredClaim
         parent::__construct(self::NAME_AUDIENCE, $audiences,
             new ContainsValidator());
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
-    public static function fromJSONValue($value): self
+    public static function fromJSONValue($value): RegisteredClaim
     {
         $value = (array) $value;
         return new self(...$value);

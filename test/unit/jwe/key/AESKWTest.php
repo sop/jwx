@@ -1,32 +1,36 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\KeyManagementAlgorithm;
-use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
-use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
-use JWX\JWK\JWK;
-use JWX\JWK\Parameter\AlgorithmParameter;
-use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\KeyValueParameter;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
+use Sop\JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
+use Sop\JWX\JWE\KeyManagementAlgorithm;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\Parameter\AlgorithmParameter;
+use Sop\JWX\JWK\Parameter\KeyTypeParameter;
+use Sop\JWX\JWK\Parameter\KeyValueParameter;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwe
  * @group key
+ *
+ * @internal
  */
 class AESKWTest extends TestCase
 {
-    const KEY_128 = "123456789 123456";
-    
+    const KEY_128 = '123456789 123456';
+
     public function testCreate()
     {
         $algo = new A128KWAlgorithm(self::KEY_128);
         $this->assertInstanceOf(AESKWAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -37,7 +41,7 @@ class AESKWTest extends TestCase
         $params = $algo->headerParameters();
         $this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -48,18 +52,18 @@ class AESKWTest extends TestCase
         $cek = $algo->cekForEncryption(16);
         $this->assertEquals(16, strlen($cek));
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException RuntimeException
      *
      * @param KeyManagementAlgorithm $algo
      */
     public function testCEKForEncryptionFail(KeyManagementAlgorithm $algo)
     {
+        $this->expectException(\RuntimeException::class);
         $algo->cekForEncryption(0);
     }
-    
+
     public function testFromJWK()
     {
         $jwk = new JWK(new AlgorithmParameter(JWA::ALGO_A128KW),
@@ -69,27 +73,23 @@ class AESKWTest extends TestCase
         $algo = AESKWAlgorithm::fromJWK($jwk, $header);
         $this->assertInstanceOf(AESKWAlgorithm::class, $algo);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJWKNoAlgo()
     {
         $jwk = new JWK(new KeyTypeParameter(KeyTypeParameter::TYPE_OCT),
             KeyValueParameter::fromString(self::KEY_128));
         $header = new Header();
+        $this->expectException(\UnexpectedValueException::class);
         AESKWAlgorithm::fromJWK($jwk, $header);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJWKUnsupportedAlgo()
     {
         $jwk = new JWK(new AlgorithmParameter(JWA::ALGO_NONE),
             new KeyTypeParameter(KeyTypeParameter::TYPE_OCT),
             KeyValueParameter::fromString(self::KEY_128));
         $header = new Header();
+        $this->expectException(\UnexpectedValueException::class);
         AESKWAlgorithm::fromJWK($jwk, $header);
     }
 }

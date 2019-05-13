@@ -2,14 +2,15 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\JWK\JWK;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\Parameter\Parameter;
 
 /**
  * Implements 'JSON Web Key' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7515#section-4.1.3
+ * @see https://tools.ietf.org/html/rfc7515#section-4.1.3
  */
 class JSONWebKeyParameter extends JWTParameter
 {
@@ -22,19 +23,18 @@ class JSONWebKeyParameter extends JWTParameter
     {
         parent::__construct(self::PARAM_JSON_WEB_KEY, $jwk->toArray());
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
-    public static function fromJSONValue($value): self
+    public static function fromJSONValue($value): Parameter
     {
         if (!is_array($value)) {
-            throw new \UnexpectedValueException("jwk must be an array.");
+            throw new \UnexpectedValueException('jwk must be an array.');
         }
         return new static(JWK::fromArray($value));
     }
-    
+
     /**
      * Get value as a JWK.
      *

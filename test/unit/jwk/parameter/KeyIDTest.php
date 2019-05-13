@@ -1,22 +1,26 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\KeyIDParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\KeyIDParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class JWKKeyIDParameterTest extends TestCase
 {
     public function testCreate()
     {
-        $param = new KeyIDParameter("test");
+        $param = new KeyIDParameter('test');
         $this->assertInstanceOf(KeyIDParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class JWKKeyIDParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_KEY_ID, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

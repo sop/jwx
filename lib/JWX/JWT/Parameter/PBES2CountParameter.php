@@ -2,12 +2,14 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
+
+use Sop\JWX\Parameter\Parameter;
 
 /**
  * Implements 'PBES2 Count' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-4.8.1.2
+ * @see https://tools.ietf.org/html/rfc7518#section-4.8.1.2
  */
 class PBES2CountParameter extends JWTParameter
 {
@@ -20,14 +22,15 @@ class PBES2CountParameter extends JWTParameter
     {
         parent::__construct(self::PARAM_PBES2_COUNT, $count);
     }
-    
+
     /**
      * Initialize from a JSON value.
      *
      * @param int $value
+     *
      * @return self
      */
-    public static function fromJSONValue($value): self
+    public static function fromJSONValue($value): Parameter
     {
         return new self(intval($value));
     }

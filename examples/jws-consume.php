@@ -5,24 +5,27 @@
  * php jws-consume.php $(php jws-create.php)
  */
 
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\JWT;
-use JWX\JWT\ValidationContext;
+declare(strict_types = 1);
 
-require dirname(__DIR__) . "/vendor/autoload.php";
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWT\JWT;
+use Sop\JWX\JWT\ValidationContext;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 // read JWT token from the first argument
 $jwt = new JWT($argv[1]);
 // key to use for signature validation
-$jwk = SymmetricKeyJWK::fromKey("secret");
+$jwk = SymmetricKeyJWK::fromKey('secret');
 // create validation context
-$ctx = ValidationContext::fromJWK($jwk)->withIssuer("John Doe")
-    ->withSubject("Jane Doe")
-    ->withAudience("acme-client");
+$ctx = ValidationContext::fromJWK($jwk)
+    ->withIssuer('John Doe')
+    ->withSubject('Jane Doe')
+    ->withAudience('acme-client');
 // get claims set from the JWT. signature shall be verified and claims
 // validated according to validation context.
 $claims = $jwt->claims($ctx);
 // print all claims
 foreach ($claims as $claim) {
-    echo $claim->name() . ": " . json_encode($claim->value()) . "\n";
+    printf("%s: %s\n", $claim->name(), json_encode($claim->value()));
 }

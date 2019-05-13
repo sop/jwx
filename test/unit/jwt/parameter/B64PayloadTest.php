@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWT\Parameter\B64PayloadParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\B64PayloadParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class B64PayloadParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class B64PayloadParameterTest extends TestCase
         $this->assertInstanceOf(B64PayloadParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -24,7 +28,6 @@ class B64PayloadParameterTest extends TestCase
      */
     public function testParamName(JWTParameter $param)
     {
-        $this->assertEquals(JWTParameter::PARAM_BASE64URL_ENCODE_PAYLOAD,
-            $param->name());
+        $this->assertEquals(JWTParameter::PARAM_BASE64URL_ENCODE_PAYLOAD, $param->name());
     }
 }

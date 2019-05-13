@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\KeyOperationsParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\KeyOperationsParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class KeyOperationsParameterTest extends TestCase
 {
@@ -17,7 +21,7 @@ class KeyOperationsParameterTest extends TestCase
         $this->assertInstanceOf(KeyOperationsParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class KeyOperationsParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_KEY_OPERATIONS, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -38,15 +42,13 @@ class KeyOperationsParameterTest extends TestCase
         $param = KeyOperationsParameter::fromJSONValue($param->value());
         $this->assertInstanceOf(KeyOperationsParameter::class, $param);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJSONValueFail()
     {
+        $this->expectException(\UnexpectedValueException::class);
         KeyOperationsParameter::fromJSONValue(null);
     }
-    
+
     /**
      * @depends testCreate
      *

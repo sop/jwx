@@ -1,40 +1,44 @@
 <?php
 
-use JWX\JWK\RSA\RSAPrivateKeyJWK;
-use JWX\JWK\RSA\RSAPublicKeyJWK;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
+use Sop\JWX\JWK\RSA\RSAPrivateKeyJWK;
+use Sop\JWX\JWK\RSA\RSAPublicKeyJWK;
 
 /**
  * @group jwk
  * @group rsa
+ *
+ * @internal
  */
 class RSAPrivateKeyJWKTest extends TestCase
 {
     private static $_privPEM;
-    
+
     private static $_pubPEM;
-    
-    public static function setUpBeforeClass()
+
+    public static function setUpBeforeClass(): void
     {
         self::$_privPEM = PEM::fromFile(
-            TEST_ASSETS_DIR . "/rsa/private_key.pem");
-        self::$_pubPEM = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+            TEST_ASSETS_DIR . '/rsa/private_key.pem');
+        self::$_pubPEM = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/public_key.pem');
     }
-    
-    public static function tearDownAfterClass()
+
+    public static function tearDownAfterClass(): void
     {
         self::$_privPEM = null;
         self::$_pubPEM = null;
     }
-    
+
     public function testFromPEM()
     {
         $jwk = RSAPrivateKeyJWK::fromPEM(self::$_privPEM);
         $this->assertInstanceOf(RSAPrivateKeyJWK::class, $jwk);
         return $jwk;
     }
-    
+
     /**
      * @depends testFromPEM
      *
@@ -46,7 +50,7 @@ class RSAPrivateKeyJWKTest extends TestCase
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }
-    
+
     /**
      * @depends testToPEM
      *
@@ -56,7 +60,7 @@ class RSAPrivateKeyJWKTest extends TestCase
     {
         $this->assertEquals(self::$_privPEM, $pem);
     }
-    
+
     /**
      * @depends testFromPEM
      *
@@ -68,7 +72,7 @@ class RSAPrivateKeyJWKTest extends TestCase
         $this->assertInstanceOf(RSAPublicKeyJWK::class, $pk);
         return $pk;
     }
-    
+
     /**
      * @depends testPublicKey
      *
@@ -78,22 +82,18 @@ class RSAPrivateKeyJWKTest extends TestCase
     {
         $this->assertEquals(self::$_pubPEM, $jwk->toPEM());
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testCreateMissingParameter()
     {
+        $this->expectException(\UnexpectedValueException::class);
         new RSAPrivateKeyJWK();
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testCreateInvalidKeyType()
     {
-        $params = array_fill_keys(RSAPrivateKeyJWK::MANAGED_PARAMS, "");
-        $params["kty"] = "nope";
+        $params = array_fill_keys(RSAPrivateKeyJWK::MANAGED_PARAMS, '');
+        $params['kty'] = 'nope';
+        $this->expectException(\UnexpectedValueException::class);
         RSAPrivateKeyJWK::fromArray($params);
     }
 }

@@ -1,28 +1,32 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\KeyManagementAlgorithm;
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\KeyManagementAlgorithm;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\AlgorithmParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwe
  * @group key
+ *
+ * @internal
  */
 class KeyManagementAlgorithmTest extends TestCase
 {
     public function testFromJWK()
     {
-        $jwk = SymmetricKeyJWK::fromKey("test");
+        $jwk = SymmetricKeyJWK::fromKey('test');
         $header = new Header(new AlgorithmParameter(JWA::ALGO_DIR));
         $algo = KeyManagementAlgorithm::fromJWK($jwk, $header);
         $this->assertInstanceOf(KeyManagementAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testFromJWK
      *
@@ -30,11 +34,11 @@ class KeyManagementAlgorithmTest extends TestCase
      */
     public function testWithKeyID(KeyManagementAlgorithm $algo)
     {
-        $algo = $algo->withKeyID("test");
+        $algo = $algo->withKeyID('test');
         $this->assertInstanceOf(KeyManagementAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testWithKeyID
      *

@@ -1,23 +1,27 @@
 <?php
 
-use JWX\Util\Base64;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\Util\Base64;
 
 /**
  * @group util
  * @group base64
+ *
+ * @internal
  */
 class Base64Test extends TestCase
 {
-    const DATA = "My hovercraft is full of eels.";
-    
+    const DATA = 'My hovercraft is full of eels.';
+
     public function testEncode()
     {
         $data = Base64::encode(self::DATA);
-        $this->assertInternalType("string", $data);
+        $this->assertIsString($data);
         return $data;
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -27,7 +31,7 @@ class Base64Test extends TestCase
     {
         $this->assertTrue(Base64::isValid($data));
     }
-    
+
     /**
      * @depends testEncode
      *
@@ -38,19 +42,19 @@ class Base64Test extends TestCase
         $result = Base64::decode($data);
         $this->assertEquals(self::DATA, $result);
     }
-    
+
     public function isNotValidEncoding()
     {
-        $this->assertFalse(Base64::isValid("#"));
+        $this->assertFalse(Base64::isValid('#'));
     }
-    
+
     public function testURLEncode()
     {
         $data = Base64::urlEncode(self::DATA);
-        $this->assertInternalType("string", $data);
+        $this->assertIsString($data);
         return $data;
     }
-    
+
     /**
      * @depends testURLEncode
      *
@@ -60,7 +64,7 @@ class Base64Test extends TestCase
     {
         $this->assertTrue(Base64::isValidURLEncoding($data));
     }
-    
+
     /**
      * @depends testURLEncode
      *
@@ -71,25 +75,21 @@ class Base64Test extends TestCase
         $result = Base64::urlDecode($data);
         $this->assertEquals(self::DATA, $result);
     }
-    
+
     public function testIsNotValidURLEncoding()
     {
-        $this->assertFalse(Base64::isValidURLEncoding("#"));
+        $this->assertFalse(Base64::isValidURLEncoding('#'));
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testURLDecodeFail()
     {
-        Base64::urlDecode("x");
+        $this->expectException(\UnexpectedValueException::class);
+        Base64::urlDecode('x');
     }
-    
-    /**
-     * @expectedException RuntimeException
-     */
+
     public function testDecodeFail()
     {
-        Base64::decode("#");
+        $this->expectException(\RuntimeException::class);
+        Base64::decode('#');
     }
 }

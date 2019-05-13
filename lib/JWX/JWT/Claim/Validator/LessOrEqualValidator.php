@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Claim\Validator;
+namespace Sop\JWX\JWT\Claim\Validator;
 
 /**
  * Validator to check whether the claim value is less or equal to the
@@ -11,7 +11,6 @@ namespace JWX\JWT\Claim\Validator;
 class LessOrEqualValidator extends Validator
 {
     /**
-     *
      * {@inheritdoc}
      */
     public function validate($value, $constraint): bool

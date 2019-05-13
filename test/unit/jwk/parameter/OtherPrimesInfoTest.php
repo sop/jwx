@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\OtherPrimesInfoParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\OtherPrimesInfoParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class OtherPrimesInfoParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class OtherPrimesInfoParameterTest extends TestCase
         $this->assertInstanceOf(OtherPrimesInfoParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class OtherPrimesInfoParameterTest extends TestCase
         $this->assertEquals(JWKParameter::PARAM_OTHER_PRIMES_INFO,
             $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -38,15 +42,13 @@ class OtherPrimesInfoParameterTest extends TestCase
         $param = OtherPrimesInfoParameter::fromJSONValue($param->value());
         $this->assertInstanceOf(OtherPrimesInfoParameter::class, $param);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJSONValueFail()
     {
+        $this->expectException(\UnexpectedValueException::class);
         OtherPrimesInfoParameter::fromJSONValue(null);
     }
-    
+
     /**
      * @depends testCreate
      *

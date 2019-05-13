@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\SecondFactorCRTExponentParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class SecondFactorCRTExponentParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class SecondFactorCRTExponentParameterTest extends TestCase
         $this->assertInstanceOf(SecondFactorCRTExponentParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class SecondFactorCRTExponentParameterTest extends TestCase
         $this->assertEquals(JWKParameter::PARAM_SECOND_FACTOR_CRT_EXPONENT,
             $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

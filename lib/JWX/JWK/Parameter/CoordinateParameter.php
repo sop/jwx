@@ -2,9 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Util\Base64;
+use Sop\JWX\Util\Base64;
 
 /**
  * Base class for EC coordinate parameters.

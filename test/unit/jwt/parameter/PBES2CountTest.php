@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\PBES2CountParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\Parameter\PBES2CountParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class PBES2CountParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class PBES2CountParameterTest extends TestCase
         $this->assertInstanceOf(PBES2CountParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *

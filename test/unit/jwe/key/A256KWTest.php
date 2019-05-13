@@ -1,26 +1,30 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\KeyAlgorithm\A256KWAlgorithm;
-use JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\KeyAlgorithm\A256KWAlgorithm;
+use Sop\JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
 
 /**
  * @group jwe
  * @group key
+ *
+ * @internal
  */
 class A256KWTest extends TestCase
 {
-    const KEY_256 = "123456789 123456789 123456789 12";
-    const CEK_256 = "987654321 987654321 987654321 98";
-    
+    const KEY_256 = '123456789 123456789 123456789 12';
+    const CEK_256 = '987654321 987654321 987654321 98';
+
     public function testCreate()
     {
         $algo = new A256KWAlgorithm(self::KEY_256);
         $this->assertInstanceOf(AESKWAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -30,7 +34,7 @@ class A256KWTest extends TestCase
     {
         $this->assertEquals(JWA::ALGO_A256KW, $algo->algorithmParamValue());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -42,13 +46,13 @@ class A256KWTest extends TestCase
         $this->assertNotEquals(self::CEK_256, $data);
         return $data;
     }
-    
+
     /**
      * @depends testCreate
      * @depends testEncrypt
      *
      * @param AESKWAlgorithm $algo
-     * @param string $data
+     * @param string         $data
      */
     public function testDecrypt(AESKWAlgorithm $algo, $data)
     {

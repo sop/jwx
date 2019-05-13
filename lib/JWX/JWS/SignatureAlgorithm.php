@@ -2,21 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWS;
+namespace Sop\JWX\JWS;
 
-use JWX\JWK\JWK;
-use JWX\JWS\Algorithm\SignatureAlgorithmFactory;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Header\HeaderParameters;
-use JWX\JWT\Parameter\AlgorithmParameterValue;
-use JWX\JWT\Parameter\KeyIDParameter;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWS\Algorithm\SignatureAlgorithmFactory;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Header\HeaderParameters;
+use Sop\JWX\JWT\Parameter\AlgorithmParameterValue;
+use Sop\JWX\JWT\Parameter\KeyIDParameter;
 
 /**
  * Base class for algorithms usable for signing and validating JWS's.
  */
-abstract class SignatureAlgorithm implements 
-    AlgorithmParameterValue,
-    HeaderParameters
+abstract class SignatureAlgorithm implements AlgorithmParameterValue, HeaderParameters
 {
     /**
      * ID of the key used by the algorithm.
@@ -24,61 +22,63 @@ abstract class SignatureAlgorithm implements
      * If set, KeyID parameter shall be automatically inserted into JWS's
      * header.
      *
-     * @var string|null $_keyID
+     * @var null|string
      */
     protected $_keyID;
-    
+
     /**
      * Compute signature.
      *
      * @param string $data Data for which the signature is computed
+     *
      * @return string
      */
     abstract public function computeSignature(string $data): string;
-    
+
     /**
      * Validate signature.
      *
-     * @param string $data Data to validate
+     * @param string $data      Data to validate
      * @param string $signature Signature to compare
+     *
      * @return bool
      */
     abstract public function validateSignature(string $data, string $signature): bool;
-    
+
     /**
      * Initialize signature algorithm from a JWK and a header.
      *
-     * @param JWK $jwk JSON Web Key
+     * @param JWK    $jwk    JSON Web Key
      * @param Header $header Header
+     *
      * @return SignatureAlgorithm
      */
-    public static function fromJWK(JWK $jwk, Header $header)
+    public static function fromJWK(JWK $jwk, Header $header): SignatureAlgorithm
     {
         $factory = new SignatureAlgorithmFactory($header);
         return $factory->algoByKey($jwk);
     }
-    
+
     /**
      * Get self with key ID.
      *
-     * @param string|null $id Key ID or null to remove
+     * @param null|string $id Key ID or null to remove
+     *
      * @return self
      */
-    public function withKeyID($id): self
+    public function withKeyID(?string $id): self
     {
         $obj = clone $this;
         $obj->_keyID = $id;
         return $obj;
     }
-    
+
     /**
-     *
-     * @see \JWX\JWT\Header\HeaderParameters::headerParameters()
-     * @return \JWX\JWT\Parameter\JWTParameter[]
+     * {@inheritdoc}
      */
     public function headerParameters(): array
     {
-        $params = array();
+        $params = [];
         if (isset($this->_keyID)) {
             $params[] = new KeyIDParameter($this->_keyID);
         }

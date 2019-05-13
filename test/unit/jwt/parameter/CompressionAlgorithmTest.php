@@ -1,14 +1,18 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
-use JWX\JWT\Parameter\CompressionAlgorithmParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
+use Sop\JWX\JWT\Parameter\CompressionAlgorithmParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class CompressionAlgorithmParameterTest extends TestCase
 {
@@ -18,7 +22,7 @@ class CompressionAlgorithmParameterTest extends TestCase
         $this->assertInstanceOf(CompressionAlgorithmParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,14 +30,12 @@ class CompressionAlgorithmParameterTest extends TestCase
      */
     public function testParamName(JWTParameter $param)
     {
-        $this->assertEquals(JWTParameter::PARAM_COMPRESSION_ALGORITHM,
-            $param->name());
+        $this->assertEquals(JWTParameter::PARAM_COMPRESSION_ALGORITHM, $param->name());
     }
-    
+
     public function testFromAlgo()
     {
-        $param = CompressionAlgorithmParameter::fromAlgorithm(
-            new DeflateAlgorithm());
+        $param = CompressionAlgorithmParameter::fromAlgorithm(new DeflateAlgorithm());
         $this->assertInstanceOf(CompressionAlgorithmParameter::class, $param);
     }
 }

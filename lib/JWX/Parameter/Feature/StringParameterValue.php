@@ -2,7 +2,9 @@
 
 declare(strict_types = 1);
 
-namespace JWX\Parameter\Feature;
+namespace Sop\JWX\Parameter\Feature;
+
+use Sop\JWX\Parameter\Parameter;
 
 /**
  * Trait for parameters having a string value.
@@ -15,14 +17,15 @@ trait StringParameterValue
      * @param string $value Parameter value
      */
     abstract public function __construct(string $value);
-    
+
     /**
      * Initialize from a JSON value.
      *
      * @param string $value
+     *
      * @return static
      */
-    public static function fromJSONValue($value)
+    public static function fromJSONValue($value): Parameter
     {
         return new static(strval($value));
     }

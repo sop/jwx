@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\Base64UIntValue;
+use Sop\JWX\Parameter\Feature\Base64UIntValue;
 
 /**
  * Implements 'First Prime Factor' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.2
+ * @see https://tools.ietf.org/html/rfc7518#section-6.3.2.2
  */
 class FirstPrimeFactorParameter extends JWKParameter
 {
     use Base64UIntValue;
-    
+
     /**
      * Constructor.
      *

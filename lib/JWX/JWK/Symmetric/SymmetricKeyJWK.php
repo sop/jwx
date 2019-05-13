@@ -2,18 +2,18 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Symmetric;
+namespace Sop\JWX\JWK\Symmetric;
 
-use JWX\JWK\JWK;
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\KeyValueParameter;
-use JWX\Util\Base64;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\KeyTypeParameter;
+use Sop\JWX\JWK\Parameter\KeyValueParameter;
+use Sop\JWX\Util\Base64;
 
 /**
  * JWK containing a symmetric key.
  *
- * @link http://tools.ietf.org/html/rfc7518#section-6.4
+ * @see http://tools.ietf.org/html/rfc7518#section-6.4
  */
 class SymmetricKeyJWK extends JWK
 {
@@ -24,17 +24,16 @@ class SymmetricKeyJWK extends JWK
      *
      * @var string[]
      */
-    const MANAGED_PARAMS = array(
-        /* @formatter:off */
-        JWKParameter::PARAM_KEY_TYPE, 
-        JWKParameter::PARAM_KEY_VALUE
-        /* @formatter:on */
-    );
-    
+    const MANAGED_PARAMS = [
+        JWKParameter::PARAM_KEY_TYPE,
+        JWKParameter::PARAM_KEY_VALUE,
+    ];
+
     /**
      * Constructor.
      *
      * @param JWKParameter ...$params
+     *
      * @throws \UnexpectedValueException If missing required parameter
      */
     public function __construct(JWKParameter ...$params)
@@ -42,19 +41,21 @@ class SymmetricKeyJWK extends JWK
         parent::__construct(...$params);
         foreach (self::MANAGED_PARAMS as $name) {
             if (!$this->has($name)) {
-                throw new \UnexpectedValueException("Missing '$name' parameter.");
+                throw new \UnexpectedValueException(
+                    "Missing '{$name}' parameter.");
             }
         }
-        if ($this->keyTypeParameter()->value() != KeyTypeParameter::TYPE_OCT) {
-            throw new \UnexpectedValueException("Invalid key type.");
+        if (KeyTypeParameter::TYPE_OCT !== $this->keyTypeParameter()->value()) {
+            throw new \UnexpectedValueException('Invalid key type.');
         }
     }
-    
+
     /**
      * Initialize from a key string.
      *
-     * @param string $key Symmetric key
+     * @param string       $key       Symmetric key
      * @param JWKParameter ...$params Optional additional parameters
+     *
      * @return self
      */
     public static function fromKey(string $key, JWKParameter ...$params): self
@@ -63,7 +64,7 @@ class SymmetricKeyJWK extends JWK
         $params[] = KeyValueParameter::fromString($key);
         return new self(...$params);
     }
-    
+
     /**
      * Get the symmetric key.
      *

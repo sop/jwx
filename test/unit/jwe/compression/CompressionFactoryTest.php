@@ -1,15 +1,19 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\CompressionAlgorithm;
-use JWX\JWE\CompressionAlgorithm\CompressionFactory;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\CompressionAlgorithmParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\CompressionAlgorithm;
+use Sop\JWX\JWE\CompressionAlgorithm\CompressionFactory;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\CompressionAlgorithmParameter;
 
 /**
  * @group jwe
  * @group compression
+ *
+ * @internal
  */
 class CompressionFactoryTest extends TestCase
 {
@@ -18,15 +22,13 @@ class CompressionFactoryTest extends TestCase
         $algo = CompressionFactory::algoByName(JWA::ALGO_DEFLATE);
         $this->assertInstanceOf(CompressionAlgorithm::class, $algo);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testUnsupportedAlgo()
     {
-        CompressionFactory::algoByName("nope");
+        $this->expectException(\UnexpectedValueException::class);
+        CompressionFactory::algoByName('nope');
     }
-    
+
     public function testAlgoByHeader()
     {
         $header = new Header(
@@ -34,12 +36,10 @@ class CompressionFactoryTest extends TestCase
         $algo = CompressionFactory::algoByHeader($header);
         $this->assertInstanceOf(CompressionAlgorithm::class, $algo);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testAlogByHeaderMissingParam()
     {
+        $this->expectException(\UnexpectedValueException::class);
         CompressionFactory::algoByHeader(new Header());
     }
 }

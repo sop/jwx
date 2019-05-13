@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\Util;
+namespace Sop\JWX\Util;
 
 /**
  * Class for handling big integers.
@@ -12,24 +12,33 @@ class BigInt
     /**
      * Number.
      *
-     * @var resource|\GMP $_num
+     * @var \GMP
      */
     protected $_num;
-    
+
     /**
      * Constructor.
      *
-     * @param resource|\GMP $num GMP number
+     * @param \GMP $num GMP number
      */
-    protected function __construct($num)
+    protected function __construct(\GMP $num)
     {
         $this->_num = $num;
     }
-    
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->base10();
+    }
+
     /**
      * Initialize from a base10 number.
      *
-     * @param string|int $number
+     * @param int|string $number
+     *
      * @return self
      */
     public static function fromBase10($number): self
@@ -37,7 +46,7 @@ class BigInt
         $num = gmp_init($number, 10);
         return new self($num);
     }
-    
+
     /**
      * Initialize from a base256 number.
      *
@@ -45,6 +54,7 @@ class BigInt
      * first integer.
      *
      * @param string $octets
+     *
      * @return self
      */
     public static function fromBase256(string $octets): self
@@ -52,7 +62,7 @@ class BigInt
         $num = gmp_import($octets, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
         return new self($num);
     }
-    
+
     /**
      * Convert to base10 string.
      *
@@ -62,7 +72,7 @@ class BigInt
     {
         return gmp_strval($this->_num, 10);
     }
-    
+
     /**
      * Convert to base16 string.
      *
@@ -72,7 +82,7 @@ class BigInt
     {
         return gmp_strval($this->_num, 16);
     }
-    
+
     /**
      * Convert to base256 string.
      *
@@ -81,14 +91,5 @@ class BigInt
     public function base256(): string
     {
         return gmp_export($this->_num, 1, GMP_MSW_FIRST | GMP_BIG_ENDIAN);
-    }
-    
-    /**
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->base10();
     }
 }

@@ -2,24 +2,24 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\EC;
+namespace Sop\JWX\JWK\EC;
 
-use JWX\JWK\Asymmetric\PublicKeyJWK;
-use JWX\JWK\Parameter\CurveParameter;
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\XCoordinateParameter;
-use JWX\JWK\Parameter\YCoordinateParameter;
 use Sop\CryptoEncoding\PEM;
 use Sop\CryptoTypes\Asymmetric\EC\ECConversion;
 use Sop\CryptoTypes\Asymmetric\EC\ECPublicKey;
+use Sop\JWX\JWK\Asymmetric\PublicKeyJWK;
+use Sop\JWX\JWK\Parameter\CurveParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\KeyTypeParameter;
+use Sop\JWX\JWK\Parameter\XCoordinateParameter;
+use Sop\JWX\JWK\Parameter\YCoordinateParameter;
 
 /**
  * Class representing elliptic curve public key as a JWK.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4
- * @link https://tools.ietf.org/html/rfc7518#section-6.2
- * @link https://tools.ietf.org/html/rfc7518#section-6.2.1
+ * @see https://tools.ietf.org/html/rfc7517#section-4
+ * @see https://tools.ietf.org/html/rfc7518#section-6.2
+ * @see https://tools.ietf.org/html/rfc7518#section-6.2.1
  */
 class ECPublicKeyJWK extends PublicKeyJWK
 {
@@ -28,18 +28,17 @@ class ECPublicKeyJWK extends PublicKeyJWK
      *
      * @var string[]
      */
-    const MANAGED_PARAMS = array(
-        /* @formatter:off */
-        JWKParameter::PARAM_KEY_TYPE, 
-        JWKParameter::PARAM_CURVE, 
-        JWKParameter::PARAM_X_COORDINATE
-        /* @formatter:on */
-    );
-    
+    const MANAGED_PARAMS = [
+        JWKParameter::PARAM_KEY_TYPE,
+        JWKParameter::PARAM_CURVE,
+        JWKParameter::PARAM_X_COORDINATE,
+    ];
+
     /**
      * Constructor.
      *
      * @param JWKParameter ...$params
+     *
      * @throws \UnexpectedValueException If missing required parameter
      */
     public function __construct(JWKParameter ...$params)
@@ -47,45 +46,49 @@ class ECPublicKeyJWK extends PublicKeyJWK
         parent::__construct(...$params);
         foreach (self::MANAGED_PARAMS as $name) {
             if (!$this->has($name)) {
-                throw new \UnexpectedValueException("Missing '$name' parameter.");
+                throw new \UnexpectedValueException(
+                    "Missing '{$name}' parameter.");
             }
         }
-        if ($this->keyTypeParameter()->value() != KeyTypeParameter::TYPE_EC) {
-            throw new \UnexpectedValueException("Invalid key type.");
+        if (KeyTypeParameter::TYPE_EC !== $this->keyTypeParameter()->value()) {
+            throw new \UnexpectedValueException('Invalid key type.');
         }
     }
-    
+
     /**
      * Initialize from ECPublicKey.
      *
      * @param ECPublicKey $pk
+     *
      * @throws \UnexpectedValueException
+     *
      * @return self
      */
     public static function fromECPublicKey(ECPublicKey $pk): self
     {
         if (!$pk->hasNamedCurve()) {
-            throw new \UnexpectedValueException("No curve name.");
+            throw new \UnexpectedValueException('No curve name.');
         }
         $curve = CurveParameter::fromOID($pk->namedCurve());
-        list($x, $y) = $pk->curvePointOctets();
+        [$x, $y] = $pk->curvePointOctets();
         $xcoord = XCoordinateParameter::fromString($x);
         $ycoord = YCoordinateParameter::fromString($y);
         $key_type = new KeyTypeParameter(KeyTypeParameter::TYPE_EC);
         return new self($key_type, $curve, $xcoord, $ycoord);
     }
-    
+
     /**
      * Initialize from PEM.
      *
      * @param PEM $pem
+     *
      * @return self
      */
     public static function fromPEM(PEM $pem): self
     {
         return self::fromECPublicKey(ECPublicKey::fromPEM($pem));
     }
-    
+
     /**
      * Convert EC public key to PEM.
      *

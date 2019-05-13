@@ -1,25 +1,29 @@
 <?php
 
-use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\JWTIDClaim;
-use JWX\JWT\Claim\RegisteredClaim;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Claim\Claim;
+use Sop\JWX\JWT\Claim\JWTIDClaim;
+use Sop\JWX\JWT\Claim\RegisteredClaim;
 
 /**
  * @group jwt
  * @group claim
+ *
+ * @internal
  */
 class JWTIDTest extends TestCase
 {
-    const VALUE = "uuid";
-    
+    const VALUE = 'uuid';
+
     public function testCreate()
     {
         $claim = new JWTIDClaim(self::VALUE);
         $this->assertInstanceOf(JWTIDClaim::class, $claim);
         return $claim;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -29,23 +33,24 @@ class JWTIDTest extends TestCase
     {
         $this->assertEquals(RegisteredClaim::NAME_JWT_ID, $claim->name());
     }
-    
+
     /**
      * @dataProvider validateProvider
+     *
+     * @param mixed $constraint
+     * @param mixed $result
      */
     public function testValidate($constraint, $result)
     {
         $claim = JWTIDClaim::fromJSONValue(self::VALUE);
         $this->assertEquals($result, $claim->validate($constraint));
     }
-    
+
     public function validateProvider()
     {
-        return array(
-            /* @formatter:off */
+        return [
             [self::VALUE, true],
-            ["nope", false]
-            /* @formatter:on */
-        );
+            ['nope', false],
+        ];
     }
 }

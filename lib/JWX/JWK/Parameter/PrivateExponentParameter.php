@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\Base64UIntValue;
+use Sop\JWX\Parameter\Feature\Base64UIntValue;
 
 /**
  * Implements 'Private Exponent' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-6.3.2.1
+ * @see https://tools.ietf.org/html/rfc7518#section-6.3.2.1
  */
 class PrivateExponentParameter extends JWKParameter
 {
     use Base64UIntValue;
-    
+
     /**
      * Constructor.
      *

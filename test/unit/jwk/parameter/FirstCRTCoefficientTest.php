@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\FirstCRTCoefficientParameter;
-use JWX\JWK\Parameter\JWKParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\FirstCRTCoefficientParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class FirstCRTCoefficientParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class FirstCRTCoefficientParameterTest extends TestCase
         $this->assertInstanceOf(FirstCRTCoefficientParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class FirstCRTCoefficientParameterTest extends TestCase
         $this->assertEquals(JWKParameter::PARAM_FIRST_CRT_COEFFICIENT,
             $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

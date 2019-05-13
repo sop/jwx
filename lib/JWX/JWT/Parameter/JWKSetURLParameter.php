@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'JWK Set URL' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7515#section-4.1.2
+ * @see https://tools.ietf.org/html/rfc7515#section-4.1.2
  */
 class JWKSetURLParameter extends JWTParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Constructor.
      *

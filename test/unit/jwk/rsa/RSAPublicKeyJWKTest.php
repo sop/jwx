@@ -1,34 +1,38 @@
 <?php
 
-use JWX\JWK\RSA\RSAPublicKeyJWK;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
 use Sop\CryptoEncoding\PEM;
+use Sop\JWX\JWK\RSA\RSAPublicKeyJWK;
 
 /**
  * @group jwk
  * @group rsa
+ *
+ * @internal
  */
 class RSAPublicKeyJWKTest extends TestCase
 {
     private static $_pubPEM;
-    
-    public static function setUpBeforeClass()
+
+    public static function setUpBeforeClass(): void
     {
-        self::$_pubPEM = PEM::fromFile(TEST_ASSETS_DIR . "/rsa/public_key.pem");
+        self::$_pubPEM = PEM::fromFile(TEST_ASSETS_DIR . '/rsa/public_key.pem');
     }
-    
-    public static function tearDownAfterClass()
+
+    public static function tearDownAfterClass(): void
     {
         self::$_pubPEM = null;
     }
-    
+
     public function testFromPEM()
     {
         $jwk = RSAPublicKeyJWK::fromPEM(self::$_pubPEM);
         $this->assertInstanceOf(RSAPublicKeyJWK::class, $jwk);
         return $jwk;
     }
-    
+
     /**
      * @depends testFromPEM
      *
@@ -40,7 +44,7 @@ class RSAPublicKeyJWKTest extends TestCase
         $this->assertInstanceOf(PEM::class, $pem);
         return $pem;
     }
-    
+
     /**
      * @depends testToPEM
      *
@@ -50,22 +54,18 @@ class RSAPublicKeyJWKTest extends TestCase
     {
         $this->assertEquals(self::$_pubPEM, $pem);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testCreateMissingParameter()
     {
+        $this->expectException(\UnexpectedValueException::class);
         new RSAPublicKeyJWK();
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testCreateInvalidKeyType()
     {
-        $params = array_fill_keys(RSAPublicKeyJWK::MANAGED_PARAMS, "");
-        $params["kty"] = "nope";
+        $params = array_fill_keys(RSAPublicKeyJWK::MANAGED_PARAMS, '');
+        $params['kty'] = 'nope';
+        $this->expectException(\UnexpectedValueException::class);
         RSAPublicKeyJWK::fromArray($params);
     }
 }

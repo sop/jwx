@@ -1,24 +1,28 @@
 <?php
 
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\Util\Base64;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\Util\Base64;
 
 /**
  * @group jwk
+ *
+ * @internal
  */
 class SymmetricKeyJWKTest extends TestCase
 {
-    const KEY = "password";
-    
+    const KEY = 'password';
+
     public function testCreate()
     {
         $jwk = SymmetricKeyJWK::fromArray(
-            array("kty" => "oct", "k" => Base64::urlEncode(self::KEY)));
+            ['kty' => 'oct', 'k' => Base64::urlEncode(self::KEY)]);
         $this->assertInstanceOf(SymmetricKeyJWK::class, $jwk);
         return $jwk;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -28,26 +32,22 @@ class SymmetricKeyJWKTest extends TestCase
     {
         $this->assertEquals(self::KEY, $jwk->key());
     }
-    
+
     public function testFromKey()
     {
         $jwk = SymmetricKeyJWK::fromKey(self::KEY);
         $this->assertInstanceOf(SymmetricKeyJWK::class, $jwk);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testCreateMissingParameter()
     {
+        $this->expectException(\UnexpectedValueException::class);
         new SymmetricKeyJWK();
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidKeyType()
     {
-        SymmetricKeyJWK::fromArray(array("kty" => "nope", "k" => ""));
+        $this->expectException(\UnexpectedValueException::class);
+        SymmetricKeyJWK::fromArray(['kty' => 'nope', 'k' => '']);
     }
 }

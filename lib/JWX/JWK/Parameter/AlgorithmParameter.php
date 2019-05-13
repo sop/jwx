@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'Algorithm' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4.4
+ * @see https://tools.ietf.org/html/rfc7517#section-4.4
  */
 class AlgorithmParameter extends JWKParameter
 {
     use StringParameterValue;
-    
+
     /**
      * Constructor.
      *

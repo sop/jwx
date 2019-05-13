@@ -1,22 +1,26 @@
 <?php
 
-use JWX\JWK\Parameter\ECCPrivateKeyParameter;
-use JWX\JWK\Parameter\JWKParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\ECCPrivateKeyParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class ECCPrivateKeyParameterTest extends TestCase
 {
     public function testCreate()
     {
-        $param = ECCPrivateKeyParameter::fromString("0123456789abcdef");
+        $param = ECCPrivateKeyParameter::fromString('0123456789abcdef');
         $this->assertInstanceOf(ECCPrivateKeyParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class ECCPrivateKeyParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_ECC_PRIVATE_KEY, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -34,6 +38,6 @@ class ECCPrivateKeyParameterTest extends TestCase
      */
     public function testPrivateKeyOctets(ECCPrivateKeyParameter $param)
     {
-        $this->assertEquals("0123456789abcdef", $param->privateKeyOctets());
+        $this->assertEquals('0123456789abcdef', $param->privateKeyOctets());
     }
 }

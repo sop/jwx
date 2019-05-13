@@ -1,30 +1,34 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\CompressionAlgorithm;
-use JWX\JWE\JWE;
-use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
-use JWX\JWT\JWT;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\CompressionAlgorithm;
+use Sop\JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use Sop\JWX\JWE\JWE;
+use Sop\JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
+use Sop\JWX\JWT\JWT;
 
 /**
  * @group jwe
  * @group compression
+ *
+ * @internal
  */
 class DeflateTest extends TestCase
 {
-    const PAYLOAD = "My hovercraft is full of eels.";
-    const CEK_A128 = "123456789 123456789 123456789 12";
-    
+    const PAYLOAD = 'My hovercraft is full of eels.';
+    const CEK_A128 = '123456789 123456789 123456789 12';
+
     public function testCreate()
     {
         $algo = new DeflateAlgorithm();
         $this->assertInstanceOf(CompressionAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -34,7 +38,7 @@ class DeflateTest extends TestCase
     {
         $this->assertEquals(JWA::ALGO_DEFLATE, $algo->compressionParamValue());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -43,23 +47,23 @@ class DeflateTest extends TestCase
     public function testCompress(CompressionAlgorithm $algo)
     {
         $data = $algo->compress(self::PAYLOAD);
-        $this->assertInternalType("string", $data);
+        $this->assertIsString($data);
         return $data;
     }
-    
+
     /**
      * @depends testCreate
      * @depends testCompress
      *
      * @param CompressionAlgorithm $algo
-     * @param string $data
+     * @param string               $data
      */
     public function testDecompress(CompressionAlgorithm $algo, $data)
     {
         $payload = $algo->decompress($data);
         $this->assertEquals(self::PAYLOAD, $payload);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -73,7 +77,7 @@ class DeflateTest extends TestCase
         $this->assertInstanceOf(JWE::class, $jwe);
         return $jwe->toCompact();
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -86,38 +90,36 @@ class DeflateTest extends TestCase
         $payload = $jwt->JWE()->decrypt($key_algo, new A128CBCHS256Algorithm());
         $this->assertEquals(self::PAYLOAD, $payload);
     }
-    
-    /**
-     * @expectedException DomainException
-     */
+
     public function testCreateInvalidLevel()
     {
+        $this->expectException(\DomainException::class);
         new DeflateAlgorithm(10);
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException RuntimeException
      *
      * @param CompressionAlgorithm $algo
      */
     public function testDecompressFail(CompressionAlgorithm $algo)
     {
+        $this->expectException(\RuntimeException::class);
         $algo->decompress("\0");
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException RuntimeException
      *
      * @param CompressionAlgorithm $algo
      */
     public function testCompressFail(CompressionAlgorithm $algo)
     {
         $obj = new ReflectionClass($algo);
-        $prop = $obj->getProperty("_compressionLevel");
+        $prop = $obj->getProperty('_compressionLevel');
         $prop->setAccessible(true);
         $prop->setValue($algo, 10);
-        $algo->compress("test");
+        $this->expectException(\RuntimeException::class);
+        $algo->compress('test');
     }
 }

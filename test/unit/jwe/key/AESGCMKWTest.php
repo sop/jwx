@@ -1,49 +1,49 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\KeyAlgorithm\A128GCMKWAlgorithm;
-use JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\AlgorithmParameter;
-use JWX\JWT\Parameter\InitializationVectorParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\KeyAlgorithm\A128GCMKWAlgorithm;
+use Sop\JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\AlgorithmParameter;
+use Sop\JWX\JWT\Parameter\InitializationVectorParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwe
  * @group key
+ *
+ * @internal
  */
 class AESGCMKWTest extends TestCase
 {
-    const KEY_128 = "123456789 123456";
-    
-    const IV = "123456789 12";
-    
+    const KEY_128 = '123456789 123456';
+
+    const IV = '123456789 12';
+
     public function testHeaderParams()
     {
         $algo = new A128GCMKWAlgorithm(self::KEY_128, self::IV);
         $params = $algo->headerParameters();
         $this->assertContainsOnlyInstancesOf(JWTParameter::class, $params);
     }
-    
-    /**
-     * @expectedException LengthException
-     */
+
     public function testInvalidIVFail()
     {
-        new A128GCMKWAlgorithm(self::KEY_128, "fail");
+        $this->expectException(\LengthException::class);
+        new A128GCMKWAlgorithm(self::KEY_128, 'fail');
     }
-    
-    /**
-     * @expectedException RuntimeException
-     */
+
     public function testDecryptMissingAuthTag()
     {
         $algo = new A128GCMKWAlgorithm(self::KEY_128, self::IV);
-        $algo->decrypt("");
+        $this->expectException(\RuntimeException::class);
+        $algo->decrypt('');
     }
-    
+
     public function testFromJWK()
     {
         $jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
@@ -52,38 +52,32 @@ class AESGCMKWTest extends TestCase
         $algo = AESGCMKWAlgorithm::fromJWK($jwk, $header);
         $this->assertInstanceOf(A128GCMKWAlgorithm::class, $algo);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJWKNoAlgo()
     {
         $jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
         $header = new Header(InitializationVectorParameter::fromString(self::IV));
+        $this->expectException(\UnexpectedValueException::class);
         AESGCMKWAlgorithm::fromJWK($jwk, $header);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJWKNoIV()
     {
         $jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
         $header = new Header(new AlgorithmParameter(JWA::ALGO_A128GCMKW));
+        $this->expectException(\UnexpectedValueException::class);
         AESGCMKWAlgorithm::fromJWK($jwk, $header);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromJWKUnsupportedAlgo()
     {
         $jwk = SymmetricKeyJWK::fromKey(self::KEY_128);
         $header = new Header(InitializationVectorParameter::fromString(self::IV),
             new AlgorithmParameter(JWA::ALGO_NONE));
+        $this->expectException(\UnexpectedValueException::class);
         AESGCMKWAlgorithm::fromJWK($jwk, $header);
     }
-    
+
     public function testFromKey()
     {
         $algo = A128GCMKWAlgorithm::fromKey(self::KEY_128);

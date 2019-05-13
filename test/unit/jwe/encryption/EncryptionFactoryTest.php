@@ -1,15 +1,19 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\ContentEncryptionAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\EncryptionAlgorithmParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\ContentEncryptionAlgorithm;
+use Sop\JWX\JWE\EncryptionAlgorithm\EncryptionAlgorithmFactory;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\EncryptionAlgorithmParameter;
 
 /**
  * @group jwe
  * @group encryption
+ *
+ * @internal
  */
 class EncryptionFactoryTest extends TestCase
 {
@@ -18,27 +22,23 @@ class EncryptionFactoryTest extends TestCase
         $algo = EncryptionAlgorithmFactory::algoByName(JWA::ALGO_A128CBC_HS256);
         $this->assertInstanceOf(ContentEncryptionAlgorithm::class, $algo);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testAlgoByNameFail()
     {
-        EncryptionAlgorithmFactory::algoByName("nope");
+        $this->expectException(\UnexpectedValueException::class);
+        EncryptionAlgorithmFactory::algoByName('nope');
     }
-    
+
     public function testAlgoByHeader()
     {
         $header = new Header(new EncryptionAlgorithmParameter(JWA::ALGO_A128GCM));
         $algo = EncryptionAlgorithmFactory::algoByHeader($header);
         $this->assertInstanceOf(ContentEncryptionAlgorithm::class, $algo);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testAlgoByHeaderFail()
     {
+        $this->expectException(\UnexpectedValueException::class);
         EncryptionAlgorithmFactory::algoByHeader(new Header());
     }
 }

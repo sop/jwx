@@ -2,27 +2,27 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWE\CompressionAlgorithm;
+namespace Sop\JWX\JWE\CompressionAlgorithm;
 
-use JWX\JWA\JWA;
-use JWX\JWE\CompressionAlgorithm;
-use JWX\JWT\Parameter\CompressionAlgorithmParameter;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\CompressionAlgorithm;
+use Sop\JWX\JWT\Parameter\CompressionAlgorithmParameter;
 
 /**
  * Implements DEFLATE compression algorithm.
  *
- * @link https://tools.ietf.org/html/rfc7516#section-4.1.3
- * @link https://tools.ietf.org/html/rfc1951
+ * @see https://tools.ietf.org/html/rfc7516#section-4.1.3
+ * @see https://tools.ietf.org/html/rfc1951
  */
 class DeflateAlgorithm implements CompressionAlgorithm
 {
     /**
      * Compression level.
      *
-     * @var int $_compressionLevel
+     * @var int
      */
     protected $_compressionLevel;
-    
+
     /**
      * Constructor.
      *
@@ -31,14 +31,14 @@ class DeflateAlgorithm implements CompressionAlgorithm
     public function __construct(int $level = -1)
     {
         if ($level < -1 || $level > 9) {
-            throw new \DomainException("Compression level must be -1..9.");
+            throw new \DomainException('Compression level must be -1..9.');
         }
-        $this->_compressionLevel = (int) $level;
+        $this->_compressionLevel = $level;
     }
-    
+
     /**
+     * {@inheritdoc}
      *
-     * @see \JWX\JWE\CompressionAlgorithm::compress()
      * @throws \RuntimeException
      */
     public function compress(string $data): string
@@ -46,15 +46,15 @@ class DeflateAlgorithm implements CompressionAlgorithm
         $ret = @gzdeflate($data, $this->_compressionLevel);
         if (false === $ret) {
             $err = error_get_last();
-            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
-            throw new \RuntimeException($msg ?? "gzdeflate() failed.");
+            $msg = isset($err) && __FILE__ === $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? 'gzdeflate() failed.');
         }
         return $ret;
     }
-    
+
     /**
+     * {@inheritdoc}
      *
-     * @see \JWX\JWE\CompressionAlgorithm::decompress()
      * @throws \RuntimeException
      */
     public function decompress(string $data): string
@@ -62,27 +62,25 @@ class DeflateAlgorithm implements CompressionAlgorithm
         $ret = @gzinflate($data);
         if (false === $ret) {
             $err = error_get_last();
-            $msg = isset($err) && __FILE__ == $err['file'] ? $err['message'] : null;
-            throw new \RuntimeException($msg ?? "gzinflate() failed.");
+            $msg = isset($err) && __FILE__ === $err['file'] ? $err['message'] : null;
+            throw new \RuntimeException($msg ?? 'gzinflate() failed.');
         }
         return $ret;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function compressionParamValue(): string
     {
         return JWA::ALGO_DEFLATE;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
      */
     public function headerParameters(): array
     {
-        return array(CompressionAlgorithmParameter::fromAlgorithm($this));
+        return [CompressionAlgorithmParameter::fromAlgorithm($this)];
     }
 }

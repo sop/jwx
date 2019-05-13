@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Exception;
+namespace Sop\JWX\JWT\Exception;
 
 /**
  * Exception thrown when claim validation fails.

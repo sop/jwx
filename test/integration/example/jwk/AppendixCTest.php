@@ -1,23 +1,27 @@
 <?php
 
-use JWX\JWE\JWE;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
-use JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
-use JWX\JWK\JWK;
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\Util\Base64;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use Sop\JWX\JWE\JWE;
+use Sop\JWX\JWE\KeyAlgorithm\PBES2Algorithm;
+use Sop\JWX\JWE\KeyAlgorithm\PBES2HS256A128KWAlgorithm;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\Util\Base64;
 
 /**
  * Test case for RFC 7517 appendix C.
- * Example Encrypted RSA Private Key
+ * Example Encrypted RSA Private Key.
  *
  * @group example
  *
- * @link https://tools.ietf.org/html/rfc7517#appendix-C
+ * @see https://tools.ietf.org/html/rfc7517#appendix-C
+ *
+ * @internal
  */
 class JWKEncryptedRSAPrivateKeyTest extends TestCase
 {
@@ -119,9 +123,9 @@ class JWKEncryptedRSAPrivateKeyTest extends TestCase
         117, 95, 110, 101, 111, 116, 103, 81, 48, 104, 122, 98, 73, 53, 103, 114,
         121, 55, 97, 106, 100, 89, 121, 57, 45, 50, 108, 78, 120, 95, 55, 54, 97,
         66, 90, 111, 79, 85, 117, 57, 72, 67, 74, 45, 85, 115, 102, 83, 79, 73,
-        56, 34, 125];
-    
-    private static $_headerJSON = <<<EOF
+        56, 34, 125, ];
+
+    private static $_headerJSON = <<<'EOF'
 {
  "alg":"PBES2-HS256+A128KW",
  "p2s":"2WCTcJZ1Rvd_CJuJripQ1w",
@@ -130,67 +134,66 @@ class JWKEncryptedRSAPrivateKeyTest extends TestCase
  "cty":"jwk+json"
 }
 EOF;
-    
+
     private static $_cekBytes = [111, 27, 25, 52, 66, 29, 20, 78, 92, 176,
         56, 240, 65, 208, 82, 112, 161, 131, 36, 55, 202, 236, 185, 172, 129, 23,
-        153, 194, 195, 48, 253, 182];
-    
+        153, 194, 195, 48, 253, 182, ];
+
     private static $_cek;
-    
+
     private static $_passphraseBytes = [84, 104, 117, 115, 32, 102, 114, 111,
         109, 32, 109, 121, 32, 108, 105, 112, 115, 44, 32, 98, 121, 32, 121, 111,
         117, 114, 115, 44, 32, 109, 121, 32, 115, 105, 110, 32, 105, 115, 32, 112,
-        117, 114, 103, 101, 100, 46];
-    
+        117, 114, 103, 101, 100, 46, ];
+
     private static $_passphrase;
-    
+
     private static $_ivBytes = [97, 239, 99, 214, 171, 54, 216, 57, 145, 72,
-        7, 93, 34, 31, 149, 156];
-    
+        7, 93, 34, 31, 149, 156, ];
+
     private static $_iv;
-    
+
     private static $_aadBytes = [123, 34, 97, 108, 103, 34, 58, 34, 80, 66,
         69, 83, 50, 45, 72, 83, 50, 53, 54, 43, 65, 49, 50, 56, 75, 87, 34, 44,
         34, 112, 50, 115, 34, 58, 34, 50, 87, 67, 84, 99, 74, 90, 49, 82, 118,
         100, 95, 67, 74, 117, 74, 114, 105, 112, 81, 49, 119, 34, 44, 34, 112, 50,
         99, 34, 58, 52, 48, 57, 54, 44, 34, 101, 110, 99, 34, 58, 34, 65, 49, 50,
         56, 67, 66, 67, 45, 72, 83, 50, 53, 54, 34, 44, 34, 99, 116, 121, 34, 58,
-        34, 106, 119, 107, 43, 106, 115, 111, 110, 34, 125];
-    
-    public static function setUpBeforeClass()
+        34, 106, 119, 107, 43, 106, 115, 111, 110, 34, 125, ];
+
+    public static function setUpBeforeClass(): void
     {
-        self::$_cek = implode("", array_map("chr", self::$_cekBytes));
-        self::$_passphrase = implode("",
-            array_map("chr", self::$_passphraseBytes));
-        self::$_iv = implode("", array_map("chr", self::$_ivBytes));
+        self::$_cek = implode('', array_map('chr', self::$_cekBytes));
+        self::$_passphrase = implode('', array_map('chr', self::$_passphraseBytes));
+        self::$_iv = implode('', array_map('chr', self::$_ivBytes));
     }
-    
-    public static function tearDownAfterClass()
+
+    public static function tearDownAfterClass(): void
     {
         self::$_cek = null;
         self::$_passphrase = null;
         self::$_iv = null;
     }
-    
+
     public function testJWK()
     {
-        $json = implode("", array_map("chr", self::$_jwkBytes));
+        $json = implode('', array_map('chr', self::$_jwkBytes));
         $jwk = JWK::fromJSON($json);
         $this->assertInstanceOf(JWK::class, $jwk);
         return $jwk;
     }
-    
+
     public function testHeader()
     {
-        static $expected = "eyJhbGciOiJQQkVTMi1IUzI1NitBMTI4S1ciLCJwMnMiOi" .
-             "IyV0NUY0paMVJ2ZF9DSnVKcmlwUTF3IiwicDJjIjo0MDk2LCJlbmMiOiJBMTI" .
-             "4Q0JDLUhTMjU2IiwiY3R5IjoiandrK2pzb24ifQ";
+        static $expected = 'eyJhbGciOiJQQkVTMi1IUzI1NitBMTI4S1ciLCJwMnMiOi' .
+             'IyV0NUY0paMVJ2ZF9DSnVKcmlwUTF3IiwicDJjIjo0MDk2LCJlbmMiOiJBMTI' .
+             '4Q0JDLUhTMjU2IiwiY3R5IjoiandrK2pzb24ifQ';
         $header = Header::fromJSON(self::$_headerJSON);
         $data = Base64::urlEncode($header->toJSON());
         $this->assertEquals($expected, $data);
         return $header;
     }
-    
+
     /**
      * @depends testHeader
      *
@@ -200,15 +203,15 @@ EOF;
     {
         static $expectedBytes = [80, 66, 69, 83, 50, 45, 72, 83, 50, 53, 54,
             43, 65, 49, 50, 56, 75, 87, 0, 217, 96, 147, 112, 150, 117, 70, 247,
-            127, 8, 155, 137, 174, 42, 80, 215];
-        $expected = implode("", array_map("chr", $expectedBytes));
+            127, 8, 155, 137, 174, 42, 80, 215, ];
+        $expected = implode('', array_map('chr', $expectedBytes));
         $p2s = $header->get(JWTParameter::P_P2S);
         $alg = $header->get(JWTParameter::P_ALG);
         $salt = $p2s->salt($alg);
         $this->assertEquals($expected, $salt);
         return $salt;
     }
-    
+
     /**
      * @depends testHeader
      *
@@ -219,8 +222,8 @@ EOF;
         static $expectedBytes = [78, 186, 151, 59, 11, 141, 81, 240, 213,
             245, 83, 211, 53, 188, 134, 188, 66, 125, 36, 200, 222, 124, 5, 103,
             249, 52, 117, 184, 140, 81, 246, 158, 161, 177, 20, 33, 245, 57, 59,
-            4];
-        $expected = implode("", array_map("chr", $expectedBytes));
+            4, ];
+        $expected = implode('', array_map('chr', $expectedBytes));
         $p2s = $header->get(JWTParameter::P_P2S);
         $count = $header->get(JWTParameter::P_P2C)->value();
         $key_algo = new PBES2HS256A128KWAlgorithm(self::$_passphrase,
@@ -229,7 +232,7 @@ EOF;
         $this->assertEquals($expected, $data);
         return $data;
     }
-    
+
     /**
      * @depends testHeader
      *
@@ -238,12 +241,12 @@ EOF;
     public function testAAD(Header $header)
     {
         $expected = Base64::urlEncode(
-            implode("", array_map("chr", self::$_aadBytes)));
+            implode('', array_map('chr', self::$_aadBytes)));
         $aad = Base64::urlEncode($header->toJSON());
         $this->assertEquals($expected, $aad);
         return $aad;
     }
-    
+
     /**
      * @depends testAAD
      *
@@ -360,25 +363,27 @@ EOF;
             198, 70, 254, 47, 59, 193, 53, 6, 139, 19, 153, 253, 28, 199, 122,
             160, 27, 67, 234, 209, 227, 139, 4, 50, 7, 178, 183, 89, 252, 32, 128,
             137, 55, 52, 29, 89, 12, 111, 42, 181, 51, 170, 132, 132, 207, 170,
-            228, 254, 178, 213, 0, 136, 175, 8];
+            228, 254, 178, 213, 0, 136, 175, 8, ];
         static $expectedAuthTagBytes = [208, 113, 102, 132, 236, 236, 67,
-            223, 39, 53, 98, 99, 32, 121, 17, 236];
-        $expectedCiphertext = implode("",
-            array_map("chr", $expectedCiphertextBytes));
-        $expectedAuthTag = implode("", array_map("chr", $expectedAuthTagBytes));
-        $plaintext = implode("", array_map("chr", self::$_jwkBytes));
+            223, 39, 53, 98, 99, 32, 121, 17, 236, ];
+        $expectedCiphertext = implode('',
+            array_map('chr', $expectedCiphertextBytes));
+        $expectedAuthTag = implode('', array_map('chr', $expectedAuthTagBytes));
+        $plaintext = implode('', array_map('chr', self::$_jwkBytes));
         $algo = new A128CBCHS256Algorithm();
-        list($ciphertext, $auth_tag) = $algo->encrypt($plaintext, self::$_cek,
-            self::$_iv, $aad);
+        [$ciphertext, $auth_tag] = $algo->encrypt($plaintext, self::$_cek, self::$_iv, $aad);
         $this->assertEquals($expectedCiphertext, $ciphertext);
         $this->assertEquals($expectedAuthTag, $auth_tag);
         return [$ciphertext, $auth_tag];
     }
-    
+
     /**
      * @depends testEncrypt
      * @depends testEncryptKey
      * @depends testHeader
+     *
+     * @param mixed $data
+     * @param mixed $enc_key
      */
     public function testDecrypt($data, $enc_key, Header $header)
     {
@@ -387,13 +392,13 @@ EOF;
         $iv = Base64::urlEncode(self::$_iv);
         $ciphertext = Base64::urlEncode($data[0]);
         $tag = Base64::urlEncode($data[1]);
-        $token = "$header_b64.$enc_key_b64.$iv.$ciphertext.$tag";
+        $token = "{$header_b64}.{$enc_key_b64}.{$iv}.{$ciphertext}.{$tag}";
         $jwe = JWE::fromCompact($token);
         $key_algo = PBES2Algorithm::fromJWK(
             SymmetricKeyJWK::fromKey(self::$_passphrase), $header);
         $enc_algo = new A128CBCHS256Algorithm();
         $plaintext = $jwe->decrypt($key_algo, $enc_algo);
-        $expected = implode("", array_map("chr", self::$_jwkBytes));
+        $expected = implode('', array_map('chr', self::$_jwkBytes));
         $this->assertEquals($expected, $plaintext);
     }
 }

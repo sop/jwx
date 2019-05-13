@@ -1,29 +1,33 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\ContentEncryptionAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\A192GCMAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\AESGCMAlgorithm;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\ContentEncryptionAlgorithm;
+use Sop\JWX\JWE\EncryptionAlgorithm\A192GCMAlgorithm;
+use Sop\JWX\JWE\EncryptionAlgorithm\AESGCMAlgorithm;
 
 /**
  * @group jwe
  * @group encryption
+ *
+ * @internal
  */
 class A192GCMEncryptionTest extends TestCase
 {
-    const PLAINTEXT = "My hovercraft is full of eels.";
-    const KEY = "0123456789abcdef01234567";
-    const IV = "0123456789ab";
-    const AAD = "I will not buy this record, it is scratched.";
-    
+    const PLAINTEXT = 'My hovercraft is full of eels.';
+    const KEY = '0123456789abcdef01234567';
+    const IV = '0123456789ab';
+    const AAD = 'I will not buy this record, it is scratched.';
+
     public function testCreate()
     {
         $algo = new A192GCMAlgorithm();
         $this->assertInstanceOf(ContentEncryptionAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -33,7 +37,7 @@ class A192GCMEncryptionTest extends TestCase
     {
         $this->assertEquals(24, $algo->keySize());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -44,7 +48,7 @@ class A192GCMEncryptionTest extends TestCase
         $this->assertEquals(JWA::ALGO_A192GCM,
             $algo->encryptionAlgorithmParamValue());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -52,12 +56,12 @@ class A192GCMEncryptionTest extends TestCase
      */
     public function testEncrypt(ContentEncryptionAlgorithm $algo)
     {
-        list($ciphertext, $auth_tag) = $algo->encrypt(self::PLAINTEXT, self::KEY,
+        [$ciphertext, $auth_tag] = $algo->encrypt(self::PLAINTEXT, self::KEY,
             self::IV, self::AAD);
         $this->assertNotEquals(self::PLAINTEXT, $ciphertext);
         return [$ciphertext, $auth_tag];
     }
-    
+
     /**
      * @depends testCreate
      * @depends testEncrypt
@@ -66,8 +70,7 @@ class A192GCMEncryptionTest extends TestCase
      */
     public function testDecrypt(ContentEncryptionAlgorithm $algo, array $data)
     {
-        $plaintext = $algo->decrypt($data[0], self::KEY, self::IV, self::AAD,
-            $data[1]);
+        $plaintext = $algo->decrypt($data[0], self::KEY, self::IV, self::AAD, $data[1]);
         $this->assertEquals(self::PLAINTEXT, $plaintext);
     }
 }

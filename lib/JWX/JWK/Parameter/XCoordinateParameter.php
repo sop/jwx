@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\Base64URLValue;
+use Sop\JWX\Parameter\Feature\Base64URLValue;
 
 /**
  * Implements 'X Coordinate' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-6.2.1.2
+ * @see https://tools.ietf.org/html/rfc7518#section-6.2.1.2
  */
 class XCoordinateParameter extends CoordinateParameter
 {
     use Base64URLValue;
-    
+
     /**
      * Constructor.
      *

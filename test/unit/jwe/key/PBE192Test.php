@@ -1,29 +1,32 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\KeyAlgorithm\PBES2Algorithm;
-use JWX\JWE\KeyAlgorithm\PBES2HS384A192KWAlgorithm;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\KeyAlgorithm\PBES2Algorithm;
+use Sop\JWX\JWE\KeyAlgorithm\PBES2HS384A192KWAlgorithm;
 
 /**
  * @group jwe
  * @group key
+ *
+ * @internal
  */
 class PBES2A192KWTest extends TestCase
 {
-    const PASSWORD = "password";
-    const SALT = "salt";
+    const PASSWORD = 'password';
+    const SALT = 'salt';
     const COUNT = 256;
-    const KEY_192 = "123456789 123456789 1234";
-    
+    const KEY_192 = '123456789 123456789 1234';
+
     public function testCreate()
     {
-        $algo = new PBES2HS384A192KWAlgorithm(self::PASSWORD, self::SALT,
-            self::COUNT);
+        $algo = new PBES2HS384A192KWAlgorithm(self::PASSWORD, self::SALT, self::COUNT);
         $this->assertInstanceOf(PBES2Algorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -34,7 +37,7 @@ class PBES2A192KWTest extends TestCase
         $this->assertEquals(JWA::ALGO_PBES2_HS384_A192KW,
             $algo->algorithmParamValue());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -46,12 +49,13 @@ class PBES2A192KWTest extends TestCase
         $this->assertNotEquals(self::KEY_192, $data);
         return $data;
     }
-    
+
     /**
      * @depends testCreate
      * @depends testEncrypt
      *
      * @param PBES2Algorithm $algo
+     * @param mixed          $data
      */
     public function testDecrypt(PBES2Algorithm $algo, $data)
     {

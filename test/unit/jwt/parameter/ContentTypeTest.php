@@ -1,22 +1,26 @@
 <?php
 
-use JWX\JWT\Parameter\ContentTypeParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\ContentTypeParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class ContentTypeParameterTest extends TestCase
 {
     public function testCreate()
     {
-        $param = new ContentTypeParameter("example");
+        $param = new ContentTypeParameter('example');
         $this->assertInstanceOf(ContentTypeParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *

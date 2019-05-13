@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\SecondPrimeFactorParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\SecondPrimeFactorParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class SecondPrimeFactorParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class SecondPrimeFactorParameterTest extends TestCase
         $this->assertInstanceOf(SecondPrimeFactorParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -27,7 +31,7 @@ class SecondPrimeFactorParameterTest extends TestCase
         $this->assertEquals(JWKParameter::PARAM_SECOND_PRIME_FACTOR,
             $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

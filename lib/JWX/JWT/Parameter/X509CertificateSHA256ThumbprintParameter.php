@@ -2,19 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWT\Parameter;
+namespace Sop\JWX\JWT\Parameter;
 
-use JWX\Parameter\Feature\Base64URLValue;
+use Sop\JWX\Parameter\Feature\Base64URLValue;
 
 /**
  * Implements 'X.509 Certificate SHA-256 Thumbprint' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7515#section-4.1.8
+ * @see https://tools.ietf.org/html/rfc7515#section-4.1.8
  */
 class X509CertificateSHA256ThumbprintParameter extends JWTParameter
 {
     use Base64URLValue;
-    
+
     /**
      * Constructor.
      *

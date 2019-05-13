@@ -2,43 +2,43 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Parameter;
+use Sop\JWX\Parameter\Parameter;
 
 /**
  * Represents a single JWK parameter.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4
- * @link http://www.iana.org/assignments/jose/jose.xhtml#web-key-parameters
+ * @see https://tools.ietf.org/html/rfc7517#section-4
+ * @see http://www.iana.org/assignments/jose/jose.xhtml#web-key-parameters
  */
 class JWKParameter extends Parameter
 {
     // registered parameter names
-    const PARAM_KEY_TYPE = "kty";
-    const PARAM_PUBLIC_KEY_USE = "use";
-    const PARAM_KEY_OPERATIONS = "key_ops";
-    const PARAM_ALGORITHM = "alg";
-    const PARAM_KEY_ID = "kid";
-    const PARAM_X509_URL = "x5u";
-    const PARAM_X509_CERTIFICATE_CHAIN = "x5c";
-    const PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT = "x5t";
-    const PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT = "x5t#S256";
-    const PARAM_CURVE = "crv";
-    const PARAM_X_COORDINATE = "x";
-    const PARAM_Y_COORDINATE = "y";
-    const PARAM_ECC_PRIVATE_KEY = "d";
-    const PARAM_MODULUS = "n";
-    const PARAM_EXPONENT = "e";
-    const PARAM_PRIVATE_EXPONENT = "d";
-    const PARAM_FIRST_PRIME_FACTOR = "p";
-    const PARAM_SECOND_PRIME_FACTOR = "q";
-    const PARAM_FIRST_FACTOR_CRT_EXPONENT = "dp";
-    const PARAM_SECOND_FACTOR_CRT_EXPONENT = "dq";
-    const PARAM_FIRST_CRT_COEFFICIENT = "qi";
-    const PARAM_OTHER_PRIMES_INFO = "oth";
-    const PARAM_KEY_VALUE = "k";
-    
+    const PARAM_KEY_TYPE = 'kty';
+    const PARAM_PUBLIC_KEY_USE = 'use';
+    const PARAM_KEY_OPERATIONS = 'key_ops';
+    const PARAM_ALGORITHM = 'alg';
+    const PARAM_KEY_ID = 'kid';
+    const PARAM_X509_URL = 'x5u';
+    const PARAM_X509_CERTIFICATE_CHAIN = 'x5c';
+    const PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT = 'x5t';
+    const PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT = 'x5t#S256';
+    const PARAM_CURVE = 'crv';
+    const PARAM_X_COORDINATE = 'x';
+    const PARAM_Y_COORDINATE = 'y';
+    const PARAM_ECC_PRIVATE_KEY = 'd';
+    const PARAM_MODULUS = 'n';
+    const PARAM_EXPONENT = 'e';
+    const PARAM_PRIVATE_EXPONENT = 'd';
+    const PARAM_FIRST_PRIME_FACTOR = 'p';
+    const PARAM_SECOND_PRIME_FACTOR = 'q';
+    const PARAM_FIRST_FACTOR_CRT_EXPONENT = 'dp';
+    const PARAM_SECOND_FACTOR_CRT_EXPONENT = 'dq';
+    const PARAM_FIRST_CRT_COEFFICIENT = 'qi';
+    const PARAM_OTHER_PRIMES_INFO = 'oth';
+    const PARAM_KEY_VALUE = 'k';
+
     // shorthand aliases for parameter names
     const P_KTY = self::PARAM_KEY_TYPE;
     const P_USE = self::PARAM_PUBLIC_KEY_USE;
@@ -63,7 +63,7 @@ class JWKParameter extends Parameter
     const P_QI = self::PARAM_FIRST_CRT_COEFFICIENT;
     const P_OTH = self::PARAM_OTHER_PRIMES_INFO;
     const P_K = self::PARAM_KEY_VALUE;
-    
+
     /**
      * Mapping from registered JWK parameter name to class name.
      *
@@ -74,8 +74,7 @@ class JWKParameter extends Parameter
      *
      * @var array
      */
-    const MAP_NAME_TO_CLASS = array(
-        /* @formatter:off */
+    const MAP_NAME_TO_CLASS = [
         self::P_KTY => KeyTypeParameter::class,
         self::P_USE => PublicKeyUseParameter::class,
         self::P_KEY_OPS => KeyOperationsParameter::class,
@@ -96,29 +95,29 @@ class JWKParameter extends Parameter
         self::P_DQ => SecondFactorCRTExponentParameter::class,
         self::P_QI => FirstCRTCoefficientParameter::class,
         self::P_OTH => OtherPrimesInfoParameter::class,
-        self::P_K => KeyValueParameter::class
-        /* @formatter:on */
-    );
-    
+        self::P_K => KeyValueParameter::class,
+    ];
+
     /**
      * Constructor.
      *
-     * @param string $name Parameter name
-     * @param mixed $value Parameter value
+     * @param string $name  Parameter name
+     * @param mixed  $value Parameter value
      */
     public function __construct(string $name, $value)
     {
         $this->_name = $name;
         $this->_value = $value;
     }
-    
+
     /**
      * Initialize from a name and a value.
      *
      * Returns a parameter specific object if one is implemented.
      *
-     * @param string $name Parameter name
-     * @param mixed $value Parameter value
+     * @param string $name  Parameter name
+     * @param mixed  $value Parameter value
+     *
      * @return self
      */
     public static function fromNameAndValue(string $name, $value): self
@@ -129,16 +128,17 @@ class JWKParameter extends Parameter
         }
         return new self($name, $value);
     }
-    
+
     /**
      * Initialize from a JSON value.
      *
      * @param mixed $value
-     * @return self
+     *
+     * @return JWKParameter
      */
-    public static function fromJSONValue($value)
+    public static function fromJSONValue($value): Parameter
     {
         throw new \BadMethodCallException(
-            __FUNCTION__ . " must be implemented in a derived class.");
+            __FUNCTION__ . ' must be implemented in a derived class.');
     }
 }

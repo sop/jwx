@@ -1,21 +1,25 @@
 <?php
 
-use JWX\JWK\JWK;
-use JWX\JWK\Parameter\JWKParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\Parameter\JWKParameter;
 
 /**
  * @group jwk
+ *
+ * @internal
  */
 class JWKTest extends TestCase
 {
     public function testCreate()
     {
-        $jwk = JWK::fromArray(array("test" => "value", "another" => "more"));
+        $jwk = JWK::fromArray(['test' => 'value', 'another' => 'more']);
         $this->assertInstanceOf(JWK::class, $jwk);
         return $jwk;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -23,9 +27,9 @@ class JWKTest extends TestCase
      */
     public function testHas(JWK $jwk)
     {
-        $this->assertTrue($jwk->has("test"));
+        $this->assertTrue($jwk->has('test'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -33,9 +37,9 @@ class JWKTest extends TestCase
      */
     public function testHasMulti(JWK $jwk)
     {
-        $this->assertTrue($jwk->has("test", "another"));
+        $this->assertTrue($jwk->has('test', 'another'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -43,9 +47,9 @@ class JWKTest extends TestCase
      */
     public function testHasMultiFails(JWK $jwk)
     {
-        $this->assertFalse($jwk->has("test", "nope"));
+        $this->assertFalse($jwk->has('test', 'nope'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -53,21 +57,21 @@ class JWKTest extends TestCase
      */
     public function testGet(JWK $jwk)
     {
-        $param = $jwk->get("test");
+        $param = $jwk->get('test');
         $this->assertInstanceOf(JWKParameter::class, $param);
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException LogicException
      *
      * @param JWK $jwk
      */
     public function testGetFails(JWK $jwk)
     {
-        $jwk->get("nope");
+        $this->expectException(\LogicException::class);
+        $jwk->get('nope');
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -75,10 +79,10 @@ class JWKTest extends TestCase
      */
     public function testWithParameters(JWK $jwk)
     {
-        $jwk = $jwk->withParameters(new JWKParameter("k", "v"));
-        $this->assertTrue($jwk->has("k"));
+        $jwk = $jwk->withParameters(new JWKParameter('k', 'v'));
+        $this->assertTrue($jwk->has('k'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -89,7 +93,7 @@ class JWKTest extends TestCase
         $params = $jwk->parameters();
         $this->assertContainsOnlyInstancesOf(JWKParameter::class, $params);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -97,11 +101,11 @@ class JWKTest extends TestCase
      */
     public function testWithKeyID(JWK $jwk)
     {
-        $jwk = $jwk->withKeyID("test");
-        $this->assertEquals("test", $jwk->get("kid")
+        $jwk = $jwk->withKeyID('test');
+        $this->assertEquals('test', $jwk->get('kid')
             ->value());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -111,7 +115,7 @@ class JWKTest extends TestCase
     {
         $this->assertCount(2, $jwk);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -119,13 +123,13 @@ class JWKTest extends TestCase
      */
     public function testIterator(JWK $jwk)
     {
-        $values = array();
+        $values = [];
         foreach ($jwk as $param) {
             $values[] = $param;
         }
         $this->assertContainsOnlyInstancesOf(JWKParameter::class, $values);
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -137,13 +141,13 @@ class JWKTest extends TestCase
         $this->assertJson($json);
         return $json;
     }
-    
+
     public function testToEmptyJSON()
     {
         $jwk = new JWK();
-        $this->assertEquals("", $jwk->toJSON());
+        $this->assertEquals('', $jwk->toJSON());
     }
-    
+
     /**
      * @depends testToJSON
      *
@@ -154,12 +158,10 @@ class JWKTest extends TestCase
         $jwk = JWK::fromJSON($json);
         $this->assertInstanceOf(JWK::class, $jwk);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidJSON()
     {
-        JWK::fromJSON("null");
+        $this->expectException(\UnexpectedValueException::class);
+        JWK::fromJSON('null');
     }
 }

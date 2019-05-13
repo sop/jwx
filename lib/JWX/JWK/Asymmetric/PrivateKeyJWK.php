@@ -2,16 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Asymmetric;
+namespace Sop\JWX\JWK\Asymmetric;
 
-use JWX\JWK\JWK;
-use JWX\JWK\EC\ECPrivateKeyJWK;
-use JWX\JWK\RSA\RSAPrivateKeyJWK;
 use Sop\CryptoEncoding\PEM;
+use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
 use Sop\CryptoTypes\Asymmetric\PrivateKey;
 use Sop\CryptoTypes\Asymmetric\PrivateKeyInfo;
-use Sop\CryptoTypes\Asymmetric\EC\ECPrivateKey;
 use Sop\CryptoTypes\Asymmetric\RSA\RSAPrivateKey;
+use Sop\JWX\JWK\EC\ECPrivateKeyJWK;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\RSA\RSAPrivateKeyJWK;
 
 /**
  * Base class for JWK private keys of an asymmetric key pairs.
@@ -24,19 +24,21 @@ abstract class PrivateKeyJWK extends JWK
      * @return PublicKeyJWK
      */
     abstract public function publicKey(): PublicKeyJWK;
-    
+
     /**
      * Convert private key to PEM.
      *
      * @return PEM
      */
     abstract public function toPEM(): PEM;
-    
+
     /**
      * Initialize from a PrivateKey object.
      *
      * @param PrivateKey $priv_key Private key
+     *
      * @throws \UnexpectedValueException
+     *
      * @return self
      */
     public static function fromPrivateKey(PrivateKey $priv_key): PrivateKeyJWK
@@ -47,13 +49,14 @@ abstract class PrivateKeyJWK extends JWK
         if ($priv_key instanceof ECPrivateKey) {
             return ECPrivateKeyJWK::fromECPrivateKey($priv_key);
         }
-        throw new \UnexpectedValueException("Unsupported private key.");
+        throw new \UnexpectedValueException('Unsupported private key.');
     }
-    
+
     /**
      * Initialize from a PrivateKeyInfo object.
      *
      * @param PrivateKeyInfo $pki PrivateKeyInfo
+     *
      * @return self
      */
     public static function fromPrivateKeyInfo(PrivateKeyInfo $pki): PrivateKeyJWK

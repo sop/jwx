@@ -1,23 +1,27 @@
 <?php
 
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\X509CertificateSHA256ThumbprintParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\Parameter\X509CertificateSHA256ThumbprintParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class X509CertificateSHA256ThumbprintParameterTest extends TestCase
 {
     public function testCreate()
     {
-        $param = X509CertificateSHA256ThumbprintParameter::fromString("abcdef");
+        $param = X509CertificateSHA256ThumbprintParameter::fromString('abcdef');
         $this->assertInstanceOf(X509CertificateSHA256ThumbprintParameter::class,
             $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *

@@ -2,22 +2,22 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWK\Parameter;
+namespace Sop\JWX\JWK\Parameter;
 
-use JWX\Parameter\Feature\StringParameterValue;
+use Sop\JWX\Parameter\Feature\StringParameterValue;
 
 /**
  * Implements 'Public Key Use' parameter.
  *
- * @link https://tools.ietf.org/html/rfc7517#section-4.2
+ * @see https://tools.ietf.org/html/rfc7517#section-4.2
  */
 class PublicKeyUseParameter extends JWKParameter
 {
     use StringParameterValue;
-    
-    const USE_SIGNATURE = "sig";
-    const USE_ENCRYPTION = "enc";
-    
+
+    const USE_SIGNATURE = 'sig';
+    const USE_ENCRYPTION = 'enc';
+
     /**
      * Constructor.
      *

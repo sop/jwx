@@ -2,19 +2,20 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWS\Algorithm;
+namespace Sop\JWX\JWS\Algorithm;
 
-use JWX\JWA\JWA;
-use JWX\JWK\JWK;
-use JWX\JWK\RSA\RSAPrivateKeyJWK;
-use JWX\JWK\RSA\RSAPublicKeyJWK;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Parameter\AlgorithmParameter;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\RSA\RSAPrivateKeyJWK;
+use Sop\JWX\JWK\RSA\RSAPublicKeyJWK;
+use Sop\JWX\JWS\SignatureAlgorithm;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Parameter\AlgorithmParameter;
 
 /**
  * Base class for algorithms implementing signature with PKCS #1.
  *
- * @link https://tools.ietf.org/html/rfc7518#section-3.3
+ * @see https://tools.ietf.org/html/rfc7518#section-3.3
  */
 abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
 {
@@ -25,18 +26,16 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = array(
-        /* @formatter:off */
+    const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_RS256 => RS256Algorithm::class,
         JWA::ALGO_RS384 => RS384Algorithm::class,
-        JWA::ALGO_RS512 => RS512Algorithm::class
-        /* @formatter:on */
-    );
-    
+        JWA::ALGO_RS512 => RS512Algorithm::class,
+    ];
+
     /**
      * Constructor.
      *
-     * @param RSAPublicKeyJWK $pub_key
+     * @param RSAPublicKeyJWK  $pub_key
      * @param RSAPrivateKeyJWK $priv_key
      */
     protected function __construct(RSAPublicKeyJWK $pub_key,
@@ -45,41 +44,41 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
         $this->_publicKey = $pub_key;
         $this->_privateKey = $priv_key;
     }
-    
+
     /**
      * Initialize from a public key.
      *
      * @param RSAPublicKeyJWK $jwk
+     *
      * @return self
      */
     public static function fromPublicKey(RSAPublicKeyJWK $jwk): self
     {
         return new static($jwk);
     }
-    
+
     /**
      * Initialize from a private key.
      *
      * @param RSAPrivateKeyJWK $jwk
+     *
      * @return self
      */
     public static function fromPrivateKey(RSAPrivateKeyJWK $jwk): self
     {
         return new static($jwk->publicKey(), $jwk);
     }
-    
+
     /**
+     * {@inheritdoc}
      *
-     * @param JWK $jwk
-     * @param Header $header
-     * @throws \UnexpectedValueException
-     * @return RSASSAPKCS1Algorithm
+     * @return self
      */
-    public static function fromJWK(JWK $jwk, Header $header): self
+    public static function fromJWK(JWK $jwk, Header $header): SignatureAlgorithm
     {
         $alg = JWA::deriveAlgorithmName($header, $jwk);
         if (!array_key_exists($alg, self::MAP_ALGO_TO_CLASS)) {
-            throw new \UnexpectedValueException("Unsupported algorithm '$alg'.");
+            throw new \UnexpectedValueException("Unsupported algorithm '{$alg}'.");
         }
         $cls = self::MAP_ALGO_TO_CLASS[$alg];
         if ($jwk->has(...RSAPrivateKeyJWK::MANAGED_PARAMS)) {
@@ -87,15 +86,13 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
         }
         return $cls::fromPublicKey(RSAPublicKeyJWK::fromJWK($jwk));
     }
-    
+
     /**
-     *
-     * @see \JWX\JWS\SignatureAlgorithm::headerParameters()
-     * @return \JWX\JWT\Parameter\JWTParameter[]
+     * {@inheritdoc}
      */
     public function headerParameters(): array
     {
         return array_merge(parent::headerParameters(),
-            array(AlgorithmParameter::fromAlgorithm($this)));
+            [AlgorithmParameter::fromAlgorithm($this)]);
     }
 }

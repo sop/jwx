@@ -1,22 +1,26 @@
 <?php
 
-use JWX\JWT\Parameter\CriticalParameter;
-use JWX\JWT\Parameter\JWTParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Parameter\CriticalParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
 
 /**
  * @group jwt
  * @group parameter
+ *
+ * @internal
  */
 class CriticalParameterTest extends TestCase
 {
     public function testCreate()
     {
-        $param = new CriticalParameter("typ", "cty");
+        $param = new CriticalParameter('typ', 'cty');
         $this->assertInstanceOf(CriticalParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class CriticalParameterTest extends TestCase
     {
         $this->assertEquals(JWTParameter::PARAM_CRITICAL, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -34,9 +38,9 @@ class CriticalParameterTest extends TestCase
      */
     public function testNames(CriticalParameter $param)
     {
-        $this->assertEquals(["typ", "cty"], $param->names());
+        $this->assertEquals(['typ', 'cty'], $param->names());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -44,9 +48,9 @@ class CriticalParameterTest extends TestCase
      */
     public function testHas(CriticalParameter $param)
     {
-        $this->assertTrue($param->has("typ"));
+        $this->assertTrue($param->has('typ'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -54,9 +58,9 @@ class CriticalParameterTest extends TestCase
      */
     public function testHasNot(CriticalParameter $param)
     {
-        $this->assertFalse($param->has("nope"));
+        $this->assertFalse($param->has('nope'));
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -64,21 +68,19 @@ class CriticalParameterTest extends TestCase
      */
     public function testWithName(CriticalParameter $param)
     {
-        $param = $param->withParamName("test");
+        $param = $param->withParamName('test');
         $this->assertCount(3, $param->names());
     }
-    
+
     public function testFromJSON()
     {
-        $param = CriticalParameter::fromJSONValue(["test"]);
+        $param = CriticalParameter::fromJSONValue(['test']);
         $this->assertInstanceOf(CriticalParameter::class, $param);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromInvalidJSON()
     {
+        $this->expectException(\UnexpectedValueException::class);
         CriticalParameter::fromJSONValue(null);
     }
 }

@@ -1,27 +1,31 @@
 <?php
 
-use JWX\JWA\JWA;
-use JWX\JWE\KeyAlgorithm\A128GCMKWAlgorithm;
-use JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
+use Sop\JWX\JWE\KeyAlgorithm\A128GCMKWAlgorithm;
+use Sop\JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
 
 /**
  * @group jwe
  * @group key
+ *
+ * @internal
  */
 class A128GCMKWTest extends TestCase
 {
-    const KEY_128 = "123456789 123456";
-    const IV = "123456789 12";
-    const CEK_128 = "987654321 987654";
-    
+    const KEY_128 = '123456789 123456';
+    const IV = '123456789 12';
+    const CEK_128 = '987654321 987654';
+
     public function testCreate()
     {
         $algo = new A128GCMKWAlgorithm(self::KEY_128, self::IV);
         $this->assertInstanceOf(AESGCMKWAlgorithm::class, $algo);
         return $algo;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -31,7 +35,7 @@ class A128GCMKWTest extends TestCase
     {
         $this->assertEquals(JWA::ALGO_A128GCMKW, $algo->algorithmParamValue());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -43,27 +47,24 @@ class A128GCMKWTest extends TestCase
         $this->assertNotEquals(self::CEK_128, $ciphertext);
         return [$ciphertext, $header];
     }
-    
+
     /**
      * @depends testCreate
      * @depends testEncrypt
      *
      * @param AESGCMKWAlgorithm $algo
-     * @param array $data
+     * @param array             $data
      */
     public function testDecrypt(AESGCMKWAlgorithm $algo, $data)
     {
-        list($ciphertext, $header) = $data;
+        [$ciphertext, $header] = $data;
         $cek = $algo->decrypt($ciphertext, $header);
         $this->assertEquals(self::CEK_128, $cek);
     }
-    
-    /**
-     * @expectedException LengthException
-     */
+
     public function testInvalidKeySize()
     {
-        $algo = new A128GCMKWAlgorithm("fail", self::IV);
-        $algo->encrypt(self::CEK_128);
+        $this->expectException(\LengthException::class);
+        new A128GCMKWAlgorithm('fail', self::IV);
     }
 }

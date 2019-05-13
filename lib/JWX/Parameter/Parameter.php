@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\Parameter;
+namespace Sop\JWX\Parameter;
 
 /**
  * Base class for JWT and JWK parameters.
@@ -12,17 +12,17 @@ abstract class Parameter
     /**
      * Parameter name.
      *
-     * @var string $_name
+     * @var string
      */
     protected $_name;
-    
+
     /**
      * Parameter value.
      *
-     * @var mixed $_value
+     * @var mixed
      */
     protected $_value;
-    
+
     /**
      * Get the parameter name.
      *
@@ -32,7 +32,7 @@ abstract class Parameter
     {
         return $this->_name;
     }
-    
+
     /**
      * Get the parameter value.
      *

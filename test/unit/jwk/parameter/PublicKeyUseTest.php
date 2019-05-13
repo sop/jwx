@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\PublicKeyUseParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\PublicKeyUseParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class PublicKeyUseParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class PublicKeyUseParameterTest extends TestCase
         $this->assertInstanceOf(PublicKeyUseParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class PublicKeyUseParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_PUBLIC_KEY_USE, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *

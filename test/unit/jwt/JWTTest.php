@@ -1,49 +1,53 @@
 <?php
 
-use JWX\JWE\JWE;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
-use JWX\JWK\JWK;
-use JWX\JWK\JWKSet;
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWS\JWS;
-use JWX\JWS\Algorithm\HS256Algorithm;
-use JWX\JWT\Claims;
-use JWX\JWT\JWT;
-use JWX\JWT\ValidationContext;
-use JWX\JWT\Claim\SubjectClaim;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Header\JOSE;
-use JWX\JWT\Parameter\ContentTypeParameter;
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\Util\Base64;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use Sop\JWX\JWE\JWE;
+use Sop\JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\JWKSet;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWS\Algorithm\HS256Algorithm;
+use Sop\JWX\JWS\JWS;
+use Sop\JWX\JWT\Claim\SubjectClaim;
+use Sop\JWX\JWT\Claims;
+use Sop\JWX\JWT\Exception\ValidationException;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Header\JOSE;
+use Sop\JWX\JWT\JWT;
+use Sop\JWX\JWT\Parameter\ContentTypeParameter;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\ValidationContext;
+use Sop\JWX\Util\Base64;
 
 /**
  * @group jwt
+ *
+ * @internal
  */
 class JWTTest extends TestCase
 {
+    const KEY_128 = '123456789 123456789 123456789 12';
+
+    const KEY_ID = 'key-id';
+
+    const KEY_NESTED = '987654321 987654321 987654321 98';
+
+    const KEY_ID2 = 'key-id2';
     private static $_claims;
-    
-    const KEY_128 = "123456789 123456789 123456789 12";
-    
-    const KEY_ID = "key-id";
-    
-    const KEY_NESTED = "987654321 987654321 987654321 98";
-    
-    const KEY_ID2 = "key-id2";
-    
-    public static function setUpBeforeClass()
+
+    public static function setUpBeforeClass(): void
     {
-        self::$_claims = new Claims(new SubjectClaim("test"));
+        self::$_claims = new Claims(new SubjectClaim('test'));
     }
-    
-    public static function tearDownAfterClass()
+
+    public static function tearDownAfterClass(): void
     {
         self::$_claims = null;
     }
-    
+
     public function testCreateJWS()
     {
         $algo = new HS256Algorithm(self::KEY_128);
@@ -52,7 +56,7 @@ class JWTTest extends TestCase
         $this->assertInstanceOf(JWT::class, $jwt);
         return $jwt;
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -62,7 +66,7 @@ class JWTTest extends TestCase
     {
         $this->assertTrue($jwt->isJWS());
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -72,18 +76,18 @@ class JWTTest extends TestCase
     {
         $this->assertInstanceOf(JWS::class, $jwt->JWS());
     }
-    
+
     /**
      * @depends testCreateJWS
-     * @expectedException LogicException
      *
      * @param JWT $jwt
      */
     public function testGetJWEFail(JWT $jwt)
     {
+        $this->expectException(\LogicException::class);
         $jwt->JWE();
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -94,7 +98,7 @@ class JWTTest extends TestCase
         $header = $jwt->header();
         $this->assertInstanceOf(JOSE::class, $header);
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -102,9 +106,9 @@ class JWTTest extends TestCase
      */
     public function testToken(JWT $jwt)
     {
-        $this->assertInternalType("string", $jwt->token());
+        $this->assertIsString($jwt->token());
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -114,7 +118,7 @@ class JWTTest extends TestCase
     {
         $this->assertFalse($jwt->isUnsecured());
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -123,9 +127,9 @@ class JWTTest extends TestCase
     public function testToString(JWT $jwt)
     {
         $token = strval($jwt);
-        $this->assertInternalType("string", $token);
+        $this->assertIsString($token);
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -133,12 +137,11 @@ class JWTTest extends TestCase
      */
     public function testClaimsFromJWS(JWT $jwt)
     {
-        $ctx = ValidationContext::fromJWK(
-            SymmetricKeyJWK::fromKey(self::KEY_128));
+        $ctx = ValidationContext::fromJWK(SymmetricKeyJWK::fromKey(self::KEY_128));
         $claims = $jwt->claims($ctx);
         $this->assertEquals(self::$_claims, $claims);
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -146,33 +149,29 @@ class JWTTest extends TestCase
      */
     public function testClaimsFromJWSMultipleKeys(JWT $jwt)
     {
-        $ctx = new ValidationContext(null,
-            new JWKSet(
-                SymmetricKeyJWK::fromKey(self::KEY_128)->withKeyID(self::KEY_ID),
-                new JWK()));
+        $ctx = new ValidationContext(null, new JWKSet(
+            SymmetricKeyJWK::fromKey(self::KEY_128)->withKeyID(self::KEY_ID), new JWK()));
         $claims = $jwt->claims($ctx);
         $this->assertEquals(self::$_claims, $claims);
     }
-    
+
     /**
      * @depends testCreateJWS
-     * @expectedException JWX\JWT\Exception\ValidationException
      *
      * @param JWT $jwt
      */
     public function testClaimsFromJWSInvalidSignature(JWT $jwt)
     {
-        $parts = explode(".", $jwt->token());
-        $parts[2] = "";
-        $jwt = new JWT(implode(".", $parts));
-        $ctx = ValidationContext::fromJWK(
-            SymmetricKeyJWK::fromKey(self::KEY_128));
+        $parts = explode('.', $jwt->token());
+        $parts[2] = '';
+        $jwt = new JWT(implode('.', $parts));
+        $ctx = ValidationContext::fromJWK(SymmetricKeyJWK::fromKey(self::KEY_128));
+        $this->expectException(ValidationException::class);
         $jwt->claims($ctx);
     }
-    
+
     /**
      * @depends testCreateJWS
-     * @expectedException JWX\JWT\Exception\ValidationException
      *
      * @param JWT $jwt
      */
@@ -180,9 +179,10 @@ class JWTTest extends TestCase
     {
         $ctx = new ValidationContext(null,
             new JWKSet(SymmetricKeyJWK::fromKey(self::KEY_128), new JWK()));
+        $this->expectException(ValidationException::class);
         $jwt->claims($ctx);
     }
-    
+
     public function testEncryptedFromClaims()
     {
         $key_algo = new DirectCEKAlgorithm(self::KEY_128);
@@ -192,7 +192,7 @@ class JWTTest extends TestCase
         $this->assertInstanceOf(JWT::class, $jwt);
         return $jwt;
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
      *
@@ -202,7 +202,7 @@ class JWTTest extends TestCase
     {
         $this->assertTrue($jwt->isJWE());
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
      *
@@ -212,18 +212,18 @@ class JWTTest extends TestCase
     {
         $this->assertInstanceOf(JWE::class, $jwt->JWE());
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
-     * @expectedException LogicException
      *
      * @param JWT $jwt
      */
     public function testGetJWSFail(JWT $jwt)
     {
+        $this->expectException(\LogicException::class);
         $jwt->JWS();
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
      *
@@ -233,7 +233,7 @@ class JWTTest extends TestCase
     {
         $this->assertFalse($jwt->isUnsecured());
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
      *
@@ -246,7 +246,7 @@ class JWTTest extends TestCase
         $claims = $jwt->claims($ctx);
         $this->assertEquals(self::$_claims, $claims);
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
      *
@@ -254,17 +254,14 @@ class JWTTest extends TestCase
      */
     public function testClaimsFromEncryptedMultipleKeys(JWT $jwt)
     {
-        $ctx = new ValidationContext(null,
-            new JWKSet(
-                SymmetricKeyJWK::fromKey(self::KEY_128)->withKeyID(self::KEY_ID),
-                new JWK()));
+        $ctx = new ValidationContext(null, new JWKSet(
+            SymmetricKeyJWK::fromKey(self::KEY_128)->withKeyID(self::KEY_ID), new JWK()));
         $claims = $jwt->claims($ctx);
         $this->assertEquals(self::$_claims, $claims);
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
-     * @expectedException JWX\JWT\Exception\ValidationException
      *
      * @param JWT $jwt
      */
@@ -272,16 +269,17 @@ class JWTTest extends TestCase
     {
         $ctx = new ValidationContext(null,
             new JWKSet(SymmetricKeyJWK::fromKey(self::KEY_128), new JWK()));
+        $this->expectException(ValidationException::class);
         $jwt->claims($ctx);
     }
-    
+
     public function testUnsecuredFromClaims()
     {
         $jwt = JWT::unsecuredFromClaims(self::$_claims);
         $this->assertInstanceOf(JWT::class, $jwt);
         return $jwt;
     }
-    
+
     /**
      * @depends testUnsecuredFromClaims
      *
@@ -291,7 +289,7 @@ class JWTTest extends TestCase
     {
         $this->assertTrue($jwt->isUnsecured());
     }
-    
+
     /**
      * @depends testUnsecuredFromClaims
      *
@@ -304,43 +302,41 @@ class JWTTest extends TestCase
         $claims = $jwt->claims($ctx);
         $this->assertEquals(self::$_claims, $claims);
     }
-    
+
     /**
      * @depends testUnsecuredFromClaims
-     * @expectedException JWX\JWT\Exception\ValidationException
      *
      * @param JWT $jwt
      */
     public function testClaimsFromUnsecuredNotAllowedFail(JWT $jwt)
     {
         $ctx = new ValidationContext();
+        $this->expectException(ValidationException::class);
         $jwt->claims($ctx);
     }
-    
+
     /**
      * @depends testUnsecuredFromClaims
-     * @expectedException JWX\JWT\Exception\ValidationException
      *
      * @param JWT $jwt
      */
     public function testMalformedUnsecuredToken(JWT $jwt)
     {
-        $parts = explode(".", $jwt->token());
-        $parts[2] = Base64::urlEncode("bogus");
-        $jwt = new JWT(implode(".", $parts));
+        $parts = explode('.', $jwt->token());
+        $parts[2] = Base64::urlEncode('bogus');
+        $jwt = new JWT(implode('.', $parts));
         $ctx = new ValidationContext();
         $ctx = $ctx->withUnsecuredAllowed(true);
+        $this->expectException(ValidationException::class);
         $jwt->claims($ctx);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testInvalidJWT()
     {
-        new JWT("");
+        $this->expectException(\UnexpectedValueException::class);
+        new JWT('');
     }
-    
+
     /**
      * @depends testCreateJWS
      *
@@ -355,7 +351,7 @@ class JWTTest extends TestCase
         $this->assertInstanceOf(JWT::class, $nested);
         return $nested;
     }
-    
+
     /**
      * @depends testEncryptNested
      *
@@ -363,12 +359,10 @@ class JWTTest extends TestCase
      */
     public function testNestedHeader(JWT $jwt)
     {
-        $cty = $jwt->header()
-            ->get(JWTParameter::P_CTY)
-            ->value();
+        $cty = $jwt->header()->get(JWTParameter::P_CTY)->value();
         $this->assertEquals(ContentTypeParameter::TYPE_JWT, $cty);
     }
-    
+
     /**
      * @depends testEncryptNested
      *
@@ -378,20 +372,20 @@ class JWTTest extends TestCase
     {
         $this->assertTrue($jwt->isNested());
     }
-    
+
     public function testIsNestedNoContentType()
     {
         $jwt = JWT::unsecuredFromClaims(new Claims());
         $this->assertFalse($jwt->isNested());
     }
-    
+
     public function testIsNestedInvalidContentType()
     {
         $jwt = JWT::unsecuredFromClaims(new Claims(),
-            new Header(new ContentTypeParameter("example")));
+            new Header(new ContentTypeParameter('example')));
         $this->assertFalse($jwt->isNested());
     }
-    
+
     /**
      * @depends testEncryptNested
      *
@@ -406,7 +400,7 @@ class JWTTest extends TestCase
         $claims = $jwt->claims($ctx);
         $this->assertEquals(self::$_claims, $claims);
     }
-    
+
     /**
      * @depends testEncryptedFromClaims
      *

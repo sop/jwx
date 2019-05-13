@@ -1,40 +1,43 @@
 <?php
 
-use JWX\JWK\JWK;
-use JWX\JWK\JWKSet;
-use JWX\JWK\Parameter\AlgorithmParameter;
-use JWX\JWK\Parameter\CurveParameter;
-use JWX\JWK\Parameter\ExponentParameter;
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\KeyTypeParameter;
-use JWX\JWK\Parameter\ModulusParameter;
-use JWX\JWK\Parameter\PublicKeyUseParameter;
-use JWX\JWK\Parameter\XCoordinateParameter;
-use JWX\JWK\Parameter\YCoordinateParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\JWK;
+use Sop\JWX\JWK\JWKSet;
+use Sop\JWX\JWK\Parameter\AlgorithmParameter;
+use Sop\JWX\JWK\Parameter\CurveParameter;
+use Sop\JWX\JWK\Parameter\ExponentParameter;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\KeyTypeParameter;
+use Sop\JWX\JWK\Parameter\ModulusParameter;
+use Sop\JWX\JWK\Parameter\PublicKeyUseParameter;
+use Sop\JWX\JWK\Parameter\XCoordinateParameter;
+use Sop\JWX\JWK\Parameter\YCoordinateParameter;
 
 /**
  * Test case for RFC 7517 appendix A.1.
- * Example Public Keys
+ * Example Public Keys.
  *
  * @group example
  *
- * @link https://tools.ietf.org/html/rfc7517#appendix-A.1
+ * @see https://tools.ietf.org/html/rfc7517#appendix-A.1
+ *
+ * @internal
  */
 class JWKPublicKeysTest extends TestCase
 {
     /**
-     *
      * @return JWKSet
      */
     public function testJWKSet()
     {
         $jwkset = JWKSet::fromJSON(
-            file_get_contents(TEST_ASSETS_DIR . "/example/rfc7517-a1-jwk.json"));
+            file_get_contents(TEST_ASSETS_DIR . '/example/rfc7517-a1-jwk.json'));
         $this->assertInstanceOf(JWKSet::class, $jwkset);
         return $jwkset;
     }
-    
+
     /**
      * @depends testJWKSet
      *
@@ -44,37 +47,40 @@ class JWKPublicKeysTest extends TestCase
     {
         $this->assertCount(2, $jwkset);
     }
-    
+
     /**
      * @depends testJWKSet
      *
      * @param JWKSet $jwkset
+     *
      * @return JWK
      */
     public function testKey1(JWKSet $jwkset)
     {
-        $jwk = $jwkset->keyByID("1");
+        $jwk = $jwkset->keyByID('1');
         $this->assertInstanceOf(JWK::class, $jwk);
         return $jwk;
     }
-    
+
     /**
      * @depends testJWKSet
      *
      * @param JWKSet $jwkset
+     *
      * @return JWK
      */
     public function testKey2(JWKSet $jwkset)
     {
-        $jwk = $jwkset->keyByID("2011-04-29");
+        $jwk = $jwkset->keyByID('2011-04-29');
         $this->assertInstanceOf(JWK::class, $jwk);
         return $jwk;
     }
-    
+
     /**
      * @depends testKey1
      *
      * @param JWK $jwk
+     *
      * @return KeyTypeParameter
      */
     public function testKey1Type(JWK $jwk)
@@ -82,9 +88,8 @@ class JWKPublicKeysTest extends TestCase
         $param = $jwk->get(JWKParameter::PARAM_KEY_TYPE);
         $this->assertInstanceOf(KeyTypeParameter::class, $param);
         return $param;
-    
     }
-    
+
     /**
      * @depends testKey1Type
      *
@@ -92,13 +97,14 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey1TypeValue(KeyTypeParameter $param)
     {
-        $this->assertEquals("EC", $param->value());
+        $this->assertEquals('EC', $param->value());
     }
-    
+
     /**
      * @depends testKey1
      *
      * @param JWK $jwk
+     *
      * @return CurveParameter
      */
     public function testKey1Curve(JWK $jwk)
@@ -107,7 +113,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(CurveParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey1Curve
      *
@@ -117,11 +123,12 @@ class JWKPublicKeysTest extends TestCase
     {
         $this->assertEquals(CurveParameter::CURVE_P256, $param->value());
     }
-    
+
     /**
      * @depends testKey1
      *
      * @param JWK $jwk
+     *
      * @return XCoordinateParameter
      */
     public function testKey1XCoord(JWK $jwk)
@@ -130,7 +137,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(XCoordinateParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey1XCoord
      *
@@ -138,14 +145,15 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey1XCoordValue(XCoordinateParameter $param)
     {
-        $this->assertEquals("MKBCTNIcKUSDii11ySs3526iDZ8AiTo7Tu6KPAqv7D4",
+        $this->assertEquals('MKBCTNIcKUSDii11ySs3526iDZ8AiTo7Tu6KPAqv7D4',
             $param->value());
     }
-    
+
     /**
      * @depends testKey1
      *
      * @param JWK $jwk
+     *
      * @return YCoordinateParameter
      */
     public function testKey1YCoord(JWK $jwk)
@@ -154,7 +162,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(YCoordinateParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey1YCoord
      *
@@ -162,14 +170,15 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey1YCoordValue(YCoordinateParameter $param)
     {
-        $this->assertEquals("4Etl6SRW2YiLUrN5vfvVHuhp7x8PxltmWWlbbM4IFyM",
+        $this->assertEquals('4Etl6SRW2YiLUrN5vfvVHuhp7x8PxltmWWlbbM4IFyM',
             $param->value());
     }
-    
+
     /**
      * @depends testKey1
      *
      * @param JWK $jwk
+     *
      * @return PublicKeyUseParameter
      */
     public function testKey1Use(JWK $jwk)
@@ -177,9 +186,8 @@ class JWKPublicKeysTest extends TestCase
         $param = $jwk->get(JWKParameter::PARAM_PUBLIC_KEY_USE);
         $this->assertInstanceOf(PublicKeyUseParameter::class, $param);
         return $param;
-    
     }
-    
+
     /**
      * @depends testKey1Use
      *
@@ -187,13 +195,14 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey1UseValue(PublicKeyUseParameter $param)
     {
-        $this->assertEquals("enc", $param->value());
+        $this->assertEquals('enc', $param->value());
     }
-    
+
     /**
      * @depends testKey2
      *
      * @param JWK $jwk
+     *
      * @return KeyTypeParameter
      */
     public function testKey2Type(JWK $jwk)
@@ -202,7 +211,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(KeyTypeParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey2Type
      *
@@ -210,13 +219,14 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey2TypeValue(KeyTypeParameter $param)
     {
-        $this->assertEquals("RSA", $param->value());
+        $this->assertEquals('RSA', $param->value());
     }
-    
+
     /**
      * @depends testKey2
      *
      * @param JWK $jwk
+     *
      * @return ModulusParameter
      */
     public function testKey2Modulus(JWK $jwk)
@@ -225,7 +235,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(ModulusParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey2Modulus
      *
@@ -236,11 +246,12 @@ class JWKPublicKeysTest extends TestCase
         $num = $param->number();
         $this->assertEquals(256, strlen($num->base256()));
     }
-    
+
     /**
      * @depends testKey2
      *
      * @param JWK $jwk
+     *
      * @return ExponentParameter
      */
     public function testKey2Exponent(JWK $jwk)
@@ -249,7 +260,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(ExponentParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey2Exponent
      *
@@ -257,14 +268,14 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey2ExponentValue(ExponentParameter $param)
     {
-        $this->assertEquals(65537, $param->number()
-            ->base10());
+        $this->assertEquals(65537, $param->number()->base10());
     }
-    
+
     /**
      * @depends testKey2
      *
      * @param JWK $jwk
+     *
      * @return AlgorithmParameter
      */
     public function testKey2Algo(JWK $jwk)
@@ -273,7 +284,7 @@ class JWKPublicKeysTest extends TestCase
         $this->assertInstanceOf(AlgorithmParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testKey2Algo
      *
@@ -281,6 +292,6 @@ class JWKPublicKeysTest extends TestCase
      */
     public function testKey2AlgoValue(AlgorithmParameter $param)
     {
-        $this->assertEquals("RS256", $param->value());
+        $this->assertEquals('RS256', $param->value());
     }
 }

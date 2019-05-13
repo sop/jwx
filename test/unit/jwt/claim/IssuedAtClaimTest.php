@@ -1,25 +1,29 @@
 <?php
 
-use JWX\JWT\Claim\Claim;
-use JWX\JWT\Claim\IssuedAtClaim;
-use JWX\JWT\Claim\RegisteredClaim;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Claim\Claim;
+use Sop\JWX\JWT\Claim\IssuedAtClaim;
+use Sop\JWX\JWT\Claim\RegisteredClaim;
 
 /**
  * @group jwt
  * @group claim
+ *
+ * @internal
  */
 class IssuedAtClaimTest extends TestCase
 {
-    const TIME = "Thu, May 12, 2016  2:33:41 PM";
-    
+    const TIME = 'Thu, May 12, 2016  2:33:41 PM';
+
     public function testCreate()
     {
         $claim = IssuedAtClaim::fromString(self::TIME);
         $this->assertInstanceOf(IssuedAtClaim::class, $claim);
         return $claim;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -29,7 +33,7 @@ class IssuedAtClaimTest extends TestCase
     {
         $this->assertEquals(RegisteredClaim::NAME_ISSUED_AT, $claim->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -37,10 +41,10 @@ class IssuedAtClaimTest extends TestCase
      */
     public function testTimestamp(IssuedAtClaim $claim)
     {
-        $dt = new DateTime(self::TIME, new DateTimeZone("UTC"));
+        $dt = new DateTime(self::TIME, new DateTimeZone('UTC'));
         $this->assertEquals($dt->getTimestamp(), $claim->timestamp());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -48,46 +52,43 @@ class IssuedAtClaimTest extends TestCase
      */
     public function testDateTime(IssuedAtClaim $claim)
     {
-        $dt = new DateTimeImmutable(self::TIME, new DateTimeZone("UTC"));
+        $dt = new DateTimeImmutable(self::TIME, new DateTimeZone('UTC'));
         $this->assertEquals($dt->getTimestamp(),
-            $claim->dateTime()
-                ->getTimestamp());
+            $claim->dateTime()->getTimestamp());
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException RuntimeException
      *
      * @param IssuedAtClaim $claim
      */
     public function testDateTimeFail(IssuedAtClaim $claim)
     {
         $cls = new ReflectionClass($claim);
-        $prop = $cls->getProperty("_value");
+        $prop = $cls->getProperty('_value');
         $prop->setAccessible(true);
-        $prop->setValue($claim, "fail");
+        $prop->setValue($claim, 'fail');
+        $this->expectException(\RuntimeException::class);
         $claim->dateTime();
     }
-    
+
     /**
      * @depends testCreate
-     * @expectedException RuntimeException
      *
      * @param IssuedAtClaim $claim
      */
     public function testDateTimeInvalidTimezone(IssuedAtClaim $claim)
     {
-        $claim->dateTime("nope");
+        $this->expectException(\RuntimeException::class);
+        $claim->dateTime('nope');
     }
-    
-    /**
-     * @expectedException RuntimeException
-     */
+
     public function testCreateFail()
     {
-        IssuedAtClaim::fromString("nope");
+        $this->expectException(\RuntimeException::class);
+        IssuedAtClaim::fromString('nope');
     }
-    
+
     public function testNow()
     {
         $claim = IssuedAtClaim::now();

@@ -1,48 +1,52 @@
 <?php
 
-use JWX\JWE\JWE;
-use JWX\JWE\KeyManagementAlgorithm;
-use JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
-use JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
-use JWX\JWE\EncryptionAlgorithm\A128GCMAlgorithm;
-use JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
-use JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
-use JWX\JWK\JWKSet;
-use JWX\JWK\Parameter\KeyIDParameter as JWKID;
-use JWX\JWK\Symmetric\SymmetricKeyJWK;
-use JWX\JWT\Header\Header;
-use JWX\JWT\Header\JOSE;
-use JWX\JWT\Parameter\JWTParameter;
-use JWX\JWT\Parameter\KeyIDParameter as JWTID;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWE\CompressionAlgorithm\DeflateAlgorithm;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128CBCHS256Algorithm;
+use Sop\JWX\JWE\EncryptionAlgorithm\A128GCMAlgorithm;
+use Sop\JWX\JWE\JWE;
+use Sop\JWX\JWE\KeyAlgorithm\A128KWAlgorithm;
+use Sop\JWX\JWE\KeyAlgorithm\DirectCEKAlgorithm;
+use Sop\JWX\JWE\KeyManagementAlgorithm;
+use Sop\JWX\JWK\JWKSet;
+use Sop\JWX\JWK\Parameter\KeyIDParameter as JWKID;
+use Sop\JWX\JWK\Symmetric\SymmetricKeyJWK;
+use Sop\JWX\JWT\Header\Header;
+use Sop\JWX\JWT\Header\JOSE;
+use Sop\JWX\JWT\Parameter\JWTParameter;
+use Sop\JWX\JWT\Parameter\KeyIDParameter as JWTID;
 
 /**
  * @group jwe
+ *
+ * @internal
  */
 class JWETest extends TestCase
 {
-    const PAYLOAD = "PAYLOAD";
-    
-    const KEY_ID = "id";
-    
-    const CEK = "123456789 123456789 123456789 12";
-    
+    const PAYLOAD = 'PAYLOAD';
+
+    const KEY_ID = 'id';
+
+    const CEK = '123456789 123456789 123456789 12';
+
     private static $_keyAlgo;
-    
+
     private static $_encAlgo;
-    
-    public static function setUpBeforeClass()
+
+    public static function setUpBeforeClass(): void
     {
         self::$_keyAlgo = new DirectCEKAlgorithm(self::CEK);
         self::$_encAlgo = new A128CBCHS256Algorithm();
     }
-    
-    public static function tearDownAfterClass()
+
+    public static function tearDownAfterClass(): void
     {
         self::$_keyAlgo = null;
         self::$_encAlgo = null;
     }
-    
+
     public function testEncrypt()
     {
         $jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo,
@@ -50,7 +54,7 @@ class JWETest extends TestCase
         $this->assertInstanceOf(JWE::class, $jwe);
         return $jwe;
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -61,29 +65,29 @@ class JWETest extends TestCase
         $payload = $jwe->decrypt(self::$_keyAlgo, self::$_encAlgo);
         $this->assertEquals(self::PAYLOAD, $payload);
     }
-    
+
     /**
      * @depends testEncrypt
-     * @expectedException UnexpectedValueException
      *
      * @param JWE $jwe
      */
     public function testDecryptInvalidAlgo(JWE $jwe)
     {
+        $this->expectException(\UnexpectedValueException::class);
         $jwe->decrypt(new A128KWAlgorithm(str_repeat("\0", 16)), self::$_encAlgo);
     }
-    
+
     /**
      * @depends testEncrypt
-     * @expectedException UnexpectedValueException
      *
      * @param JWE $jwe
      */
     public function testDecryptInvalidEncAlgo(JWE $jwe)
     {
+        $this->expectException(\UnexpectedValueException::class);
         $jwe->decrypt(self::$_keyAlgo, new A128GCMAlgorithm());
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -95,7 +99,7 @@ class JWETest extends TestCase
         $payload = $jwe->decryptWithJWK($jwk);
         $this->assertEquals(self::PAYLOAD, $payload);
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -108,18 +112,18 @@ class JWETest extends TestCase
         $payload = $jwe->decryptWithJWKSet(new JWKSet($jwk));
         $this->assertEquals(self::PAYLOAD, $payload);
     }
-    
+
     /**
      * @depends testEncrypt
-     * @expectedException RuntimeException
      *
      * @param JWE $jwe
      */
     public function testDecryptWithJWKSetNoKeys(JWE $jwe)
     {
+        $this->expectException(\RuntimeException::class);
         $jwe->decryptWithJWKSet(new JWKSet());
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -130,7 +134,7 @@ class JWETest extends TestCase
         $header = $jwe->header();
         $this->assertInstanceOf(JOSE::class, $header);
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -138,9 +142,9 @@ class JWETest extends TestCase
      */
     public function testEncryptedKey(JWE $jwe)
     {
-        $this->assertEquals("", $jwe->encryptedKey());
+        $this->assertEquals('', $jwe->encryptedKey());
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -148,9 +152,9 @@ class JWETest extends TestCase
      */
     public function testIV(JWE $jwe)
     {
-        $this->assertInternalType("string", $jwe->initializationVector());
+        $this->assertIsString($jwe->initializationVector());
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -158,9 +162,9 @@ class JWETest extends TestCase
      */
     public function testCiphertext(JWE $jwe)
     {
-        $this->assertInternalType("string", $jwe->ciphertext());
+        $this->assertIsString($jwe->ciphertext());
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -168,9 +172,9 @@ class JWETest extends TestCase
      */
     public function testAuthTag(JWE $jwe)
     {
-        $this->assertInternalType("string", $jwe->authenticationTag());
+        $this->assertIsString($jwe->authenticationTag());
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -179,10 +183,10 @@ class JWETest extends TestCase
     public function testToCompact(JWE $jwe)
     {
         $data = $jwe->toCompact();
-        $this->assertInternalType("string", $data);
+        $this->assertIsString($data);
         return $data;
     }
-    
+
     /**
      * @depends testEncrypt
      *
@@ -191,9 +195,9 @@ class JWETest extends TestCase
     public function testToString(JWE $jwe)
     {
         $token = strval($jwe);
-        $this->assertInternalType("string", $token);
+        $this->assertIsString($token);
     }
-    
+
     /**
      * @depends testToCompact
      *
@@ -204,26 +208,24 @@ class JWETest extends TestCase
         $jwe = JWE::fromCompact($data);
         $this->assertInstanceOf(JWE::class, $jwe);
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testFromPartsFail()
     {
-        JWE::fromParts(array());
+        $this->expectException(\UnexpectedValueException::class);
+        JWE::fromParts([]);
     }
-    
+
     public function testEncryptWithAll()
     {
         $zip_algo = new DeflateAlgorithm();
-        $header = new Header(new JWTParameter("test", "value"));
-        static $iv = "0123456789abcdef";
+        $header = new Header(new JWTParameter('test', 'value'));
+        static $iv = '0123456789abcdef';
         $jwe = JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo,
             $zip_algo, $header, self::CEK, $iv);
         $this->assertInstanceOf(JWE::class, $jwe);
         return $jwe;
     }
-    
+
     /**
      * @depends testEncryptWithAll
      *
@@ -234,7 +236,7 @@ class JWETest extends TestCase
         $payload = $jwe->decrypt(self::$_keyAlgo, self::$_encAlgo);
         $this->assertEquals(self::PAYLOAD, $payload);
     }
-    
+
     /**
      * @depends testEncryptWithAll
      *
@@ -242,65 +244,54 @@ class JWETest extends TestCase
      */
     public function testCustomParameter(JWE $jwe)
     {
-        $this->assertEquals("value",
-            $jwe->header()
-                ->get("test")
-                ->value());
+        $this->assertEquals('value', $jwe->header()->get('test')->value());
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testEncryptInvalidKeySize()
     {
-        JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, null,
-            "nope");
+        $this->expectException(\UnexpectedValueException::class);
+        JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, null, 'nope');
     }
-    
-    /**
-     * @expectedException UnexpectedValueException
-     */
+
     public function testEncryptInvalidIVSize()
     {
-        JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, null,
-            null, "nope");
+        $this->expectException(\UnexpectedValueException::class);
+        JWE::encrypt(self::PAYLOAD, self::$_keyAlgo, self::$_encAlgo, null, null, null, 'nope');
     }
-    
-    /**
-     * @expectedException RuntimeException
-     */
+
     public function testKeyEncryptUnsetsHeader()
     {
         $key_algo = new JWETest_EvilKeyAlgo();
+        $this->expectException(\RuntimeException::class);
         JWE::encrypt(self::PAYLOAD, $key_algo, self::$_encAlgo);
     }
 }
 
 class JWETest_EvilKeyAlgo extends KeyManagementAlgorithm
 {
+    public function cekForEncryption(int $length): string
+    {
+        return str_repeat("\0", $length);
+    }
+
+    public function algorithmParamValue(): string
+    {
+        return 'test';
+    }
+
+    public function headerParameters(): array
+    {
+        return [];
+    }
+
     protected function _encryptKey(string $key, Header &$header): string
     {
         $header = null;
         return $key;
     }
-    
+
     protected function _decryptKey(string $ciphertext, Header $header): string
     {
         return $ciphertext;
-    }
-    
-    public function cekForEncryption(int $length): string
-    {
-        return str_repeat("\0", $length);
-    }
-    
-    public function algorithmParamValue(): string
-    {
-        return "test";
-    }
-    
-    public function headerParameters(): array
-    {
-        return array();
     }
 }

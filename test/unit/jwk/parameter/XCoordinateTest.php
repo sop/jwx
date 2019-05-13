@@ -1,12 +1,16 @@
 <?php
 
-use JWX\JWK\Parameter\JWKParameter;
-use JWX\JWK\Parameter\XCoordinateParameter;
+declare(strict_types = 1);
+
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWK\Parameter\JWKParameter;
+use Sop\JWX\JWK\Parameter\XCoordinateParameter;
 
 /**
  * @group jwk
  * @group parameter
+ *
+ * @internal
  */
 class XCoordinateParameterTest extends TestCase
 {
@@ -16,7 +20,7 @@ class XCoordinateParameterTest extends TestCase
         $this->assertInstanceOf(XCoordinateParameter::class, $param);
         return $param;
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -26,7 +30,7 @@ class XCoordinateParameterTest extends TestCase
     {
         $this->assertEquals(JWKParameter::PARAM_X_COORDINATE, $param->name());
     }
-    
+
     /**
      * @depends testCreate
      *
@@ -36,7 +40,7 @@ class XCoordinateParameterTest extends TestCase
     {
         $this->assertEquals("\xff\x88", $param->coordinateOctets());
     }
-    
+
     /**
      * @depends testCreate
      *

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace JWX\JWE\Exception;
+namespace Sop\JWX\JWE\Exception;
 
 /**
  * Exception thrown when encrypted message authentication validation fails.
