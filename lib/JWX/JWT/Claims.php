@@ -99,7 +99,7 @@ class Claims implements \Countable, \IteratorAggregate
      *
      * @param string $name Claim name
      *
-     * @return true
+     * @return bool
      */
     public function has(string $name): bool
     {
