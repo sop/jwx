@@ -27,7 +27,7 @@ trait Base64UIntValue
     public static function fromNumber($number): Parameter
     {
         $data = BigInt::fromBase10($number)->base256();
-        return self::fromString($data);
+        return static::fromString($data);
     }
 
     /**
