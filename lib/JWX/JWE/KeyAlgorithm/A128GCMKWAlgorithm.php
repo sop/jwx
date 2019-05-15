@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Sop\JWX\JWE\KeyAlgorithm;
 
-use Sop\GCM\Cipher\AES\AES128Cipher;
-use Sop\GCM\Cipher\Cipher;
 use Sop\JWX\JWA\JWA;
 
 /**
@@ -21,14 +19,6 @@ class A128GCMKWAlgorithm extends AESGCMKWAlgorithm
     public function algorithmParamValue(): string
     {
         return JWA::ALGO_A128GCMKW;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getGCMCipher(): Cipher
-    {
-        return new AES128Cipher();
     }
 
     /**

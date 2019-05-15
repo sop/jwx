@@ -4,8 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\JWX\JWE\KeyAlgorithm;
 
-use Sop\GCM\Cipher\Cipher;
-use Sop\GCM\GCM;
+use Sop\GCM\AESGCM;
 use Sop\JWX\JWA\JWA;
 use Sop\JWX\JWE\KeyAlgorithm\Feature\RandomCEK;
 use Sop\JWX\JWE\KeyManagementAlgorithm;
@@ -135,13 +134,6 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
     }
 
     /**
-     * Get GCM Cipher instance.
-     *
-     * @return Cipher
-     */
-    abstract protected function _getGCMCipher(): Cipher;
-
-    /**
      * Get the required key size.
      *
      * @return int
@@ -149,22 +141,12 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
     abstract protected function _keySize(): int;
 
     /**
-     * Get GCM instance.
-     *
-     * @return GCM
-     */
-    final protected function _getGCM(): GCM
-    {
-        return new GCM($this->_getGCMCipher(), self::AUTH_TAG_SIZE);
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function _encryptKey(string $key, Header &$header): string
     {
-        [$ciphertext, $auth_tag] = $this->_getGCM()
-            ->encrypt($key, '', $this->_kek, $this->_iv);
+        [$ciphertext, $auth_tag] = AESGCM::encrypt($key, '', $this->_kek,
+            $this->_iv, self::AUTH_TAG_SIZE);
         // insert authentication tag to the header
         $header = $header->withParameters(
             AuthenticationTagParameter::fromString($auth_tag));
@@ -181,7 +163,6 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
                 "Header doesn't contain authentication tag.");
         }
         $auth_tag = $header->authenticationTag()->authenticationTag();
-        return $this->_getGCM()
-            ->decrypt($ciphertext, $auth_tag, '', $this->_kek, $this->_iv);
+        return AESGCM::decrypt($ciphertext, $auth_tag, '', $this->_kek, $this->_iv);
     }
 }
