@@ -4,9 +4,8 @@ declare(strict_types = 1);
 
 namespace Sop\JWX\JWE\EncryptionAlgorithm;
 
-use Sop\GCM\Cipher\Cipher;
+use Sop\GCM\AESGCM;
 use Sop\GCM\Exception\AuthenticationException as GCMAuthException;
-use Sop\GCM\GCM;
 use Sop\JWX\JWE\ContentEncryptionAlgorithm;
 use Sop\JWX\JWE\Exception\AuthenticationException;
 use Sop\JWX\JWT\Parameter\EncryptionAlgorithmParameter;
@@ -26,9 +25,7 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
     {
         $this->_validateKey($key);
         $this->_validateIV($iv);
-        [$ciphertext, $auth_tag] = $this->_getGCM()
-            ->encrypt($plaintext, $aad, $key, $iv);
-        return [$ciphertext, $auth_tag];
+        return AESGCM::encrypt($plaintext, $aad, $key, $iv, 16);
     }
 
     /**
@@ -40,8 +37,7 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
         $this->_validateKey($key);
         $this->_validateIV($iv);
         try {
-            $plaintext = $this->_getGCM()
-                ->decrypt($ciphertext, $auth_tag, $aad, $key, $iv);
+            $plaintext = AESGCM::decrypt($ciphertext, $auth_tag, $aad, $key, $iv);
         } catch (GCMAuthException $e) {
             throw new AuthenticationException('Message authentication failed.');
         }
@@ -62,23 +58,6 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
     public function headerParameters(): array
     {
         return [EncryptionAlgorithmParameter::fromAlgorithm($this)];
-    }
-
-    /**
-     * Get GCM Cipher instance.
-     *
-     * @return Cipher
-     */
-    abstract protected function _getGCMCipher(): Cipher;
-
-    /**
-     * Get GCM instance.
-     *
-     * @return GCM
-     */
-    final protected function _getGCM(): GCM
-    {
-        return new GCM($this->_getGCMCipher(), 16);
     }
 
     /**

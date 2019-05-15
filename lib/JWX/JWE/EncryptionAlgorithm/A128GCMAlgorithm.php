@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Sop\JWX\JWE\EncryptionAlgorithm;
 
-use Sop\GCM\Cipher\AES\AES128Cipher;
-use Sop\GCM\Cipher\Cipher;
 use Sop\JWX\JWA\JWA;
 
 /**
@@ -29,13 +27,5 @@ class A128GCMAlgorithm extends AESGCMAlgorithm
     public function keySize(): int
     {
         return 16;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getGCMCipher(): Cipher
-    {
-        return new AES128Cipher();
     }
 }

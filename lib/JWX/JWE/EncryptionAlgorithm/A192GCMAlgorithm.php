@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Sop\JWX\JWE\EncryptionAlgorithm;
 
-use Sop\GCM\Cipher\AES\AES192Cipher;
-use Sop\GCM\Cipher\Cipher;
 use Sop\JWX\JWA\JWA;
 
 /**
@@ -29,13 +27,5 @@ class A192GCMAlgorithm extends AESGCMAlgorithm
     public function keySize(): int
     {
         return 24;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _getGCMCipher(): Cipher
-    {
-        return new AES192Cipher();
     }
 }
