@@ -52,7 +52,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
     /**
      * Constructor.
      *
-     * Use <code>fromPublicKey</code> or <code>fromPrivateKey</code> instead!
+     * Use `fromPublicKey` or `fromPrivateKey` instead!
      *
      * @param RSAPublicKeyJWK  $pub_key  RSA public key
      * @param RSAPrivateKeyJWK $priv_key Optional RSA private key

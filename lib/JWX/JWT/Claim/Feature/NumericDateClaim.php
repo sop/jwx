@@ -26,7 +26,7 @@ trait NumericDateClaim
     /**
      * Initialize instance from date/time string.
      *
-     * @param string $time <code>strtotime</code> compatible time string
+     * @param string $time `strtotime` compatible time string
      * @param string $tz   Default timezone
      *
      * @throws \RuntimeException
