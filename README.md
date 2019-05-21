@@ -1,9 +1,9 @@
+# JWX
+
 [![Build Status](https://travis-ci.org/sop/jwx.svg?branch=master)](https://travis-ci.org/sop/jwx)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sop/jwx/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sop/jwx/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/sop/jwx/badge.svg?branch=master)](https://coveralls.io/github/sop/jwx?branch=master)
 [![License](https://poser.pugx.org/sop/jwx/license)](https://github.com/sop/jwx/blob/master/LICENSE)
-
-# JWX
 
 A PHP library for JSON web tokens
 ([JWT](https://tools.ietf.org/html/rfc7519))
@@ -17,43 +17,43 @@ Also implements unencoded payload option
 
 ## Features
 
--   Signing and signature validation (JWS)
-    -   HMAC, RSA and EC
--   Encryption and decryption with compression and integrity protection (JWE)
-    -   AES
--   Claims validation
-    -   Configurable with sensible defaults
--   JSON Web Keys (JWK)
-    -   Convert PEM encoded keys to JWK and vice versa
+- Signing and signature validation (JWS)
+  - HMAC, RSA and EC
+- Encryption and decryption with compression and integrity protection (JWE)
+  - AES
+- Claims validation
+  - Configurable with sensible defaults
+- JSON Web Keys (JWK)
+  - Convert PEM encoded keys to JWK and vice versa
 
 ## Supported algorithms
 
--   Signature
-    -   HMAC with SHA-256, SHA-384 and SHA-512
-    -   RSASSA-PKCS1-v1_5 with SHA-256, SHA-384 and SHA-512
-    -   ECDSA with P-256, P-384 and P-521 curves
--   Content encryption
-    -   AES-CBC with 128, 192 and 256-bit key sizes
-    -   AES-GCM with 128, 192 and 256-bit key sizes
--   Key management
-    -   Shared symmetric key (direct)
-    -   RSAES-PKCS1-v1_5
-    -   RSAES OAEP
-    -   AES Key Wrap with 128, 192 and 256-bit key sizes
-    -   AES-GCM key encryption with 128, 192 and 256-bit key sizes
-    -   Password-based key encryption (PBES2 with AES Key Wrap)
--   Compression
-    -   DEFLATE
+- Signature
+  - HMAC with SHA-256, SHA-384 and SHA-512
+  - RSASSA-PKCS1-v1_5 with SHA-256, SHA-384 and SHA-512
+  - ECDSA with P-256, P-384 and P-521 curves
+- Content encryption
+  - AES-CBC with 128, 192 and 256-bit key sizes
+  - AES-GCM with 128, 192 and 256-bit key sizes
+- Key management
+  - Shared symmetric key (direct)
+  - RSAES-PKCS1-v1_5
+  - RSAES OAEP
+  - AES Key Wrap with 128, 192 and 256-bit key sizes
+  - AES-GCM key encryption with 128, 192 and 256-bit key sizes
+  - Password-based key encryption (PBES2 with AES Key Wrap)
+- Compression
+  - DEFLATE
 
 ## Requirements
 
--   PHP >=7.2
--   openssl
--   hash
--   [sop/crypto-types](https://github.com/sop/crypto-types)
--   [sop/crypto-encoding](https://github.com/sop/crypto-encoding)
--   [sop/aes-kw](https://github.com/sop/aes-kw)
--   [sop/gcm](https://github.com/sop/gcm)
+- PHP >=7.2
+- openssl
+- hash
+- [sop/crypto-types](https://github.com/sop/crypto-types)
+- [sop/crypto-encoding](https://github.com/sop/crypto-encoding)
+- [sop/aes-kw](https://github.com/sop/aes-kw)
+- [sop/gcm](https://github.com/sop/gcm)
 
 ## Installation
 
@@ -112,14 +112,14 @@ foreach ($claims as $claim) {
 See [`/examples`](https://github.com/sop/jwx/tree/master/examples)
 directory for more examples.
 
--   [Create a signed JWT](https://github.com/sop/jwx/blob/master/examples/jws-create.php)
--   [Consume a signed JWT](https://github.com/sop/jwx/blob/master/examples/jws-consume.php)
--   [Create an encrypted JWT](https://github.com/sop/jwx/blob/master/examples/jwe-create.php)
--   [Consume an encrypted JWT](https://github.com/sop/jwx/blob/master/examples/jwe-consume.php)
--   [Create a nested JWT](https://github.com/sop/jwx/blob/master/examples/nested-create.php)
--   [Consume a nested JWT](https://github.com/sop/jwx/blob/master/examples/nested-consume.php)
--   [Encrypt arbitrary data](https://github.com/sop/jwx/blob/master/examples/arbitrary-encrypt.php)
--   [Decrypt arbitrary data](https://github.com/sop/jwx/blob/master/examples/arbitrary-decrypt.php)
+- [Create a signed JWT](https://github.com/sop/jwx/blob/master/examples/jws-create.php)
+- [Consume a signed JWT](https://github.com/sop/jwx/blob/master/examples/jws-consume.php)
+- [Create an encrypted JWT](https://github.com/sop/jwx/blob/master/examples/jwe-create.php)
+- [Consume an encrypted JWT](https://github.com/sop/jwx/blob/master/examples/jwe-consume.php)
+- [Create a nested JWT](https://github.com/sop/jwx/blob/master/examples/nested-create.php)
+- [Consume a nested JWT](https://github.com/sop/jwx/blob/master/examples/nested-consume.php)
+- [Encrypt arbitrary data](https://github.com/sop/jwx/blob/master/examples/arbitrary-encrypt.php)
+- [Decrypt arbitrary data](https://github.com/sop/jwx/blob/master/examples/arbitrary-decrypt.php)
 
 ## License
 
