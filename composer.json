@@ -30,10 +30,10 @@
         "php": ">=7.2",
         "ext-openssl": "*",
         "ext-hash": "*",
-        "sop/crypto-types": "dev-php72 as 0.2.1",
-        "sop/crypto-encoding": "dev-php72 as 0.2.0",
-        "sop/aes-kw": "dev-php72 as 2.0.0",
-        "sop/gcm": "dev-php72 as 2.0.0"
+        "sop/crypto-types": "dev-master as 0.2.1",
+        "sop/crypto-encoding": "dev-master as 0.2.0",
+        "sop/aes-kw": "dev-master as 2.0.0",
+        "sop/gcm": "dev-master as 2.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.1",
