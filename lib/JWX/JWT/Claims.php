@@ -91,7 +91,7 @@ class Claims implements \Countable, \IteratorAggregate
      */
     public function all(): array
     {
-        return $this->_claims;
+        return array_values($this->_claims);
     }
 
     /**

@@ -108,6 +108,8 @@ class Claim
     /**
      * Validate the claim in a given context.
      *
+     * Overridden in specific claims that provide default validation.
+     *
      * @param ValidationContext $ctx
      *
      * @return bool True if claim is valid
@@ -118,12 +120,10 @@ class Claim
         if (!$ctx->hasConstraint($this->_name)) {
             return true;
         }
-        $constraint = $ctx->constraint($this->_name);
-        // if validation context has an explicitly
-        // defined validator for the claim
+        // if validation context has an explicitly defined validator for the claim
         if ($ctx->hasValidator($this->_name)) {
             return $ctx->validator($this->_name)
-                ->validate($this->_value, $constraint);
+                ->validate($this->_value, $ctx->constraint($this->_name));
         }
         // validate using claim's default validator
         return $this->validate($ctx->constraint($this->_name));

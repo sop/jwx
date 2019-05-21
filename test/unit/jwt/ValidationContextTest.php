@@ -3,7 +3,10 @@
 declare(strict_types = 1);
 
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWT\Claim\IssuerClaim;
 use Sop\JWX\JWT\Claim\RegisteredClaim;
+use Sop\JWX\JWT\Claims;
+use Sop\JWX\JWT\Exception\ValidationException;
 use Sop\JWX\JWT\ValidationContext;
 
 /**
@@ -151,5 +154,33 @@ class ValidationContextTest extends TestCase
     {
         $this->expectException(\LogicException::class);
         $ctx->validator('nope');
+    }
+
+    /**
+     * @depends testCreate
+     *
+     * @param ValidationContext $ctx
+     */
+    public function testValidateMissingClaim(ValidationContext $ctx)
+    {
+        $claims = new Claims();
+        $ctx = $ctx->withIssuer('test');
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('is required');
+        $ctx->validate($claims);
+    }
+
+    /**
+     * @depends testCreate
+     *
+     * @param ValidationContext $ctx
+     */
+    public function testValidateRequiredFail(ValidationContext $ctx)
+    {
+        $claims = new Claims(new IssuerClaim('other'));
+        $ctx = $ctx->withIssuer('test');
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('failed');
+        $ctx->validate($claims);
     }
 }

@@ -13,9 +13,12 @@ use Sop\JWX\JWT\Exception\ValidationException;
 /**
  * Class to provide context for claims validation.
  *
- * Validation constraints are variables that are compared against the claims.
+ * Validation constraints are variables, that are compared against the claims.
  * Validation of the expiration, not-before and not-after claims is provided by
  * default.
+ *
+ * Constraints configured for the validation context must be present in the
+ * validated set of claims, or else validation fails.
  *
  * Context also provides a set of JSON Web Keys, that shall be used for the
  * JWS signature validation or JWE payload decryption.
@@ -340,10 +343,23 @@ class ValidationContext
      */
     public function validate(Claims $claims): self
     {
-        foreach ($claims as $claim) {
+        $claimset = iterator_to_array($claims);
+        // validate required constraints
+        foreach (array_keys($this->_constraints) as $name) {
+            if (!isset($claimset[$name])) {
+                throw new ValidationException("Claim '{$name}' is required.");
+            }
+            if (!$claimset[$name]->validateWithContext($this)) {
+                throw new ValidationException(
+                    "Validation of claim '{$name}' failed.");
+            }
+            unset($claimset[$name]);
+        }
+        // validate remaining claims using default validators
+        foreach ($claimset as $name => $claim) {
             if (!$claim->validateWithContext($this)) {
                 throw new ValidationException(
-                    "Validation of claim '" . $claim->name() . "' failed.");
+                    "Validation of claim '{$name}' failed.");
             }
         }
         return $this;
