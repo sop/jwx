@@ -72,23 +72,23 @@ JWS and JWE may also be used to carry arbitrary payload, not just JSON claims.
 
 ## Code examples
 
-### Simple JWT
+### [Simple JWT](https://github.com/sop/jwx/blob/master/examples/jwt-io.php)
 
-Parse JWT from [https://jwt.io/](https://jwt.io/#debugger-io) example.
+Parse JWT from [https://jwt.io/](https://jwt.io/#debugger-io) HS512 example.
 
 ```php
 $jwt = new JWT($token);
 // create context for the claims validation
-// "secret" key is used to verify the signature
+// 'your-512-bit-secret' key is used to verify the signature
 $ctx = ValidationContext::fromJWK(
-    SymmetricKeyJWK::fromKey("secret"));
+    SymmetricKeyJWK::fromKey('your-512-bit-secret'));
 // validate claims
 $claims = $jwt->claims($ctx);
 // print value of the subject claim
-echo $claims->subject()->value() . "\n";
+echo $claims->subject()->value();
 ```
 
-### Additional Validation
+### [Additional Validation](https://github.com/sop/jwx/blob/master/examples/jwt-io.php)
 
 Parse the same token as above but additionally validate subject and admin claims.
 
@@ -97,9 +97,9 @@ $jwt = new JWT($token);
 // validate that the subject is "1234567890"
 // validate that the admin claim is true using explicitly provided validator
 $ctx = ValidationContext::fromJWK(
-    SymmetricKeyJWK::fromKey("secret"),
-    ["sub" => "1234567890"])->withConstraint(
-        "admin", true, new EqualsValidator());
+    SymmetricKeyJWK::fromKey('your-512-bit-secret'),
+        ['sub' => '1234567890']
+    )->withConstraint('admin', true, new EqualsValidator());
 // validate and print all claims
 $claims = $jwt->claims($ctx);
 foreach ($claims as $claim) {
