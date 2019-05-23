@@ -16,7 +16,7 @@ use Sop\JWX\JWT\Claim\RegisteredClaim;
 class AudienceClaimTest extends TestCase
 {
     const VALUE_SINGLE = 'audience';
-    
+
     const VALUE_MANY = ['audience #1', 'audience #2'];
 
     public function testCreate()
