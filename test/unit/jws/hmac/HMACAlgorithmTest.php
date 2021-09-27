@@ -37,10 +37,23 @@ class HMACAlgorithmTest extends TestCase
         HMACAlgorithm::fromJWK($jwk, new Header());
     }
 
+    /**
+     * @requires PHP < 8
+     */
     public function testComputeFails()
     {
         $algo = new HMACAlgorithmTest_InvalidAlgo('key');
         $this->expectException(\RuntimeException::class);
+        $algo->computeSignature('data');
+    }
+    
+    /**
+     * @requires PHP >= 8
+     */
+    public function testComputeFailsPhp8()
+    {
+        $algo = new HMACAlgorithmTest_InvalidAlgo('key');
+        $this->expectException(\ValueError::class);
         $algo->computeSignature('data');
     }
 }

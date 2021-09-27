@@ -110,6 +110,7 @@ class DeflateTest extends TestCase
 
     /**
      * @depends testCreate
+     * @requires PHP < 8
      *
      * @param CompressionAlgorithm $algo
      */
@@ -120,6 +121,22 @@ class DeflateTest extends TestCase
         $prop->setAccessible(true);
         $prop->setValue($algo, 10);
         $this->expectException(\RuntimeException::class);
+        $algo->compress('test');
+    }
+    
+    /**
+     * @depends testCreate
+     * @requires PHP >= 8
+     *
+     * @param CompressionAlgorithm $algo
+     */
+    public function testCompressFailPhp8(CompressionAlgorithm $algo)
+    {
+        $obj = new ReflectionClass($algo);
+        $prop = $obj->getProperty('_compressionLevel');
+        $prop->setAccessible(true);
+        $prop->setValue($algo, 10);
+        $this->expectException(\ValueError::class);
         $algo->compress('test');
     }
 }

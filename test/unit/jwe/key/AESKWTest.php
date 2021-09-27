@@ -55,12 +55,25 @@ class AESKWTest extends TestCase
 
     /**
      * @depends testCreate
+     * @requires PHP < 8
      *
      * @param KeyManagementAlgorithm $algo
      */
     public function testCEKForEncryptionFail(KeyManagementAlgorithm $algo)
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(\InvalidArgumentException::class);
+        $algo->cekForEncryption(0);
+    }
+    
+    /**
+     * @depends testCreate
+     * @requires PHP >= 8
+     *
+     * @param KeyManagementAlgorithm $algo
+     */
+    public function testCEKForEncryptionFailPhp8(KeyManagementAlgorithm $algo)
+    {
+        $this->expectException(\ValueError::class);
         $algo->cekForEncryption(0);
     }
 
