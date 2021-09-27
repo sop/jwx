@@ -12,13 +12,6 @@ use Sop\JWX\Parameter\Parameter;
 trait ArrayParameterValue
 {
     /**
-     * Constructor.
-     *
-     * @param mixed ...$values
-     */
-    abstract public function __construct(...$values);
-
-    /**
      * Initialize from a JSON value.
      *
      * @param array $value
