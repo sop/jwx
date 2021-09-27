@@ -20,6 +20,9 @@ trait RandomCEK
      */
     public function cekForEncryption(int $length): string
     {
+        if ($length < 1) {
+            throw new \InvalidArgumentException("Length must be greater than 0.");
+        }
         $ret = openssl_random_pseudo_bytes($length);
         if (false === $ret) {
             throw new \RuntimeException('openssl_random_pseudo_bytes() failed.');
