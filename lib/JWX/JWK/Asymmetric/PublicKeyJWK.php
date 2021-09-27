@@ -20,8 +20,6 @@ abstract class PublicKeyJWK extends JWK
 {
     /**
      * Convert public key to PEM.
-     *
-     * @return PEM
      */
     abstract public function toPEM(): PEM;
 

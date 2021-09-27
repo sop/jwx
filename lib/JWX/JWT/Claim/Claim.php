@@ -57,8 +57,6 @@ class Claim
      *
      * @param string $name  Claim name
      * @param mixed  $value Claim value
-     *
-     * @return Claim
      */
     public static function fromNameAndValue(string $name, $value): Claim
     {
@@ -71,8 +69,6 @@ class Claim
 
     /**
      * Get the claim name.
-     *
-     * @return string
      */
     public function name(): string
     {
@@ -109,8 +105,6 @@ class Claim
      * Validate the claim in a given context.
      *
      * Overridden in specific claims that provide default validation.
-     *
-     * @param ValidationContext $ctx
      *
      * @return bool True if claim is valid
      */

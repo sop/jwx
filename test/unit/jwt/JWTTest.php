@@ -29,13 +29,13 @@ use Sop\JWX\Util\Base64;
  */
 class JWTTest extends TestCase
 {
-    const KEY_128 = '123456789 123456789 123456789 12';
+    public const KEY_128 = '123456789 123456789 123456789 12';
 
-    const KEY_ID = 'key-id';
+    public const KEY_ID = 'key-id';
 
-    const KEY_NESTED = '987654321 987654321 987654321 98';
+    public const KEY_NESTED = '987654321 987654321 987654321 98';
 
-    const KEY_ID2 = 'key-id2';
+    public const KEY_ID2 = 'key-id2';
     private static $_claims;
 
     public static function setUpBeforeClass(): void
@@ -59,8 +59,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testIsJWS(JWT $jwt)
     {
@@ -69,8 +67,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testGetJWS(JWT $jwt)
     {
@@ -79,8 +75,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testGetJWEFail(JWT $jwt)
     {
@@ -90,8 +84,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testHeader(JWT $jwt)
     {
@@ -101,8 +93,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testToken(JWT $jwt)
     {
@@ -111,8 +101,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testIsUnsecured(JWT $jwt)
     {
@@ -121,8 +109,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testToString(JWT $jwt)
     {
@@ -132,8 +118,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromJWS(JWT $jwt)
     {
@@ -144,8 +128,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromJWSMultipleKeys(JWT $jwt)
     {
@@ -157,8 +139,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromJWSInvalidSignature(JWT $jwt)
     {
@@ -172,8 +152,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromJWSFail(JWT $jwt)
     {
@@ -195,8 +173,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testIsJWE(JWT $jwt)
     {
@@ -205,8 +181,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testGetJWE(JWT $jwt)
     {
@@ -215,8 +189,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testGetJWSFail(JWT $jwt)
     {
@@ -226,8 +198,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testIsEncryptedUnsecured(JWT $jwt)
     {
@@ -236,8 +206,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromEncrypted(JWT $jwt)
     {
@@ -249,8 +217,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromEncryptedMultipleKeys(JWT $jwt)
     {
@@ -262,8 +228,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromEncryptedFail(JWT $jwt)
     {
@@ -282,8 +246,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testUnsecuredFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testIsUnsecuredUnsecured(JWT $jwt)
     {
@@ -292,8 +254,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testUnsecuredFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromUnsecured(JWT $jwt)
     {
@@ -305,8 +265,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testUnsecuredFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromUnsecuredNotAllowedFail(JWT $jwt)
     {
@@ -317,8 +275,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testUnsecuredFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testMalformedUnsecuredToken(JWT $jwt)
     {
@@ -339,8 +295,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testCreateJWS
-     *
-     * @param JWT $jwt
      */
     public function testEncryptNested(JWT $jwt)
     {
@@ -354,8 +308,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptNested
-     *
-     * @param JWT $jwt
      */
     public function testNestedHeader(JWT $jwt)
     {
@@ -365,8 +317,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptNested
-     *
-     * @param JWT $jwt
      */
     public function testIsNested(JWT $jwt)
     {
@@ -388,8 +338,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptNested
-     *
-     * @param JWT $jwt
      */
     public function testClaimsFromNested(JWT $jwt)
     {
@@ -403,8 +351,6 @@ class JWTTest extends TestCase
 
     /**
      * @depends testEncryptedFromClaims
-     *
-     * @param JWT $jwt
      */
     public function testSignNested(JWT $jwt)
     {

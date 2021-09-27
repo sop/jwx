@@ -15,14 +15,14 @@ class KeyOperationsParameter extends JWKParameter
 {
     use ArrayParameterValue;
 
-    const OP_SIGN = 'sign';
-    const OP_VERIFY = 'verify';
-    const OP_ENCRYPT = 'encrypt';
-    const OP_DECRYPT = 'decrypt';
-    const OP_WRAP_KEY = 'wrapKey';
-    const OP_UNWRAP_KEY = 'unwrapKey';
-    const OP_DERIVE_KEY = 'deriveKey';
-    const OP_DERIVE_BITS = 'deriveBits';
+    public const OP_SIGN = 'sign';
+    public const OP_VERIFY = 'verify';
+    public const OP_ENCRYPT = 'encrypt';
+    public const OP_DECRYPT = 'decrypt';
+    public const OP_WRAP_KEY = 'wrapKey';
+    public const OP_UNWRAP_KEY = 'unwrapKey';
+    public const OP_DERIVE_KEY = 'deriveKey';
+    public const OP_DERIVE_BITS = 'deriveBits';
 
     /**
      * Constructor.

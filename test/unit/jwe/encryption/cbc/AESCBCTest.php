@@ -17,8 +17,8 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class AESCBCEncryptionTest extends TestCase
 {
-    const KEY_128 = '123456789 123456789 123456789 12';
-    const IV = '123456789 123456';
+    public const KEY_128 = '123456789 123456789 123456789 12';
+    public const IV = '123456789 123456';
 
     public function testCreate()
     {
@@ -29,8 +29,6 @@ class AESCBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testIVSize(ContentEncryptionAlgorithm $algo)
     {
@@ -39,8 +37,6 @@ class AESCBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testHeaderParams(ContentEncryptionAlgorithm $algo)
     {
@@ -50,8 +46,6 @@ class AESCBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testInvalidKeySize(ContentEncryptionAlgorithm $algo)
     {
@@ -61,8 +55,6 @@ class AESCBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testInvalidIVSize(ContentEncryptionAlgorithm $algo)
     {
@@ -72,8 +64,6 @@ class AESCBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testAuthFail(ContentEncryptionAlgorithm $algo)
     {
@@ -92,8 +82,6 @@ class AESCBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AESCBCAlgorithm $algo
      */
     public function testDecryptFail(AESCBCAlgorithm $algo)
     {

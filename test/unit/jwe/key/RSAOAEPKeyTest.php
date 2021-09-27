@@ -18,7 +18,7 @@ use Sop\JWX\JWK\RSA\RSAPrivateKeyJWK;
  */
 class RSAOAEPKeyTest extends TestCase
 {
-    const CEK = '123456789 123456';
+    public const CEK = '123456789 123456';
 
     private static $_publicKey;
 
@@ -46,8 +46,6 @@ class RSAOAEPKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testAlgoValue(KeyManagementAlgorithm $algo)
     {
@@ -56,8 +54,6 @@ class RSAOAEPKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testEncrypt(RSAESKeyAlgorithm $algo)
     {
@@ -70,8 +66,7 @@ class RSAOAEPKeyTest extends TestCase
      * @depends testCreate
      * @depends testEncrypt
      *
-     * @param RSAESKeyAlgorithm $algo
-     * @param string            $data
+     * @param string $data
      */
     public function testDecrypt(RSAESKeyAlgorithm $algo, $data)
     {

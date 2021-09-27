@@ -14,8 +14,6 @@ abstract class Validator
      *
      * @param mixed $value
      * @param mixed $constraint
-     *
-     * @return bool
      */
     public function __invoke($value, $constraint): bool
     {

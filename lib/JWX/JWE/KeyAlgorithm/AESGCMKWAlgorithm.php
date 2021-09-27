@@ -31,7 +31,7 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_A128GCMKW => A128GCMKWAlgorithm::class,
         JWA::ALGO_A192GCMKW => A192GCMKWAlgorithm::class,
         JWA::ALGO_A256GCMKW => A256GCMKWAlgorithm::class,
@@ -42,14 +42,14 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      *
      * @var int
      */
-    const IV_SIZE = 12;
+    public const IV_SIZE = 12;
 
     /**
      * Authentication tag size in bytes.
      *
      * @var int
      */
-    const AUTH_TAG_SIZE = 16;
+    public const AUTH_TAG_SIZE = 16;
 
     /**
      * Key encryption key.
@@ -86,9 +86,6 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
     /**
      * Initialize from JWK.
      *
-     * @param JWK    $jwk
-     * @param Header $header
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -114,8 +111,6 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
      * Key size must match the underlying cipher.
      *
      * @param string $key Key encryption key
-     *
-     * @return self
      */
     public static function fromKey(string $key): self
     {
@@ -135,8 +130,6 @@ abstract class AESGCMKWAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Get the required key size.
-     *
-     * @return int
      */
     abstract protected function _keySize(): int;
 

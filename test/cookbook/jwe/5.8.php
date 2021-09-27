@@ -38,8 +38,6 @@ class CookbookAESKWWithAESGCMTest extends TestCase
 
     /**
      * @depends testCreateJWK
-     *
-     * @param SymmetricKeyJWK $jwk
      */
     public function testEncryptKey(SymmetricKeyJWK $jwk)
     {

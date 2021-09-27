@@ -22,7 +22,7 @@ class SignatureAlgorithmFactory
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_HS256 => HS256Algorithm::class,
         JWA::ALGO_HS384 => HS384Algorithm::class,
         JWA::ALGO_HS512 => HS512Algorithm::class,
@@ -42,8 +42,6 @@ class SignatureAlgorithmFactory
 
     /**
      * Constructor.
-     *
-     * @param Header $header
      */
     public function __construct(Header $header)
     {
@@ -52,10 +50,6 @@ class SignatureAlgorithmFactory
 
     /**
      * Get signature algorithm by given JWK.
-     *
-     * @param JWK $jwk
-     *
-     * @return SignatureAlgorithm
      */
     public function algoByKey(JWK $jwk): SignatureAlgorithm
     {
@@ -67,11 +61,7 @@ class SignatureAlgorithmFactory
     /**
      * Get signature algorithm using a matching key from given JWK set.
      *
-     * @param JWKSet $set
-     *
      * @throws \UnexpectedValueException If a key cannot be found
-     *
-     * @return SignatureAlgorithm
      */
     public function algoByKeys(JWKSet $set): SignatureAlgorithm
     {

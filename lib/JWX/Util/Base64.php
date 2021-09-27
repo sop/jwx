@@ -13,10 +13,6 @@ class Base64
      * Encode a string using base64url variant.
      *
      * @see https://en.wikipedia.org/wiki/Base64#URL_applications
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public static function urlEncode(string $data): string
     {
@@ -28,11 +24,7 @@ class Base64
      *
      * @see https://en.wikipedia.org/wiki/Base64#URL_applications
      *
-     * @param string $data
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return string
      */
     public static function urlDecode(string $data): string
     {
@@ -57,10 +49,6 @@ class Base64
      * Check whether string is validly base64url encoded.
      *
      * @see https://en.wikipedia.org/wiki/Base64#URL_applications
-     *
-     * @param string $data
-     *
-     * @return bool
      */
     public static function isValidURLEncoding(string $data): bool
     {
@@ -71,10 +59,6 @@ class Base64
      * Encode a string in base64.
      *
      * @see https://tools.ietf.org/html/rfc4648#section-4
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public static function encode(string $data): string
     {
@@ -86,11 +70,7 @@ class Base64
      *
      * @see https://tools.ietf.org/html/rfc4648#section-4
      *
-     * @param string $data
-     *
      * @throws \RuntimeException If decoding fails
-     *
-     * @return string
      */
     public static function decode(string $data): string
     {
@@ -107,10 +87,6 @@ class Base64
      * Check whether string is validly base64 encoded.
      *
      * @see https://tools.ietf.org/html/rfc4648#section-4
-     *
-     * @param string $data
-     *
-     * @return bool
      */
     public static function isValid(string $data): bool
     {

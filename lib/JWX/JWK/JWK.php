@@ -38,10 +38,6 @@ class JWK implements \Countable, \IteratorAggregate
 
     /**
      * Initialize from an array representing a JSON object.
-     *
-     * @param array $members
-     *
-     * @return self
      */
     public static function fromArray(array $members): self
     {
@@ -55,11 +51,7 @@ class JWK implements \Countable, \IteratorAggregate
     /**
      * Initialize from a JSON string.
      *
-     * @param string $json
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromJSON(string $json): self
     {
@@ -74,10 +66,6 @@ class JWK implements \Countable, \IteratorAggregate
      * Initialize from another JWK.
      *
      * Allows casting to subclass by late static binding.
-     *
-     * @param JWK $jwk
-     *
-     * @return self
      */
     public static function fromJWK(JWK $jwk): self
     {
@@ -88,8 +76,6 @@ class JWK implements \Countable, \IteratorAggregate
      * Get self with parameters added.
      *
      * @param JWKParameter ...$params
-     *
-     * @return self
      */
     public function withParameters(JWKParameter ...$params): self
     {
@@ -114,8 +100,6 @@ class JWK implements \Countable, \IteratorAggregate
      * Get self with given key ID added to parameters.
      *
      * @param string $id Key ID as a string
-     *
-     * @return self
      */
     public function withKeyID(string $id): self
     {
@@ -128,8 +112,6 @@ class JWK implements \Countable, \IteratorAggregate
      * Returns false if any of the given parameters is not set.
      *
      * @param string ...$names Parameter names
-     *
-     * @return bool
      */
     public function has(string ...$names): bool
     {
@@ -147,8 +129,6 @@ class JWK implements \Countable, \IteratorAggregate
      * @param string $name Parameter name
      *
      * @throws \LogicException
-     *
-     * @return JWKParameter
      */
     public function get(string $name): JWKParameter
     {
@@ -174,8 +154,6 @@ class JWK implements \Countable, \IteratorAggregate
 
     /**
      * Convert to JSON.
-     *
-     * @return string
      */
     public function toJSON(): string
     {
@@ -200,8 +178,6 @@ class JWK implements \Countable, \IteratorAggregate
      * Get iterator for the parameters.
      *
      * @see \IteratorAggregate::getIterator()
-     *
-     * @return \ArrayIterator
      */
     public function getIterator(): \ArrayIterator
     {

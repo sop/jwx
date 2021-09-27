@@ -11,8 +11,6 @@ interface CompressionAlgorithmParameterValue
 {
     /**
      * Get compression algorithm type as an 'zip' parameter value.
-     *
-     * @return string
      */
     public function compressionParamValue(): string;
 }

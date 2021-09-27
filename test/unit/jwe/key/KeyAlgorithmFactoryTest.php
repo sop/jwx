@@ -21,7 +21,7 @@ use Sop\JWX\JWT\Parameter\KeyIDParameter;
  */
 class KeyAlgorithmFactoryTest extends TestCase
 {
-    const KEY_ID = 'test-key';
+    public const KEY_ID = 'test-key';
 
     private static $_header;
 

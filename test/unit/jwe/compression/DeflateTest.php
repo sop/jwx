@@ -19,8 +19,8 @@ use Sop\JWX\JWT\JWT;
  */
 class DeflateTest extends TestCase
 {
-    const PAYLOAD = 'My hovercraft is full of eels.';
-    const CEK_A128 = '123456789 123456789 123456789 12';
+    public const PAYLOAD = 'My hovercraft is full of eels.';
+    public const CEK_A128 = '123456789 123456789 123456789 12';
 
     public function testCreate()
     {
@@ -31,8 +31,6 @@ class DeflateTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CompressionAlgorithm $algo
      */
     public function testCompressionParamValue(CompressionAlgorithm $algo)
     {
@@ -41,8 +39,6 @@ class DeflateTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CompressionAlgorithm $algo
      */
     public function testCompress(CompressionAlgorithm $algo)
     {
@@ -55,8 +51,7 @@ class DeflateTest extends TestCase
      * @depends testCreate
      * @depends testCompress
      *
-     * @param CompressionAlgorithm $algo
-     * @param string               $data
+     * @param string $data
      */
     public function testDecompress(CompressionAlgorithm $algo, $data)
     {
@@ -66,8 +61,6 @@ class DeflateTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CompressionAlgorithm $algo
      */
     public function testEncrypt(CompressionAlgorithm $algo)
     {
@@ -99,8 +92,6 @@ class DeflateTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CompressionAlgorithm $algo
      */
     public function testDecompressFail(CompressionAlgorithm $algo)
     {
@@ -111,8 +102,6 @@ class DeflateTest extends TestCase
     /**
      * @depends testCreate
      * @requires PHP < 8
-     *
-     * @param CompressionAlgorithm $algo
      */
     public function testCompressFail(CompressionAlgorithm $algo)
     {
@@ -123,12 +112,10 @@ class DeflateTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $algo->compress('test');
     }
-    
+
     /**
      * @depends testCreate
      * @requires PHP >= 8
-     *
-     * @param CompressionAlgorithm $algo
      */
     public function testCompressFailPhp8(CompressionAlgorithm $algo)
     {

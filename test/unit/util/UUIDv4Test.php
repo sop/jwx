@@ -13,7 +13,7 @@ use Sop\JWX\Util\UUIDv4;
  */
 class UUIDv4Test extends TestCase
 {
-    const UUID = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
+    public const UUID = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
 
     public function testCreate()
     {
@@ -24,8 +24,6 @@ class UUIDv4Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param UUIDv4 $uuid
      */
     public function testCanonical(UUIDv4 $uuid)
     {
@@ -34,8 +32,6 @@ class UUIDv4Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param UUIDv4 $uuid
      */
     public function testToString(UUIDv4 $uuid)
     {

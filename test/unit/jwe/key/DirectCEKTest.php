@@ -19,7 +19,7 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class DirectCEKTest extends TestCase
 {
-    const KEY_128 = '123456789 123456';
+    public const KEY_128 = '123456789 123456';
 
     public function testCreate()
     {
@@ -30,8 +30,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testCEK(DirectCEKAlgorithm $algo)
     {
@@ -40,8 +38,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testAlgoValue(DirectCEKAlgorithm $algo)
     {
@@ -50,8 +46,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testHeaderParameters(KeyManagementAlgorithm $algo)
     {
@@ -61,8 +55,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testEncrypt(DirectCEKAlgorithm $algo)
     {
@@ -75,8 +67,7 @@ class DirectCEKTest extends TestCase
      * @depends testCreate
      * @depends testEncrypt
      *
-     * @param DirectCEKAlgorithm $algo
-     * @param mixed              $data
+     * @param mixed $data
      */
     public function testDecrypt(DirectCEKAlgorithm $algo, $data)
     {
@@ -86,8 +77,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testEncryptFail(DirectCEKAlgorithm $algo)
     {
@@ -97,8 +86,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testDecryptFail(DirectCEKAlgorithm $algo)
     {
@@ -108,8 +95,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testCEKForEncryption(DirectCEKAlgorithm $algo)
     {
@@ -119,8 +104,6 @@ class DirectCEKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param DirectCEKAlgorithm $algo
      */
     public function testCEKForEncryptionFail(DirectCEKAlgorithm $algo)
     {

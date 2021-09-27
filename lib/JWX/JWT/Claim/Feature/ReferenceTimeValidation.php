@@ -15,8 +15,6 @@ trait ReferenceTimeValidation
      * Validate the claim against given constraint.
      *
      * @param mixed $constraint
-     *
-     * @return bool
      */
     abstract public function validate($constraint): bool;
 
@@ -26,10 +24,6 @@ trait ReferenceTimeValidation
      * Uses reference time of the validation context as a constraint.
      *
      * @see \Sop\JWX\JWT\Claim\Claim::validateWithContext()
-     *
-     * @param ValidationContext $ctx
-     *
-     * @return bool
      */
     public function validateWithContext(ValidationContext $ctx): bool
     {

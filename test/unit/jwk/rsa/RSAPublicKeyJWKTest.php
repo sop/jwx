@@ -35,8 +35,6 @@ class RSAPublicKeyJWKTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param RSAPublicKeyJWK $jwk
      */
     public function testToPEM(RSAPublicKeyJWK $jwk)
     {
@@ -47,8 +45,6 @@ class RSAPublicKeyJWKTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecoded(PEM $pem)
     {

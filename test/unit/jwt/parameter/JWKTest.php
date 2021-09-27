@@ -24,8 +24,6 @@ class JSONWebKeyParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {
@@ -34,8 +32,6 @@ class JSONWebKeyParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testFromJSONValue(JWTParameter $param)
     {
@@ -45,8 +41,6 @@ class JSONWebKeyParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JSONWebKeyParameter $param
      */
     public function testJWK(JSONWebKeyParameter $param)
     {

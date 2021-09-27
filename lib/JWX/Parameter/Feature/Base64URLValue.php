@@ -26,8 +26,6 @@ trait Base64URLValue
      *
      * Value shall be encoded using Base64url encoding.
      *
-     * @param string $value
-     *
      * @return self
      */
     public static function fromString(string $value): Parameter
@@ -37,8 +35,6 @@ trait Base64URLValue
 
     /**
      * Get the parameter value as a decoded string.
-     *
-     * @return string
      */
     public function string(): string
     {
@@ -47,8 +43,6 @@ trait Base64URLValue
 
     /**
      * Validate that value is validly base64url encoded.
-     *
-     * @param string $value
      *
      * @throws \UnexpectedValueException
      *

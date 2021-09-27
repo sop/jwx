@@ -23,8 +23,6 @@ class PrivateExponentParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {

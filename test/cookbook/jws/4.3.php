@@ -46,9 +46,6 @@ class CookbookECDSASignatureTest extends TestCase
     /**
      * @depends testPrivateKey
      * @depends testHeader
-     *
-     * @param ECPrivateKeyJWK $jwk
-     * @param Header          $header
      */
     public function testSign(ECPrivateKeyJWK $jwk, Header $header)
     {
@@ -64,9 +61,6 @@ class CookbookECDSASignatureTest extends TestCase
     /**
      * @depends testSign
      * @depends testPrivateKey
-     *
-     * @param JWS             $jws
-     * @param ECPrivateKeyJWK $jwk
      */
     public function testValidate(JWS $jws, ECPrivateKeyJWK $jwk)
     {

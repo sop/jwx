@@ -22,7 +22,7 @@ class KeyAlgorithmFactory
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_A128KW => A128KWAlgorithm::class,
         JWA::ALGO_A192KW => A192KWAlgorithm::class,
         JWA::ALGO_A128KW => A256KWAlgorithm::class,
@@ -45,8 +45,6 @@ class KeyAlgorithmFactory
 
     /**
      * Constructor.
-     *
-     * @param Header $header
      */
     public function __construct(Header $header)
     {
@@ -55,10 +53,6 @@ class KeyAlgorithmFactory
 
     /**
      * Get key management algorithm by given JWK.
-     *
-     * @param JWK $jwk
-     *
-     * @return KeyManagementAlgorithm
      */
     public function algoByKey(JWK $jwk): KeyManagementAlgorithm
     {
@@ -70,11 +64,7 @@ class KeyAlgorithmFactory
     /**
      * Get key management algorithm using a matching key from given JWK set.
      *
-     * @param JWKSet $set
-     *
      * @throws \UnexpectedValueException If a key cannot be found
-     *
-     * @return KeyManagementAlgorithm
      */
     public function algoByKeys(JWKSet $set): KeyManagementAlgorithm
     {

@@ -60,9 +60,6 @@ class ClaimsTest extends TestCase
     /**
      * @depends testCreate
      * @depends testFromJSON
-     *
-     * @param Claims $ref
-     * @param Claims $claims
      */
     public function testRecoded(Claims $ref, Claims $claims)
     {

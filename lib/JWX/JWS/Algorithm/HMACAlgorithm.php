@@ -25,7 +25,7 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_HS256 => HS256Algorithm::class,
         JWA::ALGO_HS384 => HS384Algorithm::class,
         JWA::ALGO_HS512 => HS512Algorithm::class,
@@ -99,8 +99,6 @@ abstract class HMACAlgorithm extends SignatureAlgorithm
 
     /**
      * Get algorithm name recognized by the Hash extension.
-     *
-     * @return string
      */
     abstract protected function _hashAlgo(): string;
 }

@@ -27,8 +27,6 @@ class IssuedAtClaim extends RegisteredClaim
 
     /**
      * Initialize with time set to current time.
-     *
-     * @return self
      */
     public static function now(): self
     {

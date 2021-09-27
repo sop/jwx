@@ -16,10 +16,10 @@ use Sop\JWX\JWE\EncryptionAlgorithm\AESGCMAlgorithm;
  */
 class A256GCMEncryptionTest extends TestCase
 {
-    const PLAINTEXT = 'My hovercraft is full of eels.';
-    const KEY = '0123456789abcdef0123456789abcdef';
-    const IV = '0123456789ab';
-    const AAD = 'I will not buy this record, it is scratched.';
+    public const PLAINTEXT = 'My hovercraft is full of eels.';
+    public const KEY = '0123456789abcdef0123456789abcdef';
+    public const IV = '0123456789ab';
+    public const AAD = 'I will not buy this record, it is scratched.';
 
     public function testCreate()
     {
@@ -40,8 +40,6 @@ class A256GCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testAlgoParamValue(ContentEncryptionAlgorithm $algo)
     {
@@ -51,8 +49,6 @@ class A256GCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testEncrypt(ContentEncryptionAlgorithm $algo)
     {
@@ -65,8 +61,6 @@ class A256GCMEncryptionTest extends TestCase
     /**
      * @depends testCreate
      * @depends testEncrypt
-     *
-     * @param array $data
      */
     public function testDecrypt(ContentEncryptionAlgorithm $algo, array $data)
     {

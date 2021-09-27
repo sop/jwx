@@ -41,8 +41,6 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends TestCase
 
     /**
      * @depends testHeader
-     *
-     * @param Header $header
      */
     public function testEncryptedKey(Header $header)
     {
@@ -56,8 +54,6 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends TestCase
 
     /**
      * @depends testHeader
-     *
-     * @param Header $header
      */
     public function testContentEncryption(Header $header)
     {
@@ -94,8 +90,6 @@ class CookbookKeyWrapPBES2AndAESHMACSHA2Test extends TestCase
 
     /**
      * @depends testCreateJWE
-     *
-     * @param JWE $jwe
      */
     public function testCompact(JWE $jwe)
     {

@@ -16,7 +16,7 @@ use Sop\JWX\JWT\ValidationContext;
  */
 class ExpirationTimeClaimTest extends TestCase
 {
-    const VALUE = 1460703960;
+    public const VALUE = 1460703960;
 
     public function testCreate()
     {
@@ -27,8 +27,6 @@ class ExpirationTimeClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Claim $claim
      */
     public function testClaimName(Claim $claim)
     {

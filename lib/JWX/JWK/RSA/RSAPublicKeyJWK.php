@@ -29,7 +29,7 @@ class RSAPublicKeyJWK extends PublicKeyJWK
      *
      * @var string[]
      */
-    const MANAGED_PARAMS = [
+    public const MANAGED_PARAMS = [
         JWKParameter::PARAM_KEY_TYPE,
         JWKParameter::PARAM_MODULUS,
         JWKParameter::PARAM_EXPONENT,
@@ -58,10 +58,6 @@ class RSAPublicKeyJWK extends PublicKeyJWK
 
     /**
      * Initialize from RSAPublicKey.
-     *
-     * @param RSAPublicKey $pk
-     *
-     * @return self
      */
     public static function fromRSAPublicKey(RSAPublicKey $pk): self
     {
@@ -73,10 +69,6 @@ class RSAPublicKeyJWK extends PublicKeyJWK
 
     /**
      * Initialize from PEM.
-     *
-     * @param PEM $pem
-     *
-     * @return self
      */
     public static function fromPEM(PEM $pem): self
     {
@@ -85,8 +77,6 @@ class RSAPublicKeyJWK extends PublicKeyJWK
 
     /**
      * Convert JWK to PEM.
-     *
-     * @return PEM
      */
     public function toPEM(): PEM
     {

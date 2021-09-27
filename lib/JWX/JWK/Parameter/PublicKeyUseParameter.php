@@ -15,8 +15,8 @@ class PublicKeyUseParameter extends JWKParameter
 {
     use StringParameterValue;
 
-    const USE_SIGNATURE = 'sig';
-    const USE_ENCRYPTION = 'enc';
+    public const USE_SIGNATURE = 'sig';
+    public const USE_ENCRYPTION = 'enc';
 
     /**
      * Constructor.

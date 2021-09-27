@@ -15,7 +15,7 @@ use Sop\JWX\JWT\Claim\RegisteredClaim;
  */
 class IssuerClaimTest extends TestCase
 {
-    const VALUE = 'issuer';
+    public const VALUE = 'issuer';
 
     public function testCreate()
     {
@@ -26,8 +26,6 @@ class IssuerClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Claim $claim
      */
     public function testClaimName(Claim $claim)
     {

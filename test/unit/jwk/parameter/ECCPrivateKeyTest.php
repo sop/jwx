@@ -23,8 +23,6 @@ class ECCPrivateKeyParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -33,8 +31,6 @@ class ECCPrivateKeyParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ECCPrivateKeyParameter $param
      */
     public function testPrivateKeyOctets(ECCPrivateKeyParameter $param)
     {

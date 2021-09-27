@@ -26,9 +26,6 @@ class BigInt
         $this->_num = $num;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->base10();
@@ -38,8 +35,6 @@ class BigInt
      * Initialize from a base10 number.
      *
      * @param int|string $number
-     *
-     * @return self
      */
     public static function fromBase10($number): self
     {
@@ -52,10 +47,6 @@ class BigInt
      *
      * Base64 number is an octet string of big endian, most significant word
      * first integer.
-     *
-     * @param string $octets
-     *
-     * @return self
      */
     public static function fromBase256(string $octets): self
     {
@@ -65,8 +56,6 @@ class BigInt
 
     /**
      * Convert to base10 string.
-     *
-     * @return string
      */
     public function base10(): string
     {
@@ -75,8 +64,6 @@ class BigInt
 
     /**
      * Convert to base16 string.
-     *
-     * @return string
      */
     public function base16(): string
     {
@@ -85,8 +72,6 @@ class BigInt
 
     /**
      * Convert to base256 string.
-     *
-     * @return string
      */
     public function base256(): string
     {

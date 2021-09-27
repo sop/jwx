@@ -38,8 +38,6 @@ class Claims implements \Countable, \IteratorAggregate
 
     /**
      * Convert to string.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -52,8 +50,6 @@ class Claims implements \Countable, \IteratorAggregate
      * @param string $json JSON
      *
      * @throws \UnexpectedValueException If JSON is malformed
-     *
-     * @return self
      */
     public static function fromJSON(string $json): self
     {
@@ -72,8 +68,6 @@ class Claims implements \Countable, \IteratorAggregate
      * Get self with Claim objects added.
      *
      * @param Claim ...$claims One or more Claim objects
-     *
-     * @return self
      */
     public function withClaims(Claim ...$claims): self
     {
@@ -98,8 +92,6 @@ class Claims implements \Countable, \IteratorAggregate
      * Check whether claim is present.
      *
      * @param string $name Claim name
-     *
-     * @return bool
      */
     public function has(string $name): bool
     {
@@ -112,8 +104,6 @@ class Claims implements \Countable, \IteratorAggregate
      * @param string $name Claim name
      *
      * @throws \LogicException If claim is not present
-     *
-     * @return Claim
      */
     public function get(string $name): Claim
     {
@@ -125,8 +115,6 @@ class Claims implements \Countable, \IteratorAggregate
 
     /**
      * Convert to a JSON.
-     *
-     * @return string
      */
     public function toJSON(): string
     {
@@ -141,8 +129,6 @@ class Claims implements \Countable, \IteratorAggregate
      * Check whether a claims set is valid in the given context.
      *
      * @param ValidationContext $ctx Validation context
-     *
-     * @return bool
      */
     public function isValid(ValidationContext $ctx): bool
     {
@@ -158,8 +144,6 @@ class Claims implements \Countable, \IteratorAggregate
      * Get the number of claims.
      *
      * @see \Countable::count()
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -170,8 +154,6 @@ class Claims implements \Countable, \IteratorAggregate
      * Get iterator for Claim objects keyed by claim name.
      *
      * @see \IteratorAggregate::getIterator()
-     *
-     * @return \ArrayIterator
      */
     public function getIterator(): \ArrayIterator
     {

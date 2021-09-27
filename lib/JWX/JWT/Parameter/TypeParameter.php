@@ -17,8 +17,6 @@ class TypeParameter extends JWTParameter
 
     /**
      * Constructor.
-     *
-     * @param string $type
      */
     public function __construct(string $type)
     {

@@ -95,8 +95,6 @@ class ValidationContext
      *
      * @param JWK        $key         JSON Web Key
      * @param null|array $constraints Optional constraints
-     *
-     * @return self
      */
     public static function fromJWK(JWK $key, ?array $constraints = null): self
     {
@@ -107,8 +105,6 @@ class ValidationContext
      * Get self with the reference time.
      *
      * @param null|int $ts Unix timestamp
-     *
-     * @return self
      */
     public function withReferenceTime(?int $ts): self
     {
@@ -119,8 +115,6 @@ class ValidationContext
 
     /**
      * Check whether the reference time is set.
-     *
-     * @return bool
      */
     public function hasReferenceTime(): bool
     {
@@ -131,8 +125,6 @@ class ValidationContext
      * Get the reference time.
      *
      * @throws \LogicException
-     *
-     * @return int
      */
     public function referenceTime(): int
     {
@@ -144,10 +136,6 @@ class ValidationContext
 
     /**
      * Get self with the reference time leeway.
-     *
-     * @param int $seconds
-     *
-     * @return self
      */
     public function withLeeway(int $seconds): self
     {
@@ -158,8 +146,6 @@ class ValidationContext
 
     /**
      * Get the reference time leeway.
-     *
-     * @return int
      */
     public function leeway(): int
     {
@@ -175,8 +161,6 @@ class ValidationContext
      * @param string         $name       Claim name
      * @param mixed          $constraint Value to check claim against
      * @param null|Validator $validator  Optional explicit validator
-     *
-     * @return self
      */
     public function withConstraint(string $name, $constraint,
         ?Validator $validator = null): self
@@ -193,8 +177,6 @@ class ValidationContext
      * Get self with the issuer constraint.
      *
      * @param string $issuer Issuer name
-     *
-     * @return self
      */
     public function withIssuer(string $issuer): self
     {
@@ -205,8 +187,6 @@ class ValidationContext
      * Get self with the subject constraint.
      *
      * @param string $subject Subject name
-     *
-     * @return self
      */
     public function withSubject(string $subject): self
     {
@@ -217,8 +197,6 @@ class ValidationContext
      * Get self with the audience constraint.
      *
      * @param string $audience Audience name
-     *
-     * @return self
      */
     public function withAudience(string $audience): self
     {
@@ -229,8 +207,6 @@ class ValidationContext
      * Get self with the JWT ID constraint.
      *
      * @param string $id JWT ID
-     *
-     * @return self
      */
     public function withID(string $id): self
     {
@@ -241,8 +217,6 @@ class ValidationContext
      * Check whether a named constraint is present.
      *
      * @param string $name Claim name
-     *
-     * @return bool
      */
     public function hasConstraint(string $name): bool
     {
@@ -270,8 +244,6 @@ class ValidationContext
      * Check whether a validator is defined for the given claim name.
      *
      * @param string $name Claim name
-     *
-     * @return bool
      */
     public function hasValidator(string $name): bool
     {
@@ -284,8 +256,6 @@ class ValidationContext
      * @param string $name Claim name
      *
      * @throws \LogicException If validator is not set
-     *
-     * @return Validator
      */
     public function validator(string $name): Validator
     {
@@ -297,8 +267,6 @@ class ValidationContext
 
     /**
      * Get a set of JSON Web Keys defined in this context.
-     *
-     * @return JWKSet
      */
     public function keys(): JWKSet
     {
@@ -312,8 +280,6 @@ class ValidationContext
      * though they are not signed nor encrypted.
      *
      * @param bool $allow Whether to allow unsecured JWT's
-     *
-     * @return self
      */
     public function withUnsecuredAllowed(bool $allow): self
     {
@@ -324,8 +290,6 @@ class ValidationContext
 
     /**
      * Check whether the unsecured JWT's are allowed.
-     *
-     * @return bool
      */
     public function isUnsecuredAllowed(): bool
     {
@@ -335,11 +299,7 @@ class ValidationContext
     /**
      * Validate claims.
      *
-     * @param Claims $claims
-     *
      * @throws ValidationException If any of the claims is not valid
-     *
-     * @return self
      */
     public function validate(Claims $claims): self
     {

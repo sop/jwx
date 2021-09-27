@@ -15,7 +15,7 @@ use Sop\JWX\JWT\Claim\RegisteredClaim;
  */
 class NotBeforeClaimTest extends TestCase
 {
-    const VALUE = 1460703960;
+    public const VALUE = 1460703960;
 
     public function testCreate()
     {
@@ -26,8 +26,6 @@ class NotBeforeClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Claim $claim
      */
     public function testClaimName(Claim $claim)
     {

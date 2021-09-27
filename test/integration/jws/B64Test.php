@@ -17,9 +17,9 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class B64Test extends TestCase
 {
-    const PAYLOAD = 'PAYLOAD';
+    public const PAYLOAD = 'PAYLOAD';
 
-    const SECRET = 'SECRETKEY';
+    public const SECRET = 'SECRETKEY';
 
     /**
      * @return JWS
@@ -34,8 +34,6 @@ class B64Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testValidate(JWS $jws)
     {
@@ -44,8 +42,6 @@ class B64Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testRecode(JWS $jws)
     {
@@ -57,8 +53,6 @@ class B64Test extends TestCase
 
     /**
      * @depends testRecode
-     *
-     * @param JWS $jws
      */
     public function testRecodedPayload(JWS $jws)
     {

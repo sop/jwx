@@ -28,8 +28,6 @@ class ECCPrivateKeyParameter extends JWKParameter
 
     /**
      * Get the EC private key in octet string representation.
-     *
-     * @return string
      */
     public function privateKeyOctets(): string
     {

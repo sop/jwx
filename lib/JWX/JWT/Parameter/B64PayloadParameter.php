@@ -15,8 +15,6 @@ class B64PayloadParameter extends JWTParameter
 {
     /**
      * Constructor.
-     *
-     * @param bool $flag
      */
     public function __construct(bool $flag)
     {

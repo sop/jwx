@@ -13,8 +13,6 @@ trait TypedClaims
      * Check whether the claim is present.
      *
      * @param string $name Claim name
-     *
-     * @return bool
      */
     abstract public function has(string $name): bool;
 
@@ -22,15 +20,11 @@ trait TypedClaims
      * Get the claim by name.
      *
      * @param string $name Claim name
-     *
-     * @return Claim
      */
     abstract public function get(string $name): Claim;
 
     /**
      * Check whether the issuer claim is present.
-     *
-     * @return bool
      */
     public function hasIssuer(): bool
     {
@@ -39,8 +33,6 @@ trait TypedClaims
 
     /**
      * Get the issuer claim.
-     *
-     * @return IssuerClaim
      */
     public function issuer(): IssuerClaim
     {
@@ -50,8 +42,6 @@ trait TypedClaims
 
     /**
      * Check whether the subject claim is present.
-     *
-     * @return bool
      */
     public function hasSubject(): bool
     {
@@ -60,8 +50,6 @@ trait TypedClaims
 
     /**
      * Get the subject claim.
-     *
-     * @return SubjectClaim
      */
     public function subject(): SubjectClaim
     {
@@ -71,8 +59,6 @@ trait TypedClaims
 
     /**
      * Check whether the audience claim is present.
-     *
-     * @return bool
      */
     public function hasAudience(): bool
     {
@@ -81,8 +67,6 @@ trait TypedClaims
 
     /**
      * Get the audience claim.
-     *
-     * @return AudienceClaim
      */
     public function audience(): AudienceClaim
     {
@@ -92,8 +76,6 @@ trait TypedClaims
 
     /**
      * Check whether the expiration time claim is present.
-     *
-     * @return bool
      */
     public function hasExpirationTime(): bool
     {
@@ -102,8 +84,6 @@ trait TypedClaims
 
     /**
      * Get the expiration time claim.
-     *
-     * @return ExpirationTimeClaim
      */
     public function expirationTime(): ExpirationTimeClaim
     {
@@ -114,8 +94,6 @@ trait TypedClaims
 
     /**
      * Check whether the not before claim is present.
-     *
-     * @return bool
      */
     public function hasNotBefore(): bool
     {
@@ -124,8 +102,6 @@ trait TypedClaims
 
     /**
      * Get the not before claim.
-     *
-     * @return NotBeforeClaim
      */
     public function notBefore(): NotBeforeClaim
     {
@@ -135,8 +111,6 @@ trait TypedClaims
 
     /**
      * Check whether the issued at claim is present.
-     *
-     * @return bool
      */
     public function hasIssuedAt(): bool
     {
@@ -145,8 +119,6 @@ trait TypedClaims
 
     /**
      * Get the issued at claim.
-     *
-     * @return IssuedAtClaim
      */
     public function issuedAt(): IssuedAtClaim
     {
@@ -156,8 +128,6 @@ trait TypedClaims
 
     /**
      * Check whether the JWT ID claim is present.
-     *
-     * @return bool
      */
     public function hasJWTID(): bool
     {
@@ -166,8 +136,6 @@ trait TypedClaims
 
     /**
      * Get the JWT ID claim.
-     *
-     * @return JWTIDClaim
      */
     public function JWTID(): JWTIDClaim
     {
@@ -182,8 +150,6 @@ trait TypedClaims
      * @param string $cls   Class name
      *
      * @throws \UnexpectedValueException
-     *
-     * @return Claim
      */
     private static function _checkType(Claim $claim, string $cls): Claim
     {

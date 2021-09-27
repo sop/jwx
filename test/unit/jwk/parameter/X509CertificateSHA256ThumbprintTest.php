@@ -25,8 +25,6 @@ class JWKX509CertificateSHA256ThumbprintParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -37,8 +35,6 @@ class JWKX509CertificateSHA256ThumbprintParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromNameAndValue(JWKParameter $param)
     {

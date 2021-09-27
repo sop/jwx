@@ -20,12 +20,10 @@ class ContentTypeParameter extends JWTParameter
      *
      * @var string
      */
-    const TYPE_JWT = 'JWT';
+    public const TYPE_JWT = 'JWT';
 
     /**
      * Constructor.
-     *
-     * @param string $type
      */
     public function __construct(string $type)
     {

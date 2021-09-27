@@ -23,8 +23,6 @@ class XCoordinateParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -33,8 +31,6 @@ class XCoordinateParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param XCoordinateParameter $param
      */
     public function testCoordinateOctets(XCoordinateParameter $param)
     {
@@ -43,8 +39,6 @@ class XCoordinateParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromNameAndValue(JWKParameter $param)
     {

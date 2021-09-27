@@ -24,11 +24,11 @@ use Sop\JWX\JWT\Parameter\KeyIDParameter as JWTID;
  */
 class JWSTest extends TestCase
 {
-    const KEY = '12345678';
+    public const KEY = '12345678';
 
-    const KEY_ID = 'id';
+    public const KEY_ID = 'id';
 
-    const PAYLOAD = 'PAYLOAD';
+    public const PAYLOAD = 'PAYLOAD';
 
     private static $_signAlgo;
 
@@ -52,8 +52,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testValidate(JWS $jws)
     {
@@ -62,8 +60,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testValidateInvalidAlgo(JWS $jws)
     {
@@ -73,8 +69,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testValidateWithJWK(JWS $jws)
     {
@@ -84,8 +78,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testValidateWithJWKSet(JWS $jws)
     {
@@ -96,8 +88,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testValidateWithJWKSetNoKeys(JWS $jws)
     {
@@ -107,8 +97,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testHeader(JWS $jws)
     {
@@ -119,8 +107,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testAlgoName(JWS $jws)
     {
@@ -129,8 +115,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testPayload(JWS $jws)
     {
@@ -139,8 +123,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testSignature(JWS $jws)
     {
@@ -149,8 +131,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testToCompact(JWS $jws)
     {
@@ -172,8 +152,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testToCompactDetached(JWS $jws)
     {
@@ -201,8 +179,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWS $jws
      */
     public function testToString(JWS $jws)
     {
@@ -228,8 +204,6 @@ class JWSTest extends TestCase
 
     /**
      * @depends testSignWithB64Param
-     *
-     * @param JWS $jws
      */
     public function testToCompactWithB64Param(JWS $jws)
     {

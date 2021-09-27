@@ -28,7 +28,7 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_ES256 => ES256Algorithm::class,
         JWA::ALGO_ES384 => ES384Algorithm::class,
         JWA::ALGO_ES512 => ES512Algorithm::class,
@@ -44,7 +44,6 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
     /**
      * Constructor.
      *
-     * @param ECPublicKeyJWK  $pub_key
      * @param ECPrivateKeyJWK $priv_key
      */
     protected function __construct(ECPublicKeyJWK $pub_key,
@@ -64,10 +63,6 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 
     /**
      * Initialize from a public key.
-     *
-     * @param ECPublicKeyJWK $jwk
-     *
-     * @return self
      */
     public static function fromPublicKey(ECPublicKeyJWK $jwk): self
     {
@@ -76,10 +71,6 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 
     /**
      * Initialize from a private key.
-     *
-     * @param ECPrivateKeyJWK $jwk
-     *
-     * @return self
      */
     public static function fromPrivateKey(ECPrivateKeyJWK $jwk): self
     {
@@ -147,8 +138,6 @@ abstract class ECDSAAlgorithm extends OpenSSLSignatureAlgorithm
 
     /**
      * Get the name of the curve used by this algorithm.
-     *
-     * @return string
      */
     abstract protected function _curveName(): string;
 }

@@ -35,10 +35,6 @@ class Header implements \Countable, \IteratorAggregate
 
     /**
      * Initialize from an array representing a JSON object.
-     *
-     * @param array $members
-     *
-     * @return self
      */
     public static function fromArray(array $members): self
     {
@@ -52,11 +48,7 @@ class Header implements \Countable, \IteratorAggregate
     /**
      * Initialize from a JSON.
      *
-     * @param string $json
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromJSON(string $json): self
     {
@@ -71,8 +63,6 @@ class Header implements \Countable, \IteratorAggregate
      * Get self with parameters added.
      *
      * @param JWTParameter ...$param
-     *
-     * @return self
      */
     public function withParameters(JWTParameter ...$params): self
     {
@@ -99,8 +89,6 @@ class Header implements \Countable, \IteratorAggregate
      * Returns false if any of the given parameters is not set.
      *
      * @param string ...$names Parameter names
-     *
-     * @return bool
      */
     public function has(string ...$names): bool
     {
@@ -118,8 +106,6 @@ class Header implements \Countable, \IteratorAggregate
      * @param string $name Parameter name
      *
      * @throws \LogicException
-     *
-     * @return JWTParameter
      */
     public function get(string $name): JWTParameter
     {
@@ -131,8 +117,6 @@ class Header implements \Countable, \IteratorAggregate
 
     /**
      * Convert to a JSON.
-     *
-     * @return string
      */
     public function toJSON(): string
     {
@@ -150,8 +134,6 @@ class Header implements \Countable, \IteratorAggregate
      * Get the number of parameters.
      *
      * @see \Countable::count()
-     *
-     * @return int
      */
     public function count(): int
     {
@@ -162,8 +144,6 @@ class Header implements \Countable, \IteratorAggregate
      * Get iterator for the parameters.
      *
      * @see \IteratorAggregate::getIterator()
-     *
-     * @return \ArrayIterator
      */
     public function getIterator(): \ArrayIterator
     {

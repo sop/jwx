@@ -22,8 +22,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testHas(JWK $jwk)
     {
@@ -32,8 +30,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testHasMulti(JWK $jwk)
     {
@@ -42,8 +38,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testHasMultiFails(JWK $jwk)
     {
@@ -52,8 +46,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testGet(JWK $jwk)
     {
@@ -63,8 +55,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testGetFails(JWK $jwk)
     {
@@ -74,8 +64,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testWithParameters(JWK $jwk)
     {
@@ -85,8 +73,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testGetParameters(JWK $jwk)
     {
@@ -96,8 +82,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testWithKeyID(JWK $jwk)
     {
@@ -108,8 +92,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testCount(JWK $jwk)
     {
@@ -118,8 +100,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testIterator(JWK $jwk)
     {
@@ -132,8 +112,6 @@ class JWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWK $jwk
      */
     public function testToJSON(JWK $jwk)
     {

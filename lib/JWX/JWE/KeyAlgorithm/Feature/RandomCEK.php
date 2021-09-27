@@ -15,13 +15,11 @@ trait RandomCEK
      * @param int $length Key length in bytes
      *
      * @throws \RuntimeException
-     *
-     * @return string
      */
     public function cekForEncryption(int $length): string
     {
         if ($length < 1) {
-            throw new \InvalidArgumentException("Length must be greater than 0.");
+            throw new \InvalidArgumentException('Length must be greater than 0.');
         }
         $ret = openssl_random_pseudo_bytes($length);
         if (false === $ret) {

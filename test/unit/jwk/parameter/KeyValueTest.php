@@ -14,7 +14,7 @@ use Sop\JWX\JWK\Parameter\KeyValueParameter;
  */
 class KeyValueParameterTest extends TestCase
 {
-    const KEY = 'password';
+    public const KEY = 'password';
 
     public function testCreate()
     {
@@ -25,8 +25,6 @@ class KeyValueParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -35,8 +33,6 @@ class KeyValueParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyValueParameter $param
      */
     public function testKey(KeyValueParameter $param)
     {
@@ -45,8 +41,6 @@ class KeyValueParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromNameAndValue(JWKParameter $param)
     {

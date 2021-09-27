@@ -22,9 +22,9 @@ use Sop\JWX\JWT\Parameter\PBES2SaltInputParameter;
  */
 class PBES2Test extends TestCase
 {
-    const PASSWORD = 'password';
-    const SALT = 'salt';
-    const COUNT = 256;
+    public const PASSWORD = 'password';
+    public const SALT = 'salt';
+    public const COUNT = 256;
 
     public function testCreate()
     {
@@ -35,8 +35,6 @@ class PBES2Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param PBES2Algorithm $algo
      */
     public function testSaltInput(PBES2Algorithm $algo)
     {
@@ -45,8 +43,6 @@ class PBES2Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param PBES2Algorithm $algo
      */
     public function testSalt(PBES2Algorithm $algo)
     {
@@ -56,8 +52,6 @@ class PBES2Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param PBES2Algorithm $algo
      */
     public function testIterationCount(PBES2Algorithm $algo)
     {
@@ -66,8 +60,6 @@ class PBES2Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testHeaderParameters(KeyManagementAlgorithm $algo)
     {

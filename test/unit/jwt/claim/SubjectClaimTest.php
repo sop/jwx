@@ -15,7 +15,7 @@ use Sop\JWX\JWT\Claim\SubjectClaim;
  */
 class SubjectClaimTest extends TestCase
 {
-    const VALUE = 'subject';
+    public const VALUE = 'subject';
 
     public function testCreate()
     {
@@ -26,8 +26,6 @@ class SubjectClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Claim $claim
      */
     public function testClaimName(Claim $claim)
     {

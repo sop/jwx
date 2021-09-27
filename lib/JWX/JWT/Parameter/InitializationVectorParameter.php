@@ -28,8 +28,6 @@ class InitializationVectorParameter extends JWTParameter
 
     /**
      * Get the initialization vector.
-     *
-     * @return string
      */
     public function initializationVector(): string
     {

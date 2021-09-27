@@ -41,15 +41,11 @@ interface ContentEncryptionAlgorithm extends EncryptionAlgorithmParameterValue, 
 
     /**
      * Get the required key size in bytes.
-     *
-     * @return int
      */
     public function keySize(): int;
 
     /**
      * Get the required IV size in bytes.
-     *
-     * @return int
      */
     public function ivSize(): int;
 }

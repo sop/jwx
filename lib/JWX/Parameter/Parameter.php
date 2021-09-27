@@ -25,8 +25,6 @@ abstract class Parameter
 
     /**
      * Get the parameter name.
-     *
-     * @return string
      */
     public function name(): string
     {

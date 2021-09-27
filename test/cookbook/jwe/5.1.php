@@ -40,8 +40,6 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends TestCase
      * @depends testPrivateKey
      *
      * Encryption result cannot be verified since RSAES uses random salt.
-     *
-     * @param RSAPrivateKeyJWK $jwk
      */
     public function testEncryptedKey(RSAPrivateKeyJWK $jwk)
     {
@@ -65,8 +63,6 @@ class CookbookKeyEncRSA15AndAESHMACSHA2Test extends TestCase
 
     /**
      * @depends testHeader
-     *
-     * @param Header $header
      */
     public function testContentEncryption(Header $header)
     {

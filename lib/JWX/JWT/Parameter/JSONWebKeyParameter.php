@@ -16,8 +16,6 @@ class JSONWebKeyParameter extends JWTParameter
 {
     /**
      * Constructor.
-     *
-     * @param JWK $jwk
      */
     public function __construct(JWK $jwk)
     {
@@ -37,8 +35,6 @@ class JSONWebKeyParameter extends JWTParameter
 
     /**
      * Get value as a JWK.
-     *
-     * @return JWK
      */
     public function jwk(): JWK
     {

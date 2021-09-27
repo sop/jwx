@@ -28,8 +28,6 @@ class SignatureAlgorithmTest extends TestCase
 
     /**
      * @depends testFromJWK
-     *
-     * @param SignatureAlgorithm $algo
      */
     public function testWithKeyID(SignatureAlgorithm $algo)
     {
@@ -40,8 +38,6 @@ class SignatureAlgorithmTest extends TestCase
 
     /**
      * @depends testWithKeyID
-     *
-     * @param SignatureAlgorithm $algo
      */
     public function testHeaderParameters(SignatureAlgorithm $algo)
     {

@@ -15,7 +15,7 @@ use Sop\JWX\JWT\Claim\RegisteredClaim;
  */
 class JWTIDTest extends TestCase
 {
-    const VALUE = 'uuid';
+    public const VALUE = 'uuid';
 
     public function testCreate()
     {
@@ -26,8 +26,6 @@ class JWTIDTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Claim $claim
      */
     public function testClaimName(Claim $claim)
     {

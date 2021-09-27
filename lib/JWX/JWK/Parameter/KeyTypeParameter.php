@@ -18,17 +18,17 @@ class KeyTypeParameter extends JWKParameter
     /**
      * Octet sequence key type.
      */
-    const TYPE_OCT = 'oct';
+    public const TYPE_OCT = 'oct';
 
     /**
      * RSA key type.
      */
-    const TYPE_RSA = 'RSA';
+    public const TYPE_RSA = 'RSA';
 
     /**
      * Elliptic curve key type.
      */
-    const TYPE_EC = 'EC';
+    public const TYPE_EC = 'EC';
 
     /**
      * Constructor.

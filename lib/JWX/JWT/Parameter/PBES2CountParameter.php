@@ -15,8 +15,6 @@ class PBES2CountParameter extends JWTParameter
 {
     /**
      * Constructor.
-     *
-     * @param int $count
      */
     public function __construct(int $count)
     {

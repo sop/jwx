@@ -13,7 +13,7 @@ use Sop\JWX\Util\Base64;
  */
 class Base64Test extends TestCase
 {
-    const DATA = 'My hovercraft is full of eels.';
+    public const DATA = 'My hovercraft is full of eels.';
 
     public function testEncode()
     {

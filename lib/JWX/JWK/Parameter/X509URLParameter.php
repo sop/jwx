@@ -17,8 +17,6 @@ class X509URLParameter extends JWKParameter
 
     /**
      * Constructor.
-     *
-     * @param string $uri
      */
     public function __construct(string $uri)
     {

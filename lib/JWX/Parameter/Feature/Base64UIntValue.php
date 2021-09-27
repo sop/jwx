@@ -32,8 +32,6 @@ trait Base64UIntValue
 
     /**
      * Get value as a number.
-     *
-     * @return BigInt
      */
     public function number(): BigInt
     {

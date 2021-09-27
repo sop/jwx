@@ -13,8 +13,6 @@ abstract class CoordinateParameter extends JWKParameter
 {
     /**
      * Get coordinate in octet string representation.
-     *
-     * @return string
      */
     public function coordinateOctets(): string
     {

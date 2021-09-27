@@ -34,8 +34,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testHas(Header $header)
     {
@@ -44,8 +42,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testHasMany(Header $header)
     {
@@ -54,8 +50,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testHasNot(Header $header)
     {
@@ -64,8 +58,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testGet(Header $header)
     {
@@ -75,8 +67,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testGetFails(Header $header)
     {
@@ -86,8 +76,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testParameters(Header $header)
     {
@@ -97,8 +85,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testCount(Header $header)
     {
@@ -107,8 +93,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testIterator(Header $header)
     {
@@ -121,8 +105,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testAdd(Header $header)
     {
@@ -132,8 +114,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      */
     public function testModify(Header $header)
     {
@@ -144,8 +124,6 @@ class HeaderTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Header $header
      *
      * @return string
      */
@@ -179,9 +157,6 @@ class HeaderTest extends TestCase
     /**
      * @depends testCreate
      * @depends testFromJSON
-     *
-     * @param Header $ref
-     * @param Header $recoded
      */
     public function testRecode(Header $ref, Header $recoded)
     {

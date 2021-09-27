@@ -23,8 +23,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testHasKeyID(JWKSet $jwkset)
     {
@@ -33,8 +31,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testHasNotKeyID(JWKSet $jwkset)
     {
@@ -43,8 +39,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testKeyByID(JWKSet $jwkset)
     {
@@ -54,8 +48,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testKeyByIDFails(JWKSet $jwkset)
     {
@@ -65,8 +57,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testWithKeys(JWKSet $jwkset)
     {
@@ -77,8 +67,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testWithKeys
-     *
-     * @param JWKSet $jwkset
      */
     public function testHasAdded(JWKSet $jwkset)
     {
@@ -88,8 +76,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testFirst(JWKSet $jwkset)
     {
@@ -106,8 +92,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testToJSON(JWKSet $jwkset)
     {
@@ -131,9 +115,6 @@ class JWKSetTest extends TestCase
     /**
      * @depends testCreate
      * @depends testFromJSON
-     *
-     * @param JWKSet $ref
-     * @param JWKSet $jwkset
      */
     public function testRecoded(JWKSet $ref, JWKSet $jwkset)
     {
@@ -143,8 +124,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testKeys(JWKSet $jwkset)
     {
@@ -154,8 +133,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testCount(JWKSet $jwkset)
     {
@@ -164,8 +141,6 @@ class JWKSetTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKSet $jwkset
      */
     public function testIterator(JWKSet $jwkset)
     {

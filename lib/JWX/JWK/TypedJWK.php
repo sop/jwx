@@ -15,8 +15,6 @@ trait TypedJWK
      * Whether parameters are present.
      *
      * @param string ...$names Parameter names
-     *
-     * @return bool
      */
     abstract public function has(string ...$names): bool;
 
@@ -24,15 +22,11 @@ trait TypedJWK
      * Get a parameter.
      *
      * @param string $name Parameter name
-     *
-     * @return JWKParameter
      */
     abstract public function get(string $name): JWKParameter;
 
     /**
      * Check whether the algorithm parameter is present.
-     *
-     * @return bool
      */
     public function hasAlgorithmParameter(): bool
     {
@@ -44,8 +38,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\AlgorithmParameter
      */
     public function algorithmParameter(): Parameter\AlgorithmParameter
     {
@@ -55,8 +47,6 @@ trait TypedJWK
 
     /**
      * Check whether the curve parameter is present.
-     *
-     * @return bool
      */
     public function hasCurveParameter(): bool
     {
@@ -68,8 +58,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\CurveParameter
      */
     public function curveParameter(): Parameter\CurveParameter
     {
@@ -79,8 +67,6 @@ trait TypedJWK
 
     /**
      * Check whether the ECC private key parameter is present.
-     *
-     * @return bool
      */
     public function hasECCPrivateKeyParameter(): bool
     {
@@ -92,8 +78,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\ECCPrivateKeyParameter
      */
     public function ECCPrivateKeyParameter(): Parameter\ECCPrivateKeyParameter
     {
@@ -103,8 +87,6 @@ trait TypedJWK
 
     /**
      * Check whether the exponent parameter is present.
-     *
-     * @return bool
      */
     public function hasExponentParameter(): bool
     {
@@ -116,8 +98,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\ExponentParameter
      */
     public function exponentParameter(): Parameter\ExponentParameter
     {
@@ -127,8 +107,6 @@ trait TypedJWK
 
     /**
      * Check whether the first CRT coefficient parameter is present.
-     *
-     * @return bool
      */
     public function hasFirstCRTCoefficientParameter(): bool
     {
@@ -140,8 +118,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\FirstCRTCoefficientParameter
      */
     public function firstCRTCoefficientParameter(): Parameter\FirstCRTCoefficientParameter
     {
@@ -151,8 +127,6 @@ trait TypedJWK
 
     /**
      * Check whether the first factor CRT exponent parameter is present.
-     *
-     * @return bool
      */
     public function hasFirstFactorCRTExponentParameter(): bool
     {
@@ -164,8 +138,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\FirstFactorCRTExponentParameter
      */
     public function firstFactorCRTExponentParameter(): Parameter\FirstFactorCRTExponentParameter
     {
@@ -175,8 +147,6 @@ trait TypedJWK
 
     /**
      * Check whether the first prime factor parameter is present.
-     *
-     * @return bool
      */
     public function hasFirstPrimeFactorParameter(): bool
     {
@@ -188,8 +158,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\FirstPrimeFactorParameter
      */
     public function firstPrimeFactorParameter(): Parameter\FirstPrimeFactorParameter
     {
@@ -199,8 +167,6 @@ trait TypedJWK
 
     /**
      * Check whether the key ID parameter is present.
-     *
-     * @return bool
      */
     public function hasKeyIDParameter(): bool
     {
@@ -212,8 +178,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\KeyIDParameter
      */
     public function keyIDParameter(): Parameter\KeyIDParameter
     {
@@ -223,8 +187,6 @@ trait TypedJWK
 
     /**
      * Check whether the key operations parameter is present.
-     *
-     * @return bool
      */
     public function hasKeyOperationsParameter(): bool
     {
@@ -236,8 +198,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\KeyOperationsParameter
      */
     public function keyOperationsParameter(): Parameter\KeyOperationsParameter
     {
@@ -247,8 +207,6 @@ trait TypedJWK
 
     /**
      * Check whether the key type parameter is present.
-     *
-     * @return bool
      */
     public function hasKeyTypeParameter(): bool
     {
@@ -260,8 +218,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\KeyTypeParameter
      */
     public function keyTypeParameter(): Parameter\KeyTypeParameter
     {
@@ -271,8 +227,6 @@ trait TypedJWK
 
     /**
      * Check whether the key value parameter is present.
-     *
-     * @return bool
      */
     public function hasKeyValueParameter(): bool
     {
@@ -284,8 +238,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\KeyValueParameter
      */
     public function keyValueParameter(): Parameter\KeyValueParameter
     {
@@ -295,8 +247,6 @@ trait TypedJWK
 
     /**
      * Check whether the modulus parameter is present.
-     *
-     * @return bool
      */
     public function hasModulusParameter(): bool
     {
@@ -308,8 +258,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\ModulusParameter
      */
     public function modulusParameter(): Parameter\ModulusParameter
     {
@@ -319,8 +267,6 @@ trait TypedJWK
 
     /**
      * Check whether the other primes info parameter is present.
-     *
-     * @return bool
      */
     public function hasOtherPrimesInfoParameter(): bool
     {
@@ -332,8 +278,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\OtherPrimesInfoParameter
      */
     public function otherPrimesInfoParameter(): Parameter\OtherPrimesInfoParameter
     {
@@ -343,8 +287,6 @@ trait TypedJWK
 
     /**
      * Check whether the private exponent parameter is present.
-     *
-     * @return bool
      */
     public function hasPrivateExponentParameter(): bool
     {
@@ -356,8 +298,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\PrivateExponentParameter
      */
     public function privateExponentParameter(): Parameter\PrivateExponentParameter
     {
@@ -367,8 +307,6 @@ trait TypedJWK
 
     /**
      * Check whether the public key use parameter is present.
-     *
-     * @return bool
      */
     public function hasPublicKeyUseParameter(): bool
     {
@@ -380,8 +318,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\PublicKeyUseParameter
      */
     public function publicKeyUseParameter(): Parameter\PublicKeyUseParameter
     {
@@ -391,8 +327,6 @@ trait TypedJWK
 
     /**
      * Check whether the second factor CRT exponent parameter is present.
-     *
-     * @return bool
      */
     public function hasSecondFactorCRTExponentParameter(): bool
     {
@@ -404,8 +338,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\SecondFactorCRTExponentParameter
      */
     public function secondFactorCRTExponentParameter(): Parameter\SecondFactorCRTExponentParameter
     {
@@ -415,8 +347,6 @@ trait TypedJWK
 
     /**
      * Check whether the second prime factor parameter is present.
-     *
-     * @return bool
      */
     public function hasSecondPrimeFactorParameter(): bool
     {
@@ -428,8 +358,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\SecondPrimeFactorParameter
      */
     public function secondPrimeFactorParameter(): Parameter\SecondPrimeFactorParameter
     {
@@ -439,8 +367,6 @@ trait TypedJWK
 
     /**
      * Check whether the X.509 certificate chain parameter is present.
-     *
-     * @return bool
      */
     public function hasX509CertificateChainParameter(): bool
     {
@@ -452,8 +378,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\X509CertificateChainParameter
      */
     public function X509CertificateChainParameter(): Parameter\X509CertificateChainParameter
     {
@@ -464,8 +388,6 @@ trait TypedJWK
     /**
      * Check whether the X.509 certificate SHA-1 thumbprint parameter is
      * present.
-     *
-     * @return bool
      */
     public function hasX509CertificateSHA1ThumbprintParameter(): bool
     {
@@ -477,8 +399,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\X509CertificateSHA1ThumbprintParameter
      */
     public function X509CertificateSHA1ThumbprintParameter(): Parameter\X509CertificateSHA1ThumbprintParameter
     {
@@ -489,8 +409,6 @@ trait TypedJWK
     /**
      * Check whether the X.509 certificate SHA-256 thumbprint parameter is
      * present.
-     *
-     * @return bool
      */
     public function hasX509CertificateSHA256ThumbprintParameter(): bool
     {
@@ -502,8 +420,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\X509CertificateSHA256ThumbprintParameter
      */
     public function X509CertificateSHA256ThumbprintParameter(): Parameter\X509CertificateSHA256ThumbprintParameter
     {
@@ -513,8 +429,6 @@ trait TypedJWK
 
     /**
      * Check whether the X.509 URL parameter is present.
-     *
-     * @return bool
      */
     public function hasX509URLParameter(): bool
     {
@@ -526,8 +440,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\X509URLParameter
      */
     public function X509URLParameter(): Parameter\X509URLParameter
     {
@@ -537,8 +449,6 @@ trait TypedJWK
 
     /**
      * Check whether the X coordinate parameter is present.
-     *
-     * @return bool
      */
     public function hasXCoordinateParameter(): bool
     {
@@ -550,8 +460,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\XCoordinateParameter
      */
     public function XCoordinateParameter(): Parameter\XCoordinateParameter
     {
@@ -561,8 +469,6 @@ trait TypedJWK
 
     /**
      * Check whether the Y coordinate parameter is present.
-     *
-     * @return bool
      */
     public function hasYCoordinateParameter(): bool
     {
@@ -574,8 +480,6 @@ trait TypedJWK
      *
      * @throws \UnexpectedValueException If the parameter has a wrong class
      * @throws \LogicException           If the parameter is not present
-     *
-     * @return Parameter\YCoordinateParameter
      */
     public function YCoordinateParameter(): Parameter\YCoordinateParameter
     {
@@ -590,8 +494,6 @@ trait TypedJWK
      * @param string                 $cls   Class name
      *
      * @throws \UnexpectedValueException
-     *
-     * @return Parameter\JWKParameter
      */
     private static function _checkType(Parameter\JWKParameter $param, string $cls): Parameter\JWKParameter
     {

@@ -50,8 +50,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testHeaderParameters(KeyManagementAlgorithm $algo)
     {
@@ -61,8 +59,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testPublicKey(RSAESKeyAlgorithm $algo)
     {
@@ -71,8 +67,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testHasPrivateKey(RSAESKeyAlgorithm $algo)
     {
@@ -81,8 +75,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testPrivateKey(RSAESKeyAlgorithm $algo)
     {
@@ -98,8 +90,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreateFromPublicKey
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testPrivateKeyNotSet(RSAESKeyAlgorithm $algo)
     {
@@ -126,8 +116,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testPubKeyFail(RSAESKeyAlgorithm $algo)
     {
@@ -142,8 +130,6 @@ class RSAESKeyTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param RSAESKeyAlgorithm $algo
      */
     public function testPrivKeyFail(RSAESKeyAlgorithm $algo)
     {

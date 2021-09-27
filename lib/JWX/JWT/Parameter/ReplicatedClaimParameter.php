@@ -15,8 +15,6 @@ class ReplicatedClaimParameter extends JWTParameter
 {
     /**
      * Constructor.
-     *
-     * @param Claim $claim
      */
     public function __construct(Claim $claim)
     {

@@ -20,21 +20,21 @@ class CurveParameter extends JWKParameter
      *
      * @var string
      */
-    const CURVE_P256 = 'P-256';
+    public const CURVE_P256 = 'P-256';
 
     /**
      * P-384 Curve.
      *
      * @var string
      */
-    const CURVE_P384 = 'P-384';
+    public const CURVE_P384 = 'P-384';
 
     /**
      * P-521 Curve.
      *
      * @var string
      */
-    const CURVE_P521 = 'P-521';
+    public const CURVE_P521 = 'P-521';
 
     /**
      * Mapping from curve OID to curve name.
@@ -43,7 +43,7 @@ class CurveParameter extends JWKParameter
      *
      * @var array
      */
-    const MAP_OID_TO_CURVE = [
+    public const MAP_OID_TO_CURVE = [
         '1.2.840.10045.3.1.7' => self::CURVE_P256,
         '1.3.132.0.34' => self::CURVE_P384,
         '1.3.132.0.35' => self::CURVE_P521,
@@ -56,7 +56,7 @@ class CurveParameter extends JWKParameter
      *
      * @var array
      */
-    const MAP_CURVE_TO_SIZE = [
+    public const MAP_CURVE_TO_SIZE = [
         self::CURVE_P256 => 256,
         self::CURVE_P384 => 384,
         self::CURVE_P521 => 521,
@@ -78,8 +78,6 @@ class CurveParameter extends JWKParameter
      * @param string $oid Object identifier in dotted format
      *
      * @throws \UnexpectedValueException If the curve is not supported
-     *
-     * @return self
      */
     public static function fromOID(string $oid): self
     {
@@ -94,8 +92,6 @@ class CurveParameter extends JWKParameter
      * Get key size in bits for the curve.
      *
      * @throws \UnexpectedValueException
-     *
-     * @return int
      */
     public function keySizeBits(): int
     {

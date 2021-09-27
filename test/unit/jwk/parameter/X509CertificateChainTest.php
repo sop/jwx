@@ -24,8 +24,6 @@ class JWKX509CertificateChainParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -41,8 +39,6 @@ class JWKX509CertificateChainParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromNameAndValue(JWKParameter $param)
     {

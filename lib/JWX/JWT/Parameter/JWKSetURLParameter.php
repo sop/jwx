@@ -17,8 +17,6 @@ class JWKSetURLParameter extends JWTParameter
 
     /**
      * Constructor.
-     *
-     * @param string $uri
      */
     public function __construct(string $uri)
     {

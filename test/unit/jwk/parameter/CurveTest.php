@@ -14,7 +14,7 @@ use Sop\JWX\JWK\Parameter\JWKParameter;
  */
 class CurveParameterTest extends TestCase
 {
-    const OID_P256 = '1.2.840.10045.3.1.7';
+    public const OID_P256 = '1.2.840.10045.3.1.7';
 
     public function testCreate()
     {
@@ -25,8 +25,6 @@ class CurveParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -59,8 +57,6 @@ class CurveParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CurveParameter $param
      */
     public function testKeySizeBits(CurveParameter $param)
     {
@@ -76,8 +72,6 @@ class CurveParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromNameAndValue(JWKParameter $param)
     {

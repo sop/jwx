@@ -15,50 +15,50 @@ use Sop\JWX\Parameter\Parameter;
 class JWTParameter extends Parameter
 {
     // registered parameter names
-    const PARAM_ALGORITHM = 'alg';
-    const PARAM_JWK_SET_URL = 'jku';
-    const PARAM_JSON_WEB_KEY = 'jwk';
-    const PARAM_KEY_ID = 'kid';
-    const PARAM_X509_URL = 'x5u';
-    const PARAM_X509_CERTIFICATE_CHAIN = 'x5c';
-    const PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT = 'x5t';
-    const PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT = 'x5t#S256';
-    const PARAM_TYPE = 'typ';
-    const PARAM_CONTENT_TYPE = 'cty';
-    const PARAM_CRITICAL = 'crit';
-    const PARAM_ENCRYPTION_ALGORITHM = 'enc';
-    const PARAM_COMPRESSION_ALGORITHM = 'zip';
-    const PARAM_EPHEMERAL_PUBLIC_KEY = 'epk';
-    const PARAM_AGREEMENT_PARTYUINFO = 'apu';
-    const PARAM_AGREEMENT_PARTYVINFO = 'apv';
-    const PARAM_INITIALIZATION_VECTOR = 'iv';
-    const PARAM_AUTHENTICATION_TAG = 'tag';
-    const PARAM_PBES2_SALT_INPUT = 'p2s';
-    const PARAM_PBES2_COUNT = 'p2c';
-    const PARAM_BASE64URL_ENCODE_PAYLOAD = 'b64';
+    public const PARAM_ALGORITHM = 'alg';
+    public const PARAM_JWK_SET_URL = 'jku';
+    public const PARAM_JSON_WEB_KEY = 'jwk';
+    public const PARAM_KEY_ID = 'kid';
+    public const PARAM_X509_URL = 'x5u';
+    public const PARAM_X509_CERTIFICATE_CHAIN = 'x5c';
+    public const PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT = 'x5t';
+    public const PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT = 'x5t#S256';
+    public const PARAM_TYPE = 'typ';
+    public const PARAM_CONTENT_TYPE = 'cty';
+    public const PARAM_CRITICAL = 'crit';
+    public const PARAM_ENCRYPTION_ALGORITHM = 'enc';
+    public const PARAM_COMPRESSION_ALGORITHM = 'zip';
+    public const PARAM_EPHEMERAL_PUBLIC_KEY = 'epk';
+    public const PARAM_AGREEMENT_PARTYUINFO = 'apu';
+    public const PARAM_AGREEMENT_PARTYVINFO = 'apv';
+    public const PARAM_INITIALIZATION_VECTOR = 'iv';
+    public const PARAM_AUTHENTICATION_TAG = 'tag';
+    public const PARAM_PBES2_SALT_INPUT = 'p2s';
+    public const PARAM_PBES2_COUNT = 'p2c';
+    public const PARAM_BASE64URL_ENCODE_PAYLOAD = 'b64';
 
     // shorthand aliases for parameter names
-    const P_ALG = self::PARAM_ALGORITHM;
-    const P_JKU = self::PARAM_JWK_SET_URL;
-    const P_JWK = self::PARAM_JSON_WEB_KEY;
-    const P_KID = self::PARAM_KEY_ID;
-    const P_X5U = self::PARAM_X509_URL;
-    const P_X5C = self::PARAM_X509_CERTIFICATE_CHAIN;
-    const P_X5T = self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT;
-    const P_X5TS256 = self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT;
-    const P_TYP = self::PARAM_TYPE;
-    const P_CTY = self::PARAM_CONTENT_TYPE;
-    const P_CRIT = self::PARAM_CRITICAL;
-    const P_ENC = self::PARAM_ENCRYPTION_ALGORITHM;
-    const P_ZIP = self::PARAM_COMPRESSION_ALGORITHM;
-    const P_EPK = self::PARAM_EPHEMERAL_PUBLIC_KEY;
-    const P_APU = self::PARAM_AGREEMENT_PARTYUINFO;
-    const P_APV = self::PARAM_AGREEMENT_PARTYVINFO;
-    const P_IV = self::PARAM_INITIALIZATION_VECTOR;
-    const P_TAG = self::PARAM_AUTHENTICATION_TAG;
-    const P_P2S = self::PARAM_PBES2_SALT_INPUT;
-    const P_P2C = self::PARAM_PBES2_COUNT;
-    const P_B64 = self::PARAM_BASE64URL_ENCODE_PAYLOAD;
+    public const P_ALG = self::PARAM_ALGORITHM;
+    public const P_JKU = self::PARAM_JWK_SET_URL;
+    public const P_JWK = self::PARAM_JSON_WEB_KEY;
+    public const P_KID = self::PARAM_KEY_ID;
+    public const P_X5U = self::PARAM_X509_URL;
+    public const P_X5C = self::PARAM_X509_CERTIFICATE_CHAIN;
+    public const P_X5T = self::PARAM_X509_CERTIFICATE_SHA1_THUMBPRINT;
+    public const P_X5TS256 = self::PARAM_X509_CERTIFICATE_SHA256_THUMBPRINT;
+    public const P_TYP = self::PARAM_TYPE;
+    public const P_CTY = self::PARAM_CONTENT_TYPE;
+    public const P_CRIT = self::PARAM_CRITICAL;
+    public const P_ENC = self::PARAM_ENCRYPTION_ALGORITHM;
+    public const P_ZIP = self::PARAM_COMPRESSION_ALGORITHM;
+    public const P_EPK = self::PARAM_EPHEMERAL_PUBLIC_KEY;
+    public const P_APU = self::PARAM_AGREEMENT_PARTYUINFO;
+    public const P_APV = self::PARAM_AGREEMENT_PARTYVINFO;
+    public const P_IV = self::PARAM_INITIALIZATION_VECTOR;
+    public const P_TAG = self::PARAM_AUTHENTICATION_TAG;
+    public const P_P2S = self::PARAM_PBES2_SALT_INPUT;
+    public const P_P2C = self::PARAM_PBES2_COUNT;
+    public const P_B64 = self::PARAM_BASE64URL_ENCODE_PAYLOAD;
 
     /**
      * Mapping from registered JWT parameter name to class name.
@@ -67,7 +67,7 @@ class JWTParameter extends Parameter
      *
      * @var array
      */
-    const MAP_NAME_TO_CLASS = [
+    public const MAP_NAME_TO_CLASS = [
         self::P_ALG => AlgorithmParameter::class,
         self::P_JKU => JWKSetURLParameter::class,
         self::P_JWK => JSONWebKeyParameter::class,
@@ -107,8 +107,6 @@ class JWTParameter extends Parameter
      *
      * @param string $name  Parameter name
      * @param mixed  $value Parameter value
-     *
-     * @return self
      */
     public static function fromNameAndValue(string $name, $value): self
     {

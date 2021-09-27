@@ -23,8 +23,6 @@ class OtherPrimesInfoParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testParamName(JWKParameter $param)
     {
@@ -34,8 +32,6 @@ class OtherPrimesInfoParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromJSONValue(JWKParameter $param)
     {
@@ -51,8 +47,6 @@ class OtherPrimesInfoParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWKParameter $param
      */
     public function testFromNameAndValue(JWKParameter $param)
     {

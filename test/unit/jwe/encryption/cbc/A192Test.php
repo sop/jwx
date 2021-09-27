@@ -16,10 +16,10 @@ use Sop\JWX\JWE\EncryptionAlgorithm\AESCBCAlgorithm;
  */
 class A192CBCEncryptionTest extends TestCase
 {
-    const PLAINTEXT = 'My hovercraft is full of eels.';
-    const KEY_192 = '123456789 123456789 123456789 123456789 12345678';
-    const IV = '123456789 123456';
-    const AAD = 'I will not buy this record, it is scratched.';
+    public const PLAINTEXT = 'My hovercraft is full of eels.';
+    public const KEY_192 = '123456789 123456789 123456789 123456789 12345678';
+    public const IV = '123456789 123456';
+    public const AAD = 'I will not buy this record, it is scratched.';
 
     public function testCreate()
     {
@@ -40,8 +40,6 @@ class A192CBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testAlgoParamValue(ContentEncryptionAlgorithm $algo)
     {
@@ -51,8 +49,6 @@ class A192CBCEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testEncrypt(ContentEncryptionAlgorithm $algo)
     {
@@ -65,8 +61,6 @@ class A192CBCEncryptionTest extends TestCase
     /**
      * @depends testCreate
      * @depends testEncrypt
-     *
-     * @param array $data
      */
     public function testDecrypt(ContentEncryptionAlgorithm $algo, array $data)
     {

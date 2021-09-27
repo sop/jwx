@@ -17,8 +17,6 @@ class KeyIDParameter extends JWTParameter
 
     /**
      * Constructor.
-     *
-     * @param string $id
      */
     public function __construct(string $id)
     {

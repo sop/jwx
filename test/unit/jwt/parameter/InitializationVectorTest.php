@@ -14,7 +14,7 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class InitializationVectorParameterTest extends TestCase
 {
-    const IV = 'abcdef';
+    public const IV = 'abcdef';
 
     public function testCreate()
     {
@@ -25,8 +25,6 @@ class InitializationVectorParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {
@@ -36,8 +34,6 @@ class InitializationVectorParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param InitializationVectorParameter $param
      */
     public function testIV(InitializationVectorParameter $param)
     {

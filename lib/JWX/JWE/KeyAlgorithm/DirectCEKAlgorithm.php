@@ -38,9 +38,6 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
     /**
      * Initialize from JWK.
      *
-     * @param JWK    $jwk
-     * @param Header $header
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -57,8 +54,6 @@ class DirectCEKAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Get content encryption key.
-     *
-     * @return string
      */
     public function cek(): string
     {

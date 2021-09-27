@@ -13,7 +13,7 @@ use Sop\JWX\Util\Base64;
  */
 class SymmetricKeyJWKTest extends TestCase
 {
-    const KEY = 'password';
+    public const KEY = 'password';
 
     public function testCreate()
     {
@@ -25,8 +25,6 @@ class SymmetricKeyJWKTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param SymmetricKeyJWK $jwk
      */
     public function testKey(SymmetricKeyJWK $jwk)
     {

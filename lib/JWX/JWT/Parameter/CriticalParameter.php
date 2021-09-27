@@ -27,10 +27,6 @@ class CriticalParameter extends JWTParameter
 
     /**
      * Get self with parameter name added.
-     *
-     * @param string $name
-     *
-     * @return self
      */
     public function withParamName(string $name): self
     {
@@ -42,10 +38,6 @@ class CriticalParameter extends JWTParameter
 
     /**
      * Check whether given parameter name is critical.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     public function has(string $name): bool
     {

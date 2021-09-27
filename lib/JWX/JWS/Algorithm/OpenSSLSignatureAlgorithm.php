@@ -80,15 +80,11 @@ abstract class OpenSSLSignatureAlgorithm extends SignatureAlgorithm
 
     /**
      * Get the signature algorithm identifier supported by OpenSSL.
-     *
-     * @return int
      */
     abstract protected function _mdMethod(): int;
 
     /**
      * Get the last OpenSSL error message.
-     *
-     * @return null|string
      */
     protected function _getLastOpenSSLError(): ?string
     {

@@ -68,8 +68,6 @@ class JWS
 
     /**
      * Convert JWS to string.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -78,10 +76,6 @@ class JWS
 
     /**
      * Initialize from a compact serialization.
-     *
-     * @param string $data
-     *
-     * @return self
      */
     public static function fromCompact(string $data): self
     {
@@ -91,11 +85,7 @@ class JWS
     /**
      * Initialize from the parts of a compact serialization.
      *
-     * @param array $parts
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromParts(array $parts): self
     {
@@ -120,8 +110,6 @@ class JWS
      *                                    parameters are added automatically.
      *
      * @throws \RuntimeException If signature computation fails
-     *
-     * @return self
      */
     public static function sign(string $payload, SignatureAlgorithm $algo,
         ?Header $header = null): self
@@ -146,8 +134,6 @@ class JWS
 
     /**
      * Get JOSE header.
-     *
-     * @return JOSE
      */
     public function header(): JOSE
     {
@@ -156,8 +142,6 @@ class JWS
 
     /**
      * Get the signature algorithm name.
-     *
-     * @return string
      */
     public function algorithmName(): string
     {
@@ -166,8 +150,6 @@ class JWS
 
     /**
      * Check whether JWS is unsecured, that is, contains no signature.
-     *
-     * @return bool
      */
     public function isUnsecured(): bool
     {
@@ -176,8 +158,6 @@ class JWS
 
     /**
      * Get the payload.
-     *
-     * @return string
      */
     public function payload(): string
     {
@@ -186,8 +166,6 @@ class JWS
 
     /**
      * Get the signature.
-     *
-     * @return string
      */
     public function signature(): string
     {
@@ -196,8 +174,6 @@ class JWS
 
     /**
      * Validate the signature using explicit algorithm.
-     *
-     * @param SignatureAlgorithm $algo
      *
      * @throws \UnexpectedValueException If using different signature algorithm
      *                                   then specified by the header
@@ -253,8 +229,6 @@ class JWS
 
     /**
      * Convert to compact serialization.
-     *
-     * @return string
      */
     public function toCompact(): string
     {
@@ -265,8 +239,6 @@ class JWS
 
     /**
      * Convert to compact serialization with payload detached.
-     *
-     * @return string
      */
     public function toCompactDetached(): string
     {
@@ -276,8 +248,6 @@ class JWS
 
     /**
      * Get the payload encoded for serialization.
-     *
-     * @return string
      */
     protected function _encodedPayload(): string
     {
@@ -293,8 +263,6 @@ class JWS
      *
      * @param string $payload Payload
      * @param Header $header  Protected header
-     *
-     * @return string
      */
     protected static function _generateSignatureInput(string $payload,
         Header $header): string

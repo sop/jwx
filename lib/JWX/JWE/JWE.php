@@ -85,8 +85,6 @@ class JWE
 
     /**
      * Convert JWE to string.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -95,10 +93,6 @@ class JWE
 
     /**
      * Initialize from compact serialization.
-     *
-     * @param string $data
-     *
-     * @return self
      */
     public static function fromCompact(string $data): self
     {
@@ -108,11 +102,7 @@ class JWE
     /**
      * Initialize from parts of compact serialization.
      *
-     * @param array $parts
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromParts(array $parts): self
     {
@@ -144,8 +134,6 @@ class JWE
      *                                             Randomly generated if not set.
      *
      * @throws \RuntimeException If encrypt fails
-     *
-     * @return self
      */
     public static function encrypt(string $payload,
         KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo,
@@ -254,8 +242,6 @@ class JWE
 
     /**
      * Get JOSE header.
-     *
-     * @return JOSE
      */
     public function header(): JOSE
     {
@@ -264,8 +250,6 @@ class JWE
 
     /**
      * Get the name of the key management algorithm.
-     *
-     * @return string
      */
     public function algorithmName(): string
     {
@@ -274,8 +258,6 @@ class JWE
 
     /**
      * Get the name of the encryption algorithm.
-     *
-     * @return string
      */
     public function encryptionAlgorithmName(): string
     {
@@ -284,8 +266,6 @@ class JWE
 
     /**
      * Get encrypted CEK.
-     *
-     * @return string
      */
     public function encryptedKey(): string
     {
@@ -294,8 +274,6 @@ class JWE
 
     /**
      * Get initialization vector.
-     *
-     * @return string
      */
     public function initializationVector(): string
     {
@@ -304,8 +282,6 @@ class JWE
 
     /**
      * Get ciphertext.
-     *
-     * @return string
      */
     public function ciphertext(): string
     {
@@ -314,8 +290,6 @@ class JWE
 
     /**
      * Get authentication tag.
-     *
-     * @return string
      */
     public function authenticationTag(): string
     {
@@ -324,8 +298,6 @@ class JWE
 
     /**
      * Convert to compact serialization.
-     *
-     * @return string
      */
     public function toCompact(): string
     {
@@ -347,8 +319,6 @@ class JWE
      * @param Header                     $header    Header
      *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     private static function _encryptContent(string $plaintext, string $cek,
         string $iv, KeyManagementAlgorithm $key_algo,

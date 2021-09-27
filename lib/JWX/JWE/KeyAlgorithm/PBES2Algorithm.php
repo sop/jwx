@@ -31,7 +31,7 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_PBES2_HS256_A128KW => PBES2HS256A128KWAlgorithm::class,
         JWA::ALGO_PBES2_HS384_A192KW => PBES2HS384A192KWAlgorithm::class,
         JWA::ALGO_PBES2_HS512_A256KW => PBES2HS512A256KWAlgorithm::class,
@@ -82,9 +82,6 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
     /**
      * Initialize from JWK.
      *
-     * @param JWK    $jwk
-     * @param Header $header
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -114,8 +111,6 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
      * @param string $password   Password
      * @param int    $count      Optional user defined iteration count
      * @param int    $salt_bytes Optional user defined salt length
-     *
-     * @return self
      */
     public static function fromPassword(string $password, int $count = 64000,
         int $salt_bytes = 8): self
@@ -126,8 +121,6 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 
     /**
      * Get salt input.
-     *
-     * @return string
      */
     public function saltInput(): string
     {
@@ -136,8 +129,6 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 
     /**
      * Get computed salt.
-     *
-     * @return string
      */
     public function salt(): string
     {
@@ -147,8 +138,6 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 
     /**
      * Get iteration count.
-     *
-     * @return int
      */
     public function iterationCount(): int
     {
@@ -168,29 +157,21 @@ abstract class PBES2Algorithm extends KeyManagementAlgorithm
 
     /**
      * Get hash algorithm for hash_pbkdf2.
-     *
-     * @return string
      */
     abstract protected function _hashAlgo(): string;
 
     /**
      * Get derived key length.
-     *
-     * @return int
      */
     abstract protected function _keyLength(): int;
 
     /**
      * Get key wrapping algoritym.
-     *
-     * @return AESKeyWrapAlgorithm
      */
     abstract protected function _kwAlgo(): AESKeyWrapAlgorithm;
 
     /**
      * Get derived key.
-     *
-     * @return string
      */
     protected function _derivedKey(): string
     {

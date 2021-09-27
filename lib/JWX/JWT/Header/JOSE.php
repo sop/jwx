@@ -36,10 +36,6 @@ class JOSE extends Header
 
     /**
      * Get self merged with another Header.
-     *
-     * @param Header $header
-     *
-     * @return self
      */
     public function withHeader(Header $header): self
     {
@@ -48,8 +44,6 @@ class JOSE extends Header
 
     /**
      * Whether JOSE is for a JWS.
-     *
-     * @return bool
      */
     public function isJWS(): bool
     {
@@ -58,8 +52,6 @@ class JOSE extends Header
 
     /**
      * Whether JOSE is for a JWE.
-     *
-     * @return bool
      */
     public function isJWE(): bool
     {

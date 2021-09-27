@@ -20,7 +20,7 @@ abstract class EncryptionAlgorithmFactory
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_A128CBC_HS256 => A128CBCHS256Algorithm::class,
         JWA::ALGO_A192CBC_HS384 => A192CBCHS384Algorithm::class,
         JWA::ALGO_A256CBC_HS512 => A256CBCHS512Algorithm::class,
@@ -35,8 +35,6 @@ abstract class EncryptionAlgorithmFactory
      * @param string $name Algorithm name
      *
      * @throws \UnexpectedValueException if algorithm is not supported
-     *
-     * @return ContentEncryptionAlgorithm
      */
     public static function algoByName(string $name): ContentEncryptionAlgorithm
     {
@@ -56,8 +54,6 @@ abstract class EncryptionAlgorithmFactory
      * @throws \UnexpectedValueException If content encryption algorithm
      *                                   parameter is not present or algorithm
      *                                   is not supported
-     *
-     * @return ContentEncryptionAlgorithm
      */
     public static function algoByHeader(Header $header): ContentEncryptionAlgorithm
     {

@@ -29,8 +29,6 @@ class KeyManagementAlgorithmTest extends TestCase
 
     /**
      * @depends testFromJWK
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testWithKeyID(KeyManagementAlgorithm $algo)
     {
@@ -41,8 +39,6 @@ class KeyManagementAlgorithmTest extends TestCase
 
     /**
      * @depends testWithKeyID
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testHeaderParameters(KeyManagementAlgorithm $algo)
     {

@@ -74,18 +74,11 @@ abstract class KeyManagementAlgorithm implements AlgorithmParameterValue, Header
      * Returned key may be random depending on the key management algorithm.
      *
      * @param int $length Required key size in bytes
-     *
-     * @return string
      */
     abstract public function cekForEncryption(int $length): string;
 
     /**
      * Initialize key management algorithm from a JWK and a header.
-     *
-     * @param JWK    $jwk
-     * @param Header $header
-     *
-     * @return KeyManagementAlgorithm
      */
     public static function fromJWK(JWK $jwk, Header $header): KeyManagementAlgorithm
     {
@@ -97,8 +90,6 @@ abstract class KeyManagementAlgorithm implements AlgorithmParameterValue, Header
      * Get self with key ID.
      *
      * @param null|string $id Key ID or null to remove
-     *
-     * @return self
      */
     public function withKeyID(?string $id): self
     {

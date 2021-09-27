@@ -25,8 +25,6 @@ class JWTAlgorithmParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {

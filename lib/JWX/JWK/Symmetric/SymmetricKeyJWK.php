@@ -24,7 +24,7 @@ class SymmetricKeyJWK extends JWK
      *
      * @var string[]
      */
-    const MANAGED_PARAMS = [
+    public const MANAGED_PARAMS = [
         JWKParameter::PARAM_KEY_TYPE,
         JWKParameter::PARAM_KEY_VALUE,
     ];
@@ -55,8 +55,6 @@ class SymmetricKeyJWK extends JWK
      *
      * @param string       $key       Symmetric key
      * @param JWKParameter ...$params Optional additional parameters
-     *
-     * @return self
      */
     public static function fromKey(string $key, JWKParameter ...$params): self
     {
@@ -67,8 +65,6 @@ class SymmetricKeyJWK extends JWK
 
     /**
      * Get the symmetric key.
-     *
-     * @return string
      */
     public function key(): string
     {

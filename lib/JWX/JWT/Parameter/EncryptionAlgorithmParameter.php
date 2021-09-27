@@ -28,8 +28,6 @@ class EncryptionAlgorithmParameter extends JWTParameter
     /**
      * Initialize from EncryptionAlgorithmParameterValue.
      *
-     * @param EncryptionAlgorithmParameterValue $value
-     *
      * @return self
      */
     public static function fromAlgorithm(

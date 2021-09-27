@@ -41,8 +41,6 @@ class RSAPrivateKeyJWKTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param RSAPrivateKeyJWK $jwk
      */
     public function testToPEM(RSAPrivateKeyJWK $jwk)
     {
@@ -53,8 +51,6 @@ class RSAPrivateKeyJWKTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecoded(PEM $pem)
     {
@@ -63,8 +59,6 @@ class RSAPrivateKeyJWKTest extends TestCase
 
     /**
      * @depends testFromPEM
-     *
-     * @param RSAPrivateKeyJWK $jwk
      */
     public function testPublicKey(RSAPrivateKeyJWK $jwk)
     {
@@ -75,8 +69,6 @@ class RSAPrivateKeyJWKTest extends TestCase
 
     /**
      * @depends testPublicKey
-     *
-     * @param RSAPublicKeyJWK $jwk
      */
     public function testPublicKeyEquals(RSAPublicKeyJWK $jwk)
     {

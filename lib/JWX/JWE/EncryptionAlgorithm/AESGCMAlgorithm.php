@@ -63,8 +63,6 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
     /**
      * Check that key is valid.
      *
-     * @param string $key
-     *
      * @throws \RuntimeException
      */
     final protected function _validateKey(string $key): void
@@ -76,8 +74,6 @@ abstract class AESGCMAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Check that IV is valid.
-     *
-     * @param string $iv
      *
      * @throws \RuntimeException
      */

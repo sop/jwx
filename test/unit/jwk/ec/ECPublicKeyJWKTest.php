@@ -67,8 +67,6 @@ class ECPublicKeyJWKTest extends TestCase
 
     /**
      * @depends testCreateFromPEM
-     *
-     * @param ECPublicKeyJWK $jwk
      */
     public function testToPEM(ECPublicKeyJWK $jwk)
     {
@@ -79,8 +77,6 @@ class ECPublicKeyJWKTest extends TestCase
 
     /**
      * @depends testToPEM
-     *
-     * @param PEM $pem
      */
     public function testRecoded(PEM $pem)
     {

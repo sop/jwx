@@ -20,15 +20,11 @@ abstract class PrivateKeyJWK extends JWK
 {
     /**
      * Get the public key component of the asymmetric key pair.
-     *
-     * @return PublicKeyJWK
      */
     abstract public function publicKey(): PublicKeyJWK;
 
     /**
      * Convert private key to PEM.
-     *
-     * @return PEM
      */
     abstract public function toPEM(): PEM;
 

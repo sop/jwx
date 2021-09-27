@@ -45,9 +45,6 @@ class CookbookSignatureWithDetachedContentTest extends TestCase
     /**
      * @depends testSymmetricKey
      * @depends testHeader
-     *
-     * @param SymmetricKeyJWK $jwk
-     * @param Header          $header
      */
     public function testSign(SymmetricKeyJWK $jwk, Header $header)
     {
@@ -61,8 +58,6 @@ class CookbookSignatureWithDetachedContentTest extends TestCase
 
     /**
      * @depends testSign
-     *
-     * @param JWS $jws
      */
     public function testCompactDetached(JWS $jws)
     {

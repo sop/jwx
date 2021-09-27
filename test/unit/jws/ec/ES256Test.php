@@ -19,7 +19,7 @@ use Sop\JWX\JWT\Parameter\AlgorithmParameterValue;
  */
 class ES256Test extends TestCase
 {
-    const DATA = 'CONTENT';
+    public const DATA = 'CONTENT';
 
     private static $_jwk;
 
@@ -43,8 +43,6 @@ class ES256Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AlgorithmParameterValue $algo
      */
     public function testAlgoParamValue(AlgorithmParameterValue $algo)
     {
@@ -53,8 +51,6 @@ class ES256Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param SignatureAlgorithm $algo
      */
     public function testSign(SignatureAlgorithm $algo)
     {
@@ -67,8 +63,7 @@ class ES256Test extends TestCase
      * @depends testCreate
      * @depends testSign
      *
-     * @param SignatureAlgorithm $algo
-     * @param string             $signature
+     * @param string $signature
      */
     public function testValidate(SignatureAlgorithm $algo, $signature)
     {

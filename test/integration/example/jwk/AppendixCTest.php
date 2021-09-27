@@ -196,8 +196,6 @@ EOF;
 
     /**
      * @depends testHeader
-     *
-     * @param Header $header
      */
     public function testSalt(Header $header)
     {
@@ -214,8 +212,6 @@ EOF;
 
     /**
      * @depends testHeader
-     *
-     * @param Header $header
      */
     public function testEncryptKey(Header $header)
     {
@@ -235,8 +231,6 @@ EOF;
 
     /**
      * @depends testHeader
-     *
-     * @param Header $header
      */
     public function testAAD(Header $header)
     {

@@ -20,18 +20,14 @@ abstract class CompressionFactory
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_DEFLATE => DeflateAlgorithm::class,
     ];
 
     /**
      * Get the compression algorithm by name.
      *
-     * @param string $name
-     *
      * @throws \UnexpectedValueException If algorithm is not supported
-     *
-     * @return CompressionAlgorithm
      */
     public static function algoByName(string $name): CompressionAlgorithm
     {
@@ -50,8 +46,6 @@ abstract class CompressionFactory
      *
      * @throws \UnexpectedValueException If compression algorithm parameter is
      *                                   not present or algorithm is not supported
-     *
-     * @return CompressionAlgorithm
      */
     public static function algoByHeader(Header $header): CompressionAlgorithm
     {

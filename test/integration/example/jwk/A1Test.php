@@ -40,8 +40,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testJWKSet
-     *
-     * @param JWKSet $jwkset
      */
     public function testKeyCount(JWKSet $jwkset)
     {
@@ -50,8 +48,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testJWKSet
-     *
-     * @param JWKSet $jwkset
      *
      * @return JWK
      */
@@ -65,8 +61,6 @@ class JWKPublicKeysTest extends TestCase
     /**
      * @depends testJWKSet
      *
-     * @param JWKSet $jwkset
-     *
      * @return JWK
      */
     public function testKey2(JWKSet $jwkset)
@@ -79,8 +73,6 @@ class JWKPublicKeysTest extends TestCase
     /**
      * @depends testKey1
      *
-     * @param JWK $jwk
-     *
      * @return KeyTypeParameter
      */
     public function testKey1Type(JWK $jwk)
@@ -92,8 +84,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1Type
-     *
-     * @param KeyTypeParameter $param
      */
     public function testKey1TypeValue(KeyTypeParameter $param)
     {
@@ -102,8 +92,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1
-     *
-     * @param JWK $jwk
      *
      * @return CurveParameter
      */
@@ -116,8 +104,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1Curve
-     *
-     * @param CurveParameter $param
      */
     public function testKey1CurveParam(CurveParameter $param)
     {
@@ -126,8 +112,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1
-     *
-     * @param JWK $jwk
      *
      * @return XCoordinateParameter
      */
@@ -140,8 +124,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1XCoord
-     *
-     * @param XCoordinateParameter $param
      */
     public function testKey1XCoordValue(XCoordinateParameter $param)
     {
@@ -151,8 +133,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1
-     *
-     * @param JWK $jwk
      *
      * @return YCoordinateParameter
      */
@@ -165,8 +145,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1YCoord
-     *
-     * @param YCoordinateParameter $param
      */
     public function testKey1YCoordValue(YCoordinateParameter $param)
     {
@@ -176,8 +154,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1
-     *
-     * @param JWK $jwk
      *
      * @return PublicKeyUseParameter
      */
@@ -190,8 +166,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey1Use
-     *
-     * @param PublicKeyUseParameter $param
      */
     public function testKey1UseValue(PublicKeyUseParameter $param)
     {
@@ -200,8 +174,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2
-     *
-     * @param JWK $jwk
      *
      * @return KeyTypeParameter
      */
@@ -214,8 +186,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2Type
-     *
-     * @param KeyTypeParameter $param
      */
     public function testKey2TypeValue(KeyTypeParameter $param)
     {
@@ -224,8 +194,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2
-     *
-     * @param JWK $jwk
      *
      * @return ModulusParameter
      */
@@ -238,8 +206,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2Modulus
-     *
-     * @param ModulusParameter $param
      */
     public function testKey2ModulusValue(ModulusParameter $param)
     {
@@ -249,8 +215,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2
-     *
-     * @param JWK $jwk
      *
      * @return ExponentParameter
      */
@@ -263,8 +227,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2Exponent
-     *
-     * @param ExponentParameter $param
      */
     public function testKey2ExponentValue(ExponentParameter $param)
     {
@@ -273,8 +235,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2
-     *
-     * @param JWK $jwk
      *
      * @return AlgorithmParameter
      */
@@ -287,8 +247,6 @@ class JWKPublicKeysTest extends TestCase
 
     /**
      * @depends testKey2Algo
-     *
-     * @param AlgorithmParameter $param
      */
     public function testKey2AlgoValue(AlgorithmParameter $param)
     {

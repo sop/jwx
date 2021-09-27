@@ -17,8 +17,6 @@ class CompressionAlgorithmParameter extends JWTParameter
 
     /**
      * Constructor.
-     *
-     * @param string $algo
      */
     public function __construct(string $algo)
     {
@@ -27,8 +25,6 @@ class CompressionAlgorithmParameter extends JWTParameter
 
     /**
      * Initialize from CompressionAlgorithmParameterValue.
-     *
-     * @param CompressionAlgorithmParameterValue $value
      *
      * @return self
      */

@@ -24,7 +24,7 @@ use Sop\JWX\JWT\ValidationContext;
  */
 class ClaimsValidateTest extends TestCase
 {
-    const REF_TIME = 1460293103;
+    public const REF_TIME = 1460293103;
 
     private static $_claims;
 

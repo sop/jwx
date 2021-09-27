@@ -46,9 +46,6 @@ class UUIDv4
         $this->_uuid = $uuid;
     }
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->canonical();
@@ -56,8 +53,6 @@ class UUIDv4
 
     /**
      * Create new random UUIDv4.
-     *
-     * @return self
      */
     public static function createRandom(): self
     {
@@ -90,8 +85,6 @@ class UUIDv4
 
     /**
      * Get UUIDv4 in canonical form.
-     *
-     * @return string
      */
     public function canonical(): string
     {

@@ -15,7 +15,7 @@ use Sop\JWX\JWT\Claim\RegisteredClaim;
  */
 class IssuedAtClaimTest extends TestCase
 {
-    const TIME = 'Thu, May 12, 2016  2:33:41 PM';
+    public const TIME = 'Thu, May 12, 2016  2:33:41 PM';
 
     public function testCreate()
     {
@@ -26,8 +26,6 @@ class IssuedAtClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param Claim $claim
      */
     public function testClaimName(Claim $claim)
     {
@@ -36,8 +34,6 @@ class IssuedAtClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param IssuedAtClaim $claim
      */
     public function testTimestamp(IssuedAtClaim $claim)
     {
@@ -47,8 +43,6 @@ class IssuedAtClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param IssuedAtClaim $claim
      */
     public function testDateTime(IssuedAtClaim $claim)
     {
@@ -59,8 +53,6 @@ class IssuedAtClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param IssuedAtClaim $claim
      */
     public function testDateTimeFail(IssuedAtClaim $claim)
     {
@@ -74,8 +66,6 @@ class IssuedAtClaimTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param IssuedAtClaim $claim
      */
     public function testDateTimeInvalidTimezone(IssuedAtClaim $claim)
     {

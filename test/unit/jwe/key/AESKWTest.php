@@ -22,7 +22,7 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class AESKWTest extends TestCase
 {
-    const KEY_128 = '123456789 123456';
+    public const KEY_128 = '123456789 123456';
 
     public function testCreate()
     {
@@ -33,8 +33,6 @@ class AESKWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testHeaderParameters(KeyManagementAlgorithm $algo)
     {
@@ -44,8 +42,6 @@ class AESKWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testCEKForEncryption(KeyManagementAlgorithm $algo)
     {
@@ -56,20 +52,16 @@ class AESKWTest extends TestCase
     /**
      * @depends testCreate
      * @requires PHP < 8
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testCEKForEncryptionFail(KeyManagementAlgorithm $algo)
     {
         $this->expectException(\InvalidArgumentException::class);
         $algo->cekForEncryption(0);
     }
-    
+
     /**
      * @depends testCreate
      * @requires PHP >= 8
-     *
-     * @param KeyManagementAlgorithm $algo
      */
     public function testCEKForEncryptionFailPhp8(KeyManagementAlgorithm $algo)
     {

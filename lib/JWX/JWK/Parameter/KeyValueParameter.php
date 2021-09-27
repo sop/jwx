@@ -28,8 +28,6 @@ class KeyValueParameter extends JWKParameter
 
     /**
      * Get key in binary format.
-     *
-     * @return string
      */
     public function key(): string
     {

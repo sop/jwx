@@ -46,9 +46,6 @@ class CookbookRSAv15SignatureTest extends TestCase
     /**
      * @depends testPrivateKey
      * @depends testHeader
-     *
-     * @param RSAPrivateKeyJWK $jwk
-     * @param Header           $header
      */
     public function testSign(RSAPrivateKeyJWK $jwk, Header $header)
     {
@@ -62,8 +59,6 @@ class CookbookRSAv15SignatureTest extends TestCase
 
     /**
      * @depends testSign
-     *
-     * @param JWS $jws
      */
     public function testCompact(JWS $jws)
     {

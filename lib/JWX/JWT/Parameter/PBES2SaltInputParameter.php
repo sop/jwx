@@ -28,8 +28,6 @@ class PBES2SaltInputParameter extends JWTParameter
 
     /**
      * Get salt input value.
-     *
-     * @return string
      */
     public function saltInput(): string
     {
@@ -38,10 +36,6 @@ class PBES2SaltInputParameter extends JWTParameter
 
     /**
      * Get computed salt value.
-     *
-     * @param AlgorithmParameter $algo
-     *
-     * @return string
      */
     public function salt(AlgorithmParameter $algo): string
     {

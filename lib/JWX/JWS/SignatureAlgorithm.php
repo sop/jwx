@@ -30,8 +30,6 @@ abstract class SignatureAlgorithm implements AlgorithmParameterValue, HeaderPara
      * Compute signature.
      *
      * @param string $data Data for which the signature is computed
-     *
-     * @return string
      */
     abstract public function computeSignature(string $data): string;
 
@@ -40,8 +38,6 @@ abstract class SignatureAlgorithm implements AlgorithmParameterValue, HeaderPara
      *
      * @param string $data      Data to validate
      * @param string $signature Signature to compare
-     *
-     * @return bool
      */
     abstract public function validateSignature(string $data, string $signature): bool;
 
@@ -50,8 +46,6 @@ abstract class SignatureAlgorithm implements AlgorithmParameterValue, HeaderPara
      *
      * @param JWK    $jwk    JSON Web Key
      * @param Header $header Header
-     *
-     * @return SignatureAlgorithm
      */
     public static function fromJWK(JWK $jwk, Header $header): SignatureAlgorithm
     {
@@ -63,8 +57,6 @@ abstract class SignatureAlgorithm implements AlgorithmParameterValue, HeaderPara
      * Get self with key ID.
      *
      * @param null|string $id Key ID or null to remove
-     *
-     * @return self
      */
     public function withKeyID(?string $id): self
     {

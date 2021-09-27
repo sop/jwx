@@ -47,8 +47,6 @@ trait NumericDateClaim
 
     /**
      * Get date as a unix timestamp.
-     *
-     * @return int
      */
     public function timestamp(): int
     {
@@ -61,8 +59,6 @@ trait NumericDateClaim
      * @param string $tz Timezone
      *
      * @throws \RuntimeException
-     *
-     * @return \DateTimeImmutable
      */
     public function dateTime(string $tz = 'UTC'): \DateTimeImmutable
     {
@@ -79,11 +75,7 @@ trait NumericDateClaim
     /**
      * Create DateTimeZone object from string.
      *
-     * @param string $tz
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return \DateTimeZone
      */
     private static function _createTimeZone(string $tz): \DateTimeZone
     {
@@ -96,8 +88,6 @@ trait NumericDateClaim
 
     /**
      * Get last error caused by DateTimeImmutable.
-     *
-     * @return string
      */
     private static function _getLastDateTimeImmutableErrorsStr(): string
     {

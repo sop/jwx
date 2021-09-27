@@ -27,8 +27,6 @@ class JOSETest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JOSE $jose
      */
     public function testHas(JOSE $jose)
     {
@@ -37,8 +35,6 @@ class JOSETest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JOSE $jose
      */
     public function testMerge(JOSE $jose)
     {
@@ -49,8 +45,6 @@ class JOSETest extends TestCase
 
     /**
      * @depends testMerge
-     *
-     * @param JOSE $jose
      */
     public function testMergedCount(JOSE $jose)
     {
@@ -59,8 +53,6 @@ class JOSETest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JOSE $jose
      */
     public function testDuplicateFail(JOSE $jose)
     {

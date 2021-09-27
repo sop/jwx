@@ -15,9 +15,9 @@ use Sop\JWX\JWE\KeyAlgorithm\AESGCMKWAlgorithm;
  */
 class A256GCMKWTest extends TestCase
 {
-    const KEY_256 = '123456789 123456789 123456789 12';
-    const IV = '123456789 12';
-    const CEK_128 = '987654321 987654';
+    public const KEY_256 = '123456789 123456789 123456789 12';
+    public const IV = '123456789 12';
+    public const CEK_128 = '987654321 987654';
 
     public function testCreate()
     {
@@ -28,8 +28,6 @@ class A256GCMKWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AESGCMKWAlgorithm $algo
      */
     public function testAlgoParamValue(AESGCMKWAlgorithm $algo)
     {
@@ -38,8 +36,6 @@ class A256GCMKWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AESGCMKWAlgorithm $algo
      */
     public function testEncrypt(AESGCMKWAlgorithm $algo)
     {
@@ -52,8 +48,7 @@ class A256GCMKWTest extends TestCase
      * @depends testCreate
      * @depends testEncrypt
      *
-     * @param AESGCMKWAlgorithm $algo
-     * @param array             $data
+     * @param array $data
      */
     public function testDecrypt(AESGCMKWAlgorithm $algo, $data)
     {

@@ -23,8 +23,6 @@ class CriticalParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {
@@ -33,8 +31,6 @@ class CriticalParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CriticalParameter $param
      */
     public function testNames(CriticalParameter $param)
     {
@@ -43,8 +39,6 @@ class CriticalParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CriticalParameter $param
      */
     public function testHas(CriticalParameter $param)
     {
@@ -53,8 +47,6 @@ class CriticalParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CriticalParameter $param
      */
     public function testHasNot(CriticalParameter $param)
     {
@@ -63,8 +55,6 @@ class CriticalParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param CriticalParameter $param
      */
     public function testWithName(CriticalParameter $param)
     {

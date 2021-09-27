@@ -24,8 +24,6 @@ class X509CertificateSHA256ThumbprintParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {

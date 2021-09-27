@@ -73,36 +73,26 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Get cipher method name that is recognized by OpenSSL.
-     *
-     * @return string
      */
     abstract protected function _cipherMethod(): string;
 
     /**
      * Get algorithm name that is recognized by the Hash extension.
-     *
-     * @return string
      */
     abstract protected function _hashAlgo(): string;
 
     /**
      * Get length of the encryption key.
-     *
-     * @return int
      */
     abstract protected function _encKeyLen(): int;
 
     /**
      * Get length of the MAC key.
-     *
-     * @return int
      */
     abstract protected function _macKeyLen(): int;
 
     /**
      * Get length of the authentication tag.
-     *
-     * @return int
      */
     abstract protected function _tagLen(): int;
 
@@ -110,8 +100,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
      * Get cipher method and verify that it's supported.
      *
      * @throws \RuntimeException
-     *
-     * @return string
      */
     final protected function _getCipherMethod(): string
     {
@@ -132,8 +120,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
     /**
      * Check that key is valid.
      *
-     * @param string $key
-     *
      * @throws \RuntimeException
      */
     final protected function _validateKey(string $key): void
@@ -145,8 +131,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Check that IV is valid.
-     *
-     * @param string $iv
      *
      * @throws \RuntimeException
      */
@@ -160,10 +144,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Get MAC key from CEK.
-     *
-     * @param string $key
-     *
-     * @return string
      */
     final protected function _macKey(string $key): string
     {
@@ -172,10 +152,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Get encryption key from CEK.
-     *
-     * @param string $key
-     *
-     * @return string
      */
     final protected function _encKey(string $key): string
     {
@@ -184,8 +160,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Compute AL value.
-     *
-     * @param string $aad
      *
      * @return string 64 bits
      */
@@ -201,10 +175,7 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
     /**
      * Compute authentication tag.
      *
-     * @param string $data
-     * @param string $key  CEK
-     *
-     * @return string
+     * @param string $key CEK
      */
     final protected function _computeAuthTag(string $data, string $key): string
     {
@@ -214,8 +185,6 @@ abstract class AESCBCAlgorithm implements ContentEncryptionAlgorithm
 
     /**
      * Get last OpenSSL error message.
-     *
-     * @return null|string
      */
     protected function _getLastOpenSSLError(): ?string
     {

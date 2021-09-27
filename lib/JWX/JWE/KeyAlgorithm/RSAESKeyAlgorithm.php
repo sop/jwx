@@ -30,7 +30,7 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_RSA1_5 => RSAESPKCS1Algorithm::class,
         JWA::ALGO_RSA_OAEP => RSAESOAEPAlgorithm::class,
     ];
@@ -67,9 +67,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
     /**
      * Initialize from JWK.
      *
-     * @param JWK    $jwk
-     * @param Header $header
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -89,10 +86,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Initialize from a public key.
-     *
-     * @param RSAPublicKeyJWK $jwk
-     *
-     * @return self
      */
     public static function fromPublicKey(RSAPublicKeyJWK $jwk): self
     {
@@ -101,10 +94,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Initialize from a private key.
-     *
-     * @param RSAPrivateKeyJWK $jwk
-     *
-     * @return self
      */
     public static function fromPrivateKey(RSAPrivateKeyJWK $jwk): self
     {
@@ -113,8 +102,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Get the public key.
-     *
-     * @return RSAPublicKeyJWK
      */
     public function publicKey(): RSAPublicKeyJWK
     {
@@ -123,8 +110,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Check whether the private key is present.
-     *
-     * @return bool
      */
     public function hasPrivateKey(): bool
     {
@@ -135,8 +120,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
      * Get the private key.
      *
      * @throws \LogicException
-     *
-     * @return RSAPrivateKeyJWK
      */
     public function privateKey(): RSAPrivateKeyJWK
     {
@@ -157,8 +140,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Get the padding scheme.
-     *
-     * @return int
      */
     abstract protected function _paddingScheme(): int;
 
@@ -208,8 +189,6 @@ abstract class RSAESKeyAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Get last OpenSSL error message.
-     *
-     * @return null|string
      */
     protected function _getLastOpenSSLError(): ?string
     {

@@ -15,10 +15,10 @@ use Sop\JWX\JWE\KeyAlgorithm\PBES2HS512A256KWAlgorithm;
  */
 class PBES2A256KWTest extends TestCase
 {
-    const PASSWORD = 'password';
-    const SALT = 'salt';
-    const COUNT = 256;
-    const KEY_256 = '123456789 123456789 123456789 12';
+    public const PASSWORD = 'password';
+    public const SALT = 'salt';
+    public const COUNT = 256;
+    public const KEY_256 = '123456789 123456789 123456789 12';
 
     public function testCreate()
     {
@@ -29,8 +29,6 @@ class PBES2A256KWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param PBES2Algorithm $algo
      */
     public function testAlgoValue(PBES2Algorithm $algo)
     {
@@ -40,8 +38,6 @@ class PBES2A256KWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param PBES2Algorithm $algo
      */
     public function testEncrypt(PBES2Algorithm $algo)
     {
@@ -54,8 +50,7 @@ class PBES2A256KWTest extends TestCase
      * @depends testCreate
      * @depends testEncrypt
      *
-     * @param PBES2Algorithm $algo
-     * @param mixed          $data
+     * @param mixed $data
      */
     public function testDecrypt(PBES2Algorithm $algo, $data)
     {

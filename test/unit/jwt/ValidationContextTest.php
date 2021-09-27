@@ -26,8 +26,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithRefTime(ValidationContext $ctx)
     {
@@ -38,8 +36,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithoutRefTime(ValidationContext $ctx)
     {
@@ -50,8 +46,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testWithoutRefTime
-     *
-     * @param ValidationContext $ctx
      */
     public function testRefTimeNotSet(ValidationContext $ctx)
     {
@@ -61,8 +55,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithLeeway(ValidationContext $ctx)
     {
@@ -73,8 +65,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithConstraint(ValidationContext $ctx)
     {
@@ -84,8 +74,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithIssuer(ValidationContext $ctx)
     {
@@ -97,8 +85,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithSubject(ValidationContext $ctx)
     {
@@ -110,8 +96,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithAudience(ValidationContext $ctx)
     {
@@ -123,8 +107,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testWithID(ValidationContext $ctx)
     {
@@ -136,8 +118,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testConstaintNotSet(ValidationContext $ctx)
     {
@@ -147,8 +127,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testValidatorNotSet(ValidationContext $ctx)
     {
@@ -158,8 +136,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testValidateMissingClaim(ValidationContext $ctx)
     {
@@ -172,8 +148,6 @@ class ValidationContextTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ValidationContext $ctx
      */
     public function testValidateRequiredFail(ValidationContext $ctx)
     {

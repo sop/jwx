@@ -5,19 +5,20 @@
 /.pydevproject
 
 # VS Code
-/.vscode
+/.vscode/
 
-# build files
+# Build files
 /build/
-/.*.cache
+.cache/
+.*[.-]cache
 
 # Composer
 /vendor/
 /composer.lock
 
-# non-dist files
+# Non-dist files
 /phpunit.xml
-/.php_cs
+/.php-cs-fixer.php
 
-# sandbox
+# Sandbox
 /demo/

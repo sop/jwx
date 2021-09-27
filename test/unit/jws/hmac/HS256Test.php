@@ -17,9 +17,9 @@ use Sop\JWX\JWT\Parameter\AlgorithmParameterValue;
  */
 class HS256Test extends TestCase
 {
-    const KEY = '12345678';
+    public const KEY = '12345678';
 
-    const DATA = 'CONTENT';
+    public const DATA = 'CONTENT';
 
     public function testCreate()
     {
@@ -30,8 +30,6 @@ class HS256Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AlgorithmParameterValue $algo
      */
     public function testAlgoParamValue(AlgorithmParameterValue $algo)
     {
@@ -40,8 +38,6 @@ class HS256Test extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param SignatureAlgorithm $algo
      */
     public function testSign(SignatureAlgorithm $algo)
     {
@@ -54,8 +50,7 @@ class HS256Test extends TestCase
      * @depends testCreate
      * @depends testSign
      *
-     * @param SignatureAlgorithm $algo
-     * @param string             $signature
+     * @param string $signature
      */
     public function testValidate(SignatureAlgorithm $algo, $signature)
     {

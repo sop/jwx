@@ -29,7 +29,7 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_A128KW => A128KWAlgorithm::class,
         JWA::ALGO_A192KW => A192KWAlgorithm::class,
         JWA::ALGO_A256KW => A256KWAlgorithm::class,
@@ -68,9 +68,6 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
     /**
      * Initialize from JWK.
      *
-     * @param JWK    $jwk
-     * @param Header $header
-     *
      * @throws \UnexpectedValueException
      *
      * @return self
@@ -97,22 +94,16 @@ abstract class AESKWAlgorithm extends KeyManagementAlgorithm
 
     /**
      * Get the size of the key encryption key in bytes.
-     *
-     * @return int
      */
     abstract protected function _kekSize(): int;
 
     /**
      * Get key wrapping algorithm instance.
-     *
-     * @return AESKeyWrapAlgorithm
      */
     abstract protected function _AESKWAlgo(): AESKeyWrapAlgorithm;
 
     /**
      * Get key wrapping algorithm.
-     *
-     * @return AESKeyWrapAlgorithm
      */
     protected function _kw(): AESKeyWrapAlgorithm
     {

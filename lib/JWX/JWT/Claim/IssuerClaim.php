@@ -15,8 +15,6 @@ class IssuerClaim extends RegisteredClaim
 {
     /**
      * Constructor.
-     *
-     * @param string $issuer
      */
     public function __construct(string $issuer)
     {

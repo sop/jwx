@@ -67,8 +67,6 @@ class RSASSAPKCS1AlgorithmTest extends TestCase
 
     /**
      * @depends testFromPublicKeyJWK
-     *
-     * @param RSASSAPKCS1Algorithm $algo
      */
     public function testComputeMissingPrivateKey(RSASSAPKCS1Algorithm $algo)
     {
@@ -94,8 +92,6 @@ class RSASSAPKCS1AlgorithmTest extends TestCase
 
     /**
      * @depends testFromPrivateKeyJWK
-     *
-     * @param RSASSAPKCS1Algorithm $algo
      */
     public function testComputeInvalidKey(RSASSAPKCS1Algorithm $algo)
     {
@@ -109,8 +105,6 @@ class RSASSAPKCS1AlgorithmTest extends TestCase
 
     /**
      * @depends testFromPrivateKeyJWK
-     *
-     * @param RSASSAPKCS1Algorithm $algo
      */
     public function testValidateInvalidKey(RSASSAPKCS1Algorithm $algo)
     {
@@ -124,8 +118,6 @@ class RSASSAPKCS1AlgorithmTest extends TestCase
 
     /**
      * @depends testFromPublicKeyJWK
-     *
-     * @param RSASSAPKCS1Algorithm $algo
      */
     public function testHeaderParameters(RSASSAPKCS1Algorithm $algo)
     {

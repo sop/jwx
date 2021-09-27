@@ -46,7 +46,7 @@ class HMACAlgorithmTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $algo->computeSignature('data');
     }
-    
+
     /**
      * @requires PHP >= 8
      */

@@ -25,11 +25,11 @@ use Sop\JWX\JWT\Parameter\KeyIDParameter as JWTID;
  */
 class JWETest extends TestCase
 {
-    const PAYLOAD = 'PAYLOAD';
+    public const PAYLOAD = 'PAYLOAD';
 
-    const KEY_ID = 'id';
+    public const KEY_ID = 'id';
 
-    const CEK = '123456789 123456789 123456789 12';
+    public const CEK = '123456789 123456789 123456789 12';
 
     private static $_keyAlgo;
 
@@ -57,8 +57,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testDecrypt(JWE $jwe)
     {
@@ -68,8 +66,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testDecryptInvalidAlgo(JWE $jwe)
     {
@@ -79,8 +75,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testDecryptInvalidEncAlgo(JWE $jwe)
     {
@@ -90,8 +84,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testDecryptWithJWK(JWE $jwe)
     {
@@ -102,8 +94,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testDecryptWithJWKSet(JWE $jwe)
     {
@@ -115,8 +105,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testDecryptWithJWKSetNoKeys(JWE $jwe)
     {
@@ -126,8 +114,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testHeader(JWE $jwe)
     {
@@ -137,8 +123,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testEncryptedKey(JWE $jwe)
     {
@@ -147,8 +131,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testIV(JWE $jwe)
     {
@@ -157,8 +139,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testCiphertext(JWE $jwe)
     {
@@ -167,8 +147,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testAuthTag(JWE $jwe)
     {
@@ -177,8 +155,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testToCompact(JWE $jwe)
     {
@@ -189,8 +165,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncrypt
-     *
-     * @param JWE $jwe
      */
     public function testToString(JWE $jwe)
     {
@@ -228,8 +202,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncryptWithAll
-     *
-     * @param JWE $jwe
      */
     public function testDecryptWithAll(JWE $jwe)
     {
@@ -239,8 +211,6 @@ class JWETest extends TestCase
 
     /**
      * @depends testEncryptWithAll
-     *
-     * @param JWE $jwe
      */
     public function testCustomParameter(JWE $jwe)
     {

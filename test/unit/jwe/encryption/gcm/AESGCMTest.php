@@ -17,8 +17,8 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class AESGCMEncryptionTest extends TestCase
 {
-    const KEY = '0123456789abcdef';
-    const IV = '0123456789ab';
+    public const KEY = '0123456789abcdef';
+    public const IV = '0123456789ab';
 
     public function testCreate()
     {
@@ -29,8 +29,6 @@ class AESGCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testIVSize(ContentEncryptionAlgorithm $algo)
     {
@@ -39,8 +37,6 @@ class AESGCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testHeaderParams(ContentEncryptionAlgorithm $algo)
     {
@@ -50,8 +46,6 @@ class AESGCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testInvalidKeySize(ContentEncryptionAlgorithm $algo)
     {
@@ -61,8 +55,6 @@ class AESGCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testInvalidIVSize(ContentEncryptionAlgorithm $algo)
     {
@@ -72,8 +64,6 @@ class AESGCMEncryptionTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param ContentEncryptionAlgorithm $algo
      */
     public function testAuthFail(ContentEncryptionAlgorithm $algo)
     {

@@ -14,7 +14,7 @@ use Sop\JWX\JWT\Parameter\PBES2SaltInputParameter;
  */
 class PBES2SaltInputParameterTest extends TestCase
 {
-    const SALT_INPUT = 'abcdef';
+    public const SALT_INPUT = 'abcdef';
 
     public function testCreate()
     {
@@ -25,8 +25,6 @@ class PBES2SaltInputParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {
@@ -35,8 +33,6 @@ class PBES2SaltInputParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param PBES2SaltInputParameter $param
      */
     public function testSaltInput(PBES2SaltInputParameter $param)
     {

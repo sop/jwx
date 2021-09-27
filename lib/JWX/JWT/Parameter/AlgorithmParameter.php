@@ -28,10 +28,6 @@ class AlgorithmParameter extends JWTParameter
 
     /**
      * Initialize from AlgorithmParameterValue.
-     *
-     * @param AlgorithmParameterValue $value
-     *
-     * @return self
      */
     public static function fromAlgorithm(AlgorithmParameterValue $value): self
     {

@@ -45,9 +45,6 @@ class CookbookHMACSHA2IntegrityProtectionTest extends TestCase
     /**
      * @depends testSymmetricKey
      * @depends testHeader
-     *
-     * @param SymmetricKeyJWK $jwk
-     * @param Header          $header
      */
     public function testSign(SymmetricKeyJWK $jwk, Header $header)
     {
@@ -61,8 +58,6 @@ class CookbookHMACSHA2IntegrityProtectionTest extends TestCase
 
     /**
      * @depends testSign
-     *
-     * @param JWS $jws
      */
     public function testCompact(JWS $jws)
     {

@@ -28,7 +28,7 @@ class ECPublicKeyJWK extends PublicKeyJWK
      *
      * @var string[]
      */
-    const MANAGED_PARAMS = [
+    public const MANAGED_PARAMS = [
         JWKParameter::PARAM_KEY_TYPE,
         JWKParameter::PARAM_CURVE,
         JWKParameter::PARAM_X_COORDINATE,
@@ -58,11 +58,7 @@ class ECPublicKeyJWK extends PublicKeyJWK
     /**
      * Initialize from ECPublicKey.
      *
-     * @param ECPublicKey $pk
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromECPublicKey(ECPublicKey $pk): self
     {
@@ -79,10 +75,6 @@ class ECPublicKeyJWK extends PublicKeyJWK
 
     /**
      * Initialize from PEM.
-     *
-     * @param PEM $pem
-     *
-     * @return self
      */
     public static function fromPEM(PEM $pem): self
     {
@@ -91,8 +83,6 @@ class ECPublicKeyJWK extends PublicKeyJWK
 
     /**
      * Convert EC public key to PEM.
-     *
-     * @return PEM
      */
     public function toPEM(): PEM
     {

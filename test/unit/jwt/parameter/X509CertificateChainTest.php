@@ -25,8 +25,6 @@ class X509CertificateChainParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testParamName(JWTParameter $param)
     {
@@ -36,8 +34,6 @@ class X509CertificateChainParameterTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param JWTParameter $param
      */
     public function testFromJSONValue(JWTParameter $param)
     {

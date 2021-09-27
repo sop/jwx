@@ -26,7 +26,7 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
      *
      * @var array
      */
-    const MAP_ALGO_TO_CLASS = [
+    public const MAP_ALGO_TO_CLASS = [
         JWA::ALGO_RS256 => RS256Algorithm::class,
         JWA::ALGO_RS384 => RS384Algorithm::class,
         JWA::ALGO_RS512 => RS512Algorithm::class,
@@ -35,7 +35,6 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
     /**
      * Constructor.
      *
-     * @param RSAPublicKeyJWK  $pub_key
      * @param RSAPrivateKeyJWK $priv_key
      */
     protected function __construct(RSAPublicKeyJWK $pub_key,
@@ -47,10 +46,6 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
 
     /**
      * Initialize from a public key.
-     *
-     * @param RSAPublicKeyJWK $jwk
-     *
-     * @return self
      */
     public static function fromPublicKey(RSAPublicKeyJWK $jwk): self
     {
@@ -59,10 +54,6 @@ abstract class RSASSAPKCS1Algorithm extends OpenSSLSignatureAlgorithm
 
     /**
      * Initialize from a private key.
-     *
-     * @param RSAPrivateKeyJWK $jwk
-     *
-     * @return self
      */
     public static function fromPrivateKey(RSAPrivateKeyJWK $jwk): self
     {

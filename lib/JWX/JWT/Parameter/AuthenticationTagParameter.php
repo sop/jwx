@@ -28,8 +28,6 @@ class AuthenticationTagParameter extends JWTParameter
 
     /**
      * Get the authentication tag.
-     *
-     * @return string
      */
     public function authenticationTag(): string
     {

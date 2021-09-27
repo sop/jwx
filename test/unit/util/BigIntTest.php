@@ -13,7 +13,7 @@ use Sop\JWX\Util\BigInt;
  */
 class BigIntTest extends TestCase
 {
-    const BASE_10 = '255';
+    public const BASE_10 = '255';
 
     public function testCreate()
     {
@@ -24,8 +24,6 @@ class BigIntTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param BigInt $bi
      */
     public function testBase10(BigInt $bi)
     {
@@ -34,8 +32,6 @@ class BigIntTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param BigInt $bi
      */
     public function testBase16(BigInt $bi)
     {
@@ -44,8 +40,6 @@ class BigIntTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param BigInt $bi
      */
     public function testBase256(BigInt $bi)
     {
@@ -54,8 +48,6 @@ class BigIntTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param BigInt $bi
      */
     public function testToString(BigInt $bi)
     {

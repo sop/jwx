@@ -56,11 +56,7 @@ class JWKSet implements \Countable, \IteratorAggregate
     /**
      * Initialize from an array representing a JSON object.
      *
-     * @param array $members
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromArray(array $members): self
     {
@@ -81,11 +77,7 @@ class JWKSet implements \Countable, \IteratorAggregate
     /**
      * Initialize from a JSON string.
      *
-     * @param string $json
-     *
      * @throws \UnexpectedValueException
-     *
-     * @return self
      */
     public static function fromJSON(string $json): self
     {
@@ -100,8 +92,6 @@ class JWKSet implements \Countable, \IteratorAggregate
      * Get self with keys added.
      *
      * @param JWK ...$keys JWK objects
-     *
-     * @return self
      */
     public function withKeys(JWK ...$keys): self
     {
@@ -124,8 +114,6 @@ class JWKSet implements \Countable, \IteratorAggregate
      * Get the first JWK in the set.
      *
      * @throws \LogicException
-     *
-     * @return JWK
      */
     public function first(): JWK
     {
@@ -137,10 +125,6 @@ class JWKSet implements \Countable, \IteratorAggregate
 
     /**
      * Check whether set has a JWK with a given key ID.
-     *
-     * @param string $id
-     *
-     * @return bool
      */
     public function hasKeyID(string $id): bool
     {
@@ -150,11 +134,7 @@ class JWKSet implements \Countable, \IteratorAggregate
     /**
      * Get a JWK by a key ID.
      *
-     * @param string $id
-     *
      * @throws \LogicException
-     *
-     * @return JWK
      */
     public function keyByID(string $id): JWK
     {
@@ -167,8 +147,6 @@ class JWKSet implements \Countable, \IteratorAggregate
 
     /**
      * Convert to array.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -182,8 +160,6 @@ class JWKSet implements \Countable, \IteratorAggregate
 
     /**
      * Convert to JSON.
-     *
-     * @return string
      */
     public function toJSON(): string
     {
@@ -204,8 +180,6 @@ class JWKSet implements \Countable, \IteratorAggregate
      * Get iterator for JWK objects.
      *
      * @see \IteratorAggregate::getIterator()
-     *
-     * @return \ArrayIterator
      */
     public function getIterator(): \ArrayIterator
     {
@@ -214,8 +188,6 @@ class JWKSet implements \Countable, \IteratorAggregate
 
     /**
      * Get JWK by key ID.
-     *
-     * @param string $id
      *
      * @return null|JWK Null if not found
      */
@@ -231,8 +203,6 @@ class JWKSet implements \Countable, \IteratorAggregate
      * Later duplicate value shall override earlier JWK.
      *
      * @param string $name Parameter name
-     *
-     * @return array
      */
     protected function _getMapping(string $name): array
     {

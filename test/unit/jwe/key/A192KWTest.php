@@ -15,8 +15,8 @@ use Sop\JWX\JWE\KeyAlgorithm\AESKWAlgorithm;
  */
 class A192KWTest extends TestCase
 {
-    const KEY_192 = '123456789 123456789 1234';
-    const CEK_192 = '987654321 987654321 9876';
+    public const KEY_192 = '123456789 123456789 1234';
+    public const CEK_192 = '987654321 987654321 9876';
 
     public function testCreate()
     {
@@ -27,8 +27,6 @@ class A192KWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AESKWAlgorithm $algo
      */
     public function testAlgoParamValue(AESKWAlgorithm $algo)
     {
@@ -37,8 +35,6 @@ class A192KWTest extends TestCase
 
     /**
      * @depends testCreate
-     *
-     * @param AESKWAlgorithm $algo
      */
     public function testEncrypt(AESKWAlgorithm $algo)
     {
@@ -51,8 +47,7 @@ class A192KWTest extends TestCase
      * @depends testCreate
      * @depends testEncrypt
      *
-     * @param AESKWAlgorithm $algo
-     * @param string         $data
+     * @param string $data
      */
     public function testDecrypt(AESKWAlgorithm $algo, $data)
     {

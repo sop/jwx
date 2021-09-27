@@ -20,9 +20,9 @@ use Sop\JWX\JWT\Parameter\JWTParameter;
  */
 class AESGCMKWTest extends TestCase
 {
-    const KEY_128 = '123456789 123456';
+    public const KEY_128 = '123456789 123456';
 
-    const IV = '123456789 12';
+    public const IV = '123456789 12';
 
     public function testHeaderParams()
     {

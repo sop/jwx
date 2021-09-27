@@ -33,7 +33,7 @@ class JWT
      *
      * @var int
      */
-    const TYPE_JWS = 0;
+    public const TYPE_JWS = 0;
 
     /**
      * Type identifier for the encrypted JWT.
@@ -42,7 +42,7 @@ class JWT
      *
      * @var int
      */
-    const TYPE_JWE = 1;
+    public const TYPE_JWE = 1;
 
     /**
      * JWT parts.
@@ -82,8 +82,6 @@ class JWT
 
     /**
      * Convert JWT to string.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -102,8 +100,6 @@ class JWT
      * @param null|Header $header Optional header
      *
      * @throws \RuntimeException For generic errors
-     *
-     * @return self
      */
     public static function unsecuredFromClaims(Claims $claims,
         ?Header $header = null): self
@@ -119,8 +115,6 @@ class JWT
      * @param null|Header        $header Optional header
      *
      * @throws \RuntimeException For generic errors
-     *
-     * @return self
      */
     public static function signedFromClaims(Claims $claims,
         SignatureAlgorithm $algo, ?Header $header = null): self
@@ -140,8 +134,6 @@ class JWT
      * @param null|Header                $header   Optional header
      *
      * @throws \RuntimeException For generic errors
-     *
-     * @return self
      */
     public static function encryptedFromClaims(Claims $claims,
         KeyManagementAlgorithm $key_algo, ContentEncryptionAlgorithm $enc_algo,
@@ -163,13 +155,9 @@ class JWT
      * If multiple keys are provided, they must contain a JWK ID parameter for
      * the key identification.
      *
-     * @param ValidationContext $ctx
-     *
      * @throws ValidationException if signature is invalid, or decryption fails,
      *                             or claims validation fails
      * @throws \RuntimeException   For generic errors
-     *
-     * @return Claims
      */
     public function claims(ValidationContext $ctx): Claims
     {
@@ -201,8 +189,6 @@ class JWT
      * @param null|Header        $header Optional header
      *
      * @throws \RuntimeException For generic errors
-     *
-     * @return self
      */
     public function signNested(SignatureAlgorithm $algo, ?Header $header = null): self
     {
@@ -230,8 +216,6 @@ class JWT
      * @param null|Header                $header   Optional header
      *
      * @throws \RuntimeException For generic errors
-     *
-     * @return self
      */
     public function encryptNested(KeyManagementAlgorithm $key_algo,
         ContentEncryptionAlgorithm $enc_algo,
@@ -250,8 +234,6 @@ class JWT
 
     /**
      * Whether JWT is a JWS.
-     *
-     * @return bool
      */
     public function isJWS(): bool
     {
@@ -262,8 +244,6 @@ class JWT
      * Get JWT as a JWS.
      *
      * @throws \LogicException
-     *
-     * @return JWS
      */
     public function JWS(): JWS
     {
@@ -275,8 +255,6 @@ class JWT
 
     /**
      * Whether JWT is a JWE.
-     *
-     * @return bool
      */
     public function isJWE(): bool
     {
@@ -287,8 +265,6 @@ class JWT
      * Get JWT as a JWE.
      *
      * @throws \LogicException
-     *
-     * @return JWE
      */
     public function JWE(): JWE
     {
@@ -300,8 +276,6 @@ class JWT
 
     /**
      * Check whether JWT contains another nested JWT.
-     *
-     * @return bool
      */
     public function isNested(): bool
     {
@@ -319,8 +293,6 @@ class JWT
     /**
      * Check whether JWT is unsecured, that is, it's neither integrity protected
      * nor encrypted.
-     *
-     * @return bool
      */
     public function isUnsecured(): bool
     {
@@ -334,8 +306,6 @@ class JWT
 
     /**
      * Get JWT header.
-     *
-     * @return JOSE
      */
     public function header(): JOSE
     {
@@ -345,8 +315,6 @@ class JWT
 
     /**
      * Get JWT as a string.
-     *
-     * @return string
      */
     public function token(): string
     {
@@ -358,8 +326,6 @@ class JWT
      *
      * @param string            $payload JWT payload
      * @param ValidationContext $ctx     Validation context
-     *
-     * @return Claims
      */
     private function _claimsFromNestedPayload(string $payload,
         ValidationContext $ctx): Claims
@@ -379,8 +345,6 @@ class JWT
      * @param ValidationContext $ctx Validation context
      *
      * @throws ValidationException If signature validation fails
-     *
-     * @return string
      */
     private static function _validatedPayloadFromJWS(JWS $jws,
         ValidationContext $ctx): string
@@ -400,8 +364,6 @@ class JWT
      *
      * @throws ValidationException If unsecured JWT's are not allowed, or JWS
      *                             token is malformed
-     *
-     * @return string
      */
     private static function _validatedPayloadFromUnsecuredJWS(JWS $jws,
         ValidationContext $ctx): string
@@ -422,8 +384,6 @@ class JWT
      * @param JWKSet $keys Set of allowed keys for the signature validation
      *
      * @throws ValidationException If validation fails
-     *
-     * @return string
      */
     private static function _validatedPayloadFromSignedJWS(JWS $jws, JWKSet $keys): string
     {
@@ -450,8 +410,6 @@ class JWT
      * @param ValidationContext $ctx Validation context
      *
      * @throws ValidationException If decryption fails
-     *
-     * @return string
      */
     private static function _validatedPayloadFromJWE(JWE $jwe,
         ValidationContext $ctx): string

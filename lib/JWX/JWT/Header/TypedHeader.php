@@ -17,8 +17,6 @@ trait TypedHeader
      * Whether parameters are present.
      *
      * @param string ...$names Parameter names
-     *
-     * @return bool
      */
     abstract public function has(string ...$names): bool;
 
@@ -28,15 +26,11 @@ trait TypedHeader
      * @param string $name Parameter name
      *
      * @throws \LogicException If the parameter is not present
-     *
-     * @return JWTParameter
      */
     abstract public function get(string $name): JWTParameter;
 
     /**
      * Check whether the algorithm parameter is present.
-     *
-     * @return bool
      */
     public function hasAlgorithm(): bool
     {
@@ -59,8 +53,6 @@ trait TypedHeader
 
     /**
      * Check whether the authentication tag parameter is present.
-     *
-     * @return bool
      */
     public function hasAuthenticationTag(): bool
     {
@@ -83,8 +75,6 @@ trait TypedHeader
 
     /**
      * Check whether the 'base64url-encode payload' parameter is present.
-     *
-     * @return bool
      */
     public function hasB64Payload(): bool
     {
@@ -107,8 +97,6 @@ trait TypedHeader
 
     /**
      * Check whether the compression algorithm parameter is present.
-     *
-     * @return bool
      */
     public function hasCompressionAlgorithm(): bool
     {
@@ -131,8 +119,6 @@ trait TypedHeader
 
     /**
      * Check whether the content type parameter is present.
-     *
-     * @return bool
      */
     public function hasContentType(): bool
     {
@@ -155,8 +141,6 @@ trait TypedHeader
 
     /**
      * Check whether the critical parameter is present.
-     *
-     * @return bool
      */
     public function hasCritical(): bool
     {
@@ -179,8 +163,6 @@ trait TypedHeader
 
     /**
      * Check whether the encryption algorithm parameter is present.
-     *
-     * @return bool
      */
     public function hasEncryptionAlgorithm(): bool
     {
@@ -203,8 +185,6 @@ trait TypedHeader
 
     /**
      * Check whether the initialization vector parameter is present.
-     *
-     * @return bool
      */
     public function hasInitializationVector(): bool
     {
@@ -227,8 +207,6 @@ trait TypedHeader
 
     /**
      * Check whether the JSON web key parameter is present.
-     *
-     * @return bool
      */
     public function hasJSONWebKey(): bool
     {
@@ -251,8 +229,6 @@ trait TypedHeader
 
     /**
      * Check whether the JWK set URL parameter is present.
-     *
-     * @return bool
      */
     public function hasJWKSetURL(): bool
     {
@@ -275,8 +251,6 @@ trait TypedHeader
 
     /**
      * Check whether the key ID parameter is present.
-     *
-     * @return bool
      */
     public function hasKeyID(): bool
     {
@@ -299,8 +273,6 @@ trait TypedHeader
 
     /**
      * Check whether the PBES2 count parameter is present.
-     *
-     * @return bool
      */
     public function hasPBES2Count(): bool
     {
@@ -323,8 +295,6 @@ trait TypedHeader
 
     /**
      * Check whether the PBES2 salt input parameter is present.
-     *
-     * @return bool
      */
     public function hasPBES2SaltInput(): bool
     {
@@ -347,8 +317,6 @@ trait TypedHeader
 
     /**
      * Check whether the type parameter is present.
-     *
-     * @return bool
      */
     public function hasType(): bool
     {
@@ -371,8 +339,6 @@ trait TypedHeader
 
     /**
      * Check whether the X.509 certificate chain parameter is present.
-     *
-     * @return bool
      */
     public function hasX509CertificateChain(): bool
     {
@@ -396,8 +362,6 @@ trait TypedHeader
     /**
      * Check whether the X.509 certificate SHA-1 thumbprint parameter is
      * present.
-     *
-     * @return bool
      */
     public function hasX509CertificateSHA1Thumbprint(): bool
     {
@@ -421,8 +385,6 @@ trait TypedHeader
     /**
      * Check whether the X.509 certificate SHA-256 thumbprint parameter is
      * present.
-     *
-     * @return bool
      */
     public function hasX509CertificateSHA256Thumbprint(): bool
     {
@@ -445,8 +407,6 @@ trait TypedHeader
 
     /**
      * Check whether the X.509 URL parameter is present.
-     *
-     * @return bool
      */
     public function hasX509URL(): bool
     {
