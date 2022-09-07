@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sop\JWX\JWT;
 
+use Sop\JWX\JWA\JWA;
 use Sop\JWX\JWK\JWK;
 use Sop\JWX\JWK\JWKSet;
 use Sop\JWX\JWT\Claim\RegisteredClaim;
@@ -71,6 +72,54 @@ class ValidationContext
      * @var bool
      */
     protected $_allowUnsecured;
+
+    /**
+     * List of permitted algorithms.
+     *
+     * By default only asymmetric key derivation algorithms are prohibited.
+     *
+     * @var string[]
+     */
+    protected $_permittedAlgoritms = [
+        // all signature algorithms are safe to use
+        JWA::ALGO_HS256 => true,
+        JWA::ALGO_HS384 => true,
+        JWA::ALGO_HS512 => true,
+        JWA::ALGO_RS256 => true,
+        JWA::ALGO_RS384 => true,
+        JWA::ALGO_RS512 => true,
+        JWA::ALGO_ES256 => true,
+        JWA::ALGO_ES384 => true,
+        JWA::ALGO_ES512 => true,
+        // unsecured JWS may be used when explicitly allowed
+        JWA::ALGO_NONE => true,
+        // all symmetric key derivation algorithms are safe to use
+        JWA::ALGO_A128KW => true,
+        JWA::ALGO_A192KW => true,
+        JWA::ALGO_A256KW => true,
+        JWA::ALGO_A128GCMKW => true,
+        JWA::ALGO_A192GCMKW => true,
+        JWA::ALGO_A256GCMKW => true,
+        JWA::ALGO_PBES2_HS256_A128KW => true,
+        JWA::ALGO_PBES2_HS384_A192KW => true,
+        JWA::ALGO_PBES2_HS512_A256KW => true,
+        JWA::ALGO_DIR => true,
+        /* asymmetric key derivation algorithms are subject to
+           "sign/encrypt confusion" vulnerability, in which the JWT consumer
+           can be tricked to accept a JWE token instead of a JWS by using
+           the public key for encryption. */
+        JWA::ALGO_RSA1_5 => false,
+        JWA::ALGO_RSA_OAEP => false,
+        // all encryption algorithms are safe to use
+        JWA::ALGO_A128CBC_HS256 => true,
+        JWA::ALGO_A192CBC_HS384 => true,
+        JWA::ALGO_A256CBC_HS512 => true,
+        JWA::ALGO_A128GCM => true,
+        JWA::ALGO_A192GCM => true,
+        JWA::ALGO_A256GCM => true,
+        // all compression algorithms are safe to use
+        JWA::ALGO_DEFLATE => true,
+    ];
 
     /**
      * Constructor.
@@ -294,6 +343,65 @@ class ValidationContext
     public function isUnsecuredAllowed(): bool
     {
         return $this->_allowUnsecured;
+    }
+
+    /**
+     * Get self with only given permitted algorithms.
+     *
+     * @param string ...$names Algorithm name
+     *
+     * @see \Sop\JWX\JWA\JWA
+     */
+    public function withPermittedAlgorithms(string ...$names): self
+    {
+        $obj = clone $this;
+        $obj->_permittedAlgoritms = [];
+        return $obj->withPermittedAlgorithmsAdded(...$names);
+    }
+
+    /**
+     * Get self with given algorithms added to the permitted set.
+     *
+     * @param string ...$names Algorithm name
+     *
+     * @see \Sop\JWX\JWA\JWA
+     */
+    public function withPermittedAlgorithmsAdded(string ...$names): self
+    {
+        $obj = clone $this;
+        foreach ($names as $name) {
+            $obj->_permittedAlgoritms[$name] = true;
+        }
+        return $obj;
+    }
+
+    /**
+     * Get self with given algorithms removed from the permitted set.
+     *
+     * @param string ...$names Algorithm name
+     *
+     * @see \Sop\JWX\JWA\JWA
+     */
+    public function withProhibitedAlgorithms(string ...$names): self
+    {
+        $obj = clone $this;
+        foreach ($names as $name) {
+            $obj->_permittedAlgoritms[$name] = false;
+        }
+        return $obj;
+    }
+
+    /**
+     * Check whether given algorithm is permitted.
+     *
+     * @param string $name Algorithm name
+     *
+     * @see \Sop\JWX\JWA\JWA
+     */
+    public function isPermittedAlgorithm(string $name): bool
+    {
+        return isset($this->_permittedAlgoritms[$name])
+            && true === $this->_permittedAlgoritms[$name];
     }
 
     /**

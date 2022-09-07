@@ -16,6 +16,7 @@ use Sop\JWX\JWT\Exception\ValidationException;
 use Sop\JWX\JWT\Header\Header;
 use Sop\JWX\JWT\Header\JOSE;
 use Sop\JWX\JWT\Parameter\ContentTypeParameter;
+use Sop\JWX\Parameter\Parameter;
 use Sop\JWX\Util\Base64;
 
 /**
@@ -161,7 +162,9 @@ class JWT
      */
     public function claims(ValidationContext $ctx): Claims
     {
-        // check signature or decrypt depending on the JWT type.
+        // check that the token uses only permitted algorithms
+        $this->_validateAlgorithms($ctx);
+        // check signature or decrypt depending on the JWT type
         if ($this->isJWS()) {
             $payload = self::_validatedPayloadFromJWS($this->JWS(), $ctx);
         } else {
@@ -336,6 +339,43 @@ class JWT
             $ctx = $ctx->withUnsecuredAllowed(true);
         }
         return $jwt->claims($ctx);
+    }
+
+    /**
+     * Validate that the token uses only permitted algorithms.
+     *
+     * @param ValidationContext $ctx Validation context
+     */
+    private function _validateAlgorithms(ValidationContext $ctx): void
+    {
+        $headers = $this->header();
+        if ($headers->hasAlgorithm()) {
+            $this->_validateAlgorithmParameter($headers->algorithm(), $ctx);
+        }
+        if ($headers->hasEncryptionAlgorithm()) {
+            $this->_validateAlgorithmParameter($headers->encryptionAlgorithm(), $ctx);
+        }
+        if ($headers->hasCompressionAlgorithm()) {
+            $this->_validateAlgorithmParameter($headers->compressionAlgorithm(), $ctx);
+        }
+    }
+
+    /**
+     * Check that given algorithm parameter value is permitted.
+     *
+     * @param Parameter         $param Header parameter
+     * @param ValidationContext $ctx   Validation context
+     *
+     * @throws ValidationException If algorithm is prohibited
+     */
+    private function _validateAlgorithmParameter(Parameter $param,
+        ValidationContext $ctx): void
+    {
+        if (!$ctx->isPermittedAlgorithm($param->value())) {
+            throw new ValidationException(sprintf(
+                '%s algorithm %s is not permitted.',
+                $param->name(), $param->value()));
+        }
     }
 
     /**

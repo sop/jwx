@@ -293,6 +293,17 @@ class JWTTest extends TestCase
         new JWT('');
     }
 
+    public function testProhibitedAlgorithm()
+    {
+        $jwt = JWT::unsecuredFromClaims(
+            self::$_claims,
+            new Header(new JWTParameter(JWTParameter::P_ZIP, 'dummy'))
+        );
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('zip algorithm dummy is not permitted');
+        $jwt->claims(new ValidationContext());
+    }
+
     /**
      * @depends testCreateJWS
      */

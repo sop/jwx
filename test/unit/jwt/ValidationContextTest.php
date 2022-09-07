@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 use PHPUnit\Framework\TestCase;
+use Sop\JWX\JWA\JWA;
 use Sop\JWX\JWT\Claim\IssuerClaim;
 use Sop\JWX\JWT\Claim\RegisteredClaim;
 use Sop\JWX\JWT\Claims;
@@ -156,5 +157,38 @@ class ValidationContextTest extends TestCase
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('failed');
         $ctx->validate($claims);
+    }
+
+    /**
+     * @depends testCreate
+     */
+    public function testAddPermittedAlgorithm(ValidationContext $ctx)
+    {
+        $this->assertTrue($ctx->isPermittedAlgorithm(JWA::ALGO_RS256));
+        $this->assertFalse($ctx->isPermittedAlgorithm('test'));
+        $ctx = $ctx->withPermittedAlgorithmsAdded('test');
+        $this->assertTrue($ctx->isPermittedAlgorithm(JWA::ALGO_RS256));
+        $this->assertTrue($ctx->isPermittedAlgorithm('test'));
+    }
+
+    /**
+     * @depends testCreate
+     */
+    public function testNewPermittedAlgorithm(ValidationContext $ctx)
+    {
+        $this->assertTrue($ctx->isPermittedAlgorithm(JWA::ALGO_RS256));
+        $ctx = $ctx->withPermittedAlgorithms('test');
+        $this->assertFalse($ctx->isPermittedAlgorithm(JWA::ALGO_RS256));
+        $this->assertTrue($ctx->isPermittedAlgorithm('test'));
+    }
+
+    /**
+     * @depends testCreate
+     */
+    public function testProhibitedAlgorithm(ValidationContext $ctx)
+    {
+        $this->assertTrue($ctx->isPermittedAlgorithm(JWA::ALGO_RS256));
+        $ctx = $ctx->withProhibitedAlgorithms(JWA::ALGO_RS256);
+        $this->assertFalse($ctx->isPermittedAlgorithm(JWA::ALGO_RS256));
     }
 }
